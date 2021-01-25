@@ -44,6 +44,37 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		40141E3E25BEE625003B49B4 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				40141E4125BEE649003B49B4 /* MainVC */,
+				40141E4025BEE63D003B49B4 /* MainStoryboards */,
+				40141E3F25BEE630003B49B4 /* MainCells */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		40141E3F25BEE630003B49B4 /* MainCells */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = MainCells;
+			sourceTree = "<group>";
+		};
+		40141E4025BEE63D003B49B4 /* MainStoryboards */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = MainStoryboards;
+			sourceTree = "<group>";
+		};
+		40141E4125BEE649003B49B4 /* MainVC */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = MainVC;
+			sourceTree = "<group>";
+		};
 		62B1DBF11BBCAAA03867E9E9 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -82,6 +113,7 @@
 		D4336D1D25BE80D500D27568 /* Gift.zip-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				40141E3E25BEE625003B49B4 /* Main */,
 				D4336D3D25BE81D200D27568 /* Global */,
 				D4336D2225BE80D500D27568 /* ViewController.swift */,
 				D4336D2425BE80D500D27568 /* Main.storyboard */,
