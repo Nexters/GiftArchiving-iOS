@@ -19,11 +19,16 @@ class RecordVC: UIViewController {
     @IBOutlet var buttons: [UIButton]!
     @IBOutlet weak var cropImageView: UIImageView!
     @IBOutlet weak var nameStackView: UIStackView!
-    
+    @IBOutlet weak var infoView: UIView!
+    @IBOutlet weak var stickerArea: UIView!
+    @IBOutlet weak var emotionTextView: UITextView!
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     
     lazy var picker = UIImagePickerController()
     
     lazy var popupBackground = UIView()
+    
+    private var textViewPlaceholderFlag: Bool = true
     
     let disposeBag = DisposeBag()
     
@@ -33,6 +38,7 @@ class RecordVC: UIViewController {
         super.viewDidLoad()
         
         setLayouts()
+        setNotificationCenter()
         initTextField()
         initializeDelegates()
     }
@@ -48,10 +54,6 @@ class RecordVC: UIViewController {
             guard let des = segue.destination as? DatePopupVC else { return }
             des.delegate = self
         }
-    }
-    
-    override func performSegue(withIdentifier identifier: String, sender: Any?) {
-        
     }
     
     //MARK: - IBAction
@@ -121,7 +123,47 @@ extension RecordVC {
         )
         
         popupBackground.setPopupBackgroundView(to: view)
+        
+        emotionTextView.textColor = UIColor.white
+        if textViewPlaceholderFlag {
+            emotionTextView.text = "지금 이 감정을 기록해보세요."
+            emotionTextView.alpha = 0.34
+        } else {
+            emotionTextView.alpha = 1.0
+        }
+        
     }
+    
+    private func setNotificationCenter() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    //    private func
+    @objc private func keyboardWillShow(_ sender: Notification) {
+        handleKeyboardIssue(sender, isAppearing: true)
+    }
+    
+    @objc private func keyboardWillHide(_ sender: Notification) {
+        handleKeyboardIssue(sender, isAppearing: false)
+    }
+    
+    private func handleKeyboardIssue(_ notification: Notification, isAppearing: Bool) {
+        guard let userInfo = notification.userInfo as? [String: Any] else { return }
+        guard let keyboardAnimationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval else { return }
+        guard let keyboardHeight = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height else { return }
+        
+        // 기기별 bottom safearea 계산하기
+        let heightConstant = isAppearing ? keyboardHeight - 34 - 44 : 0
+        
+        UIView.animate(withDuration: keyboardAnimationDuration, animations: {
+            self.bottomConstraint.constant = heightConstant
+            self.view.layoutIfNeeded()
+        }) { (_) in
+        }
+    }
+    
+    
     
     private func initTextField() {
         
@@ -143,6 +185,7 @@ extension RecordVC {
     private func initializeDelegates() {
         nameTextField.delegate = self
         picker.delegate = self
+        emotionTextView.delegate = self
     }
     
     
@@ -215,6 +258,34 @@ extension RecordVC: PopupViewDelegate {
         print("tap")
         popupBackground.animatePopupBackground(false)
         // date
+    }
+}
+
+//MARK: - UITextViewDelegate
+
+extension RecordVC: UITextViewDelegate {
+    
+    // TextView Place Holder
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        
+        if textViewPlaceholderFlag {
+            textView.text = nil
+            textView.alpha = 1.0
+            textViewPlaceholderFlag = false
+        }
+        
+    }
+    // TextView Place Holder
+    func textViewDidEndEditing(_ textView: UITextView) {
+        let text = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+        if text.isEmpty {
+            textView.text = "지금 이 감정을 기록해보세요."
+            textView.alpha = 0.34
+            textViewPlaceholderFlag = true
+        } else {
+            textViewPlaceholderFlag = false
+        }
+        
     }
 }
 
