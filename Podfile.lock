@@ -2,23 +2,37 @@ PODS:
   - Alamofire (5.4.1)
   - Kingfisher (6.0.1)
   - lottie-ios (3.1.9)
+  - RxCocoa (6.0.0):
+    - RxRelay (= 6.0.0)
+    - RxSwift (= 6.0.0)
+  - RxRelay (6.0.0):
+    - RxSwift (= 6.0.0)
+  - RxSwift (6.0.0)
 
 DEPENDENCIES:
   - Alamofire
   - Kingfisher
   - lottie-ios
+  - RxCocoa (= 6.0.0)
+  - RxSwift (= 6.0.0)
 
 SPEC REPOS:
   trunk:
     - Alamofire
     - Kingfisher
     - lottie-ios
+    - RxCocoa
+    - RxRelay
+    - RxSwift
 
 SPEC CHECKSUMS:
   Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
   Kingfisher: adde87a4f74f6a3845395769354efff593581740
   lottie-ios: 3a3758ef5a008e762faec9c9d50a39842f26d124
+  RxCocoa: 3f79328fafa3645b34600f37c31e64c73ae3a80e
+  RxRelay: 8d593be109c06ea850df027351beba614b012ffb
+  RxSwift: c14e798c59b9f6e9a2df8fd235602e85cc044295
 
-PODFILE CHECKSUM: c01f250fe26869429f17b0a0663244870663d69d
+PODFILE CHECKSUM: c4714c45861da9422e49eec84d00077a76fa4310
 
 COCOAPODS: 1.9.1
