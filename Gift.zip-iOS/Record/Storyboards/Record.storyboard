@@ -34,9 +34,18 @@
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QUt-NO-Vig" userLabel="Sticker Area">
                                 <rect key="frame" x="0.0" y="100" width="390" height="284"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qtg-tk-6aK">
+                                        <rect key="frame" x="0.0" y="0.0" width="390" height="284"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstItem="qtg-tk-6aK" firstAttribute="top" secondItem="QUt-NO-Vig" secondAttribute="top" id="2gA-zi-mPM"/>
+                                    <constraint firstItem="qtg-tk-6aK" firstAttribute="leading" secondItem="QUt-NO-Vig" secondAttribute="leading" id="9Ry-1K-zRe"/>
                                     <constraint firstAttribute="height" constant="284" id="VJO-zU-M4v"/>
+                                    <constraint firstAttribute="bottom" secondItem="qtg-tk-6aK" secondAttribute="bottom" id="qFG-ma-ePS"/>
+                                    <constraint firstAttribute="trailing" secondItem="qtg-tk-6aK" secondAttribute="trailing" id="sKO-Bf-OU9"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FtL-y3-ncY" userLabel="Upper Container">
@@ -98,10 +107,16 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6XT-00-CRw">
                                         <rect key="frame" x="20" y="13" width="24" height="22"/>
                                         <state key="normal" image="btnCamera"/>
+                                        <connections>
+                                            <action selector="selectPhoto:" destination="mvo-u9-pcE" eventType="touchUpInside" id="JBv-Ts-uhK"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X5u-dl-tXB">
                                         <rect key="frame" x="302.33333333333331" y="12.333333333333373" width="23.666666666666686" height="23.666666666666671"/>
                                         <state key="normal" image="btnSticker"/>
+                                        <connections>
+                                            <action selector="useSticker:" destination="mvo-u9-pcE" eventType="touchUpInside" id="Xe3-fh-Bz6"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wga-zl-J9b">
                                         <rect key="frame" x="346" y="13" width="24" height="22"/>
@@ -110,6 +125,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8ZV-If-Odw">
                                         <rect key="frame" x="258.33333333333331" y="12" width="24" height="24"/>
                                         <state key="normal" image="btnFrame"/>
+                                        <connections>
+                                            <action selector="changeFrame:" destination="mvo-u9-pcE" eventType="touchUpInside" id="Z1n-9v-sjm"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -252,6 +270,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="cropImageView" destination="qtg-tk-6aK" id="0fD-uM-UfF"/>
                         <outlet property="emotionLabel" destination="GsQ-Rg-OpX" id="C4k-pl-Yrp"/>
                         <outlet property="fromLabel" destination="fAq-mX-lBR" id="dTi-MT-vFu"/>
                         <outlet property="nameTextField" destination="Kaq-Ao-5fF" id="M2F-0U-9ob"/>
