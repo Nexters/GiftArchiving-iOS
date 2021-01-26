@@ -18,9 +18,12 @@ class RecordVC: UIViewController {
     @IBOutlet weak var emotionLabel: UILabel!
     @IBOutlet var buttons: [UIButton]!
     @IBOutlet weak var cropImageView: UIImageView!
+    @IBOutlet weak var nameStackView: UIStackView!
     
     
     lazy var picker = UIImagePickerController()
+    
+    lazy var popupBackground = UIView()
     
     let disposeBag = DisposeBag()
     
@@ -36,6 +39,19 @@ class RecordVC: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "dateSegue" {
+            popupBackground.animatePopupBackground(true)
+            guard let des = segue.destination as? DatePopupVC else { return }
+            des.delegate = self
+        }
+    }
+    
+    override func performSegue(withIdentifier identifier: String, sender: Any?) {
+        
     }
     
     //MARK: - IBAction
@@ -85,6 +101,7 @@ class RecordVC: UIViewController {
     }
     
     @IBAction func useSticker(_ sender: UIButton) {
+        
     }
 }
 
@@ -102,6 +119,8 @@ extension RecordVC {
             string: "이름 입력",
             attributes: [NSAttributedString.Key.foregroundColor : UIColor.init(white: 1.0, alpha: 0.34)]
         )
+        
+        popupBackground.setPopupBackgroundView(to: view)
     }
     
     private func initTextField() {
@@ -151,6 +170,10 @@ extension RecordVC {
 
 extension RecordVC: UITextFieldDelegate {
 
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        nameStackView.layoutIfNeeded()
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
@@ -183,3 +206,15 @@ extension RecordVC: UIImagePickerControllerDelegate, UINavigationControllerDeleg
         print("success")
     }
 }
+
+//MARK: - PopupViewDelegate
+
+extension RecordVC: PopupViewDelegate {
+    
+    func sendDateButtonTapped() {
+        print("tap")
+        popupBackground.animatePopupBackground(false)
+        // date
+    }
+}
+
