@@ -15,6 +15,9 @@
 		D4336D2825BE80D500D27568 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4336D2725BE80D500D27568 /* Assets.xcassets */; };
 		D4336D2B25BE80D500D27568 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4336D2925BE80D500D27568 /* LaunchScreen.storyboard */; };
 		D4336D4225BE81FB00D27568 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4336D4125BE81FB00D27568 /* UIView+Extensions.swift */; };
+		D4A08E9225BFDCFF009CFCC4 /* RecordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A08E9125BFDCFF009CFCC4 /* RecordVC.swift */; };
+		D4A08E9525BFDD09009CFCC4 /* Record.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4A08E9425BFDD09009CFCC4 /* Record.storyboard */; };
+		D4A08E9E25BFE031009CFCC4 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A08E9D25BFE031009CFCC4 /* UIColor+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +33,9 @@
 		D4336D2A25BE80D500D27568 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D4336D2C25BE80D600D27568 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D4336D4125BE81FB00D27568 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
+		D4A08E9125BFDCFF009CFCC4 /* RecordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordVC.swift; sourceTree = "<group>"; };
+		D4A08E9425BFDD09009CFCC4 /* Record.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Record.storyboard; sourceTree = "<group>"; };
+		D4A08E9D25BFE031009CFCC4 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +88,7 @@
 		D4336D1D25BE80D500D27568 /* Gift.zip-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				D4A08E9025BFDCE2009CFCC4 /* Record */,
 				D4336D3D25BE81D200D27568 /* Global */,
 				D4336D2225BE80D500D27568 /* ViewController.swift */,
 				D4336D2425BE80D500D27568 /* Main.storyboard */,
@@ -114,6 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				D4336D4125BE81FB00D27568 /* UIView+Extensions.swift */,
+				D4A08E9D25BFE031009CFCC4 /* UIColor+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -124,6 +132,31 @@
 				D4336D2C25BE80D600D27568 /* Info.plist */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D4A08E9025BFDCE2009CFCC4 /* Record */ = {
+			isa = PBXGroup;
+			children = (
+				D4A08E9725BFDD10009CFCC4 /* VCs */,
+				D4A08E9925BFDD14009CFCC4 /* Storyboards */,
+			);
+			path = Record;
+			sourceTree = "<group>";
+		};
+		D4A08E9725BFDD10009CFCC4 /* VCs */ = {
+			isa = PBXGroup;
+			children = (
+				D4A08E9125BFDCFF009CFCC4 /* RecordVC.swift */,
+			);
+			path = VCs;
+			sourceTree = "<group>";
+		};
+		D4A08E9925BFDD14009CFCC4 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				D4A08E9425BFDD09009CFCC4 /* Record.storyboard */,
+			);
+			path = Storyboards;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -188,6 +221,7 @@
 				D4336D2B25BE80D500D27568 /* LaunchScreen.storyboard in Resources */,
 				D4336D2825BE80D500D27568 /* Assets.xcassets in Resources */,
 				D4336D2625BE80D500D27568 /* Main.storyboard in Resources */,
+				D4A08E9525BFDD09009CFCC4 /* Record.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,6 +274,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4A08E9225BFDCFF009CFCC4 /* RecordVC.swift in Sources */,
+				D4A08E9E25BFE031009CFCC4 /* UIColor+Extensions.swift in Sources */,
 				D4336D2325BE80D500D27568 /* ViewController.swift in Sources */,
 				D4336D1F25BE80D500D27568 /* AppDelegate.swift in Sources */,
 				D4336D4225BE81FB00D27568 /* UIView+Extensions.swift in Sources */,
