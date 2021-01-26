@@ -9,21 +9,37 @@ import UIKit
 
 class RecordVC: UIViewController {
 
+    @IBOutlet weak var fromLabel: UILabel!
+    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var typeLabel: UILabel!
+    @IBOutlet weak var whenLabel: UILabel!
+    @IBOutlet weak var emotionLabel: UILabel!
+    
+    @IBOutlet var buttons: [UIButton]!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func backToMain(_ sender: UIButton) {
+        
     }
-    */
-
+    
+    @IBAction func showDatePicker(_ sender: UIButton) {
+        
+    }
+    
+    @IBAction func completeRecord(_ sender: UIButton) {
+    }
+    
+    @IBAction func chooseType(_ sender: UIButton) {
+    }
+    
+    @IBAction func chooseWhen(_ sender: UIButton) {
+    }
+    
+    @IBAction func chooseEmotion(_ sender: UIButton) {
+    }
+    
 }
