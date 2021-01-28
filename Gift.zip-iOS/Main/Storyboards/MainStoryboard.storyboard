@@ -138,7 +138,7 @@
                                     <constraint firstAttribute="height" constant="67" id="cw9-Do-zoi"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dHb-AS-UpM">
@@ -187,7 +187,7 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="btn_arrow" translatesAutoresizingMaskIntoConstraints="NO" id="fAJ-KT-z8c">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="btn_arrow_white" translatesAutoresizingMaskIntoConstraints="NO" id="fAJ-KT-z8c">
                                 <rect key="frame" x="376" y="430" width="14" height="11"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="11" id="6JX-0C-ruZ"/>
@@ -240,7 +240,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="btn_arrow" width="14" height="10.333333015441895"/>
+        <image name="btn_arrow_white" width="14" height="10.333333015441895"/>
         <image name="btn_search" width="24" height="24"/>
         <image name="btn_setting" width="24.333333969116211" height="24.333333969116211"/>
         <image name="logo_gray" width="40" height="40"/>

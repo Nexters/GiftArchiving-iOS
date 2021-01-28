@@ -24,23 +24,33 @@ class MainVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     @IBOutlet weak var btnWrite: UIButton!
     
     var models = [Model]()
-    var colors = [UIColor.black, UIColor.blue, UIColor.white, UIColor.brown]
+    var colors = [UIColor(named: "ceruleanBlue"), UIColor.greyishBrown, UIColor(named: "pinkishOrange"), UIColor(named: "wheat")]
+    var logos = [UIImage(named: "logo_blue"), UIImage(named: "logo_gray"), UIImage(named: "logo_orange"), UIImage(named: "logo_yellow")]
+    var colorIdx = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        testData()
+        setLayout()
+        
+    }
+    
+    func setLayout(){
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        (btnWrite as UIView).makeRounded(cornerRadius: 8.0)
+    }
+    
+    func testData(){
         models.append(Model(text: "유진",
                             imageName: "img_test"))
-        
         models.append(Model(text: "유진2",
                             imageName: "img_test"))
         models.append(Model(text: "유진3",
                             imageName: "img_test"))
         models.append(Model(text: "유진4",
                             imageName: "img_test"))
-        
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        
     }
     
     func configure(with models: [Model]) {
@@ -54,16 +64,28 @@ class MainVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("cellforItemAt")
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MainCollectionViewCell", for: indexPath) as! MainCollectionViewCell
         cell.configure(with: models[indexPath.row])
-        collectionView.backgroundColor = colors[indexPath.row]
+        changeUI()
         return cell
     }
-    /*
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 250, height: 250)
-    }*/
+    func changeUI(){
+        if (colorIdx == 4){
+            colorIdx = 0
+        }
+        if(colorIdx == 3){
+            imgArrow.image = UIImage(named: "btn_arrow_black")
+            gfitBoxLabel.textColor = UIColor.greyishBrown
+        }else{
+            imgArrow.image = UIImage(named: "btn_arrow_white")
+            gfitBoxLabel.textColor = UIColor.white
+        }
+        collectionView.backgroundColor = colors[colorIdx]
+        imgLogo.image = logos[colorIdx]
+        colorIdx += 1
+    }
+    
 
 }
 struct Model {
