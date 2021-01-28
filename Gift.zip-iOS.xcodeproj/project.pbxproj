@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		40141E4725BEE982003B49B4 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40141E4625BEE982003B49B4 /* MainStoryboard.storyboard */; };
+		4074F4E525C1A52300D34361 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4074F4E425C1A52300D34361 /* MainVC.swift */; };
+		4074F4E825C1CC2800D34361 /* MainCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4074F4E725C1CC2800D34361 /* MainCollectionViewCell.swift */; };
 		88DE6CEB42D2D43A9C392C22 /* Pods_Gift_zip_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39B10916997BFB92D3A04B42 /* Pods_Gift_zip_iOS.framework */; };
 		D4336D1F25BE80D500D27568 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4336D1E25BE80D500D27568 /* AppDelegate.swift */; };
 		D4336D2125BE80D500D27568 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4336D2025BE80D500D27568 /* SceneDelegate.swift */; };
@@ -26,6 +29,9 @@
 
 /* Begin PBXFileReference section */
 		39B10916997BFB92D3A04B42 /* Pods_Gift_zip_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Gift_zip_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		40141E4625BEE982003B49B4 /* MainStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
+		4074F4E425C1A52300D34361 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
+		4074F4E725C1CC2800D34361 /* MainCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionViewCell.swift; sourceTree = "<group>"; };
 		CAB51F8940A7A2D1DBE7B8F8 /* Pods-Gift.zip-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gift.zip-iOS.release.xcconfig"; path = "Target Support Files/Pods-Gift.zip-iOS/Pods-Gift.zip-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		CD281D2B3ABD9BE5F785046B /* Pods-Gift.zip-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gift.zip-iOS.debug.xcconfig"; path = "Target Support Files/Pods-Gift.zip-iOS/Pods-Gift.zip-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		D4336D1B25BE80D500D27568 /* Gift.zip-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Gift.zip-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -58,6 +64,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		40141E3E25BEE625003B49B4 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				40141E4125BEE649003B49B4 /* VC */,
+				40141E4025BEE63D003B49B4 /* Storyboards */,
+				40141E3F25BEE630003B49B4 /* Cells */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		40141E3F25BEE630003B49B4 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				4074F4E725C1CC2800D34361 /* MainCollectionViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		40141E4025BEE63D003B49B4 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				40141E4625BEE982003B49B4 /* MainStoryboard.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		40141E4125BEE649003B49B4 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				4074F4E425C1A52300D34361 /* MainVC.swift */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
 		62B1DBF11BBCAAA03867E9E9 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -96,6 +136,8 @@
 		D4336D1D25BE80D500D27568 /* Gift.zip-iOS */ = {
 			isa = PBXGroup;
 			children = (
+
+				40141E3E25BEE625003B49B4 /* Main */,
 				D4A08E9025BFDCE2009CFCC4 /* Record */,
 				D4336D3D25BE81D200D27568 /* Global */,
 				D4336D2225BE80D500D27568 /* ViewController.swift */,
@@ -240,6 +282,7 @@
 			files = (
 				D4336D2B25BE80D500D27568 /* LaunchScreen.storyboard in Resources */,
 				D4336D2825BE80D500D27568 /* Assets.xcassets in Resources */,
+				40141E4725BEE982003B49B4 /* MainStoryboard.storyboard in Resources */,
 				D4336D2625BE80D500D27568 /* Main.storyboard in Resources */,
 				D4A08E9525BFDD09009CFCC4 /* Record.storyboard in Resources */,
 				D4A08EB625C01A8A009CFCC4 /* Spoqa Han Sans Neo Bold.otf in Resources */,
@@ -300,7 +343,12 @@
 				D4A08E9225BFDCFF009CFCC4 /* RecordVC.swift in Sources */,
 				D4A08E9E25BFE031009CFCC4 /* UIColor+Extensions.swift in Sources */,
 				D4336D2325BE80D500D27568 /* ViewController.swift in Sources */,
+
+				4074F4E825C1CC2800D34361 /* MainCollectionViewCell.swift in Sources */,
+				4074F4E525C1A52300D34361 /* MainVC.swift in Sources */,
+
 				D4A08EBD25C01D32009CFCC4 /* PopupViewDelegate.swift in Sources */,
+
 				D4336D1F25BE80D500D27568 /* AppDelegate.swift in Sources */,
 				D4336D4225BE81FB00D27568 /* UIView+Extensions.swift in Sources */,
 				D4336D2125BE80D500D27568 /* SceneDelegate.swift in Sources */,
