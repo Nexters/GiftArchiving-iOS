@@ -90,23 +90,19 @@ class RecordVC: UIViewController {
             self.openCamera()
             
         }
-        
         let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-        
         alert.addAction(library)
-        
         alert.addAction(camera)
         alert.addAction(cancel)
-        
         present(alert, animated: true, completion: nil)
-        
     }
     
     @IBAction func changeFrame(_ sender: UIButton) {
-        
     }
     
     @IBAction func useSticker(_ sender: UIButton) {
+//        let sticker
+        
         
     }
 }
@@ -116,18 +112,14 @@ class RecordVC: UIViewController {
 extension RecordVC {
     
     private func setLayouts() {
-        
         for button in buttons {
             button.makeRounded(cornerRadius: 12.0)
         }
-        
         nameTextField.attributedPlaceholder = NSAttributedString(
             string: "이름 입력",
             attributes: [NSAttributedString.Key.foregroundColor : UIColor.init(white: 1.0, alpha: 0.34)]
         )
-        
         popupBackground.setPopupBackgroundView(to: view)
-        
         emotionTextView.textColor = UIColor.white
         if textViewPlaceholderFlag {
             emotionTextView.text = "지금 이 감정을 기록해보세요."
@@ -198,6 +190,7 @@ extension RecordVC {
     
     private func openLibrary() {
         picker.sourceType = .photoLibrary
+        picker.allowsEditing = true
         picker.modalPresentationStyle = .fullScreen
         present(picker, animated: true, completion: nil)
     }
@@ -206,6 +199,7 @@ extension RecordVC {
         
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             picker.sourceType = .camera
+            picker.allowsEditing = true
             picker.modalPresentationStyle = .fullScreen
             present(picker, animated: true, completion: nil)
         } else {
