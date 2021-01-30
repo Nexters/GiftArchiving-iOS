@@ -143,6 +143,13 @@ class VC: UIViewController{
             self.collectionView.reloadData()
         }
     }
+    
+    @IBAction func btnWriteClicked(_ sender: UIButton) {
+        let recordSB = UIStoryboard(name: "Record", bundle: nil)
+        let vc = recordSB.instantiateViewController(withIdentifier: "RecordVC")
+        self.show(vc, sender: self)
+    }
+    
     func moveBarToReceivedAnimate(){
         UIView.animate(withDuration: 0.5) {
             self.viewBar.transform =  CGAffineTransform(translationX: 0, y: 0)
