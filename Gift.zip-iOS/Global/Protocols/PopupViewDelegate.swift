@@ -8,9 +8,9 @@
 import Foundation
 
 protocol PopupViewDelegate: class {
-    func sendDateButtonTapped()
+    func sendDateButtonTapped(_ date: Date)
 }
 
 extension PopupViewDelegate {
-    func sendDateButtonTapped() {}
+    func sendDateButtonTapped(_ date: Date) {}
 }

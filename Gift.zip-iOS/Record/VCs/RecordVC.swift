@@ -10,7 +10,7 @@ import RxCocoa
 import RxSwift
 
 class RecordVC: UIViewController {
-
+    
     @IBOutlet weak var fromLabel: UILabel!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var typeLabel: UILabel!
@@ -32,8 +32,9 @@ class RecordVC: UIViewController {
     
     let disposeBag = DisposeBag()
     
+    private var isNameTouched: Bool = false
     //MARK: - Life Cycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -48,12 +49,14 @@ class RecordVC: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         if segue.identifier == "dateSegue" {
             popupBackground.animatePopupBackground(true)
             guard let des = segue.destination as? DatePopupVC else { return }
             des.delegate = self
+        } else if segue.identifier == "frameSegue" {
+            //            guard let des = segue.description as?
         }
+        
     }
     
     //MARK: - IBAction
@@ -100,6 +103,7 @@ class RecordVC: UIViewController {
     }
     
     @IBAction func changeFrame(_ sender: UIButton) {
+        
     }
     
     @IBAction func useSticker(_ sender: UIButton) {
@@ -151,20 +155,23 @@ extension RecordVC {
     private func handleKeyboardIssue(_ notification: Notification, isAppearing: Bool) {
         guard let userInfo = notification.userInfo as? [String: Any] else { return }
         guard let keyboardAnimationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval else { return }
-        guard let keyboardHeight = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height else { return }
+        guard let keyboardHeight = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height else { return
+        }
         
-        // 기기별 bottom safearea 계산하기
-        let heightConstant = isAppearing ? keyboardHeight - 34 - 44 : 0
-        
-        UIView.animate(withDuration: keyboardAnimationDuration, animations: {
-            self.bottomConstraint.constant = heightConstant
-            self.view.layoutIfNeeded()
-        }) { (_) in
+        if isNameTouched {
+            isNameTouched = false
+        } else {
+            // 기기별 bottom safearea 계산하기
+            let heightConstant = isAppearing ? keyboardHeight - 34 - 44 : 0
+            
+            UIView.animate(withDuration: keyboardAnimationDuration, animations: {
+                self.bottomConstraint.constant = heightConstant
+                self.view.layoutIfNeeded()
+            }) { (_) in
+            }
         }
     }
-    
-    
-    
+
     private func initTextField() {
         
         nameTextField.rx.controlEvent([.editingChanged])
@@ -179,7 +186,7 @@ extension RecordVC {
                 }
                 self.nameTextField.sizeToFit()
             }.disposed(by: disposeBag)
-
+        
     }
     
     private func initializeDelegates() {
@@ -212,7 +219,11 @@ extension RecordVC {
 //MARK: - UITextFieldDelegate
 
 extension RecordVC: UITextFieldDelegate {
-
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        isNameTouched = true
+    }
+    
     func textFieldDidEndEditing(_ textField: UITextField) {
         nameStackView.layoutIfNeeded()
     }
@@ -250,17 +261,6 @@ extension RecordVC: UIImagePickerControllerDelegate, UINavigationControllerDeleg
     }
 }
 
-//MARK: - PopupViewDelegate
-
-extension RecordVC: PopupViewDelegate {
-    
-    func sendDateButtonTapped() {
-        print("tap")
-        popupBackground.animatePopupBackground(false)
-        // date
-    }
-}
-
 //MARK: - UITextViewDelegate
 
 extension RecordVC: UITextViewDelegate {
@@ -289,3 +289,13 @@ extension RecordVC: UITextViewDelegate {
     }
 }
 
+//MARK: - PopupViewDelegate
+
+extension RecordVC: PopupViewDelegate {
+    
+    func sendDateButtonTapped() {
+        
+        popupBackground.animatePopupBackground(false)
+        // date
+    }
+}

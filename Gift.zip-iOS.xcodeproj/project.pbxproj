@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		88DE6CEB42D2D43A9C392C22 /* Pods_Gift_zip_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39B10916997BFB92D3A04B42 /* Pods_Gift_zip_iOS.framework */; };
+		D404F2BD25C3FD3600615CD0 /* CropVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D404F2BC25C3FD3600615CD0 /* CropVC.swift */; };
 		D4336D1F25BE80D500D27568 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4336D1E25BE80D500D27568 /* AppDelegate.swift */; };
 		D4336D2125BE80D500D27568 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4336D2025BE80D500D27568 /* SceneDelegate.swift */; };
 		D4336D2325BE80D500D27568 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4336D2225BE80D500D27568 /* ViewController.swift */; };
@@ -28,6 +29,7 @@
 		39B10916997BFB92D3A04B42 /* Pods_Gift_zip_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Gift_zip_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAB51F8940A7A2D1DBE7B8F8 /* Pods-Gift.zip-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gift.zip-iOS.release.xcconfig"; path = "Target Support Files/Pods-Gift.zip-iOS/Pods-Gift.zip-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		CD281D2B3ABD9BE5F785046B /* Pods-Gift.zip-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gift.zip-iOS.debug.xcconfig"; path = "Target Support Files/Pods-Gift.zip-iOS/Pods-Gift.zip-iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		D404F2BC25C3FD3600615CD0 /* CropVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropVC.swift; sourceTree = "<group>"; };
 		D4336D1B25BE80D500D27568 /* Gift.zip-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Gift.zip-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4336D1E25BE80D500D27568 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D4336D2025BE80D500D27568 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 			children = (
 				D4A08E9125BFDCFF009CFCC4 /* RecordVC.swift */,
 				D4A08EB325C016BA009CFCC4 /* DatePopupVC.swift */,
+				D404F2BC25C3FD3600615CD0 /* CropVC.swift */,
 			);
 			path = VCs;
 			sourceTree = "<group>";
@@ -301,6 +304,7 @@
 				D4A08E9E25BFE031009CFCC4 /* UIColor+Extensions.swift in Sources */,
 				D4336D2325BE80D500D27568 /* ViewController.swift in Sources */,
 				D4A08EBD25C01D32009CFCC4 /* PopupViewDelegate.swift in Sources */,
+				D404F2BD25C3FD3600615CD0 /* CropVC.swift in Sources */,
 				D4336D1F25BE80D500D27568 /* AppDelegate.swift in Sources */,
 				D4336D4225BE81FB00D27568 /* UIView+Extensions.swift in Sources */,
 				D4336D2125BE80D500D27568 /* SceneDelegate.swift in Sources */,
