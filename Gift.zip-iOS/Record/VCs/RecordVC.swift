@@ -30,6 +30,8 @@ class RecordVC: UIViewController {
     
     private var textViewPlaceholderFlag: Bool = true
     
+    private var originalImage: UIImage?
+    
     let disposeBag = DisposeBag()
     
     private var isNameTouched: Bool = false
@@ -235,15 +237,12 @@ extension RecordVC: UIImagePickerControllerDelegate, UINavigationControllerDeleg
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        if let image = info[.originalImage] as? UIImage {
+        if let image = info[.originalImage] as? UIImage, let editedImage = info[.editedImage] as? UIImage {
             print(image)
-            self.cropImageView.image = image
-            
+            self.cropImageView.image = editedImage
+            self.originalImage = image 
             self.dismiss(animated: true, completion: nil)
         }
-        
-        
-        
     }
     
     @objc func savedImage(image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeMutableRawPointer?) {
@@ -287,8 +286,8 @@ extension RecordVC: UITextViewDelegate {
 
 extension RecordVC: PopupViewDelegate {
     
-    func sendDateButtonTapped() {
-        
+    func sendDateButtonTapped(_ date: Date) {
+        print(date)
         popupBackground.animatePopupBackground(false)
         // date
     }
