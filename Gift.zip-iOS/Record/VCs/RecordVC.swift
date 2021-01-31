@@ -10,7 +10,7 @@ import RxCocoa
 import RxSwift
 
 class RecordVC: UIViewController {
-
+    
     @IBOutlet weak var fromLabel: UILabel!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var typeLabel: UILabel!
@@ -19,20 +19,27 @@ class RecordVC: UIViewController {
     @IBOutlet var buttons: [UIButton]!
     @IBOutlet weak var cropImageView: UIImageView!
     @IBOutlet weak var nameStackView: UIStackView!
-    
+    @IBOutlet weak var infoView: UIView!
+    @IBOutlet weak var stickerArea: UIView!
+    @IBOutlet weak var emotionTextView: UITextView!
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     
     lazy var picker = UIImagePickerController()
     
     lazy var popupBackground = UIView()
     
+    private var textViewPlaceholderFlag: Bool = true
+    
     let disposeBag = DisposeBag()
     
+    private var isNameTouched: Bool = false
     //MARK: - Life Cycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setLayouts()
+        setNotificationCenter()
         initTextField()
         initializeDelegates()
     }
@@ -42,15 +49,13 @@ class RecordVC: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         if segue.identifier == "dateSegue" {
             popupBackground.animatePopupBackground(true)
             guard let des = segue.destination as? DatePopupVC else { return }
             des.delegate = self
+        } else if segue.identifier == "frameSegue" {
+            //            guard let des = segue.description as?
         }
-    }
-    
-    override func performSegue(withIdentifier identifier: String, sender: Any?) {
         
     }
     
@@ -85,22 +90,19 @@ class RecordVC: UIViewController {
             self.openCamera()
             
         }
-        
         let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-        
         alert.addAction(library)
-        
         alert.addAction(camera)
         alert.addAction(cancel)
-        
         present(alert, animated: true, completion: nil)
-        
     }
     
     @IBAction func changeFrame(_ sender: UIButton) {
     }
     
     @IBAction func useSticker(_ sender: UIButton) {
+//        let sticker
+        
         
     }
 }
@@ -110,19 +112,58 @@ class RecordVC: UIViewController {
 extension RecordVC {
     
     private func setLayouts() {
-        
         for button in buttons {
             button.makeRounded(cornerRadius: 12.0)
         }
-        
         nameTextField.attributedPlaceholder = NSAttributedString(
             string: "이름 입력",
             attributes: [NSAttributedString.Key.foregroundColor : UIColor.init(white: 1.0, alpha: 0.34)]
         )
-        
         popupBackground.setPopupBackgroundView(to: view)
+        emotionTextView.textColor = UIColor.white
+        if textViewPlaceholderFlag {
+            emotionTextView.text = "지금 이 감정을 기록해보세요."
+            emotionTextView.alpha = 0.34
+        } else {
+            emotionTextView.alpha = 1.0
+        }
+        
     }
     
+    private func setNotificationCenter() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    //    private func
+    @objc private func keyboardWillShow(_ sender: Notification) {
+        handleKeyboardIssue(sender, isAppearing: true)
+    }
+    
+    @objc private func keyboardWillHide(_ sender: Notification) {
+        handleKeyboardIssue(sender, isAppearing: false)
+    }
+    
+    private func handleKeyboardIssue(_ notification: Notification, isAppearing: Bool) {
+        guard let userInfo = notification.userInfo as? [String: Any] else { return }
+        guard let keyboardAnimationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval else { return }
+        guard let keyboardHeight = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height else { return
+        }
+        
+        if isNameTouched {
+            isNameTouched = false
+        } else {
+            // 기기별 bottom safearea 계산하기
+            let heightConstant = isAppearing ? keyboardHeight - 34 - 44 : 0
+            
+            UIView.animate(withDuration: keyboardAnimationDuration, animations: {
+                self.bottomConstraint.constant = heightConstant
+                self.view.layoutIfNeeded()
+            }) { (_) in
+            }
+        }
+    }
+
     private func initTextField() {
         
         nameTextField.rx.controlEvent([.editingChanged])
@@ -137,17 +178,19 @@ extension RecordVC {
                 }
                 self.nameTextField.sizeToFit()
             }.disposed(by: disposeBag)
-
+        
     }
     
     private func initializeDelegates() {
         nameTextField.delegate = self
         picker.delegate = self
+        emotionTextView.delegate = self
     }
     
     
     private func openLibrary() {
         picker.sourceType = .photoLibrary
+        picker.allowsEditing = true
         picker.modalPresentationStyle = .fullScreen
         present(picker, animated: true, completion: nil)
     }
@@ -156,6 +199,7 @@ extension RecordVC {
         
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             picker.sourceType = .camera
+            picker.allowsEditing = true
             picker.modalPresentationStyle = .fullScreen
             present(picker, animated: true, completion: nil)
         } else {
@@ -169,7 +213,11 @@ extension RecordVC {
 //MARK: - UITextFieldDelegate
 
 extension RecordVC: UITextFieldDelegate {
-
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        isNameTouched = true
+    }
+    
     func textFieldDidEndEditing(_ textField: UITextField) {
         nameStackView.layoutIfNeeded()
     }
@@ -207,14 +255,41 @@ extension RecordVC: UIImagePickerControllerDelegate, UINavigationControllerDeleg
     }
 }
 
+//MARK: - UITextViewDelegate
+
+extension RecordVC: UITextViewDelegate {
+    
+    // TextView Place Holder
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        
+        if textViewPlaceholderFlag {
+            textView.text = nil
+            textView.alpha = 1.0
+            textViewPlaceholderFlag = false
+        }
+        
+    }
+    // TextView Place Holder
+    func textViewDidEndEditing(_ textView: UITextView) {
+        let text = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+        if text.isEmpty {
+            textView.text = "지금 이 감정을 기록해보세요."
+            textView.alpha = 0.34
+            textViewPlaceholderFlag = true
+        } else {
+            textViewPlaceholderFlag = false
+        }
+        
+    }
+}
+
 //MARK: - PopupViewDelegate
 
 extension RecordVC: PopupViewDelegate {
     
     func sendDateButtonTapped() {
-        print("tap")
+        
         popupBackground.animatePopupBackground(false)
         // date
     }
 }
-
