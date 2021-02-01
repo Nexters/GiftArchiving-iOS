@@ -9,11 +9,15 @@ import UIKit
 
 class CollectionViewCell: UICollectionViewCell {
     
+    
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var imgWidth: NSLayoutConstraint!
     @IBOutlet weak var imgHeight: NSLayoutConstraint!
     @IBOutlet weak var labelFrom: UILabel!
     @IBOutlet weak var labelDate: UILabel!
+    
+    @IBOutlet weak var constImgTop: NSLayoutConstraint!
+    
     
     public func configure(with model: Model){
         
@@ -23,13 +27,19 @@ class CollectionViewCell: UICollectionViewCell {
         
     }
     public func setLabelColor(colorIdx : Int){
-        var cIdx = colorIdx
-        if(cIdx == 3){
+        if(colorIdx == 3){
             labelFrom.textColor = UIColor.greyishBrown
             labelDate.textColor = UIColor.greyishBrownOpacity
         }else{
             labelFrom.textColor = UIColor.white
             labelDate.textColor = UIColor.whiteOpacity
+        }
+    }
+    public func setConstraint(device: Int){
+        if device == 1{
+            constImgTop.setValue(64, forKey: "Constant")
+            imgWidth.setValue(256, forKey: "Constant")
+            imgHeight.setValue(256, forKey: "Constant")
         }
     }
     override func layoutSubviews() {
