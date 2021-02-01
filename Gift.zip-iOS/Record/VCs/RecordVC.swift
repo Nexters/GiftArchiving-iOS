@@ -108,10 +108,14 @@ class RecordVC: UIViewController {
     }
     
     @IBAction func changeFrame(_ sender: UIButton) {
-        
-        let shiftyVC = ShiftyImageCropVC(frame: (view.frame), image: originalFullImage!, aspectWidth: 315, aspectHeight: 152)
-        shiftyVC.modalPresentationStyle = .fullScreen
-        self.present(shiftyVC, animated: true, completion: nil)
+
+        let des = self.storyboard?.instantiateViewController(identifier: "ImageCropVC") as! ImageCropVC
+        des.image = originalFullImage
+        des.modalPresentationStyle = .fullScreen
+        present(des, animated: true, completion: nil)
+//        let shiftyVC = ShiftyImageCropVC(frame: (view.frame), image: originalFullImage!, aspectWidth: 315, aspectHeight: 152)
+//        shiftyVC.modalPresentationStyle = .fullScreen
+//        self.present(shiftyVC, animated: true, completion: nil)
     }
     
     @IBAction func useSticker(_ sender: UIButton) {

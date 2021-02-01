@@ -147,7 +147,7 @@ class VC: UIViewController{
     @IBAction func btnWriteClicked(_ sender: UIButton) {
         let recordSB = UIStoryboard(name: "Record", bundle: nil)
         let vc = recordSB.instantiateViewController(withIdentifier: "RecordVC")
-        self.show(vc, sender: self)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func moveBarToReceivedAnimate(){
