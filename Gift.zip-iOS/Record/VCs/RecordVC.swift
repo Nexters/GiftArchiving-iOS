@@ -9,6 +9,12 @@ import UIKit
 import RxCocoa
 import RxSwift
 
+enum FrameOfImage {
+    case square
+    case circle
+    case windowFrame
+}
+
 class RecordVC: UIViewController {
     
     @IBOutlet weak var fromLabel: UILabel!
@@ -30,7 +36,11 @@ class RecordVC: UIViewController {
     
     private var textViewPlaceholderFlag: Bool = true
     
-    private var originalImage: UIImage?
+    private var originalFullImage: UIImage? // full Image
+    
+    var editedImage: UIImage? // cropped Image
+    
+    var frameImage: FrameOfImage = .square
     
     let disposeBag = DisposeBag()
     
@@ -55,8 +65,6 @@ class RecordVC: UIViewController {
             popupBackground.animatePopupBackground(true)
             guard let des = segue.destination as? DatePopupVC else { return }
             des.delegate = self
-        } else if segue.identifier == "frameSegue" {
-            //            guard let des = segue.description as?
         }
         
     }
@@ -100,6 +108,10 @@ class RecordVC: UIViewController {
     }
     
     @IBAction func changeFrame(_ sender: UIButton) {
+        
+        let shiftyVC = ShiftyImageCropVC(frame: (view.frame), image: originalFullImage!, aspectWidth: 315, aspectHeight: 152)
+        shiftyVC.modalPresentationStyle = .fullScreen
+        self.present(shiftyVC, animated: true, completion: nil)
     }
     
     @IBAction func useSticker(_ sender: UIButton) {
@@ -240,7 +252,7 @@ extension RecordVC: UIImagePickerControllerDelegate, UINavigationControllerDeleg
         if let image = info[.originalImage] as? UIImage, let editedImage = info[.editedImage] as? UIImage {
             print(image)
             self.cropImageView.image = editedImage
-            self.originalImage = image 
+            self.originalFullImage = image 
             self.dismiss(animated: true, completion: nil)
         }
     }
