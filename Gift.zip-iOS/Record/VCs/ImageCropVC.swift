@@ -38,7 +38,9 @@ class ImageCropVC: UIViewController, UIScrollViewDelegate {
             holeWidth = 275.0
             holeHeight = 275.0
             
-            holeRect = CGRect(x: 50, y: 225, width: holeWidth, height: holeHeight)
+            let holeX = (self.view.frame.width - holeWidth) / 2
+            
+            holeRect = CGRect(x: holeX, y: 165, width: holeWidth, height: holeHeight)
         }
         
         imageView = UIImageView(image: image)
@@ -54,7 +56,7 @@ class ImageCropVC: UIViewController, UIScrollViewDelegate {
         scrollView.zoomScale = minZoom
         scrollView.maximumZoomScale = minZoom*4
         
-        let viewFinder = hollowView(frame: view.frame, transparentRect: holeRect)
+        let viewFinder = hollowView(frame: CGRect(x: 0, y: 104.0, width: self.view.frame.width, height: self.view.frame.height - 60 - 87 - 44 - 34), transparentRect: holeRect)
         view.addSubview(viewFinder)
         
     }
@@ -67,7 +69,9 @@ class ImageCropVC: UIViewController, UIScrollViewDelegate {
 
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
         let gapToHole: CGFloat = (view.frame.height -  147) / 2 - holeRect.height / 2
-        scrollView.contentInset = UIEdgeInsets(top: gapToHole, left: 50, bottom: gapToHole, right: 50)
+        let holeX = (self.view.frame.width - 275.0) / 2
+        
+        scrollView.contentInset = UIEdgeInsets(top: gapToHole, left: holeX, bottom: gapToHole, right: 50)
         
     }
     

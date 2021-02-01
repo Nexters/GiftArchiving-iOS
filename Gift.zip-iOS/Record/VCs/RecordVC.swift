@@ -72,14 +72,14 @@ class RecordVC: UIViewController {
     //MARK: - IBAction
     
     @IBAction func backToMain(_ sender: UIButton) {
-        
-    }
-    
-    @IBAction func showDatePicker(_ sender: UIButton) {
-        
+        self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func completeRecord(_ sender: UIButton) {
+        
+        // record server
+        
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     @IBAction func chooseType(_ sender: UIButton) {
