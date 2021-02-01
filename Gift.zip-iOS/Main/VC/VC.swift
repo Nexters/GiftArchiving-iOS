@@ -34,6 +34,7 @@ class VC: UIViewController{
     
     var receivedModels = [Model]()
     var sentModels = [Model]()
+    
     var colors = [UIColor(named: "ceruleanBlue"), UIColor.greyishBrown, UIColor(named: "pinkishOrange"), UIColor(named: "wheat")]
     var logos = [[UIImage(named: "logo_blue_rec"), UIImage(named: "logo_blue_circle"), UIImage(named: "logo_blue_oval")],
                  [UIImage(named: "logo_grey_rec"), UIImage(named: "logo_grey_circle"), UIImage(named: "logo_grey_oval")],
@@ -43,19 +44,51 @@ class VC: UIViewController{
     var colorIdx = 0
     private var collectionViewFlag = true // true는 받은 flase는 보낸
     
+    private var device = 0 //device 크기 flag
+    
+    
+    @IBOutlet weak var constLabelMain1Top: NSLayoutConstraint!
+    @IBOutlet weak var constLabelMainWidth: NSLayoutConstraint!
+    @IBOutlet weak var constLabelMainHeight: NSLayoutConstraint!
+    @IBOutlet weak var constLabelMain2Height: NSLayoutConstraint!
+    @IBOutlet weak var constLabelMain2Width: NSLayoutConstraint!
+    @IBOutlet weak var constBtnWriteTop: NSLayoutConstraint!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(view.bounds.height)
+        if view.bounds.height > 850 {
+            device = 1
+        }else{
+            device = 0
+        }
         testData()
         setLayout()
     }
     func setLayout(){
-        collectionViewHeight.setValue(330, forKey: "Constant")
+        var cellHeight = CGFloat(330)
+        if device == 0 {
+            collectionViewHeight.setValue(330, forKey: "Constant")
+            cellHeight = CGFloat(330)
+        }else{
+            collectionViewHeight.setValue(410, forKey: "Constant")
+            cellHeight = CGFloat(410)
+            constLabelMain1Top.setValue(60, forKey: "Constant")
+            constLabelMainHeight.setValue(38, forKey: "Constant")
+            constLabelMainWidth.setValue(150, forKey: "Constant")
+            constLabelMain2Height.setValue(38, forKey: "Constant")
+            constLabelMain2Width.setValue(110, forKey: "Constant")
+            labelMain1.font = labelMain1.font.withSize(26)
+            labelMain2.font = labelMain2.font.withSize(26)
+            constBtnWriteTop.setValue(20, forKey: "Constant")
+            
+            
+        }
         
         // width, height 설정
         let cellWidth = floor(view.frame.width * cellRatio)
         //let cellHeight = floor(view.frame.height * cellRatio / 2)
-        let cellHeight = CGFloat(330)
+        
         // 상하, 좌우 inset value 설정
         let insetX = ((view.bounds.width - cellWidth) / 2.0) 
         
@@ -157,7 +190,7 @@ class VC: UIViewController{
     }
     func moveBarToSentAnimate(){
         UIView.animate(withDuration: 0.5) {
-            self.viewBar.transform =  CGAffineTransform(translationX:  self.viewBar.frame.width + 28, y: 0)
+            self.viewBar.transform =  CGAffineTransform(translationX:  self.viewBar.frame.width + 26, y: 0)
         }
     }
     
@@ -180,12 +213,12 @@ extension VC: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionViewCell", for: indexPath) as! CollectionViewCell
+        cell.setConstraint(device: device)
         if collectionViewFlag{
             cell.configure(with: receivedModels[indexPath.row])
         }else{
             cell.configure(with: sentModels[indexPath.row])
         }
-        //cell.alpha = 0.5
         
         return cell
     }
