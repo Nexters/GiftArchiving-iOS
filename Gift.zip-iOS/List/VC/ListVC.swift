@@ -52,11 +52,3 @@ extension ListVC: UICollectionViewDataSource {
     }
 }
 
-extension ListVC: UICollectionViewDelegateFlowLayout {
-    /*override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 40)
-    }*/
-    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        print(indexPath.row)
-    }
-}
