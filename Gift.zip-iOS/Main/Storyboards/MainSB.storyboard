@@ -225,6 +225,9 @@
                                 <state key="normal" title="선물함">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="btnGfitBoxClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="f9Y-od-CGv"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>

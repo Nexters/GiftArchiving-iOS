@@ -95,6 +95,7 @@ class VC: UIViewController{
         //let insetY = ((view.bounds.height - cellHeight) / 2.0 )
         
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        
         layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
         layout.minimumLineSpacing = lineSpacing
         layout.scrollDirection = .horizontal
@@ -183,6 +184,11 @@ class VC: UIViewController{
         self.show(vc, sender: self)
     }
     
+    @IBAction func btnGfitBoxClicked(_ sender: UIButton) {
+        let listSB = UIStoryboard(name: "ListSB", bundle: nil)
+        let vc = listSB.instantiateViewController(withIdentifier: "ListVC")
+        self.show(vc, sender: self)
+    }
     func moveBarToReceivedAnimate(){
         UIView.animate(withDuration: 0.5) {
             self.viewBar.transform =  CGAffineTransform(translationX: 0, y: 0)
