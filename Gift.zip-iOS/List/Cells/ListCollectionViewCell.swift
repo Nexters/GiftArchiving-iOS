@@ -9,22 +9,22 @@ import UIKit
 
 class ListCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var cityLabel: UILabel!
-    @IBOutlet weak var backingVIew: UIView!
-    public var city: String? {
-        didSet {
-            cityLabel.text = city
-        }
-    }
+    @IBOutlet weak var imgView: UIImageView!
+    @IBOutlet weak var labelName: UILabel!
+    @IBOutlet weak var labelDate: UILabel!
     
-    public var color: UIColor? {
-        didSet {
-            backingVIew.backgroundColor = color
+    public func configure(with model: Model, color : UIColor){
+        
+        self.imgView.image = UIImage(named: model.imageName)
+        self.labelName.text = model.name
+        self.labelDate.text = model.date
+        self.backgroundColor = color
+        if color == UIColor(named: "wheat") {
+            labelName.textColor = UIColor.greyishBrown
+            labelDate.textColor = UIColor.greyishBrownOpacity
+        }else{
+            labelName.textColor = UIColor.white
+            labelDate.textColor = UIColor.whiteOpacity
         }
-    }
-    
-    override func awakeFromNib() {
-        backingVIew.layer.cornerRadius = 12
-        backingVIew.layer.masksToBounds = true
     }
 }
