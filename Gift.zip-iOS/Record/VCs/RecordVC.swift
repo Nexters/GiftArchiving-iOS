@@ -34,6 +34,10 @@ class RecordVC: UIViewController {
     @IBOutlet weak var bottomContainer: UIView!
     @IBOutlet weak var imageContainer: UIView!
     
+    @IBOutlet weak var categoryImageView: UIImageView!
+    @IBOutlet weak var purposeImageView: UIImageView!
+    @IBOutlet weak var emotionImageView: UIImageView!
+    
     lazy var picker = UIImagePickerController()
     
     lazy var popupBackground = UIView()
@@ -81,7 +85,7 @@ class RecordVC: UIViewController {
             popupBackground.animatePopupBackground(true)
             guard let des = segue.destination as? CategoryPopupVC else { return }
             des.backgroundColor = currentBackgroundColor
-            
+            des.popupViewHeightByPhones = self.view.frame.height - infoView.frame.origin.y - 141 - 34
         }
         
     }
@@ -100,6 +104,7 @@ class RecordVC: UIViewController {
     }
     
     @IBAction func chooseType(_ sender: UIButton) {
+        print("HELELEL")
     }
     
     @IBAction func chooseWhen(_ sender: UIButton) {
@@ -336,5 +341,9 @@ extension RecordVC: PopupViewDelegate {
         print(date)
         popupBackground.animatePopupBackground(false)
         // date
+    }
+    
+    func sendIconDataButtonTapped(_ icon: String, _ name: String) {
+        popupBackground.animatePopupBackground(false)
     }
 }
