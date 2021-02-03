@@ -22,10 +22,25 @@ class ListVC: UIViewController {
     @IBOutlet weak var labelSort: UILabel!
     @IBOutlet weak var btnSort: UIButton!
     
-    
+    var stickyCellFlowLayout : StickyCellFlowLayout?
+    var gridCellFlowLayout : UICollectionViewLayout?
+    var gridCellNib : UINib?
+    var collectionViewFlowLayoutType = true // true는 stickyType false는 gridType
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        setLayout()
+        stickyCellFlowLayout = collectionView.collectionViewLayout as! StickyCellFlowLayout
+        gridCellNib = UINib(nibName: "GridCollectionViewCell", bundle: nil)
+        gridCellFlowLayout = createGridLayout()
+    }
+    private func setLayout(){
+        labelCount.text = "\(models.count)"
+        if receivedSentFlag {
+            labelTop.text = "받은선물"
+        }else{
+            labelTop.text = "보낸선물"
+        }
         if let layout = collectionView.collectionViewLayout as? StickyCellFlowLayout {
             layout.stickyIndexPath = []
             for index in 0..<models.count {
@@ -41,6 +56,22 @@ class ListVC: UIViewController {
     
 
     @IBAction func btnCollectionViewTypeClicked(_ sender: UIButton) {
+        if collectionViewFlowLayoutType {
+            sender.setImage(UIImage(named: "iconSticky"), for: .normal)
+            collectionView.collectionViewLayout = self.gridCellFlowLayout!
+            collectionView.register(gridCellNib, forCellWithReuseIdentifier: "GridCollectionViewCell")
+            collectionViewFlowLayoutType = false
+            collectionView.reloadData()
+            
+        }else{
+            sender.setImage(UIImage(named: "iconGrid"), for: .normal)
+            collectionView.collectionViewLayout = self.stickyCellFlowLayout!
+            collectionViewFlowLayoutType = true
+            collectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
+            collectionView.reloadData()
+            
+        }
+        
     }
     @IBAction func btnBackClicked(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
@@ -54,12 +85,49 @@ extension ListVC: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! ListCollectionViewCell
         
+        if collectionViewFlowLayoutType {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! ListCollectionViewCell
+            cell.configure(with: models[indexPath.row], color: colors[indexPath.row % 4]! )
+            return cell
+            
+        }else{
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GridCollectionViewCell", for: indexPath) as! GridCollectionViewCell
+            cell.configure(with: models[indexPath.row], color: colors[indexPath.row % 4]! )
+            return cell
+        }
+    }
+}
+//MARK: - collectionview 콤포지셔널 레이아웃
+extension ListVC{
+    // 콤포지셔널 레이아웃 설정
+    fileprivate func createGridLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewCompositionalLayout{
+            // 만들게 되면 튜플 (키: 값, 키: 값) 의 묶음으로 들어옴
+            (sectionIndex: Int, layoutEvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+            //아이템에 대한 사이즈 - absolute 는 고정값, estimated 는 추측, fraction은 퍼센트
+            let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(160), heightDimension: .absolute(208))
+            
+            //위에서 만든 아이템 사이즈로 아이템 만들기
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            //아이템 간격 설정
+            item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+            
+            //그룹 사이즈
+            let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(335), heightDimension: .absolute(224))
+            //그룹사이즈로 그룹 만들기
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 2)
+            group.interItemSpacing = .fixed(16)
+            
+            // 만든 그룹으로 섹션 만들기
+            let section = NSCollectionLayoutSection(group: group)
+            
+            //섹션에 대한 간격 설정
+            section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+            return section
+        }
         
-        cell.configure(with: models[indexPath.row], color: colors[indexPath.row % 4]! )
-        
-        return cell
+        return layout
     }
 }
 

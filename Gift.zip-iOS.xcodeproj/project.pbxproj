@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		4052034E25C537110066989C /* VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4052034D25C537110066989C /* VC.swift */; };
 		4052035225C537890066989C /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4052035125C537890066989C /* CollectionViewCell.swift */; };
+		408E518F25CAF5E20037EC9B /* GridCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 408E518E25CAF5E20037EC9B /* GridCollectionViewCell.xib */; };
+		408E519225CAF81E0037EC9B /* GridCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408E519125CAF81E0037EC9B /* GridCollectionViewCell.swift */; };
 		40ADFC0E25C9AFA100721F4D /* ListSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40ADFC0D25C9AFA100721F4D /* ListSB.storyboard */; };
 		40ADFC1325C9B03800721F4D /* StickyCellFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40ADFC1225C9B03800721F4D /* StickyCellFlowLayout.swift */; };
 		40DE15A825C80DC000184320 /* MainSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40DE15A725C80DC000184320 /* MainSB.storyboard */; };
@@ -36,6 +38,8 @@
 		39B10916997BFB92D3A04B42 /* Pods_Gift_zip_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Gift_zip_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4052034D25C537110066989C /* VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VC.swift; sourceTree = "<group>"; };
 		4052035125C537890066989C /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		408E518E25CAF5E20037EC9B /* GridCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GridCollectionViewCell.xib; sourceTree = "<group>"; };
+		408E519125CAF81E0037EC9B /* GridCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCollectionViewCell.swift; sourceTree = "<group>"; };
 		40ADFC0D25C9AFA100721F4D /* ListSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ListSB.storyboard; sourceTree = "<group>"; };
 		40ADFC1225C9B03800721F4D /* StickyCellFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyCellFlowLayout.swift; sourceTree = "<group>"; };
 		40DE15A725C80DC000184320 /* MainSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainSB.storyboard; sourceTree = "<group>"; };
@@ -112,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				40ADFC0D25C9AFA100721F4D /* ListSB.storyboard */,
+				408E518E25CAF5E20037EC9B /* GridCollectionViewCell.xib */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -139,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				40DE15C825C8629300184320 /* ListCollectionViewCell.swift */,
+				408E519125CAF81E0037EC9B /* GridCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -337,6 +343,7 @@
 				D4336D2B25BE80D500D27568 /* LaunchScreen.storyboard in Resources */,
 				40ADFC0E25C9AFA100721F4D /* ListSB.storyboard in Resources */,
 				D4336D2825BE80D500D27568 /* Assets.xcassets in Resources */,
+				408E518F25CAF5E20037EC9B /* GridCollectionViewCell.xib in Resources */,
 				D4336D2625BE80D500D27568 /* Main.storyboard in Resources */,
 				D4A08E9525BFDD09009CFCC4 /* Record.storyboard in Resources */,
 				40DE15A825C80DC000184320 /* MainSB.storyboard in Resources */,
@@ -403,6 +410,7 @@
 				4052034E25C537110066989C /* VC.swift in Sources */,
 				D4A08EBD25C01D32009CFCC4 /* PopupViewDelegate.swift in Sources */,
 				40DE15C925C8629300184320 /* ListCollectionViewCell.swift in Sources */,
+				408E519225CAF81E0037EC9B /* GridCollectionViewCell.swift in Sources */,
 				D404F2BD25C3FD3600615CD0 /* CropVC.swift in Sources */,
 				40ADFC1325C9B03800721F4D /* StickyCellFlowLayout.swift in Sources */,
 				D4336D1F25BE80D500D27568 /* AppDelegate.swift in Sources */,
