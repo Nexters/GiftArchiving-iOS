@@ -8,14 +8,27 @@
 import UIKit
 
 class ListVC: UIViewController {
-    let count = 30
+    var models = [Model]()
+    var receivedSentFlag = true //보낸인지 받은 인지
+    var colors = [UIColor(named: "ceruleanBlue"), UIColor.greyishBrown, UIColor(named: "pinkishOrange"), UIColor(named: "wheat")]
+    
+    
     @IBOutlet weak var collectionView:UICollectionView!
+    @IBOutlet weak var btnBack: UIButton!
+    @IBOutlet weak var labelTop: UILabel!
+    @IBOutlet weak var labelCount: UILabel!
+    @IBOutlet weak var btnSearch: UIButton!
+    @IBOutlet weak var btnCollectionViewType: UIButton!
+    @IBOutlet weak var labelSort: UILabel!
+    @IBOutlet weak var btnSort: UIButton!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         if let layout = collectionView.collectionViewLayout as? StickyCellFlowLayout {
             layout.stickyIndexPath = []
-            for index in 0..<count {
+            for index in 0..<models.count {
                 layout.stickyIndexPath.append(IndexPath(row: index, section: 0))
             }
         }
@@ -26,27 +39,25 @@ class ListVC: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func getRandomColor() -> UIColor{
-        
-        let randomRed:CGFloat = CGFloat(arc4random()) / CGFloat(UInt32.max)
-        let randomGreen:CGFloat = CGFloat(arc4random()) / CGFloat(UInt32.max)
-        let randomBlue:CGFloat = CGFloat(arc4random()) / CGFloat(UInt32.max)
-        
-        return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
-        
+
+    @IBAction func btnCollectionViewTypeClicked(_ sender: UIButton) {
     }
-
-
+    @IBAction func btnBackClicked(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 }
 
 extension ListVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return count
+        return models.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-        cell.backgroundColor = getRandomColor()
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! ListCollectionViewCell
+        
+        
+        cell.configure(with: models[indexPath.row], color: colors[indexPath.row % 4]! )
         
         return cell
     }

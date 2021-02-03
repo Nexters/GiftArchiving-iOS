@@ -186,8 +186,14 @@ class VC: UIViewController{
     
     @IBAction func btnGfitBoxClicked(_ sender: UIButton) {
         let listSB = UIStoryboard(name: "ListSB", bundle: nil)
-        let vc = listSB.instantiateViewController(withIdentifier: "ListVC")
-        self.show(vc, sender: self)
+        let vc = listSB.instantiateViewController(withIdentifier: "ListVC") as! ListVC
+        if self.collectionViewFlag{
+            vc.models = self.receivedModels
+        }else{
+            vc.models = self.sentModels
+        }
+        vc.receivedSentFlag = self.collectionViewFlag
+        self.present(vc, animated: true, completion: nil)
     }
     func moveBarToReceivedAnimate(){
         UIView.animate(withDuration: 0.5) {

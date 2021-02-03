@@ -108,12 +108,20 @@
 			path = VC;
 			sourceTree = "<group>";
 		};
+		408E518C25CA676A0037EC9B /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				40ADFC0D25C9AFA100721F4D /* ListSB.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
 		40DE15BA25C858F100184320 /* List */ = {
 			isa = PBXGroup;
 			children = (
+				408E518C25CA676A0037EC9B /* Storyboards */,
 				40DE15C325C861EA00184320 /* Helper */,
 				40DE15BD25C8591000184320 /* Cells */,
-				40DE15BC25C8590400184320 /* Storyboards */,
 				40DE15BB25C858FF00184320 /* VC */,
 			);
 			path = List;
@@ -125,14 +133,6 @@
 				40DE15CB25C8636D00184320 /* ListVC.swift */,
 			);
 			path = VC;
-			sourceTree = "<group>";
-		};
-		40DE15BC25C8590400184320 /* Storyboards */ = {
-			isa = PBXGroup;
-			children = (
-				40ADFC0D25C9AFA100721F4D /* ListSB.storyboard */,
-			);
-			path = Storyboards;
 			sourceTree = "<group>";
 		};
 		40DE15BD25C8591000184320 /* Cells */ = {
