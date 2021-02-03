@@ -26,5 +26,6 @@ class ListCollectionViewCell: UICollectionViewCell {
             labelName.textColor = UIColor.white
             labelDate.textColor = UIColor.whiteOpacity
         }
+        
     }
 }
