@@ -58,6 +58,7 @@ extension CategoryPopupVC: UICollectionViewDataSource, UICollectionViewDelegateF
         return UICollectionViewCell()
         }
         category.setBorder()
+        category.setCategories()
         return category
     }
     
