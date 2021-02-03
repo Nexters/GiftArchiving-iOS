@@ -10,6 +10,16 @@ import UIKit
 class CategoryCVC: UICollectionViewCell {
     static let identifier: String = "CategoryCVC"
     
+    @IBOutlet var buttons: [UIButton]!
+
+    func setBorder() {
+        for button in buttons {
+            button.makeRounded(cornerRadius: 8.0)
+        }
+    }
     
+    @IBAction func selectCategory(_ sender: UIButton) {
+        print(sender)
+    }
     
 }

@@ -85,7 +85,7 @@ class RecordVC: UIViewController {
             popupBackground.animatePopupBackground(true)
             guard let des = segue.destination as? CategoryPopupVC else { return }
             des.backgroundColor = currentBackgroundColor
-            des.popupViewHeightByPhones = self.view.frame.height - infoView.frame.origin.y - 141 - 34
+            des.popupViewHeightByPhones = self.view.frame.height - infoView.frame.origin.y - 149 - 34
         }
         
     }
@@ -153,7 +153,7 @@ extension RecordVC {
     
     private func setLayouts() {
         for button in buttons {
-            button.makeRounded(cornerRadius: 12.0)
+            button.makeRounded(cornerRadius: 8.0)
         }
         nameTextField.attributedPlaceholder = NSAttributedString(
             string: "이름",
@@ -172,7 +172,6 @@ extension RecordVC {
         cropImageView.layer.borderColor = UIColor.init(red: 255, green: 255, blue: 255, alpha: 0.12).cgColor
         currentInfoViewOriginY = infoView.frame.origin.y
         currentBottomContainerOriginY = bottomContainer.frame.origin.y
-        print(bottomContainer.frame.origin.y)
         currentImageContainerOriginY = imageContainer.frame.origin.y
         
     }

@@ -18,7 +18,9 @@ class CategoryPopupVC: UIViewController {
     var backgroundColor: UIColor?
     
     var popupViewHeightByPhones: CGFloat?
+    
     weak var delegate: PopupViewDelegate?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,10 +35,11 @@ class CategoryPopupVC: UIViewController {
             safeAreaView.backgroundColor = bc
             popupViewHeight.constant = height
         }
-    }
+      }
     
     private func initDelegates() {
         categoryCollectionView.delegate = self
+        categoryCollectionView.dataSource = self
     }
     
     @IBAction func selectCategory(_ sender: Any) {
@@ -51,9 +54,22 @@ extension CategoryPopupVC: UICollectionViewDataSource, UICollectionViewDelegateF
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let category = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCVC.identifier, for: indexPath) as? CategoryCVC else {
         return UICollectionViewCell()
+        }
+        category.setBorder()
+        return category
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width, height: popupViewHeightByPhones! - 58)
+    }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
 }
