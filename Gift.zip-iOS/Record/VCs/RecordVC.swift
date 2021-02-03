@@ -134,7 +134,7 @@ extension RecordVC {
             button.makeRounded(cornerRadius: 12.0)
         }
         nameTextField.attributedPlaceholder = NSAttributedString(
-            string: "이름 입력",
+            string: "이름",
             attributes: [NSAttributedString.Key.foregroundColor : UIColor.init(white: 1.0, alpha: 0.34)]
         )
         popupBackground.setPopupBackgroundView(to: view)
@@ -145,6 +145,10 @@ extension RecordVC {
         } else {
             emotionTextView.alpha = 1.0
         }
+        
+        cropImageView.layer.borderWidth = 1
+        cropImageView.layer.borderColor = UIColor.init(red: 255, green: 255, blue: 255, alpha: 0.7).cgColor
+        
         
     }
     
