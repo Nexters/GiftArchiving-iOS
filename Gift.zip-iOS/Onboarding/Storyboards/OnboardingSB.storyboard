@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--OnboardingVC-->
+        <scene sceneID="8oU-ec-BOd">
+            <objects>
+                <viewController id="cPT-3X-HqY" customClass="OnboardingVC" customModule="Gift_zip_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="AJu-5I-gZc">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="H53-gB-tjQ">
+                                <rect key="frame" x="20" y="759" width="374" height="53"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="53" id="bcB-5m-72v"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="xK0-LD-mzY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="xK0-LD-mzY" firstAttribute="bottom" secondItem="H53-gB-tjQ" secondAttribute="bottom" constant="50" id="JD5-3W-fJu"/>
+                            <constraint firstItem="xK0-LD-mzY" firstAttribute="trailing" secondItem="H53-gB-tjQ" secondAttribute="trailing" constant="20" id="kgY-ZQ-tl6"/>
+                            <constraint firstItem="H53-gB-tjQ" firstAttribute="leading" secondItem="xK0-LD-mzY" secondAttribute="leading" constant="20" id="lQB-fk-S9d"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="appleSignInBtn" destination="H53-gB-tjQ" id="zip-SD-rda"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8Oe-9Y-iM3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1185.5072463768117" y="-168.08035714285714"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
