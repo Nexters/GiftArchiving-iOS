@@ -15,6 +15,7 @@ class ImageCropVC: UIViewController, UIScrollViewDelegate {
     var imageView: UIImageView!
     var frameOfImage: FrameOfImage = .square
     var holeRect: CGRect!
+    var widthAndHeightOfImage: CGFloat = 0.0
     
     @IBOutlet weak var topBar: UIView!
     @IBOutlet weak var bottomBar: UIView!
@@ -24,45 +25,71 @@ class ImageCropVC: UIViewController, UIScrollViewDelegate {
         
         setupView()
     }
+    
     func setupView() {
-        if image.imageOrientation != .up {
-            UIGraphicsBeginImageContextWithOptions(image.size, false, image.scale)
-            var rect = CGRect.zero
-            rect.size = image.size
-            image.draw(in: rect)
-            image = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
-        }
-        
         var holeWidth:CGFloat = 0
         var holeHeight: CGFloat = 0
-        
-        if frameOfImage == . square {
-            holeWidth = 275.0
-            holeHeight = 275.0
+        switch frameOfImage {
+        case .square:
+            holeWidth = self.scrollView.frame.width - 49 * 2
+            holeHeight = holeWidth
             
-            let holeX = (self.view.frame.width - holeWidth) / 2
+            let holeX = (scrollView.frame.width - holeWidth) / 2
+            let holeY = (scrollView.frame.height - holeHeight) / 2 + 107
             
-            holeRect = CGRect(x: holeX, y: 225, width: holeWidth, height: holeHeight)
+            holeRect = CGRect(x: holeX, y: holeY, width: holeWidth, height: holeHeight) // 269
+        case .circle:
+            holeWidth = self.scrollView.frame.width - 49 * 2
+            holeHeight = holeWidth
+            
+            let holeX = (scrollView.frame.width - holeWidth) / 2
+            let holeY = (scrollView.frame.height - holeHeight) / 2 + 107
+            
+            holeRect = CGRect(x: holeX, y: holeY, width: holeWidth, height: holeHeight) // 269
+            break
+        case .windowFrame:
+            holeWidth = self.scrollView.frame.width - 49 * 2
+            holeHeight = holeWidth
+            
+            let holeX = (scrollView.frame.width - holeWidth) / 2
+            let holeY = (scrollView.frame.height - holeHeight) / 2 + 107
+            
+            holeRect = CGRect(x: holeX, y: holeY, width: holeWidth, height: holeHeight) // 269
+            break
         }
-        
-        imageView = UIImageView(image: image)
-        scrollView.addSubview(imageView)
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.showsHorizontalScrollIndicator = false
-        scrollView.alwaysBounceVertical = true
-        scrollView.alwaysBounceHorizontal = true
-        scrollView.delegate = self
-        
-        let minZoom = max(holeWidth / image.size.width, holeHeight / image.size.height)
-        scrollView.minimumZoomScale = minZoom
-        scrollView.zoomScale = minZoom
-        scrollView.maximumZoomScale = minZoom*4
-//        CGRect(x: 0, y: 104.0, width: self.view.frame.width, height: self.view.frame.height - 60 - 87 - 44 - 34)
-        let viewFinder = hollowView(frame: view.frame, transparentRect: holeRect)
-        view.addSubview(viewFinder)
-        view.bringSubviewToFront(topBar)
-        view.bringSubviewToFront(bottomBar)
+        if image == nil {
+            
+        } else {
+            if image.imageOrientation != .up {
+                UIGraphicsBeginImageContextWithOptions(image.size, false, image.scale)
+                var rect = CGRect.zero
+                rect.size = image.size
+                image.draw(in: rect)
+                image = UIGraphicsGetImageFromCurrentImageContext()
+                UIGraphicsEndImageContext()
+            }
+            imageView = UIImageView(image: image)
+            scrollView.addSubview(imageView)
+            print(imageView.frame)
+            print(imageView.bounds)
+            print("scrollView.frame: \(scrollView.frame)")
+            scrollView.showsVerticalScrollIndicator = false
+            scrollView.showsHorizontalScrollIndicator = false
+            scrollView.alwaysBounceVertical = true
+            scrollView.alwaysBounceHorizontal = true
+            scrollView.delegate = self
+            
+            let minZoom = max(holeWidth / image.size.width, holeHeight / image.size.height)
+            scrollView.minimumZoomScale = minZoom
+            scrollView.zoomScale = minZoom
+            scrollView.maximumZoomScale = minZoom * 4
+            
+            let viewFinder = hollowView(frame: view.frame, transparentRect: holeRect)
+            view.addSubview(viewFinder)
+            view.bringSubviewToFront(topBar)
+            view.bringSubviewToFront(bottomBar)
+            
+        }
         
     }
     
@@ -73,10 +100,11 @@ class ImageCropVC: UIViewController, UIScrollViewDelegate {
     }
 
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
-        let gapToHole: CGFloat = (view.frame.height -  147) / 2 - holeRect.height / 2
-        let holeX = (self.view.frame.width - 275.0) / 2
+        let gapToHole: CGFloat = (scrollView.frame.height - (scrollView.frame.width - 98)) / 2
         
-        scrollView.contentInset = UIEdgeInsets(top: gapToHole, left: holeX, bottom: gapToHole, right: 50)
+        print("gapToHole\(gapToHole)")
+        // TODO: scroll 영역 설정하는 곳
+        scrollView.contentInset = UIEdgeInsets(top: gapToHole, left: 49, bottom: gapToHole, right: 49)
         
     }
     
@@ -95,12 +123,13 @@ class ImageCropVC: UIViewController, UIScrollViewDelegate {
 // MARK: hollow view class
 
 class hollowView: UIView {
-    var transparentRect: CGRect!
+    var transparentRect: UIView!
     
     init(frame: CGRect, transparentRect: CGRect) {
         super.init(frame: frame)
         
-        self.transparentRect = transparentRect
+        self.transparentRect = UIView.init(frame: transparentRect)
+      
         self.isUserInteractionEnabled = false
         self.alpha = 0.5
         self.isOpaque = false
@@ -114,7 +143,7 @@ class hollowView: UIView {
         backgroundColor?.setFill()
         UIRectFill(rect)
         
-        let holeRectIntersection = transparentRect.intersection( rect )
+        let holeRectIntersection = transparentRect.frame.intersection( rect )
         
         UIColor.clear.setFill();
         UIRectFill(holeRectIntersection);

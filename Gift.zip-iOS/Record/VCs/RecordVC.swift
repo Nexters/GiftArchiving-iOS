@@ -38,10 +38,10 @@ class RecordVC: UIViewController {
     private var textViewPlaceholderFlag: Bool = true
     
     private var originalFullImage: UIImage? // full Image
-    
+        
     var editedImage: UIImage? // cropped Image
-    
-    var frameImage: FrameOfImage = .square
+
+    private var currentFrameOfImage: FrameOfImage = .square
     
     let disposeBag = DisposeBag()
     
@@ -51,6 +51,7 @@ class RecordVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print(cropImageView.frame)
         setLayouts()
         setNotificationCenter()
         initTextField()
@@ -109,14 +110,14 @@ class RecordVC: UIViewController {
     }
     
     @IBAction func changeFrame(_ sender: UIButton) {
-
         let des = self.storyboard?.instantiateViewController(identifier: "ImageCropVC") as! ImageCropVC
+        
+        // image 및 프레임 설정
         des.image = originalFullImage
+        des.frameOfImage = currentFrameOfImage
+        // hole 크기 설정 , 스크롤 영역 설정
         des.modalPresentationStyle = .fullScreen
         present(des, animated: true, completion: nil)
-//        let shiftyVC = ShiftyImageCropVC(frame: (view.frame), image: originalFullImage!, aspectWidth: 315, aspectHeight: 152)
-//        shiftyVC.modalPresentationStyle = .fullScreen
-//        self.present(shiftyVC, animated: true, completion: nil)
     }
     
     @IBAction func useSticker(_ sender: UIButton) {
