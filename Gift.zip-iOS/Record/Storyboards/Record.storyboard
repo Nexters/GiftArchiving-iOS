@@ -358,6 +358,9 @@
                                                 <state key="normal" title="정사각형">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="changeSquareFrame:" destination="Oq2-J2-3IA" eventType="touchUpInside" id="ETO-XI-0eP"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vdc-TS-Rha">
                                                 <rect key="frame" x="101" y="0.0" width="30" height="26"/>
@@ -365,6 +368,9 @@
                                                 <state key="normal" title="원">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="changeCircleFrame:" destination="Oq2-J2-3IA" eventType="touchUpInside" id="lLJ-6j-Iwh"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7zk-gc-CrV">
                                                 <rect key="frame" x="191" y="0.0" width="30" height="26"/>
@@ -372,6 +378,9 @@
                                                 <state key="normal" title="창문">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="changeToWindowFrame:" destination="Oq2-J2-3IA" eventType="touchUpInside" id="r8s-Vn-dVR"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D6P-3h-NWP">
                                                 <rect key="frame" x="281" y="0.0" width="30" height="26"/>

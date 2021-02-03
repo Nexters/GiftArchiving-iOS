@@ -8,14 +8,17 @@
 import UIKit
 
 class ImageCropVC: UIViewController, UIScrollViewDelegate {
-
+    
     @IBOutlet weak var scrollView: UIScrollView!
     
     var image: UIImage!
     var imageView: UIImageView!
-    var frameOfImage: FrameOfImage = .square
-    var holeRect: CGRect!
-    var widthAndHeightOfImage: CGFloat = 0.0
+    var holeView: UIView!
+    var viewFinder: HollowView!
+    
+    var holeWidth:CGFloat = 0
+    var holeHeight: CGFloat = 0
+    var frameOfImage: FrameOfImage = .circle
     
     @IBOutlet weak var topBar: UIView!
     @IBOutlet weak var bottomBar: UIView!
@@ -26,9 +29,7 @@ class ImageCropVC: UIViewController, UIScrollViewDelegate {
         setupView()
     }
     
-    func setupView() {
-        var holeWidth:CGFloat = 0
-        var holeHeight: CGFloat = 0
+    private func changeFrameOfImage() {
         switch frameOfImage {
         case .square:
             holeWidth = self.scrollView.frame.width - 49 * 2
@@ -37,7 +38,9 @@ class ImageCropVC: UIViewController, UIScrollViewDelegate {
             let holeX = (scrollView.frame.width - holeWidth) / 2
             let holeY = (scrollView.frame.height - holeHeight) / 2 + 107
             
-            holeRect = CGRect(x: holeX, y: holeY, width: holeWidth, height: holeHeight) // 269
+            let holeRect = CGRect(x: holeX, y: holeY, width: holeWidth, height: holeHeight) // 269
+            holeView = UIView.init(frame: holeRect)
+            break
         case .circle:
             holeWidth = self.scrollView.frame.width - 49 * 2
             holeHeight = holeWidth
@@ -45,7 +48,11 @@ class ImageCropVC: UIViewController, UIScrollViewDelegate {
             let holeX = (scrollView.frame.width - holeWidth) / 2
             let holeY = (scrollView.frame.height - holeHeight) / 2 + 107
             
-            holeRect = CGRect(x: holeX, y: holeY, width: holeWidth, height: holeHeight) // 269
+            let holeRect = CGRect(x: holeX, y: holeY, width: holeWidth, height: holeHeight) // 269
+            holeView = UIView.init(frame: holeRect)
+            
+            holeView.layer.cornerRadius = holeView.frame.width / 2
+            
             break
         case .windowFrame:
             holeWidth = self.scrollView.frame.width - 49 * 2
@@ -54,9 +61,14 @@ class ImageCropVC: UIViewController, UIScrollViewDelegate {
             let holeX = (scrollView.frame.width - holeWidth) / 2
             let holeY = (scrollView.frame.height - holeHeight) / 2 + 107
             
-            holeRect = CGRect(x: holeX, y: holeY, width: holeWidth, height: holeHeight) // 269
+            let holeRect = CGRect(x: holeX, y: holeY, width: holeWidth, height: holeHeight) // 269
+            holeView = UIView.init(frame: holeRect)
             break
         }
+        
+    }
+    func setupView() {
+        changeFrameOfImage()
         if image == nil {
             
         } else {
@@ -70,9 +82,7 @@ class ImageCropVC: UIViewController, UIScrollViewDelegate {
             }
             imageView = UIImageView(image: image)
             scrollView.addSubview(imageView)
-            print(imageView.frame)
-            print(imageView.bounds)
-            print("scrollView.frame: \(scrollView.frame)")
+            
             scrollView.showsVerticalScrollIndicator = false
             scrollView.showsHorizontalScrollIndicator = false
             scrollView.alwaysBounceVertical = true
@@ -84,7 +94,7 @@ class ImageCropVC: UIViewController, UIScrollViewDelegate {
             scrollView.zoomScale = minZoom
             scrollView.maximumZoomScale = minZoom * 4
             
-            let viewFinder = hollowView(frame: view.frame, transparentRect: holeRect)
+            viewFinder = HollowView(frame: view.frame, transparentRect: holeView)
             view.addSubview(viewFinder)
             view.bringSubviewToFront(topBar)
             view.bringSubviewToFront(bottomBar)
@@ -98,7 +108,7 @@ class ImageCropVC: UIViewController, UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageView
     }
-
+    
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
         let gapToHole: CGFloat = (scrollView.frame.height - (scrollView.frame.width - 98)) / 2
         
@@ -107,6 +117,8 @@ class ImageCropVC: UIViewController, UIScrollViewDelegate {
         scrollView.contentInset = UIEdgeInsets(top: gapToHole, left: 49, bottom: gapToHole, right: 49)
         
     }
+    
+    //MARK: - IBAction
     
     @IBAction func dismissView(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
@@ -118,18 +130,48 @@ class ImageCropVC: UIViewController, UIScrollViewDelegate {
         self.dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func changeSquareFrame(_ sender: Any) {
+        frameOfImage = .square
+        changeFrameOfImage()
+        viewFinder.removeFromSuperview()
+        viewFinder =  HollowView(frame: view.frame, transparentRect: holeView)
+        view.addSubview(viewFinder)
+        view.bringSubviewToFront(topBar)
+        view.bringSubviewToFront(bottomBar)
+    }
+    
+    
+    @IBAction func changeCircleFrame(_ sender: Any) {
+        frameOfImage = .circle
+        changeFrameOfImage()
+        viewFinder.removeFromSuperview()
+        viewFinder =  HollowView(frame: view.frame, transparentRect: holeView)
+        view.addSubview(viewFinder)
+        view.bringSubviewToFront(topBar)
+        view.bringSubviewToFront(bottomBar)
+    }
+    
+    @IBAction func changeToWindowFrame(_ sender: Any) {
+        frameOfImage = .windowFrame
+        changeFrameOfImage()
+        viewFinder.removeFromSuperview()
+        viewFinder =  HollowView(frame: view.frame, transparentRect: holeView)
+        view.addSubview(viewFinder)
+        view.bringSubviewToFront(topBar)
+        view.bringSubviewToFront(bottomBar)
+    }
 }
 
 // MARK: hollow view class
 
-class hollowView: UIView {
+class HollowView: UIView {
     var transparentRect: UIView!
     
-    init(frame: CGRect, transparentRect: CGRect) {
+    init(frame: CGRect, transparentRect: UIView) {
         super.init(frame: frame)
         
-        self.transparentRect = UIView.init(frame: transparentRect)
-      
+        self.transparentRect = transparentRect
+        
         self.isUserInteractionEnabled = false
         self.alpha = 0.5
         self.isOpaque = false

@@ -81,10 +81,10 @@ class ShiftyImageCropVC: UIViewController, UIScrollViewDelegate {
         scrollView.zoomScale = minZoom
         scrollView.maximumZoomScale = minZoom*4
         
-        let viewFinder = hollowView(frame: view.frame, transparentRect: holeRect)
-        view.addSubview(viewFinder)
-        view.addSubview(closeButton)
-        view.addSubview(cropButton)
+//        let viewFinder = HollowView(frame: view.frame, transparentRect: holeView)
+//        view.addSubview(viewFinder)
+//        view.addSubview(closeButton)
+//        view.addSubview(cropButton)
     }
     
     // MARK: scrollView delegate
