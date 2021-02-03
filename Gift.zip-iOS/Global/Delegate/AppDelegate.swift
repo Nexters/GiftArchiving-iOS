@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AuthenticationServices
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -14,6 +15,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        let SPREF = UserDefaults.standard
+        if let appleId = SPREF.string(forKey: "appleId"){
+            let appleIDProvider = ASAuthorizationAppleIDProvider()
+            appleIDProvider.getCredentialState(forUserID: appleId) { (credentialState, error) in
+                switch credentialState {
+                case .authorized:
+                    // The Apple ID credential is valid.
+                    print("해당 ID는 연동되어있습니다.")
+                case .revoked:
+                    // The Apple ID credential is either revoked or was not found, so show the sign-in UI.
+                    print("해당 ID는 연동되어있지않습니다.")
+                case .notFound:
+                    // The Apple ID credential is either was not found, so show the sign-in UI.
+                    print("해당 ID를 찾을 수 없습니다.")
+                default:
+                    break
+                }
+            }
+        }
+        
+        
+        
+        NotificationCenter.default.addObserver(forName: ASAuthorizationAppleIDProvider.credentialRevokedNotification, object: nil, queue: nil) { (Notification) in
+            print("Revoked Notification")
+            // 로그인 페이지로 이동
+        }
+        
         return true
     }
 

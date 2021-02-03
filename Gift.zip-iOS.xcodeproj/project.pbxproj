@@ -11,6 +11,8 @@
 		4052035225C537890066989C /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4052035125C537890066989C /* CollectionViewCell.swift */; };
 		408E518F25CAF5E20037EC9B /* GridCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 408E518E25CAF5E20037EC9B /* GridCollectionViewCell.xib */; };
 		408E519225CAF81E0037EC9B /* GridCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408E519125CAF81E0037EC9B /* GridCollectionViewCell.swift */; };
+		408E519B25CB1E6E0037EC9B /* OnboardingSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 408E519A25CB1E6E0037EC9B /* OnboardingSB.storyboard */; };
+		408E51A025CB201C0037EC9B /* OnboardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408E519F25CB201C0037EC9B /* OnboardingVC.swift */; };
 		40ADFC0E25C9AFA100721F4D /* ListSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40ADFC0D25C9AFA100721F4D /* ListSB.storyboard */; };
 		40ADFC1325C9B03800721F4D /* StickyCellFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40ADFC1225C9B03800721F4D /* StickyCellFlowLayout.swift */; };
 		40DE15A825C80DC000184320 /* MainSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40DE15A725C80DC000184320 /* MainSB.storyboard */; };
@@ -40,6 +42,9 @@
 		4052035125C537890066989C /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		408E518E25CAF5E20037EC9B /* GridCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GridCollectionViewCell.xib; sourceTree = "<group>"; };
 		408E519125CAF81E0037EC9B /* GridCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCollectionViewCell.swift; sourceTree = "<group>"; };
+		408E519A25CB1E6E0037EC9B /* OnboardingSB.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = OnboardingSB.storyboard; sourceTree = "<group>"; };
+		408E519D25CB1FFE0037EC9B /* Gift.zip-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Gift.zip-iOS.entitlements"; sourceTree = "<group>"; };
+		408E519F25CB201C0037EC9B /* OnboardingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingVC.swift; sourceTree = "<group>"; };
 		40ADFC0D25C9AFA100721F4D /* ListSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ListSB.storyboard; sourceTree = "<group>"; };
 		40ADFC1225C9B03800721F4D /* StickyCellFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyCellFlowLayout.swift; sourceTree = "<group>"; };
 		40DE15A725C80DC000184320 /* MainSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainSB.storyboard; sourceTree = "<group>"; };
@@ -121,6 +126,39 @@
 			path = Storyboards;
 			sourceTree = "<group>";
 		};
+		408E519625CB16310037EC9B /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				408E519925CB1E590037EC9B /* Cells */,
+				408E519825CB1E4E0037EC9B /* Storyboards */,
+				408E519725CB163D0037EC9B /* VC */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		408E519725CB163D0037EC9B /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				408E519F25CB201C0037EC9B /* OnboardingVC.swift */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		408E519825CB1E4E0037EC9B /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				408E519A25CB1E6E0037EC9B /* OnboardingSB.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		408E519925CB1E590037EC9B /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		40DE15BA25C858F100184320 /* List */ = {
 			isa = PBXGroup;
 			children = (
@@ -195,6 +233,8 @@
 		D4336D1D25BE80D500D27568 /* Gift.zip-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				408E519D25CB1FFE0037EC9B /* Gift.zip-iOS.entitlements */,
+				408E519625CB16310037EC9B /* Onboarding */,
 				40DE15BA25C858F100184320 /* List */,
 				40141E3E25BEE625003B49B4 /* Main */,
 				D4A08E9025BFDCE2009CFCC4 /* Record */,
@@ -342,6 +382,7 @@
 			files = (
 				D4336D2B25BE80D500D27568 /* LaunchScreen.storyboard in Resources */,
 				40ADFC0E25C9AFA100721F4D /* ListSB.storyboard in Resources */,
+				408E519B25CB1E6E0037EC9B /* OnboardingSB.storyboard in Resources */,
 				D4336D2825BE80D500D27568 /* Assets.xcassets in Resources */,
 				408E518F25CAF5E20037EC9B /* GridCollectionViewCell.xib in Resources */,
 				D4336D2625BE80D500D27568 /* Main.storyboard in Resources */,
@@ -410,6 +451,7 @@
 				4052034E25C537110066989C /* VC.swift in Sources */,
 				D4A08EBD25C01D32009CFCC4 /* PopupViewDelegate.swift in Sources */,
 				40DE15C925C8629300184320 /* ListCollectionViewCell.swift in Sources */,
+				408E51A025CB201C0037EC9B /* OnboardingVC.swift in Sources */,
 				408E519225CAF81E0037EC9B /* GridCollectionViewCell.swift in Sources */,
 				D404F2BD25C3FD3600615CD0 /* CropVC.swift in Sources */,
 				40ADFC1325C9B03800721F4D /* StickyCellFlowLayout.swift in Sources */,
@@ -563,8 +605,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Gift.zip-iOS/Gift.zip-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = TZVHD77BLL;
+				DEVELOPMENT_TEAM = N5FS2H5UXX;
 				INFOPLIST_FILE = "Gift.zip-iOS/Global/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -583,8 +626,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Gift.zip-iOS/Gift.zip-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = TZVHD77BLL;
+				DEVELOPMENT_TEAM = N5FS2H5UXX;
 				INFOPLIST_FILE = "Gift.zip-iOS/Global/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

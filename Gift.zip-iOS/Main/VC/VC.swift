@@ -193,7 +193,8 @@ class VC: UIViewController{
             vc.models = self.sentModels
         }
         vc.receivedSentFlag = self.collectionViewFlag
-        self.present(vc, animated: true, completion: nil)
+        navigationController?.pushViewController(vc, animated: true)
+        //self.show(vc, sender: self)
     }
     func moveBarToReceivedAnimate(){
         UIView.animate(withDuration: 0.5) {
