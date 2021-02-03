@@ -261,7 +261,8 @@ extension RecordVC: UIImagePickerControllerDelegate, UINavigationControllerDeleg
         if let image = info[.originalImage] as? UIImage, let editedImage = info[.editedImage] as? UIImage {
             print(image)
             self.cropImageView.image = editedImage
-            self.originalFullImage = image 
+            self.originalFullImage = image
+            self.emptyImageLabel.isHidden = true
             self.dismiss(animated: true, completion: nil)
         }
     }
