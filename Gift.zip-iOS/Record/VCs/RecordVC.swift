@@ -28,7 +28,8 @@ class RecordVC: UIViewController {
     @IBOutlet weak var infoView: UIView!
     @IBOutlet weak var stickerArea: UIView!
     @IBOutlet weak var emotionTextView: UITextView!
-    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var bottomBarBottomConstraintWithBottomSafeArea: NSLayoutConstraint!
+    @IBOutlet weak var emptyImageLabel: UILabel!
     
     lazy var picker = UIImagePickerController()
     
@@ -147,7 +148,7 @@ extension RecordVC {
         }
         
         cropImageView.layer.borderWidth = 1
-        cropImageView.layer.borderColor = UIColor.init(red: 255, green: 255, blue: 255, alpha: 0.7).cgColor
+        cropImageView.layer.borderColor = UIColor.init(red: 255, green: 255, blue: 255, alpha: 0.12).cgColor
         
         
     }
@@ -176,10 +177,10 @@ extension RecordVC {
             isNameTouched = false
         } else {
             // 기기별 bottom safearea 계산하기
-            let heightConstant = isAppearing ? keyboardHeight - 34 - 44 : 0
+            let heightConstant = isAppearing ? keyboardHeight - 34 : 0
             
             UIView.animate(withDuration: keyboardAnimationDuration, animations: {
-                self.bottomConstraint.constant = heightConstant
+                self.bottomBarBottomConstraintWithBottomSafeArea.constant = heightConstant
                 self.view.layoutIfNeeded()
             }) { (_) in
             }

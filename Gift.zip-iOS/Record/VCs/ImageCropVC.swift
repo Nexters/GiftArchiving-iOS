@@ -16,6 +16,9 @@ class ImageCropVC: UIViewController, UIScrollViewDelegate {
     var frameOfImage: FrameOfImage = .square
     var holeRect: CGRect!
     
+    @IBOutlet weak var topBar: UIView!
+    @IBOutlet weak var bottomBar: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -40,7 +43,7 @@ class ImageCropVC: UIViewController, UIScrollViewDelegate {
             
             let holeX = (self.view.frame.width - holeWidth) / 2
             
-            holeRect = CGRect(x: holeX, y: 165, width: holeWidth, height: holeHeight)
+            holeRect = CGRect(x: holeX, y: 225, width: holeWidth, height: holeHeight)
         }
         
         imageView = UIImageView(image: image)
@@ -55,9 +58,11 @@ class ImageCropVC: UIViewController, UIScrollViewDelegate {
         scrollView.minimumZoomScale = minZoom
         scrollView.zoomScale = minZoom
         scrollView.maximumZoomScale = minZoom*4
-        
-        let viewFinder = hollowView(frame: CGRect(x: 0, y: 104.0, width: self.view.frame.width, height: self.view.frame.height - 60 - 87 - 44 - 34), transparentRect: holeRect)
+//        CGRect(x: 0, y: 104.0, width: self.view.frame.width, height: self.view.frame.height - 60 - 87 - 44 - 34)
+        let viewFinder = hollowView(frame: view.frame, transparentRect: holeRect)
         view.addSubview(viewFinder)
+        view.bringSubviewToFront(topBar)
+        view.bringSubviewToFront(bottomBar)
         
     }
     
