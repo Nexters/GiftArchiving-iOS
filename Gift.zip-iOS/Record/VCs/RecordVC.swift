@@ -29,7 +29,10 @@ class RecordVC: UIViewController {
     @IBOutlet weak var stickerArea: UIView!
     @IBOutlet weak var emotionTextView: UITextView!
     @IBOutlet weak var bottomBarBottomConstraintWithBottomSafeArea: NSLayoutConstraint!
+    @IBOutlet weak var upperContainerConstraintWithImageContainerTop: NSLayoutConstraint!
     @IBOutlet weak var emptyImageLabel: UILabel!
+    @IBOutlet weak var bottomContainer: UIView!
+    @IBOutlet weak var imageContainer: UIView!
     
     lazy var picker = UIImagePickerController()
     
@@ -43,6 +46,14 @@ class RecordVC: UIViewController {
 
     private var currentFrameOfImage: FrameOfImage = .square
     
+    private var currentInfoViewOriginY: CGFloat = 0
+    
+    private var currentBottomContainerOriginY: CGFloat = 0
+    
+    private var currentImageContainerOriginY: CGFloat = 0
+    
+    private var currentBackgroundColor: UIColor = UIColor.charcoalGrey
+    
     let disposeBag = DisposeBag()
     
     private var isNameTouched: Bool = false
@@ -51,7 +62,6 @@ class RecordVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(cropImageView.frame)
         setLayouts()
         setNotificationCenter()
         initTextField()
@@ -67,6 +77,11 @@ class RecordVC: UIViewController {
             popupBackground.animatePopupBackground(true)
             guard let des = segue.destination as? DatePopupVC else { return }
             des.delegate = self
+        } else if segue.identifier == "CategoryPopup" {
+            popupBackground.animatePopupBackground(true)
+            guard let des = segue.destination as? CategoryPopupVC else { return }
+            des.backgroundColor = currentBackgroundColor
+            
         }
         
     }
@@ -150,7 +165,10 @@ extension RecordVC {
         
         cropImageView.layer.borderWidth = 1
         cropImageView.layer.borderColor = UIColor.init(red: 255, green: 255, blue: 255, alpha: 0.12).cgColor
-        
+        currentInfoViewOriginY = infoView.frame.origin.y
+        currentBottomContainerOriginY = bottomContainer.frame.origin.y
+        print(bottomContainer.frame.origin.y)
+        currentImageContainerOriginY = imageContainer.frame.origin.y
         
     }
     
@@ -173,14 +191,19 @@ extension RecordVC {
         guard let keyboardAnimationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval else { return }
         guard let keyboardHeight = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height else { return
         }
-        
+        // 기기별 bottom safearea 계산하기
+        let heightConstant = isAppearing ? keyboardHeight - 34 : 0
         if isNameTouched {
             isNameTouched = false
+            self.bottomBarBottomConstraintWithBottomSafeArea.constant = heightConstant
+            self.view.layoutIfNeeded()
         } else {
-            // 기기별 bottom safearea 계산하기
-            let heightConstant = isAppearing ? keyboardHeight - 34 : 0
-            
             UIView.animate(withDuration: keyboardAnimationDuration, animations: {
+                if isAppearing {
+                    self.upperContainerConstraintWithImageContainerTop.priority = UILayoutPriority(rawValue: 248)
+                } else {
+                    self.upperContainerConstraintWithImageContainerTop.priority = UILayoutPriority(rawValue: 1000)
+                }
                 self.bottomBarBottomConstraintWithBottomSafeArea.constant = heightConstant
                 self.view.layoutIfNeeded()
             }) { (_) in
