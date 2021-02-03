@@ -9,6 +9,12 @@ import UIKit
 import RxCocoa
 import RxSwift
 
+enum FrameOfImage {
+    case square
+    case circle
+    case windowFrame
+}
+
 class RecordVC: UIViewController {
     
     @IBOutlet weak var fromLabel: UILabel!
@@ -22,13 +28,35 @@ class RecordVC: UIViewController {
     @IBOutlet weak var infoView: UIView!
     @IBOutlet weak var stickerArea: UIView!
     @IBOutlet weak var emotionTextView: UITextView!
-    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var bottomBarBottomConstraintWithBottomSafeArea: NSLayoutConstraint!
+    @IBOutlet weak var upperContainerConstraintWithImageContainerTop: NSLayoutConstraint!
+    @IBOutlet weak var emptyImageLabel: UILabel!
+    @IBOutlet weak var bottomContainer: UIView!
+    @IBOutlet weak var imageContainer: UIView!
+    
+    @IBOutlet weak var categoryImageView: UIImageView!
+    @IBOutlet weak var purposeImageView: UIImageView!
+    @IBOutlet weak var emotionImageView: UIImageView!
     
     lazy var picker = UIImagePickerController()
     
     lazy var popupBackground = UIView()
     
     private var textViewPlaceholderFlag: Bool = true
+    
+    private var originalFullImage: UIImage? // full Image
+        
+    var editedImage: UIImage? // cropped Image
+
+    private var currentFrameOfImage: FrameOfImage = .square
+    
+    private var currentInfoViewOriginY: CGFloat = 0
+    
+    private var currentBottomContainerOriginY: CGFloat = 0
+    
+    private var currentImageContainerOriginY: CGFloat = 0
+    
+    private var currentBackgroundColor: UIColor = UIColor.charcoalGrey
     
     let disposeBag = DisposeBag()
     
@@ -53,8 +81,11 @@ class RecordVC: UIViewController {
             popupBackground.animatePopupBackground(true)
             guard let des = segue.destination as? DatePopupVC else { return }
             des.delegate = self
-        } else if segue.identifier == "frameSegue" {
-            //            guard let des = segue.description as?
+        } else if segue.identifier == "CategoryPopup" {
+            popupBackground.animatePopupBackground(true)
+            guard let des = segue.destination as? CategoryPopupVC else { return }
+            des.backgroundColor = currentBackgroundColor
+            des.popupViewHeightByPhones = self.view.frame.height - infoView.frame.origin.y - 141 - 34
         }
         
     }
@@ -62,17 +93,18 @@ class RecordVC: UIViewController {
     //MARK: - IBAction
     
     @IBAction func backToMain(_ sender: UIButton) {
-        
-    }
-    
-    @IBAction func showDatePicker(_ sender: UIButton) {
-        
+        self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func completeRecord(_ sender: UIButton) {
+        
+        // record server
+        
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     @IBAction func chooseType(_ sender: UIButton) {
+        print("HELELEL")
     }
     
     @IBAction func chooseWhen(_ sender: UIButton) {
@@ -98,6 +130,14 @@ class RecordVC: UIViewController {
     }
     
     @IBAction func changeFrame(_ sender: UIButton) {
+        let des = self.storyboard?.instantiateViewController(identifier: "ImageCropVC") as! ImageCropVC
+        
+        // image 및 프레임 설정
+        des.image = originalFullImage
+        des.frameOfImage = currentFrameOfImage
+        // hole 크기 설정 , 스크롤 영역 설정
+        des.modalPresentationStyle = .fullScreen
+        present(des, animated: true, completion: nil)
     }
     
     @IBAction func useSticker(_ sender: UIButton) {
@@ -116,7 +156,7 @@ extension RecordVC {
             button.makeRounded(cornerRadius: 12.0)
         }
         nameTextField.attributedPlaceholder = NSAttributedString(
-            string: "이름 입력",
+            string: "이름",
             attributes: [NSAttributedString.Key.foregroundColor : UIColor.init(white: 1.0, alpha: 0.34)]
         )
         popupBackground.setPopupBackgroundView(to: view)
@@ -127,6 +167,13 @@ extension RecordVC {
         } else {
             emotionTextView.alpha = 1.0
         }
+        
+        cropImageView.layer.borderWidth = 1
+        cropImageView.layer.borderColor = UIColor.init(red: 255, green: 255, blue: 255, alpha: 0.12).cgColor
+        currentInfoViewOriginY = infoView.frame.origin.y
+        currentBottomContainerOriginY = bottomContainer.frame.origin.y
+        print(bottomContainer.frame.origin.y)
+        currentImageContainerOriginY = imageContainer.frame.origin.y
         
     }
     
@@ -149,15 +196,20 @@ extension RecordVC {
         guard let keyboardAnimationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval else { return }
         guard let keyboardHeight = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height else { return
         }
-        
+        // 기기별 bottom safearea 계산하기
+        let heightConstant = isAppearing ? keyboardHeight - 34 : 0
         if isNameTouched {
             isNameTouched = false
+            self.bottomBarBottomConstraintWithBottomSafeArea.constant = heightConstant
+            self.view.layoutIfNeeded()
         } else {
-            // 기기별 bottom safearea 계산하기
-            let heightConstant = isAppearing ? keyboardHeight - 34 - 44 : 0
-            
             UIView.animate(withDuration: keyboardAnimationDuration, animations: {
-                self.bottomConstraint.constant = heightConstant
+                if isAppearing {
+                    self.upperContainerConstraintWithImageContainerTop.priority = UILayoutPriority(rawValue: 248)
+                } else {
+                    self.upperContainerConstraintWithImageContainerTop.priority = UILayoutPriority(rawValue: 1000)
+                }
+                self.bottomBarBottomConstraintWithBottomSafeArea.constant = heightConstant
                 self.view.layoutIfNeeded()
             }) { (_) in
             }
@@ -235,15 +287,13 @@ extension RecordVC: UIImagePickerControllerDelegate, UINavigationControllerDeleg
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        if let image = info[.originalImage] as? UIImage {
+        if let image = info[.originalImage] as? UIImage, let editedImage = info[.editedImage] as? UIImage {
             print(image)
-            self.cropImageView.image = image
-            
+            self.cropImageView.image = editedImage
+            self.originalFullImage = image
+            self.emptyImageLabel.isHidden = true
             self.dismiss(animated: true, completion: nil)
         }
-        
-        
-        
     }
     
     @objc func savedImage(image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeMutableRawPointer?) {
@@ -287,9 +337,13 @@ extension RecordVC: UITextViewDelegate {
 
 extension RecordVC: PopupViewDelegate {
     
-    func sendDateButtonTapped() {
-        
+    func sendDateButtonTapped(_ date: Date) {
+        print(date)
         popupBackground.animatePopupBackground(false)
         // date
+    }
+    
+    func sendIconDataButtonTapped(_ icon: String, _ name: String) {
+        popupBackground.animatePopupBackground(false)
     }
 }
