@@ -35,6 +35,8 @@ class CategoryPopupVC: UIViewController {
             safeAreaView.backgroundColor = bc
             popupViewHeight.constant = height
         }
+        
+        categoryCollectionView.isPagingEnabled = true
       }
     
     private func initDelegates() {
@@ -50,17 +52,28 @@ class CategoryPopupVC: UIViewController {
 
 extension CategoryPopupVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let category = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCVC.identifier, for: indexPath) as? CategoryCVC else {
-        return UICollectionViewCell()
+        if indexPath.item == 0 {
+            guard let category = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCVC.identifier, for: indexPath) as? CategoryCVC else {
+            return UICollectionViewCell()
+            }
+            category.setBorder()
+            category.setCategories()
+            category.delegate = self
+            return category
+        } else {
+            guard let category = collectionView.dequeueReusableCell(withReuseIdentifier: CategorySecondCVC.identifier, for: indexPath) as? CategorySecondCVC else {
+            return UICollectionViewCell()
+            }
+            category.setBorder()
+            category.setCategories()
+            category.delegate = self
+            return category
         }
-        category.setBorder()
-        category.setCategories()
-        category.delegate = self
-        return category
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
