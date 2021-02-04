@@ -19,8 +19,8 @@ class RecordVC: UIViewController {
     
     @IBOutlet weak var fromLabel: UILabel!
     @IBOutlet weak var nameTextField: UITextField!
-    @IBOutlet weak var typeLabel: UILabel!
-    @IBOutlet weak var whenLabel: UILabel!
+    @IBOutlet weak var categoryLabel: UILabel!
+    @IBOutlet weak var purposeLabel: UILabel!
     @IBOutlet weak var emotionLabel: UILabel!
     @IBOutlet var buttons: [UIButton]!
     @IBOutlet weak var cropImageView: UIImageView!
@@ -42,6 +42,8 @@ class RecordVC: UIViewController {
     
     lazy var popupBackground = UIView()
     
+    lazy var stickerView = StickerView()
+    
     private var textViewPlaceholderFlag: Bool = true
     
     private var originalFullImage: UIImage? // full Image
@@ -57,6 +59,8 @@ class RecordVC: UIViewController {
     private var currentImageContainerOriginY: CGFloat = 0
     
     private var currentBackgroundColor: UIColor = UIColor.charcoalGrey
+    
+    private var isStickerEditing: Bool = false
     
     let disposeBag = DisposeBag()
     
@@ -82,7 +86,11 @@ class RecordVC: UIViewController {
             guard let des = segue.destination as? DatePopupVC else { return }
             des.delegate = self
         } else if segue.identifier == "CategoryPopup" {
+            
             popupBackground.animatePopupBackground(true)
+            view.bringSubviewToFront(categoryImageView)
+            view.bringSubviewToFront(categoryLabel)
+            
             guard let des = segue.destination as? CategoryPopupVC else { return }
             des.backgroundColor = currentBackgroundColor
             des.popupViewHeightByPhones = self.view.frame.height - infoView.frame.origin.y - 149 - 34
@@ -103,11 +111,11 @@ class RecordVC: UIViewController {
         self.navigationController?.popToRootViewController(animated: true)
     }
     
-    @IBAction func chooseType(_ sender: UIButton) {
-        print("HELELEL")
+    @IBAction func chooseCategory(_ sender: UIButton) {
+        
     }
     
-    @IBAction func chooseWhen(_ sender: UIButton) {
+    @IBAction func choosePurpose(_ sender: UIButton) {
     }
     
     @IBAction func chooseEmotion(_ sender: UIButton) {
@@ -141,7 +149,22 @@ class RecordVC: UIViewController {
     }
     
     @IBAction func useSticker(_ sender: UIButton) {
-//        let sticker
+        
+        if isStickerEditing {
+            stickerView.animatePopupBackground(false)
+            isStickerEditing = false
+        } else {
+            
+            self.view.addSubview(stickerView)
+            stickerView.translatesAutoresizingMaskIntoConstraints = false
+            stickerView.bottomAnchor.constraint(equalTo: bottomContainer.topAnchor, constant: 0).isActive = true
+            stickerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+            stickerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+            stickerView.topAnchor.constraint(equalTo: imageContainer
+                                                .bottomAnchor, constant: 0).isActive = true
+            
+            isStickerEditing = true
+        }
         
         
     }
@@ -179,6 +202,18 @@ extension RecordVC {
     private func setNotificationCenter() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(selectIcon), name: .init("selectIcon"), object: nil)
+    }
+    
+    @objc private func selectIcon(_ notification: Notification) {
+        
+        popupBackground.animatePopupBackground(false)
+        guard let userInfo = notification.userInfo as? [String: Any] else { return }
+        guard let iconImage = userInfo["iconImageName"] as? String else { return }
+        guard let iconName = userInfo["iconName"] as? String else { return }
+        
+        categoryImageView.image = UIImage(named: iconImage)
+        categoryLabel.text = iconName
     }
     
     //    private func

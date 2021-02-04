@@ -43,7 +43,7 @@ class CategoryPopupVC: UIViewController {
     }
     
     @IBAction func selectCategory(_ sender: Any) {
-//        delegate?.sendIconDataButtonTapped()
+        NotificationCenter.default.post(name: .init("selectIcon"), object: nil)
         self.dismiss(animated: true, completion: nil)
     }
 }
@@ -59,6 +59,7 @@ extension CategoryPopupVC: UICollectionViewDataSource, UICollectionViewDelegateF
         }
         category.setBorder()
         category.setCategories()
+        category.delegate = self
         return category
     }
     
@@ -72,5 +73,12 @@ extension CategoryPopupVC: UICollectionViewDataSource, UICollectionViewDelegateF
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
+    }
+}
+
+extension CategoryPopupVC: CollectionViewButtonSelectedProtocol {
+
+    func iconSelectedAndDismissView() {
+        self.dismiss(animated: true, completion: nil)
     }
 }

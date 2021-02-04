@@ -18,6 +18,7 @@ class CategoryCVC: UICollectionViewCell {
     
     var popupBackgroundColor: UIColor?
     
+    var delegate: CollectionViewButtonSelectedProtocol?
     
     func setBorder() {
         for button in buttons {
@@ -34,6 +35,17 @@ class CategoryCVC: UICollectionViewCell {
     
     @IBAction func selectCategory(_ sender: UIButton) {
         print(sender)
+        
+        delegate?.iconSelectedAndDismissView()
+        NotificationCenter.default.post(name: .init("selectIcon"), object: nil, userInfo: ["iconImageName": "icBaby", "iconName": "아기"])
     }
     
+}
+
+protocol CollectionViewButtonSelectedProtocol {
+    func iconSelectedAndDismissView()
+}
+
+extension CollectionViewButtonSelectedProtocol {
+    func iconSelectedAndDismissView() {}
 }
