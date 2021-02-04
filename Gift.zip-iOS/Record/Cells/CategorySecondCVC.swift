@@ -10,15 +10,13 @@ import UIKit
 class CategorySecondCVC: UICollectionViewCell {
     static let identifier: String = "CategorySecondCVC"
     
-    var categoryImageArray: [String] = ["icCosmetic", "icMcoupon", "icCulture", "icEtc"]
-    var categoryNameArray: [String] = ["화장품", "모바일교환권", "컬처", "기타"]
-    
     @IBOutlet var buttons: [UIButton]!
     @IBOutlet var images: [UIImageView]!
     @IBOutlet var labels: [UILabel]!
     
     var popupBackgroundColor: UIColor?
     var delegate: CollectionViewButtonSelectedProtocol?
+    var iconKind: String?
     
     func setBorder() {
         for button in buttons {
@@ -26,19 +24,20 @@ class CategorySecondCVC: UICollectionViewCell {
         }
     }
     
-    func setCategories() {
+    func setCategories(iconNames: [String], iconImages: [String]) {
         for index in labels.indices {
-            labels[index].text = categoryNameArray[index]
-            images[index].image = UIImage.init(named: categoryImageArray[index])
+            labels[index].text = iconNames[index]
+            images[index].image = UIImage.init(named: iconImages[index])
         }
     }
     
     
     @IBAction func selectIcon(_ sender: UIButton) {
-        delegate?.iconSelectedAndDismissView()
+        
         for index in buttons.indices {
             if buttons[index] == sender {
-                NotificationCenter.default.post(name: .init("selectIcon"), object: nil, userInfo: ["iconImageName": categoryImageArray[index], "iconName": categoryNameArray[index]])
+                delegate?.iconSelectedAndDismissView(index: index, from: 2, iconKind: iconKind!)
+                
             }
         }
     }

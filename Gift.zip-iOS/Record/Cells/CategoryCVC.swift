@@ -16,9 +16,8 @@ class CategoryCVC: UICollectionViewCell {
     
     var popupBackgroundColor: UIColor?
     var delegate: CollectionViewButtonSelectedProtocol?
+    var iconKind: String?
     
-    var categoryImageArray: [String] = ["icDigital", "icGroceries", "icLiving", "icPet", "icBaby", "icGiftCard", "icSports", "icFashion"]
-    var categoryNameArray: [String] = ["디지털", "식품", "리빙", "펫", "유아동", "상품권", "스포츠", "패션"]
     
     func setBorder() {
         for button in buttons {
@@ -26,27 +25,28 @@ class CategoryCVC: UICollectionViewCell {
         }
     }
     
-    func setCategories() {
+    func setCategories(iconNames: [String], iconImages: [String]) {
         for index in labels.indices {
-            labels[index].text = categoryNameArray[index]
-            images[index].image = UIImage.init(named: categoryImageArray[index])
+            labels[index].text = iconNames[index]
+            images[index].image = UIImage.init(named: iconImages[index])
         }
     }
     
     @IBAction func selectCategory(_ sender: UIButton) {
-        delegate?.iconSelectedAndDismissView()
+        
         for index in buttons.indices {
             if buttons[index] == sender {
-                NotificationCenter.default.post(name: .init("selectIcon"), object: nil, userInfo: ["iconImageName": categoryImageArray[index], "iconName": categoryNameArray[index]])
+                delegate?.iconSelectedAndDismissView(index: index, from: 1, iconKind: iconKind!)
+                
             }
         }
     }
 }
 
 protocol CollectionViewButtonSelectedProtocol {
-    func iconSelectedAndDismissView()
+    func iconSelectedAndDismissView(index: Int, from: Int, iconKind: String)
 }
 
 extension CollectionViewButtonSelectedProtocol {
-    func iconSelectedAndDismissView() {}
+    func iconSelectedAndDismissView(index: Int, from: Int, iconKind: String) {}
 }

@@ -85,13 +85,28 @@ class RecordVC: UIViewController {
             popupBackground.animatePopupBackground(true)
             guard let des = segue.destination as? DatePopupVC else { return }
             des.delegate = self
-        } else if segue.identifier == "CategoryPopup" {
-            
+        } else if segue.identifier == "categoryPopup" {
             popupBackground.animatePopupBackground(true)
             view.bringSubviewToFront(categoryImageView)
             view.bringSubviewToFront(categoryLabel)
-            
-            guard let des = segue.destination as? CategoryPopupVC else { return }
+            guard let des = segue.destination as? IconPopupVC else { return }
+            des.whichPopup = 0
+            des.backgroundColor = currentBackgroundColor
+            des.popupViewHeightByPhones = self.view.frame.height - infoView.frame.origin.y - 149 - 34
+        } else if segue.identifier == "purposePopup" {
+            popupBackground.animatePopupBackground(true)
+            view.bringSubviewToFront(purposeImageView)
+            view.bringSubviewToFront(purposeLabel)
+            guard let des = segue.destination as? IconPopupVC else { return }
+            des.whichPopup = 1
+            des.backgroundColor = currentBackgroundColor
+            des.popupViewHeightByPhones = self.view.frame.height - infoView.frame.origin.y - 149 - 34
+        } else if segue.identifier == "emotionPopup" {
+            popupBackground.animatePopupBackground(true)
+            view.bringSubviewToFront(emotionImageView)
+            view.bringSubviewToFront(emotionLabel)
+            guard let des = segue.destination as? IconPopupVC else { return }
+            des.whichPopup = 2
             des.backgroundColor = currentBackgroundColor
             des.popupViewHeightByPhones = self.view.frame.height - infoView.frame.origin.y - 149 - 34
         }
