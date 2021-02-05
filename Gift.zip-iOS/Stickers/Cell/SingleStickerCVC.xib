@@ -4,7 +4,6 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -20,17 +19,27 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wcW-8e-v2e">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="302"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Single Stcker" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="154-dJ-Fcv">
-                                <rect key="frame" x="137.5" y="140.5" width="100" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="cuK-CF-KNX">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="302"/>
+                                <color key="backgroundColor" red="0.22352941176470587" green="0.22352941176470587" blue="0.22352941176470587" alpha="1" colorSpace="calibratedRGB"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="b6v-Yp-gE1">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <connections>
+                                    <outlet property="dataSource" destination="-1" id="S2B-LU-rRv"/>
+                                    <outlet property="delegate" destination="-1" id="1Xf-GQ-cKi"/>
+                                </connections>
+                            </collectionView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" red="0.22352941176470587" green="0.22352941176470587" blue="0.22352941176470587" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="154-dJ-Fcv" firstAttribute="centerY" secondItem="wcW-8e-v2e" secondAttribute="centerY" id="76q-Rh-fLJ"/>
-                            <constraint firstItem="154-dJ-Fcv" firstAttribute="centerX" secondItem="wcW-8e-v2e" secondAttribute="centerX" id="cLa-IN-geX"/>
+                            <constraint firstAttribute="trailing" secondItem="cuK-CF-KNX" secondAttribute="trailing" id="87O-MA-4N5"/>
+                            <constraint firstItem="cuK-CF-KNX" firstAttribute="top" secondItem="wcW-8e-v2e" secondAttribute="top" id="VAB-kF-pmM"/>
+                            <constraint firstAttribute="bottom" secondItem="cuK-CF-KNX" secondAttribute="bottom" id="euM-2b-o1j"/>
+                            <constraint firstItem="cuK-CF-KNX" firstAttribute="leading" secondItem="wcW-8e-v2e" secondAttribute="leading" id="gBc-hl-YF7"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -43,12 +52,10 @@
                 <constraint firstItem="wcW-8e-v2e" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="wIO-2w-xI8"/>
             </constraints>
             <size key="customSize" width="199" height="145"/>
+            <connections>
+                <outlet property="singleCollectionView" destination="cuK-CF-KNX" id="bPD-Yn-75T"/>
+            </connections>
             <point key="canvasLocation" x="-47.10144927536232" y="120.20089285714285"/>
         </collectionViewCell>
     </objects>
-    <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-    </resources>
 </document>
