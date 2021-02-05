@@ -158,22 +158,22 @@ extension IconPopupVC: CollectionViewButtonSelectedProtocol {
     func iconSelectedAndDismissView(index: Int, from: Int, iconKind: String) {
         if iconKind == "category"  {
             if from == 1 {
-                NotificationCenter.default.post(name: .init("selectIcon"), object: nil, userInfo: ["iconImageName": categoryImageArray[index], "iconName": categoryNameArray[index], "whichPopup": iconKind])
+                NotificationCenter.default.post(name: .init("selectIcon"), object: nil, userInfo: ["iconImageName": categoryImageArray[index], "iconName": categoryNameArray[index], "iconKind": iconKind])
             } else {
-                NotificationCenter.default.post(name: .init("selectIcon"), object: nil, userInfo: ["iconImageName": categoryImageArray2[index], "iconName": categoryNameArray2[index], "whichPopup": iconKind])
+                NotificationCenter.default.post(name: .init("selectIcon"), object: nil, userInfo: ["iconImageName": categoryImageArray2[index], "iconName": categoryNameArray2[index], "iconKind": iconKind])
             }
         } else if iconKind == "purpose" {
             if from == 1 {
-                NotificationCenter.default.post(name: .init("selectIcon"), object: nil, userInfo: ["iconImageName": purposeImageArray[index], "iconName": purposeNameArray[index], "whichPopup": iconKind])
+                NotificationCenter.default.post(name: .init("selectIcon"), object: nil, userInfo: ["iconImageName": purposeImageArray[index], "iconName": purposeNameArray[index], "iconKind": iconKind])
             } else {
-                NotificationCenter.default.post(name: .init("selectIcon"), object: nil, userInfo: ["iconImageName": purposeImageArray2[index], "iconName": purposeNameArray2[index], "whichPopup": iconKind])
+                NotificationCenter.default.post(name: .init("selectIcon"), object: nil, userInfo: ["iconImageName": purposeImageArray2[index], "iconName": purposeNameArray2[index], "iconKind": iconKind])
             }
         } else if iconKind == "emotion" {
             if isSend {
-                NotificationCenter.default.post(name: .init("selectIcon"), object: nil, userInfo: ["iconImageName": emotionImageSendArray[index], "iconName": emotionNameSendArray[index], "whichPopup": iconKind])
+                NotificationCenter.default.post(name: .init("selectIcon"), object: nil, userInfo: ["iconImageName": emotionImageSendArray[index], "iconName": emotionNameSendArray[index], "iconKind": iconKind])
 
             } else {
-                NotificationCenter.default.post(name: .init("selectIcon"), object: nil, userInfo: ["iconImageName": emotionImageGetArray[index], "iconName": emotionNameGetArray[index], "whichPopup": iconKind])
+                NotificationCenter.default.post(name: .init("selectIcon"), object: nil, userInfo: ["iconImageName": emotionImageGetArray[index], "iconName": emotionNameGetArray[index], "iconKind": iconKind])
 
             }
         }

@@ -211,9 +211,18 @@ extension RecordVC {
         guard let userInfo = notification.userInfo as? [String: Any] else { return }
         guard let iconImage = userInfo["iconImageName"] as? String else { return }
         guard let iconName = userInfo["iconName"] as? String else { return }
+        guard let iconKind = userInfo["iconKind"] as? String else { return }
         
-        categoryImageView.image = UIImage(named: iconImage)
-        categoryLabel.text = iconName
+        if iconKind == "category" {
+            categoryImageView.image = UIImage(named: iconImage)
+            categoryLabel.text = iconName
+        } else if iconKind == "purpose" {
+            purposeImageView.image = UIImage(named: iconImage)
+            purposeLabel.text = iconName
+        } else {
+            emotionImageView.image = UIImage(named: iconImage)
+            emotionLabel.text = iconName
+        }
     }
     
     //    private func
