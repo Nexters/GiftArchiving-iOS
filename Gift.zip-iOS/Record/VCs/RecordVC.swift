@@ -190,12 +190,11 @@ extension RecordVC {
             emotionTextView.alpha = 1.0
         }
         
-        cropImageView.layer.borderWidth = 1
-        cropImageView.layer.borderColor = UIColor.init(red: 255, green: 255, blue: 255, alpha: 0.12).cgColor
+        
         currentInfoViewOriginY = infoView.frame.origin.y
         currentBottomContainerOriginY = bottomContainer.frame.origin.y
         currentImageContainerOriginY = imageContainer.frame.origin.y
-        
+        cropImageView.makeDashedBorder()
     }
     
     private func setNotificationCenter() {
@@ -243,8 +242,8 @@ extension RecordVC {
         let heightConstant = isAppearing ? keyboardHeight - 34 : 0
         if isNameTouched {
             isNameTouched = false
-            self.bottomBarBottomConstraintWithBottomSafeArea.constant = heightConstant
-            self.view.layoutIfNeeded()
+//            self.bottomBarBottomConstraintWithBottomSafeArea.constant = heightConstant
+//            self.view.layoutIfNeeded()
         } else {
             UIView.animate(withDuration: keyboardAnimationDuration, animations: {
                 if isAppearing {
@@ -333,6 +332,7 @@ extension RecordVC: UIImagePickerControllerDelegate, UINavigationControllerDeleg
         if let image = info[.originalImage] as? UIImage, let editedImage = info[.editedImage] as? UIImage {
             print(image)
             self.cropImageView.image = editedImage
+            self.cropImageView.eraseBorder()
             self.originalFullImage = image
             self.emptyImageLabel.isHidden = true
             self.dismiss(animated: true, completion: nil)

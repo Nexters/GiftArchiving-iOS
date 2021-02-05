@@ -8,7 +8,7 @@
 import UIKit
 
 class IconPopupVC: UIViewController {
-
+    
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var safeAreaView: UIView!
     @IBOutlet weak var pageControl: UIPageControl!
@@ -17,7 +17,7 @@ class IconPopupVC: UIViewController {
     
     var whichPopup: Int = 0
     // 0 :
-        
+    
     var backgroundColor: UIColor?
     
     var popupViewHeightByPhones: CGFloat?
@@ -46,7 +46,7 @@ class IconPopupVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setLayout()
         initDelegates()
     }
@@ -58,7 +58,13 @@ class IconPopupVC: UIViewController {
             popupViewHeight.constant = height
         }
         iconCollectionView.isPagingEnabled = true
-      }
+        if whichPopup == 2 {
+            pageControl.numberOfPages = 1
+        } else {
+            pageControl.numberOfPages = 2
+        }
+        pageControl.hidesForSinglePage = true
+    }
     
     private func initDelegates() {
         iconCollectionView.delegate = self
@@ -84,25 +90,25 @@ extension IconPopupVC: UICollectionViewDataSource, UICollectionViewDelegateFlowL
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if whichPopup == 2 {
             guard let icon = collectionView.dequeueReusableCell(withReuseIdentifier: CategorySecondCVC.identifier, for: indexPath) as? CategorySecondCVC else {
-            return UICollectionViewCell()
+                return UICollectionViewCell()
             }
             icon.setBorder()
             if isSend {
                 icon.setCategories(iconNames: emotionNameSendArray, iconImages: emotionImageSendArray)
                 icon.iconKind = "emotion"
-            
+                
             } else {
                 icon.setCategories(iconNames: emotionNameGetArray, iconImages: emotionImageGetArray)
                 icon.iconKind = "emotion"
             }
-                
+            
             icon.delegate = self
             return icon
-
+            
         } else {
             if indexPath.item == 0 {
                 guard let icon = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCVC.identifier, for: indexPath) as? CategoryCVC else {
-                return UICollectionViewCell()
+                    return UICollectionViewCell()
                 }
                 icon.setBorder()
                 if whichPopup == 0 {
@@ -119,7 +125,7 @@ extension IconPopupVC: UICollectionViewDataSource, UICollectionViewDelegateFlowL
                 return icon
             } else {
                 guard let icon = collectionView.dequeueReusableCell(withReuseIdentifier: CategorySecondCVC.identifier, for: indexPath) as? CategorySecondCVC else {
-                return UICollectionViewCell()
+                    return UICollectionViewCell()
                 }
                 icon.setBorder()
                 if whichPopup == 0 {
@@ -135,9 +141,9 @@ extension IconPopupVC: UICollectionViewDataSource, UICollectionViewDelegateFlowL
                 icon.delegate = self
                 return icon
             }
-
+            
         }
-                
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -151,10 +157,22 @@ extension IconPopupVC: UICollectionViewDataSource, UICollectionViewDelegateFlowL
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let pageSide = self.view.frame.width
+        
+        let offset = scrollView.contentOffset.x
+        
+        let currentPage = Int(floor((offset - pageSide / 2) / pageSide) + 1)
+        pageControl.currentPage = currentPage
+        
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    }
 }
 
 extension IconPopupVC: CollectionViewButtonSelectedProtocol {
-
+    
     func iconSelectedAndDismissView(index: Int, from: Int, iconKind: String) {
         if iconKind == "category"  {
             if from == 1 {
@@ -171,10 +189,10 @@ extension IconPopupVC: CollectionViewButtonSelectedProtocol {
         } else if iconKind == "emotion" {
             if isSend {
                 NotificationCenter.default.post(name: .init("selectIcon"), object: nil, userInfo: ["iconImageName": emotionImageSendArray[index], "iconName": emotionNameSendArray[index], "iconKind": iconKind])
-
+                
             } else {
                 NotificationCenter.default.post(name: .init("selectIcon"), object: nil, userInfo: ["iconImageName": emotionImageGetArray[index], "iconName": emotionNameGetArray[index], "iconKind": iconKind])
-
+                
             }
         }
         

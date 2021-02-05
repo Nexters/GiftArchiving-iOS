@@ -47,4 +47,25 @@ extension UIView {
         }
     }
     
+    // dahsed View
+    func makeDashedBorder()  {
+        let mViewBorder = CAShapeLayer()
+        let opacity: CGFloat = 0.25
+        let borderColor: UIColor = UIColor.white
+        mViewBorder.strokeColor = borderColor.withAlphaComponent(opacity).cgColor
+        mViewBorder.lineDashPattern = [2, 2]
+        mViewBorder.frame = self.bounds
+        mViewBorder.fillColor = nil
+        mViewBorder.path = UIBezierPath(rect: self.bounds).cgPath
+        mViewBorder.name = "dash"
+        self.layer.addSublayer(mViewBorder)
+    }
+    
+    func eraseBorder() {
+        for layer in self.layer.sublayers! {
+            if layer.name == "dash" {
+                layer.removeFromSuperlayer()
+            }
+        }
+    }
 }
