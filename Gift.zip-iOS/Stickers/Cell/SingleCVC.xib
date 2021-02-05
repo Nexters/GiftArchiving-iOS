@@ -19,13 +19,23 @@
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="l0b-nV-04Q">
                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                     </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XZ7-1R-12D">
+                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                        <connections>
+                            <action selector="selectSticker:" destination="gTV-IL-0wX" eventType="touchUpInside" id="S4W-eJ-bAa"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
                 <constraint firstItem="l0b-nV-04Q" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="5D3-zV-IDT"/>
+                <constraint firstAttribute="bottom" secondItem="XZ7-1R-12D" secondAttribute="bottom" id="EZi-IY-ea1"/>
+                <constraint firstItem="XZ7-1R-12D" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="IYF-SW-C5q"/>
                 <constraint firstAttribute="trailing" secondItem="l0b-nV-04Q" secondAttribute="trailing" id="Nk2-TZ-g9V"/>
                 <constraint firstItem="l0b-nV-04Q" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="brC-V0-k7n"/>
+                <constraint firstAttribute="trailing" secondItem="XZ7-1R-12D" secondAttribute="trailing" id="ozF-Dh-M0R"/>
+                <constraint firstItem="XZ7-1R-12D" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="p2l-Jt-092"/>
                 <constraint firstAttribute="bottom" secondItem="l0b-nV-04Q" secondAttribute="bottom" id="xb3-Ls-ZCM"/>
             </constraints>
             <connections>

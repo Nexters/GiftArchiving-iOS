@@ -1,9 +1,9 @@
 {
   "images" : [
     {
-      "filename" : "iconCameraBk.png",
       "idiom" : "universal",
-      "scale" : "1x"
+      "scale" : "1x",
+      "filename" : "iconCameraBk.png"
     },
     {
       "scale" : "2x",
@@ -11,9 +11,9 @@
       "idiom" : "universal"
     },
     {
-      "filename" : "iconCameraBk@3x.png",
       "scale" : "3x",
-      "idiom" : "universal"
+      "idiom" : "universal",
+      "filename" : "iconCameraBk@3x.png"
     }
   ],
   "info" : {

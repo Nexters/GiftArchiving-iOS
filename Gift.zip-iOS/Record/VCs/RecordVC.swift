@@ -26,7 +26,7 @@ class RecordVC: UIViewController {
     @IBOutlet weak var cropImageView: UIImageView!
     @IBOutlet weak var nameStackView: UIStackView!
     @IBOutlet weak var infoView: UIView!
-    @IBOutlet weak var stickerArea: UIView!
+    @IBOutlet weak var cropArea: UIView!
     @IBOutlet weak var emotionTextView: UITextView!
     @IBOutlet weak var bottomBarBottomConstraintWithBottomSafeArea: NSLayoutConstraint!
     @IBOutlet weak var upperContainerConstraintWithImageContainerTop: NSLayoutConstraint!
@@ -42,7 +42,10 @@ class RecordVC: UIViewController {
     @IBOutlet weak var emotionImageView: UIImageView!
     @IBOutlet weak var dateToRecordLabel: UILabel!
     
+    @IBOutlet weak var photoButton: UIButton!
+    @IBOutlet weak var frameButton: UIButton!
     @IBOutlet weak var stickerButton: UIButton!
+    @IBOutlet weak var colorButton: UIButton!
     
     @IBOutlet var colorButtons: [UIButton]!
     
@@ -92,6 +95,7 @@ class RecordVC: UIViewController {
         didSet {
             if isColorEditing {
                 view.bringSubviewToFront(colorBottomContainer)
+                view.bringSubviewToFront(exitButton)
                 exitButton.isHidden = false
             } else {
                 view.bringSubviewToFront(bottomContainer)
@@ -108,8 +112,8 @@ class RecordVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let stickerButtonWidth = stickerButton.frame.width
-        stickerButton.makeRounded(cornerRadius: stickerButtonWidth / 2)
+        let stickerButtonWidth = colorButton.frame.width
+        colorButton.makeRounded(cornerRadius: stickerButtonWidth / 2)
         for button in colorButtons {
             let buttonWidth = button.frame.width
             button.makeRounded(cornerRadius: buttonWidth / 2)
@@ -183,7 +187,22 @@ class RecordVC: UIViewController {
     
     @IBAction func completeRecord(_ sender: UIButton) {
         // record server
-        self.navigationController?.popToRootViewController(animated: true)
+        
+        let renderer = UIGraphicsImageRenderer(size: cropArea.bounds.size)
+        let renderImage = renderer.image { _ in
+             cropArea.drawHierarchy(in: cropArea.bounds, afterScreenUpdates: true)
+        }
+        UIImageWriteToSavedPhotosAlbum(renderImage, self, #selector(image(image:didFinishSavingWithError:contextInfo:)), nil)
+//        self.dismiss(animated: true, completion: nil)
+//        self.navigationController?.popToRootViewController(animated: true)
+    }
+    
+    @objc func image(image: UIImage, didFinishSavingWithError error: NSError?, contextInfo:UnsafeRawPointer) {
+        if error == nil {
+            print("saved cropped image")
+        } else {
+            print("error saving cropped image")
+        }
     }
     
     @IBAction func selectPhoto(_ sender: UIButton) {
@@ -208,18 +227,34 @@ class RecordVC: UIViewController {
     
     @IBAction func useSticker(_ sender: UIButton) {
         if isStickerEditing {
-            stickerView.animatePopupBackground(false)
+            stickerView.animateStickerView(false)
+            makeButtonNormalOpacity()
+            bottomContainer.backgroundColor = currentBackgroundColor
             isStickerEditing = false
         } else {
-            self.view.addSubview(stickerView)
-            stickerView.translatesAutoresizingMaskIntoConstraints = false
-            stickerView.bottomAnchor.constraint(equalTo: bottomContainer.topAnchor, constant: 0).isActive = true
-            stickerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
-            stickerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
-            stickerView.topAnchor.constraint(equalTo: imageContainer
-                                                .bottomAnchor, constant: 0).isActive = true
+            stickerView.animateStickerView(true)
             isStickerEditing = true
+            makeButtonLowOpacity(index: 2)
         }
+    }
+    
+    private func makeButtonLowOpacity(index: Int) {
+        photoButton.alpha = 0.3
+        colorButton.alpha = 0.3
+        if index == 1 {
+            frameButton.alpha = 1.0
+            stickerButton.alpha = 0.3
+        } else if index == 2 {
+            frameButton.alpha = 0.3
+            stickerButton.alpha = 1.0
+        }
+    }
+    
+    private func makeButtonNormalOpacity() {
+        photoButton.alpha = 1.0
+        colorButton.alpha = 1.0
+        frameButton.alpha = 1.0
+        stickerButton.alpha = 1.0
     }
     
     @IBAction func changeColor(_ sender: UIButton) {
@@ -272,12 +307,14 @@ extension RecordVC {
         currentImageContainerOriginY = imageContainer.frame.origin.y
         cropImageView.makeDashedBorder()
         
-        stickerButton.translatesAutoresizingMaskIntoConstraints = false
-        stickerButton.widthAnchor.constraint(equalToConstant: 24).isActive = true
-        stickerButton.heightAnchor.constraint(equalToConstant: 24).isActive = true
-        stickerButton.layer.borderWidth = 1
-        stickerButton.layer.borderColor = UIColor.white.cgColor
+        colorButton.translatesAutoresizingMaskIntoConstraints = false
+        colorButton.widthAnchor.constraint(equalToConstant: 24).isActive = true
+        colorButton.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        colorButton.layer.borderWidth = 1
+        colorButton.layer.borderColor = UIColor.white.cgColor
         
+        
+        // 배경색 바꿀때 원래 메뉴로 돌아가는 버튼
         exitButton.addTarget(self, action: #selector(dismissColorBottomContainer), for: .touchUpInside)
         view.addSubview(exitButton)
         exitButton.translatesAutoresizingMaskIntoConstraints = false
@@ -286,6 +323,17 @@ extension RecordVC {
         exitButton.bottomAnchor.constraint(equalTo: colorBottomContainer.topAnchor).isActive = true
         exitButton.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
         exitButton.isHidden = true
+        
+        // 스티커 뷰
+        view.addSubview(stickerView)
+        stickerView.translatesAutoresizingMaskIntoConstraints = false
+        stickerView.bottomAnchor.constraint(equalTo: bottomContainer.topAnchor, constant: 0).isActive = true
+        stickerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+        stickerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+        stickerView.topAnchor.constraint(equalTo: imageContainer
+                                            .bottomAnchor, constant: 0).isActive = true
+        stickerView.alpha = 0
+        stickerView.isHidden = true
     }
     
     @objc func dismissColorBottomContainer() {
@@ -296,6 +344,13 @@ extension RecordVC {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(selectIcon), name: .init("selectIcon"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(getStickerName), name: .init("getStickerName"), object: nil)
+    }
+    
+    @objc private func getStickerName(_ notification: Notification) {
+        guard let userInfo = notification.userInfo as? [String: Any] else { return }
+        guard let stickerName = userInfo["stickerName"] as? String else { return }
+        print(stickerName)
     }
     
     @objc private func selectIcon(_ notification: Notification) {
@@ -357,6 +412,8 @@ extension RecordVC {
             }) { (_) in
             }
         }
+        
+        
     }
     
     private func initTextField() {

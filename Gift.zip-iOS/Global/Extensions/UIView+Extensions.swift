@@ -47,6 +47,19 @@ extension UIView {
         }
     }
     
+    
+    // animate sticker view
+    func animateStickerView(_ direction: Bool) {
+        self.superview?.bringSubviewToFront(self)
+        let duration: TimeInterval = direction ? 0.25 : 0.10
+        let alpha: CGFloat = direction ? 1.0 : 0.0
+        self.isHidden = !direction
+        UIView.animate(withDuration: duration) {
+            self.alpha = alpha
+        }
+    }
+    
+    
     // dahsed View
     func makeDashedBorder()  {
         let mViewBorder = CAShapeLayer()

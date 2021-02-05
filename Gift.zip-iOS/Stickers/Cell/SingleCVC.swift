@@ -11,7 +11,13 @@ class SingleCVC: UICollectionViewCell {
     static let identifier: String = "SingleCVC"
     @IBOutlet weak var imageView: UIImageView!
     
+    var imageName: String?
     func setSticker(imageName: String) {
         imageView.image = UIImage.init(named: imageName)
+        self.imageName = imageName
+    }
+    @IBAction func selectSticker(_ sender: UIButton) {
+        print("tapped")
+        NotificationCenter.default.post(name: .init("getStickerName"), object: nil, userInfo: ["stickerName": imageName!])
     }
 }
