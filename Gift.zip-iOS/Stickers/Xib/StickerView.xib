@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Spoqa Han Sans Neo Regular.otf">
+            <string>SpoqaHanSansNeo-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StickerView" customModule="Gift_zip_iOS" customModuleProvider="target">
+            <connections>
+                <outlet property="packageSticker" destination="aTO-0i-3aR" id="oig-5s-GMD"/>
+                <outlet property="singleSticker" destination="8b5-Vz-eMH" id="F5y-Xi-x9v"/>
+                <outlet property="slider" destination="LPh-l2-n0Z" id="Mew-ep-8yX"/>
+                <outlet property="stickerCollectionView" destination="zjL-zK-Eej" id="usI-d6-3OC"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="302"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="WeF-RJ-cR0">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="53"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8b5-Vz-eMH">
+                            <rect key="frame" x="0.0" y="0.0" width="187.66666666666666" height="53"/>
+                            <fontDescription key="fontDescription" name="SpoqaHanSansNeo-Regular" family="Spoqa Han Sans Neo" pointSize="14"/>
+                            <state key="normal" title="단일 스티커">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="selectSingle:" destination="-1" eventType="touchUpInside" id="yhh-m1-F8V"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" alpha="0.29999999999999999" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aTO-0i-3aR">
+                            <rect key="frame" x="187.66666666666663" y="0.0" width="187.33333333333337" height="53"/>
+                            <fontDescription key="fontDescription" name="SpoqaHanSansNeo-Regular" family="Spoqa Han Sans Neo" pointSize="14"/>
+                            <state key="normal" title="패키지 스티커">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="selectPackage:" destination="-1" eventType="touchUpInside" id="p1B-0B-g0r"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.22352941176470587" green="0.22352941176470587" blue="0.22352941176470587" alpha="0.84705882352941175" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="53" id="rM6-1C-QDH"/>
+                    </constraints>
+                </stackView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LPh-l2-n0Z">
+                    <rect key="frame" x="0.0" y="53" width="187.66666666666666" height="1"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="tss-aq-Q97"/>
+                    </constraints>
+                </view>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="zjL-zK-Eej">
+                    <rect key="frame" x="0.0" y="54" width="375" height="248"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="qr4-3g-0wm">
+                        <size key="itemSize" width="128" height="128"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="e68-0g-kCG"/>
+                        <outlet property="delegate" destination="-1" id="WMz-Dl-Gpa"/>
+                    </connections>
+                </collectionView>
+            </subviews>
+            <color key="backgroundColor" red="0.22352941176470587" green="0.22352941176470587" blue="0.22352941176470587" alpha="0.84705882352941175" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="zjL-zK-Eej" secondAttribute="trailing" id="3bS-KU-I8l"/>
+                <constraint firstItem="WeF-RJ-cR0" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="5XL-uF-m3L"/>
+                <constraint firstItem="WeF-RJ-cR0" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="9Pi-AA-rJ7"/>
+                <constraint firstItem="LPh-l2-n0Z" firstAttribute="top" secondItem="8b5-Vz-eMH" secondAttribute="bottom" id="ADB-uO-Stx"/>
+                <constraint firstItem="zjL-zK-Eej" firstAttribute="top" secondItem="LPh-l2-n0Z" secondAttribute="bottom" id="Fx5-Bb-oUV"/>
+                <constraint firstItem="LPh-l2-n0Z" firstAttribute="leading" secondItem="8b5-Vz-eMH" secondAttribute="leading" id="LhI-UM-PdR"/>
+                <constraint firstAttribute="trailing" secondItem="WeF-RJ-cR0" secondAttribute="trailing" id="RBI-tD-gpa"/>
+                <constraint firstAttribute="bottom" secondItem="zjL-zK-Eej" secondAttribute="bottom" id="YGT-mR-m1V"/>
+                <constraint firstItem="LPh-l2-n0Z" firstAttribute="width" secondItem="8b5-Vz-eMH" secondAttribute="width" id="wEh-9E-cgg"/>
+                <constraint firstItem="zjL-zK-Eej" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="wcV-IT-7wC"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="139" y="105"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

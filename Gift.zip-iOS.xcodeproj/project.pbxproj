@@ -18,6 +18,8 @@
 		40DE15C925C8629300184320 /* ListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DE15C825C8629300184320 /* ListCollectionViewCell.swift */; };
 		40DE15CC25C8636D00184320 /* ListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DE15CB25C8636D00184320 /* ListVC.swift */; };
 		88DE6CEB42D2D43A9C392C22 /* Pods_Gift_zip_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39B10916997BFB92D3A04B42 /* Pods_Gift_zip_iOS.framework */; };
+		D400F5AA25CDA3CE00F71709 /* PackageStickerCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D400F5A825CDA3CE00F71709 /* PackageStickerCVC.swift */; };
+		D400F5AB25CDA3CE00F71709 /* PackageStickerCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = D400F5A925CDA3CE00F71709 /* PackageStickerCVC.xib */; };
 		D4336D1F25BE80D500D27568 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4336D1E25BE80D500D27568 /* AppDelegate.swift */; };
 		D4336D2125BE80D500D27568 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4336D2025BE80D500D27568 /* SceneDelegate.swift */; };
 		D4336D2325BE80D500D27568 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4336D2225BE80D500D27568 /* ViewController.swift */; };
@@ -41,6 +43,8 @@
 		D4D5262425CB385700D18386 /* MainSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4D5262325CB385700D18386 /* MainSB.storyboard */; };
 		D4F3609625C8739F00874874 /* ShiftyImageCropVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F3609525C8739F00874874 /* ShiftyImageCropVC.swift */; };
 		D4F360AC25C8871700874874 /* ImageCropVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F360AB25C8871700874874 /* ImageCropVC.swift */; };
+		D4F4915C25CD9E5F00FE9BF6 /* SingleStickerCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F4915A25CD9E5F00FE9BF6 /* SingleStickerCVC.swift */; };
+		D4F4915D25CD9E5F00FE9BF6 /* SingleStickerCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4F4915B25CD9E5F00FE9BF6 /* SingleStickerCVC.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +62,8 @@
 		40DE15CB25C8636D00184320 /* ListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListVC.swift; sourceTree = "<group>"; };
 		CAB51F8940A7A2D1DBE7B8F8 /* Pods-Gift.zip-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gift.zip-iOS.release.xcconfig"; path = "Target Support Files/Pods-Gift.zip-iOS/Pods-Gift.zip-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		CD281D2B3ABD9BE5F785046B /* Pods-Gift.zip-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gift.zip-iOS.debug.xcconfig"; path = "Target Support Files/Pods-Gift.zip-iOS/Pods-Gift.zip-iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		D400F5A825CDA3CE00F71709 /* PackageStickerCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageStickerCVC.swift; sourceTree = "<group>"; };
+		D400F5A925CDA3CE00F71709 /* PackageStickerCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PackageStickerCVC.xib; sourceTree = "<group>"; };
 		D4336D1B25BE80D500D27568 /* Gift.zip-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Gift.zip-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4336D1E25BE80D500D27568 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D4336D2025BE80D500D27568 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -84,6 +90,8 @@
 		D4EADD3325CA693E002B8629 /* ListSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ListSB.storyboard; sourceTree = "<group>"; };
 		D4F3609525C8739F00874874 /* ShiftyImageCropVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShiftyImageCropVC.swift; sourceTree = "<group>"; };
 		D4F360AB25C8871700874874 /* ImageCropVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCropVC.swift; sourceTree = "<group>"; };
+		D4F4915A25CD9E5F00FE9BF6 /* SingleStickerCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleStickerCVC.swift; sourceTree = "<group>"; };
+		D4F4915B25CD9E5F00FE9BF6 /* SingleStickerCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SingleStickerCVC.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -345,26 +353,30 @@
 		D4B1899D25CBCE75007C6AE9 /* Stickers */ = {
 			isa = PBXGroup;
 			children = (
-				D4B1899F25CBCE88007C6AE9 /* VCs */,
-				D4B1899E25CBCE81007C6AE9 /* Storyboards */,
+				D4B1899F25CBCE88007C6AE9 /* Xib */,
+				D4B1899E25CBCE81007C6AE9 /* Cell */,
 			);
 			path = Stickers;
 			sourceTree = "<group>";
 		};
-		D4B1899E25CBCE81007C6AE9 /* Storyboards */ = {
+		D4B1899E25CBCE81007C6AE9 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				D4F4915A25CD9E5F00FE9BF6 /* SingleStickerCVC.swift */,
+				D4F4915B25CD9E5F00FE9BF6 /* SingleStickerCVC.xib */,
+				D400F5A825CDA3CE00F71709 /* PackageStickerCVC.swift */,
+				D400F5A925CDA3CE00F71709 /* PackageStickerCVC.xib */,
 			);
-			path = Storyboards;
+			path = Cell;
 			sourceTree = "<group>";
 		};
-		D4B1899F25CBCE88007C6AE9 /* VCs */ = {
+		D4B1899F25CBCE88007C6AE9 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
 				D4B189A025CBCEA2007C6AE9 /* StickerView.swift */,
 				D4B189A725CBCF30007C6AE9 /* StickerView.xib */,
 			);
-			path = VCs;
+			path = Xib;
 			sourceTree = "<group>";
 		};
 		D4B189A325CBCEDC007C6AE9 /* CustomView */ = {
@@ -455,6 +467,7 @@
 				40ADFC0E25C9AFA100721F4D /* ListSB.storyboard in Resources */,
 				D4B189A825CBCF30007C6AE9 /* StickerView.xib in Resources */,
 				408E519B25CB1E6E0037EC9B /* OnboardingSB.storyboard in Resources */,
+				D4F4915D25CD9E5F00FE9BF6 /* SingleStickerCVC.xib in Resources */,
 				D4336D2825BE80D500D27568 /* Assets.xcassets in Resources */,
 				D4D5262425CB385700D18386 /* MainSB.storyboard in Resources */,
 				408E518F25CAF5E20037EC9B /* GridCollectionViewCell.xib in Resources */,
@@ -462,6 +475,7 @@
 				D4A08E9525BFDD09009CFCC4 /* Record.storyboard in Resources */,
 				D4A08EB625C01A8A009CFCC4 /* Spoqa Han Sans Neo Bold.otf in Resources */,
 				D4A08EB825C01A8D009CFCC4 /* Spoqa Han Sans Neo Regular.otf in Resources */,
+				D400F5AB25CDA3CE00F71709 /* PackageStickerCVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,10 +543,12 @@
 				D4A08EBD25C01D32009CFCC4 /* PopupViewDelegate.swift in Sources */,
 				40DE15C925C8629300184320 /* ListCollectionViewCell.swift in Sources */,
 				408E51A025CB201C0037EC9B /* OnboardingVC.swift in Sources */,
+				D400F5AA25CDA3CE00F71709 /* PackageStickerCVC.swift in Sources */,
 				D4D5261025CAFE2400D18386 /* IconPopupVC.swift in Sources */,
 				408E519225CAF81E0037EC9B /* GridCollectionViewCell.swift in Sources */,
 				40ADFC1325C9B03800721F4D /* StickyCellFlowLayout.swift in Sources */,
 				D4B189A125CBCEA2007C6AE9 /* StickerView.swift in Sources */,
+				D4F4915C25CD9E5F00FE9BF6 /* SingleStickerCVC.swift in Sources */,
 				D4336D1F25BE80D500D27568 /* AppDelegate.swift in Sources */,
 				D4336D4225BE81FB00D27568 /* UIView+Extensions.swift in Sources */,
 				D4336D2125BE80D500D27568 /* SceneDelegate.swift in Sources */,
