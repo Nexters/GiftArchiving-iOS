@@ -178,7 +178,6 @@
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="chooseCategory:" destination="mvo-u9-pcE" eventType="touchUpInside" id="Uwh-OI-fjo"/>
                                                     <segue destination="fSn-Gu-ddM" kind="presentation" identifier="categoryPopup" modalPresentationStyle="overFullScreen" id="dRY-b2-dpd"/>
                                                 </connections>
                                             </button>
@@ -189,7 +188,6 @@
                                                     <constraint firstAttribute="width" constant="40" id="LAG-BI-Fgw"/>
                                                 </constraints>
                                                 <connections>
-                                                    <action selector="choosePurpose:" destination="mvo-u9-pcE" eventType="touchUpInside" id="VhQ-n2-GVW"/>
                                                     <segue destination="fSn-Gu-ddM" kind="presentation" identifier="purposePopup" modalPresentationStyle="overFullScreen" id="1kQ-cJ-i3H"/>
                                                 </connections>
                                             </button>
@@ -201,7 +199,6 @@
                                                     <constraint firstAttribute="height" constant="40" id="ss0-RH-Exw"/>
                                                 </constraints>
                                                 <connections>
-                                                    <action selector="chooseEmotion:" destination="mvo-u9-pcE" eventType="touchUpInside" id="qrL-lh-OjU"/>
                                                     <segue destination="fSn-Gu-ddM" kind="presentation" identifier="emotionPopup" modalPresentationStyle="overFullScreen" id="ESM-do-b2Q"/>
                                                 </connections>
                                             </button>
@@ -838,7 +835,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PPT-s5-2OF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1520" y="506"/>
+            <point key="canvasLocation" x="1519" y="311"/>
         </scene>
         <!--Image CropVC-->
         <scene sceneID="Q2O-Gk-nZZ">
@@ -965,7 +962,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TM9-CV-Tcy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1903" y="-142"/>
+            <point key="canvasLocation" x="2288" y="-363"/>
         </scene>
         <!--Date PopupVC-->
         <scene sceneID="FzA-uj-agJ">
@@ -1047,11 +1044,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Al-bs-aur" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="887.69230769230762" y="-141.46919431279619"/>
+            <point key="canvasLocation" x="706" y="-364"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="ESM-do-b2Q"/>
+        <segue reference="1kQ-cJ-i3H"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="btnCamera" width="24" height="20"/>

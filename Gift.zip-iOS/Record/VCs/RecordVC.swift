@@ -33,7 +33,6 @@ class RecordVC: UIViewController {
     @IBOutlet weak var emptyImageLabel: UILabel!
     @IBOutlet weak var bottomContainer: UIView!
     @IBOutlet weak var imageContainer: UIView!
-    
     @IBOutlet weak var categoryImageView: UIImageView!
     @IBOutlet weak var purposeImageView: UIImageView!
     @IBOutlet weak var emotionImageView: UIImageView!
@@ -62,6 +61,8 @@ class RecordVC: UIViewController {
     
     private var isStickerEditing: Bool = false
     
+    private var isSend: Bool = false
+    
     let disposeBag = DisposeBag()
     
     private var isNameTouched: Bool = false
@@ -69,7 +70,6 @@ class RecordVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setLayouts()
         setNotificationCenter()
         initTextField()
@@ -108,9 +108,11 @@ class RecordVC: UIViewController {
             guard let des = segue.destination as? IconPopupVC else { return }
             des.whichPopup = 2
             des.backgroundColor = currentBackgroundColor
+            
+            des.isSend = self.isSend
+            
             des.popupViewHeightByPhones = self.view.frame.height - infoView.frame.origin.y - 149 - 34
         }
-        
     }
     
     //MARK: - IBAction
@@ -120,22 +122,10 @@ class RecordVC: UIViewController {
     }
     
     @IBAction func completeRecord(_ sender: UIButton) {
-        
         // record server
-        
         self.navigationController?.popToRootViewController(animated: true)
     }
-    
-    @IBAction func chooseCategory(_ sender: UIButton) {
-        
-    }
-    
-    @IBAction func choosePurpose(_ sender: UIButton) {
-    }
-    
-    @IBAction func chooseEmotion(_ sender: UIButton) {
-    }
-    
+
     @IBAction func selectPhoto(_ sender: UIButton) {
         let alert = UIAlertController(title: "사진 선택", message: "되라제발", preferredStyle: .actionSheet)
         let library = UIAlertAction(title: "사진앨범", style: .default) { (action) in
@@ -154,7 +144,6 @@ class RecordVC: UIViewController {
     
     @IBAction func changeFrame(_ sender: UIButton) {
         let des = self.storyboard?.instantiateViewController(identifier: "ImageCropVC") as! ImageCropVC
-        
         // image 및 프레임 설정
         des.image = originalFullImage
         des.frameOfImage = currentFrameOfImage
@@ -164,12 +153,10 @@ class RecordVC: UIViewController {
     }
     
     @IBAction func useSticker(_ sender: UIButton) {
-        
         if isStickerEditing {
             stickerView.animatePopupBackground(false)
             isStickerEditing = false
         } else {
-            
             self.view.addSubview(stickerView)
             stickerView.translatesAutoresizingMaskIntoConstraints = false
             stickerView.bottomAnchor.constraint(equalTo: bottomContainer.topAnchor, constant: 0).isActive = true
@@ -177,11 +164,8 @@ class RecordVC: UIViewController {
             stickerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
             stickerView.topAnchor.constraint(equalTo: imageContainer
                                                 .bottomAnchor, constant: 0).isActive = true
-            
             isStickerEditing = true
         }
-        
-        
     }
 }
 
@@ -223,6 +207,7 @@ extension RecordVC {
     @objc private func selectIcon(_ notification: Notification) {
         
         popupBackground.animatePopupBackground(false)
+        view.bringSubviewToFront(popupBackground)
         guard let userInfo = notification.userInfo as? [String: Any] else { return }
         guard let iconImage = userInfo["iconImageName"] as? String else { return }
         guard let iconName = userInfo["iconName"] as? String else { return }
@@ -387,12 +372,12 @@ extension RecordVC: UITextViewDelegate {
 extension RecordVC: PopupViewDelegate {
     
     func sendDateButtonTapped(_ date: Date) {
-        print(date)
         popupBackground.animatePopupBackground(false)
         // date
     }
     
-    func sendIconDataButtonTapped(_ icon: String, _ name: String) {
+    func sendIconDataButtonTapped() {
         popupBackground.animatePopupBackground(false)
+        
     }
 }
