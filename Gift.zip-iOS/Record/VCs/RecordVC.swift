@@ -36,6 +36,7 @@ class RecordVC: UIViewController {
     @IBOutlet weak var categoryImageView: UIImageView!
     @IBOutlet weak var purposeImageView: UIImageView!
     @IBOutlet weak var emotionImageView: UIImageView!
+    @IBOutlet weak var dateToRecordLabel: UILabel!
     
     lazy var picker = UIImagePickerController()
     
@@ -46,9 +47,9 @@ class RecordVC: UIViewController {
     private var textViewPlaceholderFlag: Bool = true
     
     private var originalFullImage: UIImage? // full Image
-        
+    
     var editedImage: UIImage? // cropped Image
-
+    
     private var currentFrameOfImage: FrameOfImage = .square
     
     private var currentInfoViewOriginY: CGFloat = 0
@@ -63,6 +64,11 @@ class RecordVC: UIViewController {
     
     private var isSend: Bool = false
     
+    private var dateToRecord: String = "" {
+        didSet {
+            dateToRecordLabel.text = dateToRecord
+        }
+    }
     let disposeBag = DisposeBag()
     
     private var isNameTouched: Bool = false
@@ -125,7 +131,7 @@ class RecordVC: UIViewController {
         // record server
         self.navigationController?.popToRootViewController(animated: true)
     }
-
+    
     @IBAction func selectPhoto(_ sender: UIButton) {
         let alert = UIAlertController(title: "사진 선택", message: "되라제발", preferredStyle: .actionSheet)
         let library = UIAlertAction(title: "사진앨범", style: .default) { (action) in
@@ -242,8 +248,8 @@ extension RecordVC {
         let heightConstant = isAppearing ? keyboardHeight - 34 : 0
         if isNameTouched {
             isNameTouched = false
-//            self.bottomBarBottomConstraintWithBottomSafeArea.constant = heightConstant
-//            self.view.layoutIfNeeded()
+            //            self.bottomBarBottomConstraintWithBottomSafeArea.constant = heightConstant
+            //            self.view.layoutIfNeeded()
         } else {
             UIView.animate(withDuration: keyboardAnimationDuration, animations: {
                 if isAppearing {
@@ -257,7 +263,7 @@ extension RecordVC {
             }
         }
     }
-
+    
     private func initTextField() {
         
         nameTextField.rx.controlEvent([.editingChanged])
@@ -380,12 +386,14 @@ extension RecordVC: UITextViewDelegate {
 
 extension RecordVC: PopupViewDelegate {
     
-    func sendDateButtonTapped(_ date: Date) {
-        print(date)
+    func sendDateButtonTapped(_ date: Date?) {
         popupBackground.animatePopupBackground(false)
+        if date == nil { return }
+        let formatter  = DateFormatter()
+        formatter.dateFormat = "yyyy. MM. dd. "
+        let todayDate = formatter.string(from: date!)
         
-        
-        // date
+        dateToRecord = todayDate + getDayOfWeek(date!)
     }
     
     func sendIconDataButtonTapped() {
@@ -393,4 +401,27 @@ extension RecordVC: PopupViewDelegate {
         
     }
     
+    func getDayOfWeek(_ today: Date) -> String {
+        let myCalendar = Calendar(identifier: .gregorian)
+        let weekDay = myCalendar.component(.weekday, from: today)
+        
+        switch weekDay {
+        case 1:
+            return "Sun"
+        case 2:
+            return "Mon"
+        case 3:
+            return "Tue"
+        case 4:
+            return "Wed"
+        case 5:
+            return "Thu"
+        case 6:
+            return "Fri"
+        case 7:
+            return "Sat"
+        default:
+            return "NILL"
+        }
+    }
 }

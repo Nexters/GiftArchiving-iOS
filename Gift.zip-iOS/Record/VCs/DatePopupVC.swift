@@ -28,6 +28,14 @@ class DatePopupVC: UIViewController {
     @IBAction func dismiss(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
         
+        delegate?.sendDateButtonTapped(nil)
+    }
+    
+    @IBAction func changeDate(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+        
         delegate?.sendDateButtonTapped(datePicker.date)
     }
+    
+    
 }

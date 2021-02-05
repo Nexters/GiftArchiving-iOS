@@ -8,13 +8,13 @@
 import Foundation
 
 protocol PopupViewDelegate: class {
-    func sendDateButtonTapped(_ date: Date)
+    func sendDateButtonTapped(_ date: Date?)
     
     func sendIconDataButtonTapped(_ icon: String, _ name: String)
 }
 
 extension PopupViewDelegate {
-    func sendDateButtonTapped(_ date: Date) {}
+    func sendDateButtonTapped(_ date: Date?) {}
     
     func sendIconDataButtonTapped(_ icon: String, _ name: String) {}
 }
