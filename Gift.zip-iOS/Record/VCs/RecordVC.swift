@@ -30,8 +30,12 @@ class RecordVC: UIViewController {
     @IBOutlet weak var emotionTextView: UITextView!
     @IBOutlet weak var bottomBarBottomConstraintWithBottomSafeArea: NSLayoutConstraint!
     @IBOutlet weak var upperContainerConstraintWithImageContainerTop: NSLayoutConstraint!
+    
+    @IBOutlet weak var bottomContainerHideAndShow: NSLayoutConstraint!
     @IBOutlet weak var emptyImageLabel: UILabel!
+    
     @IBOutlet weak var bottomContainer: UIView!
+    
     @IBOutlet weak var imageContainer: UIView!
     @IBOutlet weak var categoryImageView: UIImageView!
     @IBOutlet weak var purposeImageView: UIImageView!
@@ -212,7 +216,9 @@ extension RecordVC {
     @objc private func selectIcon(_ notification: Notification) {
         
         popupBackground.animatePopupBackground(false)
+        view.bringSubviewToFront(bottomContainer)
         view.bringSubviewToFront(popupBackground)
+        
         guard let userInfo = notification.userInfo as? [String: Any] else { return }
         guard let iconImage = userInfo["iconImageName"] as? String else { return }
         guard let iconName = userInfo["iconName"] as? String else { return }
@@ -246,11 +252,15 @@ extension RecordVC {
         }
         // 기기별 bottom safearea 계산하기
         let heightConstant = isAppearing ? keyboardHeight - 34 : 0
+        
         if isNameTouched {
+
+            self.bottomBarBottomConstraintWithBottomSafeArea.constant = heightConstant
             isNameTouched = false
-            //            self.bottomBarBottomConstraintWithBottomSafeArea.constant = heightConstant
-            //            self.view.layoutIfNeeded()
+            self.view.layoutIfNeeded()
+
         } else {
+            print("TextView Touched")
             UIView.animate(withDuration: keyboardAnimationDuration, animations: {
                 if isAppearing {
                     self.upperContainerConstraintWithImageContainerTop.priority = UILayoutPriority(rawValue: 248)
