@@ -61,12 +61,12 @@ extension UIView {
     
     
     // dahsed View
-    func makeDashedBorder()  {
+    func makeDashedBorder(_ color: UIColor)  {
         let mViewBorder = CAShapeLayer()
-        let opacity: CGFloat = 0.25
-        let borderColor: UIColor = UIColor.white
+        let opacity: CGFloat = 0.4
+        let borderColor: UIColor = color
         mViewBorder.strokeColor = borderColor.withAlphaComponent(opacity).cgColor
-        mViewBorder.lineDashPattern = [2, 2]
+        mViewBorder.lineDashPattern = [4, 4]
         mViewBorder.frame = self.bounds
         mViewBorder.fillColor = nil
         mViewBorder.path = UIBezierPath(rect: self.bounds).cgPath

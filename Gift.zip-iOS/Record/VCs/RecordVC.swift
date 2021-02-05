@@ -46,6 +46,9 @@ class RecordVC: UIViewController {
     @IBOutlet weak var frameButton: UIButton!
     @IBOutlet weak var stickerButton: UIButton!
     @IBOutlet weak var colorButton: UIButton!
+    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var completeButton: UIButton!
+    @IBOutlet weak var dateDropDownImage: UIImageView!
     
     @IBOutlet var colorButtons: [UIButton]!
     
@@ -77,6 +80,28 @@ class RecordVC: UIViewController {
         didSet {
             for changeView in backgroundColorViews {
                 changeView.backgroundColor = currentBackgroundColor
+            }
+            
+            if currentBackgroundColor == UIColor.wheat {
+                backButton.setImage(UIImage.init(named: "iconBackBk"), for: .normal)
+                dateToRecordLabel.textColor = .greyishBrown
+                completeButton.setImage(UIImage.init(named: "iconCheckBk"), for: .normal)
+                dateDropDownImage.image = UIImage.init(named: "iconArrowBottomBk")
+                emptyImageLabel.textColor = .greyishBrown
+                cropImageView.makeDashedBorder(UIColor.greyishBrown)
+                fromLabel.textColor = .greyishBrown
+                nameTextField.attributedPlaceholder = NSAttributedString(string: "이름",
+                                                                         attributes: [NSAttributedString.Key.foregroundColor: UIColor(white: 62.0 / 255.0, alpha: 0.34)])
+            } else {
+                backButton.setImage(UIImage.init(named: "iconBack"), for: .normal)
+                dateToRecordLabel.textColor = .white
+                completeButton.setImage(UIImage.init(named: "iconCheck"), for: .normal)
+                dateDropDownImage.image = UIImage.init(named: "iconArrowBottom")
+                emptyImageLabel.textColor = .white
+                cropImageView.makeDashedBorder(UIColor.white)
+                fromLabel.textColor = .white
+                nameTextField.attributedPlaceholder = NSAttributedString(string: "이름",
+                                                                         attributes: [NSAttributedString.Key.foregroundColor: UIColor.init(white: 1, alpha: 0.34)])
             }
         }
     }
@@ -151,6 +176,7 @@ class RecordVC: UIViewController {
             popupBackground.animatePopupBackground(true)
             guard let des = segue.destination as? DatePopupVC else { return }
             des.delegate = self
+            des.currentBackgroundColor = currentBackgroundColor
         } else if segue.identifier == "categoryPopup" {
             popupBackground.animatePopupBackground(true)
             view.bringSubviewToFront(categoryImageView)
@@ -305,7 +331,7 @@ extension RecordVC {
         currentInfoViewOriginY = infoView.frame.origin.y
         currentBottomContainerOriginY = bottomContainer.frame.origin.y
         currentImageContainerOriginY = imageContainer.frame.origin.y
-        cropImageView.makeDashedBorder()
+        cropImageView.makeDashedBorder(UIColor.white)
         
         colorButton.translatesAutoresizingMaskIntoConstraints = false
         colorButton.widthAnchor.constraint(equalToConstant: 24).isActive = true

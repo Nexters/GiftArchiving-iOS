@@ -10,19 +10,28 @@ import UIKit
 class DatePopupVC: UIViewController {
 
     @IBOutlet weak var datePicker: UIDatePicker!
+    @IBOutlet var backgroundColorViews: [UIView]!
     
     weak var delegate: PopupViewDelegate?
     
+    var currentBackgroundColor: UIColor?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setLayouts()
+        setBackgroundColor()
     }
     
     private func setLayouts() {
         datePicker.setValue(UIColor.white, forKey: "textColor")
         datePicker.setValue(false, forKey: "highlightsToday")
+    }
+    
+    private func setBackgroundColor() {
+        for v in backgroundColorViews {
+            v.backgroundColor = currentBackgroundColor
+        }
     }
 
     @IBAction func dismiss(_ sender: Any) {
