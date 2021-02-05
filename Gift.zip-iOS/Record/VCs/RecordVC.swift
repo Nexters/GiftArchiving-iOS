@@ -381,7 +381,10 @@ extension RecordVC: UITextViewDelegate {
 extension RecordVC: PopupViewDelegate {
     
     func sendDateButtonTapped(_ date: Date) {
+        print(date)
         popupBackground.animatePopupBackground(false)
+        
+        
         // date
     }
     
@@ -389,4 +392,5 @@ extension RecordVC: PopupViewDelegate {
         popupBackground.animatePopupBackground(false)
         
     }
+    
 }
