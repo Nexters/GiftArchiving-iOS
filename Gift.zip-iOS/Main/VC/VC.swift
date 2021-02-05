@@ -82,7 +82,6 @@ class VC: UIViewController{
             labelMain2.font = labelMain2.font.withSize(26)
             constBtnWriteTop.setValue(20, forKey: "Constant")
             
-            
         }
         
         // width, height 설정

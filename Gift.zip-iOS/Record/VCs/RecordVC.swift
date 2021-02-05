@@ -30,19 +30,31 @@ class RecordVC: UIViewController {
     @IBOutlet weak var emotionTextView: UITextView!
     @IBOutlet weak var bottomBarBottomConstraintWithBottomSafeArea: NSLayoutConstraint!
     @IBOutlet weak var upperContainerConstraintWithImageContainerTop: NSLayoutConstraint!
+    
+    @IBOutlet weak var bottomContainerHideAndShow: NSLayoutConstraint!
     @IBOutlet weak var emptyImageLabel: UILabel!
+    
     @IBOutlet weak var bottomContainer: UIView!
+    @IBOutlet weak var colorBottomContainer: UIView!
     @IBOutlet weak var imageContainer: UIView!
     @IBOutlet weak var categoryImageView: UIImageView!
     @IBOutlet weak var purposeImageView: UIImageView!
     @IBOutlet weak var emotionImageView: UIImageView!
     @IBOutlet weak var dateToRecordLabel: UILabel!
     
+    @IBOutlet weak var stickerButton: UIButton!
+    
+    @IBOutlet var colorButtons: [UIButton]!
+    
+    @IBOutlet var backgroundColorViews: [UIView]!
+    
     lazy var picker = UIImagePickerController()
     
     lazy var popupBackground = UIView()
     
     lazy var stickerView = StickerView()
+    
+    lazy var exitButton = UIButton()
     
     private var textViewPlaceholderFlag: Bool = true
     
@@ -58,7 +70,13 @@ class RecordVC: UIViewController {
     
     private var currentImageContainerOriginY: CGFloat = 0
     
-    private var currentBackgroundColor: UIColor = UIColor.charcoalGrey
+    private var currentBackgroundColor: UIColor = UIColor.charcoalGrey {
+        didSet {
+            for changeView in backgroundColorViews {
+                changeView.backgroundColor = currentBackgroundColor
+            }
+        }
+    }
     
     private var isStickerEditing: Bool = false
     
@@ -69,10 +87,42 @@ class RecordVC: UIViewController {
             dateToRecordLabel.text = dateToRecord
         }
     }
+    
+    private var isColorEditing: Bool = false {
+        didSet {
+            if isColorEditing {
+                view.bringSubviewToFront(colorBottomContainer)
+                exitButton.isHidden = false
+            } else {
+                view.bringSubviewToFront(bottomContainer)
+                exitButton.isHidden = true
+            }
+        }
+    }
+    
+    
     let disposeBag = DisposeBag()
     
     private var isNameTouched: Bool = false
     //MARK: - Life Cycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let stickerButtonWidth = stickerButton.frame.width
+        stickerButton.makeRounded(cornerRadius: stickerButtonWidth / 2)
+        for button in colorButtons {
+            let buttonWidth = button.frame.width
+            button.makeRounded(cornerRadius: buttonWidth / 2)
+            button.layer.borderColor = UIColor.white.cgColor
+            button.layer.borderWidth = 1
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,6 +130,12 @@ class RecordVC: UIViewController {
         setNotificationCenter()
         initTextField()
         initializeDelegates()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        print("viewDidLayoutSubviews")
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -98,7 +154,7 @@ class RecordVC: UIViewController {
             guard let des = segue.destination as? IconPopupVC else { return }
             des.whichPopup = 0
             des.backgroundColor = currentBackgroundColor
-            des.popupViewHeightByPhones = self.view.frame.height - infoView.frame.origin.y - 149 - 34
+            des.popupViewHeightByPhones = self.view.frame.height - infoView.frame.origin.y - 154
         } else if segue.identifier == "purposePopup" {
             popupBackground.animatePopupBackground(true)
             view.bringSubviewToFront(purposeImageView)
@@ -106,7 +162,7 @@ class RecordVC: UIViewController {
             guard let des = segue.destination as? IconPopupVC else { return }
             des.whichPopup = 1
             des.backgroundColor = currentBackgroundColor
-            des.popupViewHeightByPhones = self.view.frame.height - infoView.frame.origin.y - 149 - 34
+            des.popupViewHeightByPhones = self.view.frame.height - infoView.frame.origin.y - 154
         } else if segue.identifier == "emotionPopup" {
             popupBackground.animatePopupBackground(true)
             view.bringSubviewToFront(emotionImageView)
@@ -114,10 +170,8 @@ class RecordVC: UIViewController {
             guard let des = segue.destination as? IconPopupVC else { return }
             des.whichPopup = 2
             des.backgroundColor = currentBackgroundColor
-            
             des.isSend = self.isSend
-            
-            des.popupViewHeightByPhones = self.view.frame.height - infoView.frame.origin.y - 149 - 34
+            des.popupViewHeightByPhones = self.view.frame.height - infoView.frame.origin.y - 154
         }
     }
     
@@ -149,13 +203,7 @@ class RecordVC: UIViewController {
     }
     
     @IBAction func changeFrame(_ sender: UIButton) {
-        let des = self.storyboard?.instantiateViewController(identifier: "ImageCropVC") as! ImageCropVC
-        // image 및 프레임 설정
-        des.image = originalFullImage
-        des.frameOfImage = currentFrameOfImage
-        // hole 크기 설정 , 스크롤 영역 설정
-        des.modalPresentationStyle = .fullScreen
-        present(des, animated: true, completion: nil)
+        
     }
     
     @IBAction func useSticker(_ sender: UIButton) {
@@ -172,6 +220,28 @@ class RecordVC: UIViewController {
                                                 .bottomAnchor, constant: 0).isActive = true
             isStickerEditing = true
         }
+    }
+    
+    @IBAction func changeColor(_ sender: UIButton) {
+        if isColorEditing {
+            isColorEditing = false
+        } else {
+            isColorEditing = true
+        }
+    }
+    
+    @IBAction func chanegToWheatColor(_ sender: UIButton) {
+        currentBackgroundColor = .wheat
+    }
+    
+    @IBAction func chanegToPinkishOrangeColor(_ sender: UIButton) {
+        currentBackgroundColor = .pinkishOrange
+    }
+    @IBAction func changeToCeruleanBlueColor(_ sender: UIButton) {
+        currentBackgroundColor = .ceruleanBlue
+    }
+    @IBAction func changeToCharcoalGreyColor(_ sender: UIButton) {
+        currentBackgroundColor = .charcoalGrey
     }
 }
 
@@ -201,6 +271,25 @@ extension RecordVC {
         currentBottomContainerOriginY = bottomContainer.frame.origin.y
         currentImageContainerOriginY = imageContainer.frame.origin.y
         cropImageView.makeDashedBorder()
+        
+        stickerButton.translatesAutoresizingMaskIntoConstraints = false
+        stickerButton.widthAnchor.constraint(equalToConstant: 24).isActive = true
+        stickerButton.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        stickerButton.layer.borderWidth = 1
+        stickerButton.layer.borderColor = UIColor.white.cgColor
+        
+        exitButton.addTarget(self, action: #selector(dismissColorBottomContainer), for: .touchUpInside)
+        view.addSubview(exitButton)
+        exitButton.translatesAutoresizingMaskIntoConstraints = false
+        exitButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        exitButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        exitButton.bottomAnchor.constraint(equalTo: colorBottomContainer.topAnchor).isActive = true
+        exitButton.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+        exitButton.isHidden = true
+    }
+    
+    @objc func dismissColorBottomContainer() {
+        isColorEditing = false
     }
     
     private func setNotificationCenter() {
@@ -212,7 +301,9 @@ extension RecordVC {
     @objc private func selectIcon(_ notification: Notification) {
         
         popupBackground.animatePopupBackground(false)
+        view.bringSubviewToFront(bottomContainer)
         view.bringSubviewToFront(popupBackground)
+        
         guard let userInfo = notification.userInfo as? [String: Any] else { return }
         guard let iconImage = userInfo["iconImageName"] as? String else { return }
         guard let iconName = userInfo["iconName"] as? String else { return }
@@ -246,11 +337,15 @@ extension RecordVC {
         }
         // 기기별 bottom safearea 계산하기
         let heightConstant = isAppearing ? keyboardHeight - 34 : 0
+        
         if isNameTouched {
+
+            self.bottomBarBottomConstraintWithBottomSafeArea.constant = heightConstant
             isNameTouched = false
-            //            self.bottomBarBottomConstraintWithBottomSafeArea.constant = heightConstant
-            //            self.view.layoutIfNeeded()
+            self.view.layoutIfNeeded()
+
         } else {
+            print("TextView Touched")
             UIView.animate(withDuration: keyboardAnimationDuration, animations: {
                 if isAppearing {
                     self.upperContainerConstraintWithImageContainerTop.priority = UILayoutPriority(rawValue: 248)
