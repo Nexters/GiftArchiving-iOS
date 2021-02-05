@@ -32,7 +32,11 @@
 		D4A08EB625C01A8A009CFCC4 /* Spoqa Han Sans Neo Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D4A08EA025BFE37B009CFCC4 /* Spoqa Han Sans Neo Bold.otf */; };
 		D4A08EB825C01A8D009CFCC4 /* Spoqa Han Sans Neo Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = D4A08EA125BFE37C009CFCC4 /* Spoqa Han Sans Neo Regular.otf */; };
 		D4A08EBD25C01D32009CFCC4 /* PopupViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A08EBC25C01D32009CFCC4 /* PopupViewDelegate.swift */; };
-		D4D5261025CAFE2400D18386 /* CategoryPopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D5260F25CAFE2400D18386 /* CategoryPopupVC.swift */; };
+		D4B189A125CBCEA2007C6AE9 /* StickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B189A025CBCEA2007C6AE9 /* StickerView.swift */; };
+		D4B189A525CBCEEF007C6AE9 /* XibView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B189A425CBCEEF007C6AE9 /* XibView.swift */; };
+		D4B189A825CBCF30007C6AE9 /* StickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4B189A725CBCF30007C6AE9 /* StickerView.xib */; };
+		D4B189AB25CBDF4B007C6AE9 /* CategorySecondCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B189AA25CBDF4B007C6AE9 /* CategorySecondCVC.swift */; };
+		D4D5261025CAFE2400D18386 /* IconPopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D5260F25CAFE2400D18386 /* IconPopupVC.swift */; };
 		D4D5261525CB018A00D18386 /* CategoryCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D5261425CB018A00D18386 /* CategoryCVC.swift */; };
 		D4D5262425CB385700D18386 /* MainSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4D5262325CB385700D18386 /* MainSB.storyboard */; };
 		D4F3609625C8739F00874874 /* ShiftyImageCropVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F3609525C8739F00874874 /* ShiftyImageCropVC.swift */; };
@@ -70,7 +74,11 @@
 		D4A08EA125BFE37C009CFCC4 /* Spoqa Han Sans Neo Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Spoqa Han Sans Neo Regular.otf"; sourceTree = "<group>"; };
 		D4A08EB325C016BA009CFCC4 /* DatePopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePopupVC.swift; sourceTree = "<group>"; };
 		D4A08EBC25C01D32009CFCC4 /* PopupViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupViewDelegate.swift; sourceTree = "<group>"; };
-		D4D5260F25CAFE2400D18386 /* CategoryPopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPopupVC.swift; sourceTree = "<group>"; };
+		D4B189A025CBCEA2007C6AE9 /* StickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerView.swift; sourceTree = "<group>"; };
+		D4B189A425CBCEEF007C6AE9 /* XibView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XibView.swift; sourceTree = "<group>"; };
+		D4B189A725CBCF30007C6AE9 /* StickerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StickerView.xib; sourceTree = "<group>"; };
+		D4B189AA25CBDF4B007C6AE9 /* CategorySecondCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySecondCVC.swift; sourceTree = "<group>"; };
+		D4D5260F25CAFE2400D18386 /* IconPopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconPopupVC.swift; sourceTree = "<group>"; };
 		D4D5261425CB018A00D18386 /* CategoryCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCVC.swift; sourceTree = "<group>"; };
 		D4D5262325CB385700D18386 /* MainSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainSB.storyboard; sourceTree = "<group>"; };
 		D4EADD3325CA693E002B8629 /* ListSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ListSB.storyboard; sourceTree = "<group>"; };
@@ -241,6 +249,7 @@
 		D4336D1D25BE80D500D27568 /* Gift.zip-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				D4B1899D25CBCE75007C6AE9 /* Stickers */,
 				408E519D25CB1FFE0037EC9B /* Gift.zip-iOS.entitlements */,
 				408E519625CB16310037EC9B /* Onboarding */,
 				40DE15BA25C858F100184320 /* List */,
@@ -258,6 +267,7 @@
 		D4336D3D25BE81D200D27568 /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				D4B189A325CBCEDC007C6AE9 /* CustomView */,
 				D4A08EBA25C01D06009CFCC4 /* Protocols */,
 				D4336D4425BE822A00D27568 /* Supporting Files */,
 				D4336D4025BE81E700D27568 /* Extensions */,
@@ -310,7 +320,7 @@
 				D4A08E9125BFDCFF009CFCC4 /* RecordVC.swift */,
 				D4A08EB325C016BA009CFCC4 /* DatePopupVC.swift */,
 				D4F3609525C8739F00874874 /* ShiftyImageCropVC.swift */,
-				D4D5260F25CAFE2400D18386 /* CategoryPopupVC.swift */,
+				D4D5260F25CAFE2400D18386 /* IconPopupVC.swift */,
 				D4F360AB25C8871700874874 /* ImageCropVC.swift */,
 			);
 			path = VCs;
@@ -332,10 +342,44 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		D4B1899D25CBCE75007C6AE9 /* Stickers */ = {
+			isa = PBXGroup;
+			children = (
+				D4B1899F25CBCE88007C6AE9 /* VCs */,
+				D4B1899E25CBCE81007C6AE9 /* Storyboards */,
+			);
+			path = Stickers;
+			sourceTree = "<group>";
+		};
+		D4B1899E25CBCE81007C6AE9 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		D4B1899F25CBCE88007C6AE9 /* VCs */ = {
+			isa = PBXGroup;
+			children = (
+				D4B189A025CBCEA2007C6AE9 /* StickerView.swift */,
+				D4B189A725CBCF30007C6AE9 /* StickerView.xib */,
+			);
+			path = VCs;
+			sourceTree = "<group>";
+		};
+		D4B189A325CBCEDC007C6AE9 /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				D4B189A425CBCEEF007C6AE9 /* XibView.swift */,
+			);
+			path = CustomView;
+			sourceTree = "<group>";
+		};
 		D4D5261325CB017800D18386 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
 				D4D5261425CB018A00D18386 /* CategoryCVC.swift */,
+				D4B189AA25CBDF4B007C6AE9 /* CategorySecondCVC.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -409,9 +453,8 @@
 			files = (
 				D4336D2B25BE80D500D27568 /* LaunchScreen.storyboard in Resources */,
 				40ADFC0E25C9AFA100721F4D /* ListSB.storyboard in Resources */,
+				D4B189A825CBCF30007C6AE9 /* StickerView.xib in Resources */,
 				408E519B25CB1E6E0037EC9B /* OnboardingSB.storyboard in Resources */,
-				D4EADD2E25CA6531002B8629 /* MainSB.storyboard in Resources */,
-
 				D4336D2825BE80D500D27568 /* Assets.xcassets in Resources */,
 				D4D5262425CB385700D18386 /* MainSB.storyboard in Resources */,
 				408E518F25CAF5E20037EC9B /* GridCollectionViewCell.xib in Resources */,
@@ -472,6 +515,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				40DE15CC25C8636D00184320 /* ListVC.swift in Sources */,
+				D4B189A525CBCEEF007C6AE9 /* XibView.swift in Sources */,
 				D4A08EB425C016BA009CFCC4 /* DatePopupVC.swift in Sources */,
 				D4A08E9225BFDCFF009CFCC4 /* RecordVC.swift in Sources */,
 				4052035225C537890066989C /* CollectionViewCell.swift in Sources */,
@@ -481,12 +525,14 @@
 				D4336D2325BE80D500D27568 /* ViewController.swift in Sources */,
 				D4D5261525CB018A00D18386 /* CategoryCVC.swift in Sources */,
 				4052034E25C537110066989C /* VC.swift in Sources */,
+				D4B189AB25CBDF4B007C6AE9 /* CategorySecondCVC.swift in Sources */,
 				D4A08EBD25C01D32009CFCC4 /* PopupViewDelegate.swift in Sources */,
 				40DE15C925C8629300184320 /* ListCollectionViewCell.swift in Sources */,
 				408E51A025CB201C0037EC9B /* OnboardingVC.swift in Sources */,
-				D4D5261025CAFE2400D18386 /* CategoryPopupVC.swift in Sources */,
+				D4D5261025CAFE2400D18386 /* IconPopupVC.swift in Sources */,
 				408E519225CAF81E0037EC9B /* GridCollectionViewCell.swift in Sources */,
 				40ADFC1325C9B03800721F4D /* StickyCellFlowLayout.swift in Sources */,
+				D4B189A125CBCEA2007C6AE9 /* StickerView.swift in Sources */,
 				D4336D1F25BE80D500D27568 /* AppDelegate.swift in Sources */,
 				D4336D4225BE81FB00D27568 /* UIView+Extensions.swift in Sources */,
 				D4336D2125BE80D500D27568 /* SceneDelegate.swift in Sources */,
@@ -639,13 +685,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Gift.zip-iOS/Gift.zip-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = N5FS2H5UXX;
+				DEVELOPMENT_TEAM = TZVHD77BLL;
 				INFOPLIST_FILE = "Gift.zip-iOS/Global/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.jaeyong.Gift-zip-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Mukbang.Gift-zip-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -660,13 +706,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Gift.zip-iOS/Gift.zip-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = N5FS2H5UXX;
+				DEVELOPMENT_TEAM = TZVHD77BLL;
 				INFOPLIST_FILE = "Gift.zip-iOS/Global/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.jaeyong.Gift-zip-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Mukbang.Gift-zip-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -19,8 +19,8 @@ class RecordVC: UIViewController {
     
     @IBOutlet weak var fromLabel: UILabel!
     @IBOutlet weak var nameTextField: UITextField!
-    @IBOutlet weak var typeLabel: UILabel!
-    @IBOutlet weak var whenLabel: UILabel!
+    @IBOutlet weak var categoryLabel: UILabel!
+    @IBOutlet weak var purposeLabel: UILabel!
     @IBOutlet weak var emotionLabel: UILabel!
     @IBOutlet var buttons: [UIButton]!
     @IBOutlet weak var cropImageView: UIImageView!
@@ -33,7 +33,6 @@ class RecordVC: UIViewController {
     @IBOutlet weak var emptyImageLabel: UILabel!
     @IBOutlet weak var bottomContainer: UIView!
     @IBOutlet weak var imageContainer: UIView!
-    
     @IBOutlet weak var categoryImageView: UIImageView!
     @IBOutlet weak var purposeImageView: UIImageView!
     @IBOutlet weak var emotionImageView: UIImageView!
@@ -41,6 +40,8 @@ class RecordVC: UIViewController {
     lazy var picker = UIImagePickerController()
     
     lazy var popupBackground = UIView()
+    
+    lazy var stickerView = StickerView()
     
     private var textViewPlaceholderFlag: Bool = true
     
@@ -58,6 +59,10 @@ class RecordVC: UIViewController {
     
     private var currentBackgroundColor: UIColor = UIColor.charcoalGrey
     
+    private var isStickerEditing: Bool = false
+    
+    private var isSend: Bool = false
+    
     let disposeBag = DisposeBag()
     
     private var isNameTouched: Bool = false
@@ -65,7 +70,6 @@ class RecordVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setLayouts()
         setNotificationCenter()
         initTextField()
@@ -81,13 +85,34 @@ class RecordVC: UIViewController {
             popupBackground.animatePopupBackground(true)
             guard let des = segue.destination as? DatePopupVC else { return }
             des.delegate = self
-        } else if segue.identifier == "CategoryPopup" {
+        } else if segue.identifier == "categoryPopup" {
             popupBackground.animatePopupBackground(true)
-            guard let des = segue.destination as? CategoryPopupVC else { return }
+            view.bringSubviewToFront(categoryImageView)
+            view.bringSubviewToFront(categoryLabel)
+            guard let des = segue.destination as? IconPopupVC else { return }
+            des.whichPopup = 0
             des.backgroundColor = currentBackgroundColor
             des.popupViewHeightByPhones = self.view.frame.height - infoView.frame.origin.y - 149 - 34
+        } else if segue.identifier == "purposePopup" {
+            popupBackground.animatePopupBackground(true)
+            view.bringSubviewToFront(purposeImageView)
+            view.bringSubviewToFront(purposeLabel)
+            guard let des = segue.destination as? IconPopupVC else { return }
+            des.whichPopup = 1
+            des.backgroundColor = currentBackgroundColor
+            des.popupViewHeightByPhones = self.view.frame.height - infoView.frame.origin.y - 149 - 34
+        } else if segue.identifier == "emotionPopup" {
+            popupBackground.animatePopupBackground(true)
+            view.bringSubviewToFront(emotionImageView)
+            view.bringSubviewToFront(emotionLabel)
+            guard let des = segue.destination as? IconPopupVC else { return }
+            des.whichPopup = 2
+            des.backgroundColor = currentBackgroundColor
+            
+            des.isSend = self.isSend
+            
+            des.popupViewHeightByPhones = self.view.frame.height - infoView.frame.origin.y - 149 - 34
         }
-        
     }
     
     //MARK: - IBAction
@@ -97,22 +122,10 @@ class RecordVC: UIViewController {
     }
     
     @IBAction func completeRecord(_ sender: UIButton) {
-        
         // record server
-        
         self.navigationController?.popToRootViewController(animated: true)
     }
-    
-    @IBAction func chooseType(_ sender: UIButton) {
-        print("HELELEL")
-    }
-    
-    @IBAction func chooseWhen(_ sender: UIButton) {
-    }
-    
-    @IBAction func chooseEmotion(_ sender: UIButton) {
-    }
-    
+
     @IBAction func selectPhoto(_ sender: UIButton) {
         let alert = UIAlertController(title: "사진 선택", message: "되라제발", preferredStyle: .actionSheet)
         let library = UIAlertAction(title: "사진앨범", style: .default) { (action) in
@@ -131,7 +144,6 @@ class RecordVC: UIViewController {
     
     @IBAction func changeFrame(_ sender: UIButton) {
         let des = self.storyboard?.instantiateViewController(identifier: "ImageCropVC") as! ImageCropVC
-        
         // image 및 프레임 설정
         des.image = originalFullImage
         des.frameOfImage = currentFrameOfImage
@@ -141,9 +153,19 @@ class RecordVC: UIViewController {
     }
     
     @IBAction func useSticker(_ sender: UIButton) {
-//        let sticker
-        
-        
+        if isStickerEditing {
+            stickerView.animatePopupBackground(false)
+            isStickerEditing = false
+        } else {
+            self.view.addSubview(stickerView)
+            stickerView.translatesAutoresizingMaskIntoConstraints = false
+            stickerView.bottomAnchor.constraint(equalTo: bottomContainer.topAnchor, constant: 0).isActive = true
+            stickerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+            stickerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+            stickerView.topAnchor.constraint(equalTo: imageContainer
+                                                .bottomAnchor, constant: 0).isActive = true
+            isStickerEditing = true
+        }
     }
 }
 
@@ -168,17 +190,38 @@ extension RecordVC {
             emotionTextView.alpha = 1.0
         }
         
-        cropImageView.layer.borderWidth = 1
-        cropImageView.layer.borderColor = UIColor.init(red: 255, green: 255, blue: 255, alpha: 0.12).cgColor
+        
         currentInfoViewOriginY = infoView.frame.origin.y
         currentBottomContainerOriginY = bottomContainer.frame.origin.y
         currentImageContainerOriginY = imageContainer.frame.origin.y
-        
+        cropImageView.makeDashedBorder()
     }
     
     private func setNotificationCenter() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(selectIcon), name: .init("selectIcon"), object: nil)
+    }
+    
+    @objc private func selectIcon(_ notification: Notification) {
+        
+        popupBackground.animatePopupBackground(false)
+        view.bringSubviewToFront(popupBackground)
+        guard let userInfo = notification.userInfo as? [String: Any] else { return }
+        guard let iconImage = userInfo["iconImageName"] as? String else { return }
+        guard let iconName = userInfo["iconName"] as? String else { return }
+        guard let iconKind = userInfo["iconKind"] as? String else { return }
+        
+        if iconKind == "category" {
+            categoryImageView.image = UIImage(named: iconImage)
+            categoryLabel.text = iconName
+        } else if iconKind == "purpose" {
+            purposeImageView.image = UIImage(named: iconImage)
+            purposeLabel.text = iconName
+        } else {
+            emotionImageView.image = UIImage(named: iconImage)
+            emotionLabel.text = iconName
+        }
     }
     
     //    private func
@@ -199,8 +242,8 @@ extension RecordVC {
         let heightConstant = isAppearing ? keyboardHeight - 34 : 0
         if isNameTouched {
             isNameTouched = false
-            self.bottomBarBottomConstraintWithBottomSafeArea.constant = heightConstant
-            self.view.layoutIfNeeded()
+//            self.bottomBarBottomConstraintWithBottomSafeArea.constant = heightConstant
+//            self.view.layoutIfNeeded()
         } else {
             UIView.animate(withDuration: keyboardAnimationDuration, animations: {
                 if isAppearing {
@@ -289,6 +332,7 @@ extension RecordVC: UIImagePickerControllerDelegate, UINavigationControllerDeleg
         if let image = info[.originalImage] as? UIImage, let editedImage = info[.editedImage] as? UIImage {
             print(image)
             self.cropImageView.image = editedImage
+            self.cropImageView.eraseBorder()
             self.originalFullImage = image
             self.emptyImageLabel.isHidden = true
             self.dismiss(animated: true, completion: nil)
@@ -337,12 +381,12 @@ extension RecordVC: UITextViewDelegate {
 extension RecordVC: PopupViewDelegate {
     
     func sendDateButtonTapped(_ date: Date) {
-        print(date)
         popupBackground.animatePopupBackground(false)
         // date
     }
     
-    func sendIconDataButtonTapped(_ icon: String, _ name: String) {
+    func sendIconDataButtonTapped() {
         popupBackground.animatePopupBackground(false)
+        
     }
 }
