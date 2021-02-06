@@ -14,10 +14,43 @@ class StickerView: XibView {
     @IBOutlet weak var slider: UIView!
     @IBOutlet weak var stickerCollectionView: UICollectionView!
     
+    @IBOutlet var backgroundColorViews: [UIView]!
+    
+    var outsideBackgroundColor: UIColor? {
+        didSet {
+            switch outsideBackgroundColor! {
+            case .charcoalGrey:
+                currentBackgroundColor = UIColor.Background.charcoalGrey.popup
+                break
+            case .ceruleanBlue:
+                currentBackgroundColor = UIColor.Background.ceruleanBlue.popup
+                break
+            case .pinkishOrange:
+                currentBackgroundColor = UIColor.Background.pinkishOrange.popup
+                break
+            case .wheat:
+                currentBackgroundColor = UIColor.Background.wheat.popup
+                break
+            default:
+                break
+            }
+            
+        }
+    }
+    
+    private var currentBackgroundColor: UIColor = UIColor.Background.charcoalGrey.popup {
+        didSet {
+            for v in backgroundColorViews {
+                v.backgroundColor = currentBackgroundColor
+            }
+            stickerCollectionView.reloadData()
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         initCollectionView()
+        initBackgroundColor()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -50,6 +83,10 @@ class StickerView: XibView {
         }
     }
     
+    private func initBackgroundColor() {
+        
+       
+    }
     
     private func scrollDirection(by direction: Int) {
         if (direction == 0) {
@@ -62,7 +99,7 @@ class StickerView: XibView {
             
         }
         
-
+        
     }
     
     private func initCollectionView() {
@@ -88,10 +125,15 @@ extension StickerView: UICollectionViewDelegateFlowLayout, UICollectionViewDataS
         if indexPath.item == 0 {
             print(indexPath.item)
             guard let singleSticker = collectionView.dequeueReusableCell(withReuseIdentifier: SingleStickerCVC.identifier, for: indexPath) as? SingleStickerCVC else { return UICollectionViewCell() }
+            singleSticker.backgroundColor = currentBackgroundColor
+            print("singleSticker.currentBackgroundColor = currentBackgroundColor")
+            singleSticker.currentBackgroundColor = currentBackgroundColor
             return singleSticker
         } else if indexPath.item == 1 {
             print(indexPath.item)
             guard let packageSticker = collectionView.dequeueReusableCell(withReuseIdentifier: PackageStickerCVC.identifier, for: indexPath) as? PackageStickerCVC else { return UICollectionViewCell() }
+            packageSticker.backgroundColor = currentBackgroundColor
+            packageSticker.backgroundColor = currentBackgroundColor
             return packageSticker
         } else {
             return UICollectionViewCell()

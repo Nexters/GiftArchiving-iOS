@@ -78,8 +78,27 @@ class RecordVC: UIViewController {
     
     private var stickerGroups: [UIImageView] = []
     
+    private var currentBackgroundPopupColor: UIColor = UIColor.Background.charcoalGrey.popup
+    
     private var currentBackgroundColor: UIColor = UIColor.charcoalGrey {
         didSet {
+            switch currentBackgroundColor {
+            case .charcoalGrey:
+                currentBackgroundPopupColor = UIColor.Background.charcoalGrey.popup
+                break
+            case .ceruleanBlue:
+                currentBackgroundPopupColor = UIColor.Background.ceruleanBlue.popup
+                break
+            case .wheat:
+                currentBackgroundPopupColor = UIColor.Background.wheat.popup
+                break
+            case .pinkishOrange:
+                currentBackgroundPopupColor = UIColor.Background.pinkishOrange.popup
+                break
+            default:
+                break
+            }
+            
             for changeView in backgroundColorViews {
                 changeView.backgroundColor = currentBackgroundColor
             }
@@ -255,16 +274,41 @@ class RecordVC: UIViewController {
     
     @IBAction func useSticker(_ sender: UIButton) {
         if isStickerEditing {
+            changeButtonContainerColor(false)
+            changeStickerButtonInteraction(true)
             stickerPopupView.animateStickerView(false)
             makeButtonNormalOpacity()
             bottomContainer.backgroundColor = currentBackgroundColor
             isStickerEditing = false
         } else {
+            changeButtonContainerColor(true)
+            changeStickerButtonInteraction(false)
+            stickerPopupView.outsideBackgroundColor = currentBackgroundColor
             stickerPopupView.animateStickerView(true)
             isStickerEditing = true
             makeButtonLowOpacity(index: 2)
             
         }
+    }
+    
+    private func changeButtonContainerColor(_ direction: Bool) {
+        if direction {
+            UIView.animate(withDuration: 0.25) {
+                self.bottomContainer.backgroundColor = self.currentBackgroundPopupColor
+                self.view.backgroundColor = self.currentBackgroundPopupColor
+            }
+        } else {
+            UIView.animate(withDuration: 0.10) {
+                self.bottomContainer.backgroundColor = self.currentBackgroundColor
+                self.view.backgroundColor = self.currentBackgroundColor
+            }
+        }
+    }
+    
+    private func changeStickerButtonInteraction(_ direction: Bool) {
+        photoButton.isUserInteractionEnabled = direction
+        frameButton.isUserInteractionEnabled = direction
+        colorButton.isUserInteractionEnabled = direction
     }
     
     private func makeButtonLowOpacity(index: Int) {

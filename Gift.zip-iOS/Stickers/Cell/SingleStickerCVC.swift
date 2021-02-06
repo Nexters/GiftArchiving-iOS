@@ -10,6 +10,13 @@ import UIKit
 class SingleStickerCVC: UICollectionViewCell {
     static let identifier: String = "SingleStickerCVC"
     @IBOutlet weak var singleCollectionView: UICollectionView!
+    
+    var currentBackgroundColor: UIColor = UIColor.Background.charcoalGrey.popup {
+        didSet {
+            singleCollectionView.backgroundColor = currentBackgroundColor
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -17,7 +24,6 @@ class SingleStickerCVC: UICollectionViewCell {
         singleCollectionView.register(nib, forCellWithReuseIdentifier: SingleCVC.identifier)
         singleCollectionView.delegate = self
         singleCollectionView.dataSource = self
-        
     }
 
 }

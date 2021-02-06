@@ -21,7 +21,7 @@
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="cuK-CF-KNX">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="302"/>
-                                <color key="backgroundColor" red="0.22352941176470587" green="0.22352941176470587" blue="0.22352941176470587" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="b6v-Yp-gE1">
                                     <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -34,7 +34,7 @@
                                 </connections>
                             </collectionView>
                         </subviews>
-                        <color key="backgroundColor" red="0.22352941176470587" green="0.22352941176470587" blue="0.22352941176470587" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="cuK-CF-KNX" secondAttribute="trailing" id="87O-MA-4N5"/>
                             <constraint firstItem="cuK-CF-KNX" firstAttribute="top" secondItem="wcW-8e-v2e" secondAttribute="top" id="VAB-kF-pmM"/>
@@ -45,6 +45,7 @@
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="wcW-8e-v2e" secondAttribute="trailing" id="2XC-dg-mrQ"/>
                 <constraint firstAttribute="bottom" secondItem="wcW-8e-v2e" secondAttribute="bottom" id="BfM-hP-Sp2"/>
