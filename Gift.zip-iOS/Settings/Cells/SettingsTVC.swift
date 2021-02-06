@@ -17,7 +17,7 @@ class SettingsTVC: UITableViewCell {
     }
 
     func setInformations(settingIconName: String, settingIconImageName: String) {
-        settingNameLabel.text = settingIconImageName
+        settingNameLabel.text = settingIconName
         settingIconImageView.image = UIImage.init(named: settingIconImageName)
     }
 }
