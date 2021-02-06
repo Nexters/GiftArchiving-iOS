@@ -7,8 +7,13 @@
 
 import UIKit
 import AuthenticationServices
+import KakaoSDKAuth
 
 class OnboardingVC: UIViewController, ASAuthorizationControllerPresentationContextProviding ,ASAuthorizationControllerDelegate {
+    let imgs = [UIImage(named: "img_test"), UIImage(named: "img_test"), UIImage(named: "img_test"), UIImage(named: "img_test")]
+    
+    @IBOutlet weak var pageControl: UIPageControl!
+    @IBOutlet weak var collectionView: UICollectionView!
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         return self.view.window!
     }
@@ -18,7 +23,21 @@ class OnboardingVC: UIViewController, ASAuthorizationControllerPresentationConte
     @IBOutlet weak var appleSignInBtn: UIStackView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        setlayout()
+        
+    }
+    private func setlayout(){
+        collectionView.collectionViewLayout = self.createCompositionalLayout()
+        let nib = UINib(nibName: "OnboardingCollectionViewCell", bundle: nil)
+        collectionView.register(nib, forCellWithReuseIdentifier: "OnboardingCollectionViewCell")
+        collectionView.dataSource = self
+        
+
         self.setAppleSignInButton()
+        
+        pageControl.hidesForSinglePage = true
+        pageControl.numberOfPages = imgs.count
+        pageControl.pageIndicatorTintColor = .darkGray
     }
     // Apple ID 로그인 버튼 생성
     func setAppleSignInButton() {
@@ -47,12 +66,12 @@ class OnboardingVC: UIViewController, ASAuthorizationControllerPresentationConte
             let userIdentifier = appleIDCredential.user//userIdentifier를 앱 내부에 저장해서 appdelegate 에서 불러와서 이미 로그인한 유저인지 판단해야 할 듯??
             let fullName = appleIDCredential.fullName
             let email = appleIDCredential.email
-                
+            /*
             print("User ID : \(userIdentifier)")
-            let SPREF = UserDefaults.standard
-            SPREF.setValue("\(userIdentifier)", forKey: "appleId")
             print("User Email : \(email ?? "")")
-            print("User Name : \((fullName?.givenName ?? "") + (fullName?.familyName ?? ""))")
+            print("User Name : \((fullName?.givenName ?? "") + (fullName?.familyName ?? ""))")*/
+            //loginAPI 호출
+            self.loginAPI(appleToken: userIdentifier, kakaoToken: "", loginType: "APPLE", name: "")
      
         default:
             break
@@ -63,4 +82,143 @@ class OnboardingVC: UIViewController, ASAuthorizationControllerPresentationConte
         //handle error
         print("apple ID 연동 실패 :  authorizationController() called ")
     }
+    
+    @IBAction func kakaoSignInBtnClicked(_ sender: UIButton) {
+        // 카카오톡 설치 여부 확인
+        if(AuthApi.isKakaoTalkLoginAvailable()) {
+            // 카카오톡 로그인. api 호출 결과를 클로저로 전달.
+            AuthApi.shared.loginWithKakaoTalk {(oauthToken, error) in
+                
+                if let error = error {
+                    // 예외 처리 (로그인 취소 등)
+                    print(error)
+                }
+                else {
+                    print("loginWithKakaoTalk() success.")
+                    // do something
+                    _ = oauthToken
+                    // 엑세스토큰
+                    if let accessToken = oauthToken?.accessToken{
+                        print(accessToken)
+                        //loginAPI 호출
+                        self.loginAPI(appleToken: "", kakaoToken: accessToken, loginType: "KAKAO", name: "")
+                    }
+                    
+                }
+            }
+       }
+    }
+    func loginAPI(appleToken : String, kakaoToken: String, loginType : String, name: String){
+        // 전송할 값
+        let param = ["appleToken" : appleToken, "kakaoToken" : kakaoToken, "loginType" : loginType, "name": name] // JSON 객체로 전송할 딕셔너리
+        let paramData = try! JSONSerialization.data(withJSONObject: param, options: [])
+        
+        // URL 객체 정의
+        let url = URL(string: "http://ec2-3-34-177-12.ap-northeast-2.compute.amazonaws.com:10000/api/user/signIn")
+        
+        // URLRequest 객체를 정의
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        request.httpBody = paramData
+        
+        // HTTP 메시지 헤더
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue(String(paramData.count), forHTTPHeaderField: "Content-Length")
+        
+        // URLSession 객체를 통해 전송, 응답값 처리
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            // 서버가 응답이 없거나 통신이 실패
+            if let e = error {
+                NSLog("An error has occured: \(e.localizedDescription)")
+                return
+            }
+            // 응답 처리 로직
+            DispatchQueue.main.async() {
+                do {
+                    let object = try JSONSerialization.jsonObject(with: data!, options: []) as? NSDictionary
+                    guard let jsonObject = object else { return }
+                    
+                    // JSON 결과값을 추출
+                    let result = jsonObject["message"] as? String
+                    
+                    // 결과가 성공일 경우
+                    if result == "SUCCESS" {
+                        print("login API Success")
+                        let SPREF = UserDefaults.standard
+                        if loginType == "KAKAO"{
+                            SPREF.setValue(kakaoToken, forKey: "kakaoId")
+                        }else if loginType == "APPLE"{
+                            SPREF.setValue(appleToken, forKey: "appleId")
+                        }
+                        
+                        //메인 이동
+                        
+                        let recordSB = UIStoryboard(name: "MainSB", bundle: nil)
+                        let vc = recordSB.instantiateViewController(withIdentifier: "MainVC")
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }
+                } catch let e as NSError {
+                    print("An error has occured while parsing JSONObject: \(e.localizedDescription)")
+                }
+            }
+        }
+        // POST 전송
+        task.resume()
+    }
+    
+
+
 }
+
+extension OnboardingVC: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return imgs.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "OnboardingCollectionViewCell", for: indexPath) as! OnboardingCollectionViewCell
+        cell.configure(img: imgs[indexPath.row]! )
+        return cell
+            
+        
+    }
+}
+//MARK: - collectionview 콤포지셔널 레이아웃
+extension OnboardingVC{
+    // 콤포지셔널 레이아웃 설정
+    fileprivate func createCompositionalLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewCompositionalLayout{
+            // 만들게 되면 튜플 (키: 값, 키: 값) 의 묶음으로 들어옴
+            (sectionIndex: Int, layoutEvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+            //아이템에 대한 사이즈 - absolute 는 고정값, estimated 는 추측, fraction은 퍼센트
+            let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(200), heightDimension: .absolute(200))
+            
+            //위에서 만든 아이템 사이즈로 아이템 만들기
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            //아이템 간격 설정
+            item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+            
+            //그룹 사이즈
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(200))
+            //그룹사이즈로 그룹 만들기
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 1)
+            //group.interItemSpacing = .fixed(16)
+            
+            // 만든 그룹으로 섹션 만들기
+            let section = NSCollectionLayoutSection(group: group)
+            
+            //섹션에 대한 간격 설정
+            section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+            section.orthogonalScrollingBehavior = .groupPaging
+            section.visibleItemsInvalidationHandler = { visibleItems, scrollOffset, layoutEnvironment in
+                //이렇게 해주면 paging이 완전히 되었을 때 page control 의 currentpage값을 알맞게 갱신할 수 있음
+                self.pageControl.currentPage = Int(round(scrollOffset.x / self.collectionView.frame.width))
+            }
+            return section
+        }
+        
+        return layout
+    }
+}
+

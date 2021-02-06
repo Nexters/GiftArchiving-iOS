@@ -26,7 +26,7 @@ class VC: UIViewController{
     
     var currentIndex: CGFloat = 0
     
-    let lineSpacing: CGFloat = 0
+    let lineSpacing: CGFloat = 20
     
     let cellRatio: CGFloat = 0.65
     
@@ -57,7 +57,7 @@ class VC: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if view.bounds.height > 850 {
+        if view.bounds.height > 840 {
             device = 1
         }else{
             device = 0
@@ -193,7 +193,6 @@ class VC: UIViewController{
         }
         vc.receivedSentFlag = self.collectionViewFlag
         navigationController?.pushViewController(vc, animated: true)
-        //self.show(vc, sender: self)
     }
     func moveBarToReceivedAnimate(){
         UIView.animate(withDuration: 0.5) {
