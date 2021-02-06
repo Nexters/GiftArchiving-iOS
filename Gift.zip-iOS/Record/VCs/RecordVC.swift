@@ -58,7 +58,7 @@ class RecordVC: UIViewController {
     
     lazy var popupBackground = UIView()
     
-    lazy var stickerView = StickerView()
+    lazy var stickerPopupView = StickerView()
     
     lazy var exitButton = UIButton()
     
@@ -75,6 +75,8 @@ class RecordVC: UIViewController {
     private var currentBottomContainerOriginY: CGFloat = 0
     
     private var currentImageContainerOriginY: CGFloat = 0
+    
+    private var stickerGroups: [UIImageView] = []
     
     private var currentBackgroundColor: UIColor = UIColor.charcoalGrey {
         didSet {
@@ -232,7 +234,7 @@ class RecordVC: UIViewController {
     }
     
     @IBAction func selectPhoto(_ sender: UIButton) {
-        let alert = UIAlertController(title: "사진 선택", message: "되라제발", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "사진 선택", message: "선물을 골라주세요. 🎁", preferredStyle: .actionSheet)
         let library = UIAlertAction(title: "사진앨범", style: .default) { (action) in
             self.openLibrary()
         }
@@ -253,14 +255,15 @@ class RecordVC: UIViewController {
     
     @IBAction func useSticker(_ sender: UIButton) {
         if isStickerEditing {
-            stickerView.animateStickerView(false)
+            stickerPopupView.animateStickerView(false)
             makeButtonNormalOpacity()
             bottomContainer.backgroundColor = currentBackgroundColor
             isStickerEditing = false
         } else {
-            stickerView.animateStickerView(true)
+            stickerPopupView.animateStickerView(true)
             isStickerEditing = true
             makeButtonLowOpacity(index: 2)
+            
         }
     }
     
@@ -351,15 +354,15 @@ extension RecordVC {
         exitButton.isHidden = true
         
         // 스티커 뷰
-        view.addSubview(stickerView)
-        stickerView.translatesAutoresizingMaskIntoConstraints = false
-        stickerView.bottomAnchor.constraint(equalTo: bottomContainer.topAnchor, constant: 0).isActive = true
-        stickerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
-        stickerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
-        stickerView.topAnchor.constraint(equalTo: imageContainer
+        view.addSubview(stickerPopupView)
+        stickerPopupView.translatesAutoresizingMaskIntoConstraints = false
+        stickerPopupView.bottomAnchor.constraint(equalTo: bottomContainer.topAnchor, constant: 0).isActive = true
+        stickerPopupView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+        stickerPopupView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+        stickerPopupView.topAnchor.constraint(equalTo: imageContainer
                                             .bottomAnchor, constant: 0).isActive = true
-        stickerView.alpha = 0
-        stickerView.isHidden = true
+        stickerPopupView.alpha = 0
+        stickerPopupView.isHidden = true
     }
     
     @objc func dismissColorBottomContainer() {
@@ -376,8 +379,108 @@ extension RecordVC {
     @objc private func getStickerName(_ notification: Notification) {
         guard let userInfo = notification.userInfo as? [String: Any] else { return }
         guard let stickerName = userInfo["stickerName"] as? String else { return }
-        print(stickerName)
+        
+        addStickerToCropView(stickerName)
     }
+    
+    private func addStickerToCropView(_ stickerName: String) {
+        
+        let sticker = UIImage.init(named: stickerName)!
+        let singleStickerView = UIImageView(image: sticker)
+        let panGesture = UIPanGestureRecognizer(
+            target: self,
+            action: #selector(handlePan)
+        )
+        let pinchGesture = UIPinchGestureRecognizer(
+            target: self,
+            action: #selector(handlePinch)
+        )
+        let rotateGesture = UIRotationGestureRecognizer(
+            target: self,
+            action: #selector(handleRotate)
+        )
+        let longPressGesture = UILongPressGestureRecognizer(
+            target: self,
+            action: #selector(handleLongPress)
+        )
+        longPressGesture.minimumPressDuration = 0
+        panGesture.delegate = self
+        pinchGesture.delegate = self
+        rotateGesture.delegate = self
+        longPressGesture.delegate = self
+        
+        singleStickerView.addGestureRecognizer(panGesture)
+        singleStickerView.addGestureRecognizer(pinchGesture)
+        singleStickerView.addGestureRecognizer(rotateGesture)
+        singleStickerView.addGestureRecognizer(longPressGesture)
+        singleStickerView.isUserInteractionEnabled = true
+        cropArea.addSubview(singleStickerView)
+        stickerGroups.append(singleStickerView)
+        
+        singleStickerView.widthAnchor.constraint(equalToConstant: 70).isActive = true
+        singleStickerView.heightAnchor.constraint(equalToConstant: 70).isActive = true
+    }
+    
+    private func updateStickerFrame() {
+        
+    }
+    
+    @objc func handleLongPress() {
+        
+    }
+    
+    @objc func handlePan(_ gesture: UIPanGestureRecognizer) {
+
+        print("PAN")
+        let translation = gesture.translation(in: view)
+        
+        guard let gestureView = gesture.view as? UIImageView else {
+            return
+        }
+        
+        gestureView.center = CGPoint(
+            x: gestureView.center.x + translation.x,
+            y: gestureView.center.y + translation.y
+        )
+        gesture.setTranslation(.zero, in: view)
+    }
+    
+    @objc func handlePinch(_ gesture: UIPinchGestureRecognizer) {
+        
+        
+        guard let gestureView = gesture.view as? UIImageView else {
+            return
+        }
+        
+        gestureView.transform = gestureView.transform.scaledBy(
+            x: gesture.scale,
+            y: gesture.scale
+        )
+        gesture.scale = 1
+        
+//        if gesture.state == .ended {
+//            self.selectedSticker = nil
+//        }
+    }
+    
+    
+    @objc func handleRotate(_ gesture: UIRotationGestureRecognizer) {
+        
+        guard let gestureView = gesture.view as? UIImageView else {
+            return
+        }
+        
+        gestureView.transform = gestureView.transform.rotated(
+            by: gesture.rotation
+        )
+        gesture.rotation = 0
+        
+//        if gesture.state == .ended {
+//            self.selectedSticker = nil
+//        }
+    }
+    
+    
     
     @objc private func selectIcon(_ notification: Notification) {
         
@@ -426,7 +529,6 @@ extension RecordVC {
             self.view.layoutIfNeeded()
 
         } else {
-            print("TextView Touched")
             UIView.animate(withDuration: keyboardAnimationDuration, animations: {
                 if isAppearing {
                     self.upperContainerConstraintWithImageContainerTop.priority = UILayoutPriority(rawValue: 248)
@@ -601,5 +703,21 @@ extension RecordVC: PopupViewDelegate {
         default:
             return "NILL"
         }
+    }
+}
+
+extension RecordVC: UIGestureRecognizerDelegate {
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+    
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if gestureRecognizer is UILongPressGestureRecognizer {
+            if let v = gestureRecognizer.view {
+                v.superview?.bringSubviewToFront(v)
+            }
+        }
+        return true
     }
 }
