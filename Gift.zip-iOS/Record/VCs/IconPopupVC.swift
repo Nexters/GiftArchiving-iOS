@@ -26,24 +26,27 @@ class IconPopupVC: UIViewController {
     
     var isSend: Bool = false
     
-    let categoryImageArray: [String] = ["icDigital", "icGroceries", "icLiving", "icPet", "icBaby", "icGiftCard", "icSports", "icFashion"]
+    var categoryImageArray: [String] = ["icDigital", "icGroceries", "icLiving", "icPet", "icBaby", "icGiftCard", "icSports", "icFashion"]
     let categoryNameArray: [String] = ["디지털", "식품", "리빙", "펫", "유아동", "상품권", "스포츠", "패션"]
-    let purposeImageArray: [String] = ["icBirthday", "icAnniversary", "icWedding", "icGetajob", "icHoliday", "icGraduation", "icApology", "icAppreciation"]
+    var purposeImageArray: [String] = ["icBirthday", "icAnniversary", "icWedding", "icGetajob", "icHoliday", "icGraduation", "icApology", "icAppreciation"]
     let purposeNameArray: [String] = ["생일", "기념일", "결혼", "취업", "명절", "졸업", "사과", "감사"]
     
     
     
-    let categoryImageArray2: [String] = ["icCosmetic", "icMcoupon", "icCulture", "icEtc"]
+    var categoryImageArray2: [String] = ["icCosmetic", "icMcoupon", "icCulture", "icEtc"]
     let categoryNameArray2: [String] = ["화장품", "모바일교환권", "컬처", "기타"]
-    let purposeImageArray2: [String] = ["icCheer", "icHousewarming", "icJust", "icEtc"]
+    var purposeImageArray2: [String] = ["icCheer", "icHousewarming", "icJust", "icEtc"]
     let purposeNameArray2: [String] = ["응원", "집들이", "그냥", "기타"]
     
-    let emotionImageSendArray: [String] = ["icEmojiCheer", "icEmojiSorry", "icEmojiBest", "icEmojiCelebration"]
+    var emotionImageSendArray: [String] = ["icEmojiCheer", "icEmojiSorry", "icEmojiBest", "icEmojiCelebration"]
     let emotionNameSendArray: [String] = ["응원해", "미안해", "나최고지", "축하해"]
-    let emotionImageGetArray: [String] = ["icEmojiSense", "icEmojiLove", "icEmojiTouch", "icEmojiSurprisal"]
+    var emotionImageGetArray: [String] = ["icEmojiSense", "icEmojiLove", "icEmojiTouch", "icEmojiSurprisal"]
     let emotionNameGetArray: [String] = ["센스최고", "사랑해", "감동이야", "놀라워"]
     
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -56,6 +59,32 @@ class IconPopupVC: UIViewController {
             backgroundView.backgroundColor = bc
             safeAreaView.backgroundColor = bc
             popupViewHeight.constant = height
+            
+            if bc == UIColor.wheat {
+                for index in categoryImageArray.indices {
+                    categoryImageArray[index] += "B"
+                    purposeImageArray[index] += "B"
+                }
+                for index in categoryImageArray2.indices {
+                    categoryImageArray2[index] += "B"
+                    purposeImageArray2[index] += "B"
+                    emotionImageGetArray[index] += "B"
+                    emotionImageSendArray[index] += "B"
+                }
+            } else {
+                for index in categoryImageArray.indices {
+                    categoryImageArray[index] = categoryImageArray[index].trimmingCharacters(in: ["B"])
+                    purposeImageArray[index] = purposeImageArray[index].trimmingCharacters(in: ["B"])
+                }
+                for index in categoryImageArray2.indices {
+                    categoryImageArray2[index] = categoryImageArray2[index].trimmingCharacters(in: ["B"])
+                    purposeImageArray2[index] = purposeImageArray2[index].trimmingCharacters(in: ["B"])
+                    emotionImageSendArray[index] = emotionImageSendArray[index].trimmingCharacters(in: ["B"])
+                    emotionImageGetArray[index] = emotionImageGetArray[index].trimmingCharacters(in: ["B"])
+                }
+            }
+            
+            
         }
         iconCollectionView.isPagingEnabled = true
         if whichPopup == 2 {
@@ -64,6 +93,8 @@ class IconPopupVC: UIViewController {
             pageControl.numberOfPages = 2
         }
         pageControl.hidesForSinglePage = true
+        
+        
     }
     
     private func initDelegates() {
@@ -101,7 +132,17 @@ extension IconPopupVC: UICollectionViewDataSource, UICollectionViewDelegateFlowL
                 icon.setCategories(iconNames: emotionNameGetArray, iconImages: emotionImageGetArray)
                 icon.iconKind = "emotion"
             }
-            
+            if let bc = backgroundColor {
+                if bc == UIColor.wheat {
+                    for label in icon.labels {
+                        label.textColor = .greyishBrown
+                    }
+                } else {
+                    for label in icon.labels {
+                        label.textColor = .white
+                    }
+                }
+            }
             icon.delegate = self
             return icon
             
@@ -118,9 +159,18 @@ extension IconPopupVC: UICollectionViewDataSource, UICollectionViewDelegateFlowL
                     icon.setCategories(iconNames: purposeNameArray, iconImages: purposeImageArray)
                     icon.iconKind = "purpose"
                 } else {
-                    
                 }
-                
+                if let bc = backgroundColor {
+                    if bc == UIColor.wheat {
+                        for label in icon.labels {
+                            label.textColor = .greyishBrown
+                        }
+                    } else {
+                        for label in icon.labels {
+                            label.textColor = .white
+                        }
+                    }
+                }
                 icon.delegate = self
                 return icon
             } else {
@@ -135,9 +185,18 @@ extension IconPopupVC: UICollectionViewDataSource, UICollectionViewDelegateFlowL
                     icon.setCategories(iconNames: purposeNameArray2, iconImages: purposeImageArray2)
                     icon.iconKind = "purpose"
                 } else {
-                    
                 }
-                
+                if let bc = backgroundColor {
+                    if bc == UIColor.wheat {
+                        for label in icon.labels {
+                            label.textColor = .greyishBrown
+                        }
+                    } else {
+                        for label in icon.labels {
+                            label.textColor = .white
+                        }
+                    }
+                }
                 icon.delegate = self
                 return icon
             }

@@ -78,6 +78,10 @@ class RecordVC: UIViewController {
     
     private var stickerGroups: [UIImageView] = []
     
+    private var categoryImageName: String = "icEtc"
+    private var purposeImageName: String = "icEtc"
+    private var emotionImageName: String = "icEtc"
+    
     private var currentBackgroundPopupColor: UIColor = UIColor.Background.charcoalGrey.popup
     
     private var currentBackgroundColor: UIColor = UIColor.charcoalGrey {
@@ -113,6 +117,34 @@ class RecordVC: UIViewController {
                 fromLabel.textColor = .greyishBrown
                 nameTextField.attributedPlaceholder = NSAttributedString(string: "이름",
                                                                          attributes: [NSAttributedString.Key.foregroundColor: UIColor(white: 62.0 / 255.0, alpha: 0.34)])
+                nameTextField.textColor = .greyishBrown
+                categoryLabel.textColor = .greyishBrown
+                purposeLabel.textColor = .greyishBrown
+                emotionLabel.textColor = .greyishBrown
+                
+                categoryImageName = categoryImageName + "B"
+                purposeImageName = purposeImageName + "B"
+                emotionImageName = emotionImageName + "B"
+                categoryImageView.image = UIImage(named: categoryImageName)
+                purposeImageView.image = UIImage(named: purposeImageName)
+                emotionImageView.image = UIImage(named: emotionImageName)
+                
+                emotionTextView.textColor = .greyishBrown
+
+                
+                let photo = UIImage(named: "iconCameraBk")
+                let frame = UIImage(named: "iconShapeBk")
+                let sticker = UIImage(named: "iconStickerBk")
+                photoButton.setImage(photo, for: .normal)
+                frameButton.setImage(frame, for: .normal)
+                stickerButton.setImage(sticker, for: .normal)
+                colorButton.layer.borderColor = UIColor.greyishBrown.cgColor
+                
+                for btn in colorButtons {
+                    btn.layer.borderColor = UIColor.greyishBrown.cgColor
+                }
+                
+                
             } else {
                 backButton.setImage(UIImage.init(named: "iconBack"), for: .normal)
                 dateToRecordLabel.textColor = .white
@@ -123,6 +155,29 @@ class RecordVC: UIViewController {
                 fromLabel.textColor = .white
                 nameTextField.attributedPlaceholder = NSAttributedString(string: "이름",
                                                                          attributes: [NSAttributedString.Key.foregroundColor: UIColor.init(white: 1, alpha: 0.34)])
+                nameTextField.textColor = .white
+                categoryLabel.textColor = .white
+                purposeLabel.textColor = .white
+                emotionLabel.textColor = .white
+                
+                categoryImageName = categoryImageName.trimmingCharacters(in: ["B"])
+                purposeImageName = purposeImageName.trimmingCharacters(in: ["B"])
+                emotionImageName = emotionImageName.trimmingCharacters(in: ["B"])
+                categoryImageView.image = UIImage(named: categoryImageName)
+                purposeImageView.image = UIImage(named: purposeImageName)
+                emotionImageView.image = UIImage(named: emotionImageName)
+                emotionTextView.textColor = .white
+                
+                let photo = UIImage(named: "iconCamera")
+                let frame = UIImage(named: "iconShape")
+                let sticker = UIImage(named: "iconSticker")
+                photoButton.setImage(photo, for: .normal)
+                frameButton.setImage(frame, for: .normal)
+                stickerButton.setImage(sticker, for: .normal)
+                colorButton.layer.borderColor = UIColor.white.cgColor
+                for btn in colorButtons {
+                    btn.layer.borderColor = UIColor.white.cgColor
+                }
             }
         }
     }
@@ -540,12 +595,15 @@ extension RecordVC {
         if iconKind == "category" {
             categoryImageView.image = UIImage(named: iconImage)
             categoryLabel.text = iconName
+            categoryImageName = iconImage
         } else if iconKind == "purpose" {
             purposeImageView.image = UIImage(named: iconImage)
             purposeLabel.text = iconName
+            purposeImageName = iconImage
         } else {
             emotionImageView.image = UIImage(named: iconImage)
             emotionLabel.text = iconName
+            emotionImageName = iconImage
         }
     }
     
