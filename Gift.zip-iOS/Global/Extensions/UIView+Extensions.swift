@@ -47,13 +47,26 @@ extension UIView {
         }
     }
     
+    
+    // animate sticker view
+    func animateStickerView(_ direction: Bool) {
+        self.superview?.bringSubviewToFront(self)
+        let duration: TimeInterval = direction ? 0.25 : 0.10
+        let alpha: CGFloat = direction ? 1.0 : 0.0
+        self.isHidden = !direction
+        UIView.animate(withDuration: duration) {
+            self.alpha = alpha
+        }
+    }
+    
+    
     // dahsed View
-    func makeDashedBorder()  {
+    func makeDashedBorder(_ color: UIColor)  {
         let mViewBorder = CAShapeLayer()
-        let opacity: CGFloat = 0.25
-        let borderColor: UIColor = UIColor.white
+        let opacity: CGFloat = 0.4
+        let borderColor: UIColor = color
         mViewBorder.strokeColor = borderColor.withAlphaComponent(opacity).cgColor
-        mViewBorder.lineDashPattern = [2, 2]
+        mViewBorder.lineDashPattern = [4, 4]
         mViewBorder.frame = self.bounds
         mViewBorder.fillColor = nil
         mViewBorder.path = UIBezierPath(rect: self.bounds).cgPath

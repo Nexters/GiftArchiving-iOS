@@ -26,7 +26,7 @@ class RecordVC: UIViewController {
     @IBOutlet weak var cropImageView: UIImageView!
     @IBOutlet weak var nameStackView: UIStackView!
     @IBOutlet weak var infoView: UIView!
-    @IBOutlet weak var stickerArea: UIView!
+    @IBOutlet weak var cropArea: UIView!
     @IBOutlet weak var emotionTextView: UITextView!
     @IBOutlet weak var bottomBarBottomConstraintWithBottomSafeArea: NSLayoutConstraint!
     @IBOutlet weak var upperContainerConstraintWithImageContainerTop: NSLayoutConstraint!
@@ -42,7 +42,13 @@ class RecordVC: UIViewController {
     @IBOutlet weak var emotionImageView: UIImageView!
     @IBOutlet weak var dateToRecordLabel: UILabel!
     
+    @IBOutlet weak var photoButton: UIButton!
+    @IBOutlet weak var frameButton: UIButton!
     @IBOutlet weak var stickerButton: UIButton!
+    @IBOutlet weak var colorButton: UIButton!
+    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var completeButton: UIButton!
+    @IBOutlet weak var dateDropDownImage: UIImageView!
     
     @IBOutlet var colorButtons: [UIButton]!
     
@@ -52,7 +58,7 @@ class RecordVC: UIViewController {
     
     lazy var popupBackground = UIView()
     
-    lazy var stickerView = StickerView()
+    lazy var stickerPopupView = StickerView()
     
     lazy var exitButton = UIButton()
     
@@ -70,10 +76,108 @@ class RecordVC: UIViewController {
     
     private var currentImageContainerOriginY: CGFloat = 0
     
+    private var stickerGroups: [UIImageView] = []
+    
+    private var categoryImageName: String = "icEtc"
+    private var purposeImageName: String = "icEtc"
+    private var emotionImageName: String = "icEtc"
+    
+    private var currentBackgroundPopupColor: UIColor = UIColor.Background.charcoalGrey.popup
+    
     private var currentBackgroundColor: UIColor = UIColor.charcoalGrey {
         didSet {
+            switch currentBackgroundColor {
+            case .charcoalGrey:
+                currentBackgroundPopupColor = UIColor.Background.charcoalGrey.popup
+                break
+            case .ceruleanBlue:
+                currentBackgroundPopupColor = UIColor.Background.ceruleanBlue.popup
+                break
+            case .wheat:
+                currentBackgroundPopupColor = UIColor.Background.wheat.popup
+                break
+            case .pinkishOrange:
+                currentBackgroundPopupColor = UIColor.Background.pinkishOrange.popup
+                break
+            default:
+                break
+            }
+            
             for changeView in backgroundColorViews {
                 changeView.backgroundColor = currentBackgroundColor
+            }
+            
+            if currentBackgroundColor == UIColor.wheat {
+                backButton.setImage(UIImage.init(named: "iconBackBk"), for: .normal)
+                dateToRecordLabel.textColor = .greyishBrown
+                completeButton.setImage(UIImage.init(named: "iconCheckBk"), for: .normal)
+                dateDropDownImage.image = UIImage.init(named: "iconArrowBottomBk")
+                emptyImageLabel.textColor = .greyishBrown
+                cropImageView.makeDashedBorder(UIColor.greyishBrown)
+                fromLabel.textColor = .greyishBrown
+                nameTextField.attributedPlaceholder = NSAttributedString(string: "이름",
+                                                                         attributes: [NSAttributedString.Key.foregroundColor: UIColor(white: 62.0 / 255.0, alpha: 0.34)])
+                nameTextField.textColor = .greyishBrown
+                categoryLabel.textColor = .greyishBrown
+                purposeLabel.textColor = .greyishBrown
+                emotionLabel.textColor = .greyishBrown
+                
+                categoryImageName = categoryImageName + "B"
+                purposeImageName = purposeImageName + "B"
+                emotionImageName = emotionImageName + "B"
+                categoryImageView.image = UIImage(named: categoryImageName)
+                purposeImageView.image = UIImage(named: purposeImageName)
+                emotionImageView.image = UIImage(named: emotionImageName)
+                
+                emotionTextView.textColor = .greyishBrown
+
+                
+                let photo = UIImage(named: "iconCameraBk")
+                let frame = UIImage(named: "iconShapeBk")
+                let sticker = UIImage(named: "iconStickerBk")
+                photoButton.setImage(photo, for: .normal)
+                frameButton.setImage(frame, for: .normal)
+                stickerButton.setImage(sticker, for: .normal)
+                colorButton.layer.borderColor = UIColor.greyishBrown.cgColor
+                
+                for btn in colorButtons {
+                    btn.layer.borderColor = UIColor.greyishBrown.cgColor
+                }
+                
+                
+            } else {
+                backButton.setImage(UIImage.init(named: "iconBack"), for: .normal)
+                dateToRecordLabel.textColor = .white
+                completeButton.setImage(UIImage.init(named: "iconCheck"), for: .normal)
+                dateDropDownImage.image = UIImage.init(named: "iconArrowBottom")
+                emptyImageLabel.textColor = .white
+                cropImageView.makeDashedBorder(UIColor.white)
+                fromLabel.textColor = .white
+                nameTextField.attributedPlaceholder = NSAttributedString(string: "이름",
+                                                                         attributes: [NSAttributedString.Key.foregroundColor: UIColor.init(white: 1, alpha: 0.34)])
+                nameTextField.textColor = .white
+                categoryLabel.textColor = .white
+                purposeLabel.textColor = .white
+                emotionLabel.textColor = .white
+                
+                categoryImageName = categoryImageName.trimmingCharacters(in: ["B"])
+                purposeImageName = purposeImageName.trimmingCharacters(in: ["B"])
+                emotionImageName = emotionImageName.trimmingCharacters(in: ["B"])
+                categoryImageView.image = UIImage(named: categoryImageName)
+                purposeImageView.image = UIImage(named: purposeImageName)
+                emotionImageView.image = UIImage(named: emotionImageName)
+                emotionTextView.textColor = .white
+                
+                let photo = UIImage(named: "iconCamera")
+                let frame = UIImage(named: "iconShape")
+                let sticker = UIImage(named: "iconSticker")
+                photoButton.setImage(photo, for: .normal)
+                frameButton.setImage(frame, for: .normal)
+                stickerButton.setImage(sticker, for: .normal)
+                colorButton.layer.borderColor = UIColor.white.cgColor
+                for btn in colorButtons {
+                    btn.layer.borderColor = UIColor.white.cgColor
+                }
             }
         }
     }
@@ -92,6 +196,7 @@ class RecordVC: UIViewController {
         didSet {
             if isColorEditing {
                 view.bringSubviewToFront(colorBottomContainer)
+                view.bringSubviewToFront(exitButton)
                 exitButton.isHidden = false
             } else {
                 view.bringSubviewToFront(bottomContainer)
@@ -108,8 +213,8 @@ class RecordVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let stickerButtonWidth = stickerButton.frame.width
-        stickerButton.makeRounded(cornerRadius: stickerButtonWidth / 2)
+        let stickerButtonWidth = colorButton.frame.width
+        colorButton.makeRounded(cornerRadius: stickerButtonWidth / 2)
         for button in colorButtons {
             let buttonWidth = button.frame.width
             button.makeRounded(cornerRadius: buttonWidth / 2)
@@ -147,6 +252,7 @@ class RecordVC: UIViewController {
             popupBackground.animatePopupBackground(true)
             guard let des = segue.destination as? DatePopupVC else { return }
             des.delegate = self
+            des.currentBackgroundColor = currentBackgroundColor
         } else if segue.identifier == "categoryPopup" {
             popupBackground.animatePopupBackground(true)
             view.bringSubviewToFront(categoryImageView)
@@ -183,11 +289,26 @@ class RecordVC: UIViewController {
     
     @IBAction func completeRecord(_ sender: UIButton) {
         // record server
-        self.navigationController?.popToRootViewController(animated: true)
+        
+        let renderer = UIGraphicsImageRenderer(size: cropArea.bounds.size)
+        let renderImage = renderer.image { _ in
+             cropArea.drawHierarchy(in: cropArea.bounds, afterScreenUpdates: true)
+        }
+        UIImageWriteToSavedPhotosAlbum(renderImage, self, #selector(image(image:didFinishSavingWithError:contextInfo:)), nil)
+//        self.dismiss(animated: true, completion: nil)
+//        self.navigationController?.popToRootViewController(animated: true)
+    }
+    
+    @objc func image(image: UIImage, didFinishSavingWithError error: NSError?, contextInfo:UnsafeRawPointer) {
+        if error == nil {
+            print("saved cropped image")
+        } else {
+            print("error saving cropped image")
+        }
     }
     
     @IBAction func selectPhoto(_ sender: UIButton) {
-        let alert = UIAlertController(title: "사진 선택", message: "되라제발", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "사진 선택", message: "선물을 골라주세요. 🎁", preferredStyle: .actionSheet)
         let library = UIAlertAction(title: "사진앨범", style: .default) { (action) in
             self.openLibrary()
         }
@@ -208,18 +329,60 @@ class RecordVC: UIViewController {
     
     @IBAction func useSticker(_ sender: UIButton) {
         if isStickerEditing {
-            stickerView.animatePopupBackground(false)
+            changeButtonContainerColor(false)
+            changeStickerButtonInteraction(true)
+            stickerPopupView.animateStickerView(false)
+            makeButtonNormalOpacity()
+            bottomContainer.backgroundColor = currentBackgroundColor
             isStickerEditing = false
         } else {
-            self.view.addSubview(stickerView)
-            stickerView.translatesAutoresizingMaskIntoConstraints = false
-            stickerView.bottomAnchor.constraint(equalTo: bottomContainer.topAnchor, constant: 0).isActive = true
-            stickerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
-            stickerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
-            stickerView.topAnchor.constraint(equalTo: imageContainer
-                                                .bottomAnchor, constant: 0).isActive = true
+            changeButtonContainerColor(true)
+            changeStickerButtonInteraction(false)
+            stickerPopupView.outsideBackgroundColor = currentBackgroundColor
+            stickerPopupView.animateStickerView(true)
             isStickerEditing = true
+            makeButtonLowOpacity(index: 2)
+            
         }
+    }
+    
+    private func changeButtonContainerColor(_ direction: Bool) {
+        if direction {
+            UIView.animate(withDuration: 0.25) {
+                self.bottomContainer.backgroundColor = self.currentBackgroundPopupColor
+                self.view.backgroundColor = self.currentBackgroundPopupColor
+            }
+        } else {
+            UIView.animate(withDuration: 0.10) {
+                self.bottomContainer.backgroundColor = self.currentBackgroundColor
+                self.view.backgroundColor = self.currentBackgroundColor
+            }
+        }
+    }
+    
+    private func changeStickerButtonInteraction(_ direction: Bool) {
+        photoButton.isUserInteractionEnabled = direction
+        frameButton.isUserInteractionEnabled = direction
+        colorButton.isUserInteractionEnabled = direction
+    }
+    
+    private func makeButtonLowOpacity(index: Int) {
+        photoButton.alpha = 0.3
+        colorButton.alpha = 0.3
+        if index == 1 {
+            frameButton.alpha = 1.0
+            stickerButton.alpha = 0.3
+        } else if index == 2 {
+            frameButton.alpha = 0.3
+            stickerButton.alpha = 1.0
+        }
+    }
+    
+    private func makeButtonNormalOpacity() {
+        photoButton.alpha = 1.0
+        colorButton.alpha = 1.0
+        frameButton.alpha = 1.0
+        stickerButton.alpha = 1.0
     }
     
     @IBAction func changeColor(_ sender: UIButton) {
@@ -270,14 +433,16 @@ extension RecordVC {
         currentInfoViewOriginY = infoView.frame.origin.y
         currentBottomContainerOriginY = bottomContainer.frame.origin.y
         currentImageContainerOriginY = imageContainer.frame.origin.y
-        cropImageView.makeDashedBorder()
+        cropImageView.makeDashedBorder(UIColor.white)
         
-        stickerButton.translatesAutoresizingMaskIntoConstraints = false
-        stickerButton.widthAnchor.constraint(equalToConstant: 24).isActive = true
-        stickerButton.heightAnchor.constraint(equalToConstant: 24).isActive = true
-        stickerButton.layer.borderWidth = 1
-        stickerButton.layer.borderColor = UIColor.white.cgColor
+        colorButton.translatesAutoresizingMaskIntoConstraints = false
+        colorButton.widthAnchor.constraint(equalToConstant: 24).isActive = true
+        colorButton.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        colorButton.layer.borderWidth = 1
+        colorButton.layer.borderColor = UIColor.white.cgColor
         
+        
+        // 배경색 바꿀때 원래 메뉴로 돌아가는 버튼
         exitButton.addTarget(self, action: #selector(dismissColorBottomContainer), for: .touchUpInside)
         view.addSubview(exitButton)
         exitButton.translatesAutoresizingMaskIntoConstraints = false
@@ -286,6 +451,17 @@ extension RecordVC {
         exitButton.bottomAnchor.constraint(equalTo: colorBottomContainer.topAnchor).isActive = true
         exitButton.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
         exitButton.isHidden = true
+        
+        // 스티커 뷰
+        view.addSubview(stickerPopupView)
+        stickerPopupView.translatesAutoresizingMaskIntoConstraints = false
+        stickerPopupView.bottomAnchor.constraint(equalTo: bottomContainer.topAnchor, constant: 0).isActive = true
+        stickerPopupView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+        stickerPopupView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+        stickerPopupView.topAnchor.constraint(equalTo: imageContainer
+                                            .bottomAnchor, constant: 0).isActive = true
+        stickerPopupView.alpha = 0
+        stickerPopupView.isHidden = true
     }
     
     @objc func dismissColorBottomContainer() {
@@ -296,7 +472,114 @@ extension RecordVC {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(selectIcon), name: .init("selectIcon"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(getStickerName), name: .init("getStickerName"), object: nil)
     }
+    
+    @objc private func getStickerName(_ notification: Notification) {
+        guard let userInfo = notification.userInfo as? [String: Any] else { return }
+        guard let stickerName = userInfo["stickerName"] as? String else { return }
+        
+        addStickerToCropView(stickerName)
+    }
+    
+    private func addStickerToCropView(_ stickerName: String) {
+        
+        let sticker = UIImage.init(named: stickerName)!
+        let singleStickerView = UIImageView(image: sticker)
+        let panGesture = UIPanGestureRecognizer(
+            target: self,
+            action: #selector(handlePan)
+        )
+        let pinchGesture = UIPinchGestureRecognizer(
+            target: self,
+            action: #selector(handlePinch)
+        )
+        let rotateGesture = UIRotationGestureRecognizer(
+            target: self,
+            action: #selector(handleRotate)
+        )
+        let longPressGesture = UILongPressGestureRecognizer(
+            target: self,
+            action: #selector(handleLongPress)
+        )
+        longPressGesture.minimumPressDuration = 0
+        panGesture.delegate = self
+        pinchGesture.delegate = self
+        rotateGesture.delegate = self
+        longPressGesture.delegate = self
+        
+        singleStickerView.addGestureRecognizer(panGesture)
+        singleStickerView.addGestureRecognizer(pinchGesture)
+        singleStickerView.addGestureRecognizer(rotateGesture)
+        singleStickerView.addGestureRecognizer(longPressGesture)
+        singleStickerView.isUserInteractionEnabled = true
+        cropArea.addSubview(singleStickerView)
+        stickerGroups.append(singleStickerView)
+        
+        singleStickerView.widthAnchor.constraint(equalToConstant: 70).isActive = true
+        singleStickerView.heightAnchor.constraint(equalToConstant: 70).isActive = true
+    }
+    
+    private func updateStickerFrame() {
+        
+    }
+    
+    @objc func handleLongPress() {
+        
+    }
+    
+    @objc func handlePan(_ gesture: UIPanGestureRecognizer) {
+
+        print("PAN")
+        let translation = gesture.translation(in: view)
+        
+        guard let gestureView = gesture.view as? UIImageView else {
+            return
+        }
+        
+        gestureView.center = CGPoint(
+            x: gestureView.center.x + translation.x,
+            y: gestureView.center.y + translation.y
+        )
+        gesture.setTranslation(.zero, in: view)
+    }
+    
+    @objc func handlePinch(_ gesture: UIPinchGestureRecognizer) {
+        
+        
+        guard let gestureView = gesture.view as? UIImageView else {
+            return
+        }
+        
+        gestureView.transform = gestureView.transform.scaledBy(
+            x: gesture.scale,
+            y: gesture.scale
+        )
+        gesture.scale = 1
+        
+//        if gesture.state == .ended {
+//            self.selectedSticker = nil
+//        }
+    }
+    
+    
+    @objc func handleRotate(_ gesture: UIRotationGestureRecognizer) {
+        
+        guard let gestureView = gesture.view as? UIImageView else {
+            return
+        }
+        
+        gestureView.transform = gestureView.transform.rotated(
+            by: gesture.rotation
+        )
+        gesture.rotation = 0
+        
+//        if gesture.state == .ended {
+//            self.selectedSticker = nil
+//        }
+    }
+    
+    
     
     @objc private func selectIcon(_ notification: Notification) {
         
@@ -312,12 +595,15 @@ extension RecordVC {
         if iconKind == "category" {
             categoryImageView.image = UIImage(named: iconImage)
             categoryLabel.text = iconName
+            categoryImageName = iconImage
         } else if iconKind == "purpose" {
             purposeImageView.image = UIImage(named: iconImage)
             purposeLabel.text = iconName
+            purposeImageName = iconImage
         } else {
             emotionImageView.image = UIImage(named: iconImage)
             emotionLabel.text = iconName
+            emotionImageName = iconImage
         }
     }
     
@@ -345,7 +631,6 @@ extension RecordVC {
             self.view.layoutIfNeeded()
 
         } else {
-            print("TextView Touched")
             UIView.animate(withDuration: keyboardAnimationDuration, animations: {
                 if isAppearing {
                     self.upperContainerConstraintWithImageContainerTop.priority = UILayoutPriority(rawValue: 248)
@@ -357,6 +642,8 @@ extension RecordVC {
             }) { (_) in
             }
         }
+        
+        
     }
     
     private func initTextField() {
@@ -518,5 +805,21 @@ extension RecordVC: PopupViewDelegate {
         default:
             return "NILL"
         }
+    }
+}
+
+extension RecordVC: UIGestureRecognizerDelegate {
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+    
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if gestureRecognizer is UILongPressGestureRecognizer {
+            if let v = gestureRecognizer.view {
+                v.superview?.bringSubviewToFront(v)
+            }
+        }
+        return true
     }
 }

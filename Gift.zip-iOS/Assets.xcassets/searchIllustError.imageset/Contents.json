@@ -1,19 +1,19 @@
 {
   "images" : [
     {
-      "filename" : "iconFeelingBk.png",
+      "filename" : "searchIllustError.png",
       "scale" : "1x",
       "idiom" : "universal"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "iconFeelingBk@2x.png"
+      "filename" : "searchIllustError@2x.png"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x",
-      "filename" : "iconFeelingBk@3x.png"
+      "filename" : "searchIllustError@3x.png",
+      "scale" : "3x"
     }
   ],
   "info" : {

@@ -127,9 +127,7 @@ class ShiftyImageCropVC: UIViewController, UIScrollViewDelegate {
         let cropRect = CGRect(x: imgX, y: imgY, width: imgW, height: imgH)
         let imageRef = img.cgImage!.cropping(to: cropRect)
         let croppedImage = UIImage(cgImage: imageRef!)
-        
-        
-//        UIImageWriteToSavedPhotosAlbum(croppedImage, self, #selector(image(image:didFinishSavingWithError:contextInfo:)), nil)
+        UIImageWriteToSavedPhotosAlbum(croppedImage, self, #selector(image(image:didFinishSavingWithError:contextInfo:)), nil)
         self.dismiss(animated: true, completion: nil)
     }
     
