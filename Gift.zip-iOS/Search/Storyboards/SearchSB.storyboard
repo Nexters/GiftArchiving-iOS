@@ -301,6 +301,7 @@
                         <outlet property="cnstTableViewHeight" destination="jGn-Vp-9J7" id="aJa-Db-9nH"/>
                         <outlet property="cnstViewRecentHeight" destination="jcs-ED-0Ow" id="ncT-lW-MN5"/>
                         <outlet property="collectionView" destination="8Ac-As-0c1" id="Th4-K0-FDa"/>
+                        <outlet property="scrollView" destination="g9T-5l-kgy" id="h7I-mv-llb"/>
                         <outlet property="tableView" destination="bQk-rV-61e" id="U15-OY-ubC"/>
                         <outlet property="tagCollectionView" destination="JL5-mF-Z9v" id="S9n-sa-AvR"/>
                         <outlet property="tagCollectionView2" destination="b95-aC-hln" id="zxy-ui-jfy"/>

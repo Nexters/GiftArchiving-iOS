@@ -8,7 +8,7 @@
 import UIKit
 import TTGTagCollectionView
 
-class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldDelegate{
+class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldDelegate, UIScrollViewDelegate{
     
 
     var giftCategory = ["모바일교환권", "패션", "화장품", "식품", "생활잡화", "디지털", "스포츠", "육아용품", "펫", "리빙", "상품권", "기타"]
@@ -29,6 +29,7 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
     
     @IBOutlet weak var cnstTableViewHeight: NSLayoutConstraint!
     
+    @IBOutlet weak var scrollView: UIScrollView!
     //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +37,7 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
         // Do any additional setup after loading the view.
         txtFieldSearch.delegate = self
         tableView.dataSource = self
+        scrollView.delegate = self
         setLayout()
         
     }
@@ -78,7 +80,19 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
         viewTxtFieldBack.backgroundColor = UIColor.secondary400
         txtFieldSearch.attributedPlaceholder = NSAttributedString(string: "이름, 내용 검색", attributes: [NSAttributedString.Key.foregroundColor : UIColor.charcoalGreyTwo])
         
+        //table view 높이 지정
         cnstTableViewHeight.constant = 10 * 52.5
+        
+        //scroll view 터치했을 때 키보드 내리기
+        let singleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MyTapMethod))
+
+        singleTapGestureRecognizer.numberOfTapsRequired = 1
+
+        singleTapGestureRecognizer.isEnabled = true
+
+        singleTapGestureRecognizer.cancelsTouchesInView = false
+
+        scrollView.addGestureRecognizer(singleTapGestureRecognizer)
         
     }
     //MARK: 최근 검색 데이터 관련
@@ -129,17 +143,26 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
     
     //MARK: 키보드 관련
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
-
-          self.view.endEditing(true)
+        self.view.endEditing(true)
 
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        print("textFieldShouldReturn")
+
         //임시
         if let searchData = textField.text {
             self.addRecentSearchData(val: searchData)
         }
         return true
+    }
+    //스크롤뷰 탭 했을 때 실행되는 메서드 
+    @objc func MyTapMethod(sender: UITapGestureRecognizer) {
+        self.view.endEditing(true)
+    }
+    //스크롤 했을 때 키보드 내리기
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView){
+
+        self.view.endEditing(true)
+
     }
     
 }
