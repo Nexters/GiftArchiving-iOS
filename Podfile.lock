@@ -21,6 +21,7 @@ PODS:
   - RxRelay (6.0.0):
     - RxSwift (= 6.0.0)
   - RxSwift (6.0.0)
+  - TTGTagCollectionView (1.11.1)
 
 DEPENDENCIES:
   - Alamofire
@@ -32,6 +33,7 @@ DEPENDENCIES:
   - lottie-ios
   - RxCocoa (= 6.0.0)
   - RxSwift (= 6.0.0)
+  - TTGTagCollectionView
 
 SPEC REPOS:
   trunk:
@@ -46,6 +48,7 @@ SPEC REPOS:
     - RxCocoa
     - RxRelay
     - RxSwift
+    - TTGTagCollectionView
 
 SPEC CHECKSUMS:
   Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
@@ -59,7 +62,8 @@ SPEC CHECKSUMS:
   RxCocoa: 3f79328fafa3645b34600f37c31e64c73ae3a80e
   RxRelay: 8d593be109c06ea850df027351beba614b012ffb
   RxSwift: c14e798c59b9f6e9a2df8fd235602e85cc044295
+  TTGTagCollectionView: 86fcbfa6a7493c9e860b01c2e693cffc8acf6de1
 
-PODFILE CHECKSUM: 31fe7a39f21240e6d489221f64eca1f924fe2008
+PODFILE CHECKSUM: f9724282980dd18f2febf3866de3d561652e2d56
 
 COCOAPODS: 1.10.0

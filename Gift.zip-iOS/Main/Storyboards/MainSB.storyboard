@@ -124,6 +124,9 @@
                                             <constraint firstAttribute="width" constant="24" id="Gpc-ik-R8U"/>
                                         </constraints>
                                         <state key="normal" image="btn_search"/>
+                                        <connections>
+                                            <action selector="btnSearchClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vha-yc-VEi"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -12,8 +12,14 @@
 		4004497D25CDDA26004E9EB1 /* SplashVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4004497C25CDDA26004E9EB1 /* SplashVC.swift */; };
 		4004498125CDDA5D004E9EB1 /* lottiegift.json in Resources */ = {isa = PBXBuildFile; fileRef = 4004498025CDDA5D004E9EB1 /* lottiegift.json */; };
 		4004498425CDDA96004E9EB1 /* SplashSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4004498325CDDA96004E9EB1 /* SplashSB.storyboard */; };
+		401C03B325CEBD160024B9C5 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401C03B225CEBD160024B9C5 /* SearchVC.swift */; };
+		401C03C425CEF7B60024B9C5 /* RecentCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 401C03C325CEF7B60024B9C5 /* RecentCollectionViewCell.xib */; };
+		401C03C825CEF84C0024B9C5 /* RecentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401C03C725CEF84C0024B9C5 /* RecentCollectionViewCell.swift */; };
+		401C03CD25CEFD660024B9C5 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401C03CC25CEFD660024B9C5 /* PaddingLabel.swift */; };
+		401C03D125D00D990024B9C5 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401C03D025D00D990024B9C5 /* TableViewCell.swift */; };
 		4052034E25C537110066989C /* VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4052034D25C537110066989C /* VC.swift */; };
 		4052035225C537890066989C /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4052035125C537890066989C /* CollectionViewCell.swift */; };
+		40742E1325CEB32200D2005D /* SearchSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40742E1225CEB32200D2005D /* SearchSB.storyboard */; };
 		408E518F25CAF5E20037EC9B /* GridCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 408E518E25CAF5E20037EC9B /* GridCollectionViewCell.xib */; };
 		408E519225CAF81E0037EC9B /* GridCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408E519125CAF81E0037EC9B /* GridCollectionViewCell.swift */; };
 		408E519B25CB1E6E0037EC9B /* OnboardingSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 408E519A25CB1E6E0037EC9B /* OnboardingSB.storyboard */; };
@@ -61,8 +67,14 @@
 		4004497C25CDDA26004E9EB1 /* SplashVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVC.swift; sourceTree = "<group>"; };
 		4004498025CDDA5D004E9EB1 /* lottiegift.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = lottiegift.json; sourceTree = "<group>"; };
 		4004498325CDDA96004E9EB1 /* SplashSB.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SplashSB.storyboard; sourceTree = "<group>"; };
+		401C03B225CEBD160024B9C5 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
+		401C03C325CEF7B60024B9C5 /* RecentCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecentCollectionViewCell.xib; sourceTree = "<group>"; };
+		401C03C725CEF84C0024B9C5 /* RecentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentCollectionViewCell.swift; sourceTree = "<group>"; };
+		401C03CC25CEFD660024B9C5 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
+		401C03D025D00D990024B9C5 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		4052034D25C537110066989C /* VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VC.swift; sourceTree = "<group>"; };
 		4052035125C537890066989C /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		40742E1225CEB32200D2005D /* SearchSB.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SearchSB.storyboard; sourceTree = "<group>"; };
 		408E518E25CAF5E20037EC9B /* GridCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GridCollectionViewCell.xib; sourceTree = "<group>"; };
 		408E519125CAF81E0037EC9B /* GridCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCollectionViewCell.swift; sourceTree = "<group>"; };
 		408E519A25CB1E6E0037EC9B /* OnboardingSB.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = OnboardingSB.storyboard; sourceTree = "<group>"; };
@@ -187,6 +199,51 @@
 			path = VC;
 			sourceTree = "<group>";
 		};
+		401C03C625CEF8340024B9C5 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				401C03C725CEF84C0024B9C5 /* RecentCollectionViewCell.swift */,
+				401C03D025D00D990024B9C5 /* TableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		401C03CB25CEFD4F0024B9C5 /* Labels */ = {
+			isa = PBXGroup;
+			children = (
+				401C03CC25CEFD660024B9C5 /* PaddingLabel.swift */,
+			);
+			path = Labels;
+			sourceTree = "<group>";
+		};
+		40742E0F25CEB2CF00D2005D /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				401C03CB25CEFD4F0024B9C5 /* Labels */,
+				401C03C625CEF8340024B9C5 /* Cells */,
+				40742E1125CEB30400D2005D /* VC */,
+				40742E1025CEB2FC00D2005D /* Storyboards */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		40742E1025CEB2FC00D2005D /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				40742E1225CEB32200D2005D /* SearchSB.storyboard */,
+				401C03C325CEF7B60024B9C5 /* RecentCollectionViewCell.xib */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		40742E1125CEB30400D2005D /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				401C03B225CEBD160024B9C5 /* SearchVC.swift */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
 		408E518C25CA676A0037EC9B /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
@@ -298,6 +355,7 @@
 		D4336D1D25BE80D500D27568 /* Gift.zip-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				40742E0F25CEB2CF00D2005D /* Search */,
 				4004498025CDDA5D004E9EB1 /* lottiegift.json */,
 				4004497925CDD976004E9EB1 /* Splash */,
 				D4B1899D25CBCE75007C6AE9 /* Stickers */,
@@ -515,6 +573,8 @@
 				4004497725CDD8D5004E9EB1 /* OnboardingCollectionViewCell.xib in Resources */,
 				D4F4915D25CD9E5F00FE9BF6 /* SingleStickerCVC.xib in Resources */,
 				4004498125CDDA5D004E9EB1 /* lottiegift.json in Resources */,
+				401C03C425CEF7B60024B9C5 /* RecentCollectionViewCell.xib in Resources */,
+				40742E1325CEB32200D2005D /* SearchSB.storyboard in Resources */,
 				D4336D2825BE80D500D27568 /* Assets.xcassets in Resources */,
 				D4D5262425CB385700D18386 /* MainSB.storyboard in Resources */,
 				408E518F25CAF5E20037EC9B /* GridCollectionViewCell.xib in Resources */,
@@ -578,10 +638,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				40DE15CC25C8636D00184320 /* ListVC.swift in Sources */,
+				401C03C825CEF84C0024B9C5 /* RecentCollectionViewCell.swift in Sources */,
 				D4B189A525CBCEEF007C6AE9 /* XibView.swift in Sources */,
 				D4A08EB425C016BA009CFCC4 /* DatePopupVC.swift in Sources */,
 				D4A08E9225BFDCFF009CFCC4 /* RecordVC.swift in Sources */,
 				4052035225C537890066989C /* CollectionViewCell.swift in Sources */,
+				401C03CD25CEFD660024B9C5 /* PaddingLabel.swift in Sources */,
 				D4A08E9E25BFE031009CFCC4 /* UIColor+Extensions.swift in Sources */,
 				D400F5B225CDAE2E00F71709 /* SingleCVC.swift in Sources */,
 				D4F360AC25C8871700874874 /* ImageCropVC.swift in Sources */,
@@ -597,6 +659,8 @@
 				D400F5AA25CDA3CE00F71709 /* PackageStickerCVC.swift in Sources */,
 				D4D5261025CAFE2400D18386 /* IconPopupVC.swift in Sources */,
 				408E519225CAF81E0037EC9B /* GridCollectionViewCell.swift in Sources */,
+				401C03D125D00D990024B9C5 /* TableViewCell.swift in Sources */,
+				401C03B325CEBD160024B9C5 /* SearchVC.swift in Sources */,
 				40ADFC1325C9B03800721F4D /* StickyCellFlowLayout.swift in Sources */,
 				D4B189A125CBCEA2007C6AE9 /* StickerView.swift in Sources */,
 				4004497D25CDDA26004E9EB1 /* SplashVC.swift in Sources */,

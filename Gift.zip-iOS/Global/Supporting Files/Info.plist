@@ -64,7 +64,7 @@
 					<key>UISceneDelegateClassName</key>
 					<string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
 					<key>UISceneStoryboardFile</key>
-					<string>SplashSB</string>
+					<string>MainSB</string>
 				</dict>
 			</array>
 		</dict>
