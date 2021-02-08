@@ -361,14 +361,19 @@ class RecordVC: UIViewController {
     
     @IBAction func completeRecord(_ sender: UIButton) {
         // record server
+
+        // 사진 크롭 저장하는 것 여러가지 방법으로!!
         
-        let renderer = UIGraphicsImageRenderer(size: cropArea.bounds.size)
-        let renderImage = renderer.image { _ in
-             cropArea.drawHierarchy(in: cropArea.bounds, afterScreenUpdates: true)
-        }
-        UIImageWriteToSavedPhotosAlbum(renderImage, self, #selector(image(image:didFinishSavingWithError:contextInfo:)), nil)
-//        self.dismiss(animated: true, completion: nil)
-//        self.navigationController?.popToRootViewController(animated: true)
+        guard let share = UIStoryboard.init(name: "Share", bundle: nil).instantiateViewController(identifier: "ShareVC") as? ShareVC else { return }
+        // 인스타에 게시할 이미지 넘기기 작업
+        self.navigationController?.pushViewController(share, animated: true)
+        
+//        let renderer = UIGraphicsImageRenderer(size: cropArea.bounds.size)
+//        let renderImage = renderer.image { _ in
+//             cropArea.drawHierarchy(in: cropArea.bounds, afterScreenUpdates: true)
+//        }
+//        UIImageWriteToSavedPhotosAlbum(renderImage, self, #selector(image(image:didFinishSavingWithError:contextInfo:)), nil)
+
     }
     
     @objc func image(image: UIImage, didFinishSavingWithError error: NSError?, contextInfo:UnsafeRawPointer) {
