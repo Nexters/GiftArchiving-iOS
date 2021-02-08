@@ -5,13 +5,14 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--OnboardingVC-->
         <scene sceneID="8oU-ec-BOd">
             <objects>
-                <viewController id="cPT-3X-HqY" customClass="OnboardingVC" customModule="Gift_zip_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="OnboardingVC" id="cPT-3X-HqY" customClass="OnboardingVC" customModule="Gift_zip_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="AJu-5I-gZc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -22,17 +23,64 @@
                                     <constraint firstAttribute="height" constant="53" id="bcB-5m-72v"/>
                                 </constraints>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vyW-sf-m8e">
+                                <rect key="frame" x="20" y="680" width="374" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="s6c-ut-OOE"/>
+                                </constraints>
+                                <state key="normal" image="kakaoLogin"/>
+                                <connections>
+                                    <action selector="kakaoSignInBtnClicked:" destination="cPT-3X-HqY" eventType="touchUpInside" id="zt4-e5-ElV"/>
+                                </connections>
+                            </button>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="aye-gt-FPc">
+                                <rect key="frame" x="20" y="178" width="374" height="200"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="umm-st-RPD"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="zKg-8b-wRp">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="TXN-DC-TWn">
+                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="2iN-KA-bP9">
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="Tni-Zs-ic0">
+                                <rect key="frame" x="0.0" y="398" width="414" height="28"/>
+                            </pageControl>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="xK0-LD-mzY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="Tni-Zs-ic0" firstAttribute="leading" secondItem="xK0-LD-mzY" secondAttribute="leading" id="8O1-3i-AFv"/>
+                            <constraint firstItem="xK0-LD-mzY" firstAttribute="trailing" secondItem="aye-gt-FPc" secondAttribute="trailing" constant="20" id="Arc-50-TVz"/>
+                            <constraint firstItem="vyW-sf-m8e" firstAttribute="leading" secondItem="xK0-LD-mzY" secondAttribute="leading" constant="20" id="CER-bQ-NRl"/>
+                            <constraint firstItem="H53-gB-tjQ" firstAttribute="top" secondItem="vyW-sf-m8e" secondAttribute="bottom" constant="34" id="FEa-Kw-iEr"/>
+                            <constraint firstItem="Tni-Zs-ic0" firstAttribute="top" secondItem="aye-gt-FPc" secondAttribute="bottom" constant="20" id="HAo-tg-eNS"/>
                             <constraint firstItem="xK0-LD-mzY" firstAttribute="bottom" secondItem="H53-gB-tjQ" secondAttribute="bottom" constant="50" id="JD5-3W-fJu"/>
+                            <constraint firstItem="aye-gt-FPc" firstAttribute="top" secondItem="xK0-LD-mzY" secondAttribute="top" constant="134" id="bF0-uj-lcH"/>
+                            <constraint firstItem="xK0-LD-mzY" firstAttribute="trailing" secondItem="vyW-sf-m8e" secondAttribute="trailing" constant="20" id="gLV-TO-xcb"/>
                             <constraint firstItem="xK0-LD-mzY" firstAttribute="trailing" secondItem="H53-gB-tjQ" secondAttribute="trailing" constant="20" id="kgY-ZQ-tl6"/>
                             <constraint firstItem="H53-gB-tjQ" firstAttribute="leading" secondItem="xK0-LD-mzY" secondAttribute="leading" constant="20" id="lQB-fk-S9d"/>
+                            <constraint firstItem="aye-gt-FPc" firstAttribute="leading" secondItem="xK0-LD-mzY" secondAttribute="leading" constant="20" id="tp7-Te-hL0"/>
+                            <constraint firstItem="xK0-LD-mzY" firstAttribute="trailing" secondItem="Tni-Zs-ic0" secondAttribute="trailing" id="vtp-IQ-OHa"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="appleSignInBtn" destination="H53-gB-tjQ" id="zip-SD-rda"/>
+                        <outlet property="collectionView" destination="aye-gt-FPc" id="EF2-j7-xc2"/>
+                        <outlet property="pageControl" destination="Tni-Zs-ic0" id="LRP-8t-2Pp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Oe-9Y-iM3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -41,6 +89,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="kakaoLogin" width="300" height="45"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
