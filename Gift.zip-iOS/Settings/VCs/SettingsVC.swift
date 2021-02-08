@@ -6,8 +6,8 @@
 //
 
 import UIKit
-
-class SettingsVC: UIViewController {
+import MessageUI
+class SettingsVC: UIViewController, MFMailComposeViewControllerDelegate {
     @IBOutlet weak var settingTableView: UITableView!
     
     var serviceSettingsName: [String] = ["현재버전 1.1.0"]
@@ -24,7 +24,6 @@ class SettingsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        initTableView()
         initNotificationCenter()
         initDelegate()
         initPopupBackgroundView()
@@ -32,10 +31,6 @@ class SettingsVC: UIViewController {
     
     @IBAction func popSetting(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
-    }
-    
-    private func initTableView() {
-        settingTableView.separatorColor = UIColor.init(red: 29, green: 29, blue: 33, alpha: 1)
     }
     
     private func initNotificationCenter() {
@@ -54,6 +49,30 @@ class SettingsVC: UIViewController {
         settingTableView.delegate = self
         settingTableView.dataSource = self
     }
+    
+    private func configuredMailComposeViewController() -> MFMailComposeViewController {
+        let mailComposerVC = MFMailComposeViewController()
+//        mailComposerVC.view.backgroundColor = .black
+        mailComposerVC.mailComposeDelegate = self
+        mailComposerVC.setSubject("문의 및 건의하기")
+        mailComposerVC.setToRecipients(["support@giftzip.kr"])
+        mailComposerVC.setMessageBody("- 정확한 문의 파악을 위해 아래 정보를 작성해주세요!\n\n\n1. 문의 내용:\n\n2. 기프트집(카카오) 메일계정: \n\n★ 문의 관련 스크린샷을 첨부하시면 \n 보다 정확하고 빠른 확인이 가능합니다.", isHTML: false)
+        return mailComposerVC
+    }
+    
+    private func showSendMailErrorAlert() {
+        
+        let sendMailErrorAlert = UIAlertController(title: "메일을 전송 실패", message: "아이폰 이메일 설정을 확인하고 다시 시도해주세요.", preferredStyle: .alert)
+        
+        let cancelButton = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+        sendMailErrorAlert.addAction(cancelButton)
+        self.present(sendMailErrorAlert, animated: true, completion: nil)
+    }
+    
+    internal func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
 }
 
 extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
@@ -77,7 +96,8 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
         if indexPath.row == 0 {
             if indexPath.section == 3 {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: FooterTVC.identifier, for: indexPath) as? FooterTVC else { return UITableViewCell() }
-             
+                
+                cell.isHighlighted = true
                 cell.delegate = self
                 return cell
             } else {
@@ -89,6 +109,7 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
                 } else {
                     cell.titleLabel.text = "앱 정보"
                 }
+                cell.isUserInteractionEnabled = false
                 return cell
             }
             
@@ -123,7 +144,49 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("tapped")
+        if indexPath.row == 0 {
+            
+        } else {
+            if indexPath.section == 1 && indexPath.row == 1 {
+                // 공지사항
+                guard let vc = self.storyboard?.instantiateViewController(identifier: "NoticeVC") as? NoticeVC else { return }
+                
+                self.navigationController?.pushViewController(vc, animated: true)
+            } else if indexPath.section == 1 && indexPath.row == 2 {
+                // 메일
+                let mailComposeViewController = self.configuredMailComposeViewController()
+                if MFMailComposeViewController.canSendMail() {
+                    mailComposeViewController.view.backgroundColor = .black
+                    mailComposeViewController.navigationController?.navigationBar.tintColor = UIColor.white
+                    self.present(mailComposeViewController, animated: true, completion: nil)
+                    print("can send mail")
+                } else {
+                    self.showSendMailErrorAlert()
+                }
+            } else if indexPath.section == 2 {
+                guard let vc = self.storyboard?.instantiateViewController(identifier: "TermsVC") as? TermsVC else { return }
+                
+                switch indexPath.row {
+                case 1:
+                    // 서비스 이용약관
+                    vc.titleText = "기프트집 서비스 이용약관"
+                    vc.navigationTitleText = "서비스 이용약관"
+                    break
+                case 2:
+                    vc.titleText = "기프트집 사용 오픈소스"
+                    vc.navigationTitleText = "오픈소스 라이센스"
+                    break
+                case 3:
+                    vc.titleText = "기프트집 사용자\n개인정보 이용방침"
+                    vc.navigationTitleText = "개인정보 이용방침"
+                    break
+                default:
+                    break
+                }
+                self.navigationController?.pushViewController(vc, animated: true)
+                
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -148,12 +211,20 @@ extension SettingsVC: UITableViewButtonSelectedDelegate {
         
         present(popup, animated: true, completion: nil)
     }
+    
+    func sendMailButtonPressed() {
+      
+    }
 }
 
 protocol UITableViewButtonSelectedDelegate: class {
     func logoutButtonPressed()
+    
+    func sendMailButtonPressed()
 }
 
 extension UITableViewButtonSelectedDelegate {
     func logoutButtonPressed() {}
+    
+    func sendMailButtonPressed() {}
 }
