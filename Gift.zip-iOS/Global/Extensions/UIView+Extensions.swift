@@ -72,6 +72,7 @@ extension UIView {
         mViewBorder.path = UIBezierPath(rect: self.bounds).cgPath
         mViewBorder.name = "dash"
         self.layer.addSublayer(mViewBorder)
+        
     }
     
     func eraseBorder() {
