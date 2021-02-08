@@ -33,6 +33,9 @@
                                             <constraint firstAttribute="height" constant="24" id="lJg-UW-i28"/>
                                         </constraints>
                                         <state key="normal" image="iconBack"/>
+                                        <connections>
+                                            <action selector="popSetting:" destination="LV9-Bt-9Fy" eventType="touchUpInside" id="lCc-cb-HAh"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="설정・문의" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hqf-bk-gV2">
                                         <rect key="frame" x="169.5" y="18.5" width="75" height="19"/>
@@ -50,7 +53,7 @@
                                     <constraint firstAttribute="height" constant="56" id="mQ8-Yw-mQD"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7T8-ob-8aM">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7T8-ob-8aM">
                                 <rect key="frame" x="0.0" y="100" width="414" height="762"/>
                                 <color key="backgroundColor" red="0.031372549019607843" green="0.031372549019607843" blue="0.031372549019607843" alpha="0.84705882352941175" colorSpace="calibratedRGB"/>
                                 <prototypes>
@@ -134,6 +137,9 @@
                                                     <state key="normal" title="로그아웃">
                                                         <color key="titleColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.60784313725490191" alpha="0.84705882352941175" colorSpace="calibratedRGB"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="logout:" destination="68b-2R-DC1" eventType="touchUpInside" id="qJm-G9-Z3G"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -165,6 +171,91 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cwc-lY-g91" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-723.1884057971015" y="236.38392857142856"/>
+        </scene>
+        <!--Logout PopupVC-->
+        <scene sceneID="co7-ud-7Y5">
+            <objects>
+                <viewController storyboardIdentifier="LogoutPopupVC" id="qbW-mw-Bds" customClass="LogoutPopupVC" customModule="Gift_zip_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="BWf-c6-Lq8">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WMi-0f-Kgf">
+                                <rect key="frame" x="0.0" y="664" width="414" height="232"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="로그아웃 하시겠어요?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i1J-mo-nDX">
+                                        <rect key="frame" x="121" y="45" width="172.5" height="23.5"/>
+                                        <fontDescription key="fontDescription" name="SpoqaHanSansNeo-Bold" family="Spoqa Han Sans Neo" pointSize="20"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="선물 등록을 할 수 없어요." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FYw-jj-gyb">
+                                        <rect key="frame" x="124.5" y="78.5" width="165.5" height="19.5"/>
+                                        <fontDescription key="fontDescription" name="SpoqaHanSansNeo-Regular" family="Spoqa Han Sans Neo" pointSize="16"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="jYN-tR-YYh">
+                                        <rect key="frame" x="25" y="128" width="364" height="48"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sgq-vs-iKl">
+                                                <rect key="frame" x="0.0" y="0.0" width="178" height="48"/>
+                                                <color key="backgroundColor" red="0.18431372549019609" green="0.18431372549019609" blue="0.21176470588235294" alpha="1" colorSpace="calibratedRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="48" id="tg8-9W-OSO"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="SpoqaHanSansNeo-Bold" family="Spoqa Han Sans Neo" pointSize="16"/>
+                                                <state key="normal" title="취소">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="cancelButtonTapped:" destination="qbW-mw-Bds" eventType="touchUpInside" id="FTW-XJ-6jx"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xg3-x8-DRf">
+                                                <rect key="frame" x="186" y="0.0" width="178" height="48"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" name="SpoqaHanSansNeo-Bold" family="Spoqa Han Sans Neo" pointSize="16"/>
+                                                <state key="normal" title="로그아웃">
+                                                    <color key="titleColor" red="0.11372549019607843" green="0.11372549019607843" blue="0.12549019607843137" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="logoutButtonTapped:" destination="qbW-mw-Bds" eventType="touchUpInside" id="oiT-MP-qUr"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.11372549019607843" green="0.11372549019607843" blue="0.12549019607843137" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="232" id="BAr-f8-xWz"/>
+                                    <constraint firstItem="FYw-jj-gyb" firstAttribute="top" secondItem="i1J-mo-nDX" secondAttribute="bottom" constant="10" id="OND-j0-Ttj"/>
+                                    <constraint firstItem="FYw-jj-gyb" firstAttribute="centerX" secondItem="WMi-0f-Kgf" secondAttribute="centerX" id="YRi-Mv-Q5B"/>
+                                    <constraint firstAttribute="bottom" secondItem="jYN-tR-YYh" secondAttribute="bottom" constant="56" id="bVe-R4-XhT"/>
+                                    <constraint firstItem="i1J-mo-nDX" firstAttribute="top" secondItem="WMi-0f-Kgf" secondAttribute="top" constant="45" id="bXC-BL-Xn1"/>
+                                    <constraint firstItem="i1J-mo-nDX" firstAttribute="centerX" secondItem="WMi-0f-Kgf" secondAttribute="centerX" id="iEL-WP-tiY"/>
+                                    <constraint firstItem="jYN-tR-YYh" firstAttribute="leading" secondItem="WMi-0f-Kgf" secondAttribute="leading" constant="25" id="jb7-Km-3kR"/>
+                                    <constraint firstAttribute="trailing" secondItem="jYN-tR-YYh" secondAttribute="trailing" constant="25" id="odn-8J-n6E"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="t7L-8C-MwV"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="WMi-0f-Kgf" firstAttribute="leading" secondItem="t7L-8C-MwV" secondAttribute="leading" id="JK0-uV-Phc"/>
+                            <constraint firstAttribute="bottom" secondItem="WMi-0f-Kgf" secondAttribute="bottom" id="Lm1-Yk-7Xr"/>
+                            <constraint firstItem="WMi-0f-Kgf" firstAttribute="trailing" secondItem="t7L-8C-MwV" secondAttribute="trailing" id="qPF-yA-iqC"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="roundView" destination="WMi-0f-Kgf" id="0Mk-I1-36Q"/>
+                        <outletCollection property="buttons" destination="Sgq-vs-iKl" collectionClass="NSMutableArray" id="Eey-am-NYy"/>
+                        <outletCollection property="buttons" destination="xg3-x8-DRf" collectionClass="NSMutableArray" id="Y65-eB-UgO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SGB-gG-DFh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="44.927536231884062" y="236.38392857142856"/>
         </scene>
     </scenes>
     <resources>

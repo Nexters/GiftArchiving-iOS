@@ -19,14 +19,35 @@ class SettingsVC: UIViewController {
     var appSettingsName: [String] = ["서비스 이용약관", "오픈 소스 라이센스", "개인정보 이용방침"]
     var appSettingsIconImageName: [String] = ["iconTerms", "iconOpensourceCopy", "iconPrivacyinfo"]
     
+    lazy var popupBackgroundView = UIView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        initDelegate()
         initTableView()
+        initNotificationCenter()
+        initDelegate()
+        initPopupBackgroundView()
+    }
+    
+    @IBAction func popSetting(_ sender: UIButton) {
+        self.navigationController?.popViewController(animated: true)
     }
     
     private func initTableView() {
+        settingTableView.separatorColor = UIColor.init(red: 29, green: 29, blue: 33, alpha: 1)
+    }
+    
+    private func initNotificationCenter() {
+        NotificationCenter.default.addObserver(self, selector: #selector(cancelLogoutPopup), name: .init("cancelLogoutPopup"), object: nil)
+    }
+    
+    @objc func cancelLogoutPopup() {
+        popupBackgroundView.animatePopupBackground(false)
+    }
+    
+    private func initPopupBackgroundView() {
+        popupBackgroundView.setPopupBackgroundView(to: view)
     }
     
     private func initDelegate() {
@@ -57,6 +78,7 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
             if indexPath.section == 3 {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: FooterTVC.identifier, for: indexPath) as? FooterTVC else { return UITableViewCell() }
              
+                cell.delegate = self
                 return cell
             } else {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: HeaderTVC.identifier, for: indexPath) as? HeaderTVC else { return UITableViewCell() }
@@ -100,6 +122,10 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
         
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("tapped")
+    }
+    
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         if section == 3 {
             return 0
@@ -111,4 +137,23 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
         
     }
     
+}
+
+extension SettingsVC: UITableViewButtonSelectedDelegate {
+    func logoutButtonPressed() {
+        popupBackgroundView.animatePopupBackground(true)
+        guard let popup = self.storyboard?.instantiateViewController(identifier: "LogoutPopupVC") as? LogoutPopupVC else { return }
+        
+        popup.modalPresentationStyle = .overFullScreen
+        
+        present(popup, animated: true, completion: nil)
+    }
+}
+
+protocol UITableViewButtonSelectedDelegate: class {
+    func logoutButtonPressed()
+}
+
+extension UITableViewButtonSelectedDelegate {
+    func logoutButtonPressed() {}
 }

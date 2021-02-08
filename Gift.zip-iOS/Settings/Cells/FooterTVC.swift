@@ -10,8 +10,13 @@ import UIKit
 class FooterTVC: UITableViewCell {
     static let identifier: String = "FooterTVC"
 
+    weak var delegate: UITableViewButtonSelectedDelegate?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+    }
+    @IBAction func logout(_ sender: UIButton) {
+        delegate?.logoutButtonPressed()
     }
 }
