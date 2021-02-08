@@ -237,12 +237,6 @@ class RecordVC: UIViewController {
         initializeDelegates()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        print("viewDidLayoutSubviews")
-    }
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
@@ -520,17 +514,11 @@ extension RecordVC {
         singleStickerView.heightAnchor.constraint(equalToConstant: 70).isActive = true
     }
     
-    private func updateStickerFrame() {
-        
-    }
-    
     @objc func handleLongPress() {
         
     }
     
     @objc func handlePan(_ gesture: UIPanGestureRecognizer) {
-
-        print("PAN")
         let translation = gesture.translation(in: view)
         
         guard let gestureView = gesture.view as? UIImageView else {
@@ -718,7 +706,6 @@ extension RecordVC: UIImagePickerControllerDelegate, UINavigationControllerDeleg
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         if let image = info[.originalImage] as? UIImage, let editedImage = info[.editedImage] as? UIImage {
-            print(image)
             self.cropImageView.image = editedImage
             self.cropImageView.eraseBorder()
             self.originalFullImage = image
