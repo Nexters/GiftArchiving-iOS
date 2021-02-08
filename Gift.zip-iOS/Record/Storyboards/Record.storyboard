@@ -945,6 +945,7 @@
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="L5r-Cr-R21">
                                                             <rect key="frame" x="203" y="5" width="44" height="44"/>
                                                             <constraints>
+                                                                <constraint firstAttribute="width" secondItem="L5r-Cr-R21" secondAttribute="height" multiplier="1:1" id="CZp-aj-R3e"/>
                                                                 <constraint firstAttribute="width" constant="44" id="OdY-8d-Vqn"/>
                                                             </constraints>
                                                         </imageView>
@@ -1237,7 +1238,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TM9-CV-Tcy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2288" y="-363"/>
+            <point key="canvasLocation" x="1518" y="-1037"/>
         </scene>
         <!--Date PopupVC-->
         <scene sceneID="FzA-uj-agJ">
@@ -1336,7 +1337,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Al-bs-aur" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="729" y="-364"/>
+            <point key="canvasLocation" x="1518" y="-364"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

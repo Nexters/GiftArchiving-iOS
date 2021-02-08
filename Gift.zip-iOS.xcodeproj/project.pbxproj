@@ -48,6 +48,8 @@
 		D4A08EB625C01A8A009CFCC4 /* Spoqa Han Sans Neo Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D4A08EA025BFE37B009CFCC4 /* Spoqa Han Sans Neo Bold.otf */; };
 		D4A08EB825C01A8D009CFCC4 /* Spoqa Han Sans Neo Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = D4A08EA125BFE37C009CFCC4 /* Spoqa Han Sans Neo Regular.otf */; };
 		D4A08EBD25C01D32009CFCC4 /* PopupViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A08EBC25C01D32009CFCC4 /* PopupViewDelegate.swift */; };
+		D4A7141325D13CDC0095CE68 /* Share.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4A7141225D13CDC0095CE68 /* Share.storyboard */; };
+		D4A7141625D13CEC0095CE68 /* ShareVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A7141525D13CEC0095CE68 /* ShareVC.swift */; };
 		D4B189A125CBCEA2007C6AE9 /* StickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B189A025CBCEA2007C6AE9 /* StickerView.swift */; };
 		D4B189A525CBCEEF007C6AE9 /* XibView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B189A425CBCEEF007C6AE9 /* XibView.swift */; };
 		D4B189A825CBCF30007C6AE9 /* StickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4B189A725CBCF30007C6AE9 /* StickerView.xib */; };
@@ -109,6 +111,8 @@
 		D4A08EA125BFE37C009CFCC4 /* Spoqa Han Sans Neo Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Spoqa Han Sans Neo Regular.otf"; sourceTree = "<group>"; };
 		D4A08EB325C016BA009CFCC4 /* DatePopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePopupVC.swift; sourceTree = "<group>"; };
 		D4A08EBC25C01D32009CFCC4 /* PopupViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupViewDelegate.swift; sourceTree = "<group>"; };
+		D4A7141225D13CDC0095CE68 /* Share.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Share.storyboard; sourceTree = "<group>"; };
+		D4A7141525D13CEC0095CE68 /* ShareVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareVC.swift; sourceTree = "<group>"; };
 		D4B189A025CBCEA2007C6AE9 /* StickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerView.swift; sourceTree = "<group>"; };
 		D4B189A425CBCEEF007C6AE9 /* XibView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XibView.swift; sourceTree = "<group>"; };
 		D4B189A725CBCF30007C6AE9 /* StickerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StickerView.xib; sourceTree = "<group>"; };
@@ -314,6 +318,7 @@
 		D4336D1D25BE80D500D27568 /* Gift.zip-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				D4A7140E25D13CAB0095CE68 /* Share */,
 				D465156525CE9F6600CDA2EB /* Settings */,
 				4004498025CDDA5D004E9EB1 /* lottiegift.json */,
 				4004497925CDD976004E9EB1 /* Splash */,
@@ -449,6 +454,31 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		D4A7140E25D13CAB0095CE68 /* Share */ = {
+			isa = PBXGroup;
+			children = (
+				D4A7141125D13CD30095CE68 /* VCs */,
+				D4A7141025D13CC90095CE68 /* Storyboards */,
+			);
+			path = Share;
+			sourceTree = "<group>";
+		};
+		D4A7141025D13CC90095CE68 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				D4A7141225D13CDC0095CE68 /* Share.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		D4A7141125D13CD30095CE68 /* VCs */ = {
+			isa = PBXGroup;
+			children = (
+				D4A7141525D13CEC0095CE68 /* ShareVC.swift */,
+			);
+			path = VCs;
+			sourceTree = "<group>";
+		};
 		D4B1899D25CBCE75007C6AE9 /* Stickers */ = {
 			isa = PBXGroup;
 			children = (
@@ -564,6 +594,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4A7141325D13CDC0095CE68 /* Share.storyboard in Resources */,
 				D4336D2B25BE80D500D27568 /* LaunchScreen.storyboard in Resources */,
 				40ADFC0E25C9AFA100721F4D /* ListSB.storyboard in Resources */,
 				D4B189A825CBCF30007C6AE9 /* StickerView.xib in Resources */,
@@ -663,6 +694,7 @@
 				40ADFC1325C9B03800721F4D /* StickyCellFlowLayout.swift in Sources */,
 				D4B189A125CBCEA2007C6AE9 /* StickerView.swift in Sources */,
 				4004497D25CDDA26004E9EB1 /* SplashVC.swift in Sources */,
+				D4A7141625D13CEC0095CE68 /* ShareVC.swift in Sources */,
 				D4F4915C25CD9E5F00FE9BF6 /* SingleStickerCVC.swift in Sources */,
 				D4336D1F25BE80D500D27568 /* AppDelegate.swift in Sources */,
 				D4336D4225BE81FB00D27568 /* UIView+Extensions.swift in Sources */,

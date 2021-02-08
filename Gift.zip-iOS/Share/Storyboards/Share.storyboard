@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Spoqa Han Sans Neo Bold.otf">
+            <string>SpoqaHanSansNeo-Bold</string>
+        </array>
+        <array key="Spoqa Han Sans Neo Regular.otf">
+            <string>SpoqaHanSansNeo-Regular</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--ShareVC-->
+        <scene sceneID="IcX-gx-604">
+            <objects>
+                <viewController storyboardIdentifier="ShareVC" id="Chc-Xc-5sT" customClass="ShareVC" customModule="Gift_zip_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ER2-lG-tPX">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R0U-ay-lpW">
+                                <rect key="frame" x="0.0" y="44" width="375" height="56"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rah-B9-EXI">
+                                        <rect key="frame" x="16" y="16" width="24" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="24" id="5jU-Yy-wNS"/>
+                                            <constraint firstAttribute="height" constant="24" id="A9D-S2-fC8"/>
+                                        </constraints>
+                                        <state key="normal" image="iconBack"/>
+                                        <connections>
+                                            <action selector="popToMain:" destination="Chc-Xc-5sT" eventType="touchUpInside" id="imm-4o-ifK"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X1x-B3-bwu">
+                                        <rect key="frame" x="331" y="16" width="24" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="24" id="VGU-MS-Lbz"/>
+                                            <constraint firstAttribute="height" constant="24" id="eOX-sR-HY5"/>
+                                        </constraints>
+                                        <state key="normal" image="iconSave"/>
+                                        <connections>
+                                            <action selector="saveImage:" destination="Chc-Xc-5sT" eventType="touchUpInside" id="Q5a-HG-wCV"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.031372549020000001" green="0.031372549020000001" blue="0.031372549020000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="4QO-aa-UKg"/>
+                                    <constraint firstItem="Rah-B9-EXI" firstAttribute="centerY" secondItem="R0U-ay-lpW" secondAttribute="centerY" id="4e6-Bl-sDY"/>
+                                    <constraint firstItem="Rah-B9-EXI" firstAttribute="leading" secondItem="R0U-ay-lpW" secondAttribute="leading" constant="16" id="6Pz-tA-fbw"/>
+                                    <constraint firstItem="X1x-B3-bwu" firstAttribute="centerY" secondItem="R0U-ay-lpW" secondAttribute="centerY" id="ItH-Bw-1hH"/>
+                                    <constraint firstAttribute="trailing" secondItem="X1x-B3-bwu" secondAttribute="trailing" constant="20" id="ROR-eU-o5e"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="선물.zip이 보관됐어요" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="07o-1m-TeY">
+                                <rect key="frame" x="24.000000000000014" y="120" width="223.33333333333337" height="29"/>
+                                <fontDescription key="fontDescription" name="SpoqaHanSansNeo-Bold" family="Spoqa Han Sans Neo" pointSize="24"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="저장하거나 공유해보세요" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LWz-Hh-XFb">
+                                <rect key="frame" x="24.000000000000014" y="153" width="248.33333333333337" height="29"/>
+                                <fontDescription key="fontDescription" name="SpoqaHanSansNeo-Bold" family="Spoqa Han Sans Neo" pointSize="24"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="받은 마음은 널리널리 자랑하기" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SIy-9A-zHR">
+                                <rect key="frame" x="24" y="186" width="177" height="17"/>
+                                <fontDescription key="fontDescription" name="SpoqaHanSansNeo-Regular" family="Spoqa Han Sans Neo" pointSize="14"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="aAL-Nm-yd4">
+                                <rect key="frame" x="123.66666666666669" y="655" width="128" height="56"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lFT-W4-sGp">
+                                        <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
+                                        <state key="normal" image="iconShareKakao"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RP5-BM-k8B">
+                                        <rect key="frame" x="71.999999999999986" y="0.0" width="56" height="56"/>
+                                        <state key="normal" image="iconShareInsta"/>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="hoG-1H-14j"/>
+                        <color key="backgroundColor" red="0.031372549019607843" green="0.031372549019607843" blue="0.031372549019607843" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="LWz-Hh-XFb" firstAttribute="top" secondItem="07o-1m-TeY" secondAttribute="bottom" constant="4" id="2HD-g2-NYx"/>
+                            <constraint firstItem="07o-1m-TeY" firstAttribute="top" secondItem="R0U-ay-lpW" secondAttribute="bottom" constant="20" id="7Nq-ws-b6e"/>
+                            <constraint firstItem="hoG-1H-14j" firstAttribute="trailing" secondItem="R0U-ay-lpW" secondAttribute="trailing" id="9BV-pc-3Ke"/>
+                            <constraint firstItem="LWz-Hh-XFb" firstAttribute="leading" secondItem="hoG-1H-14j" secondAttribute="leading" constant="24" id="L9t-yK-cd1"/>
+                            <constraint firstItem="hoG-1H-14j" firstAttribute="bottom" secondItem="aAL-Nm-yd4" secondAttribute="bottom" constant="67" id="N1L-Zm-yM3"/>
+                            <constraint firstItem="R0U-ay-lpW" firstAttribute="top" secondItem="hoG-1H-14j" secondAttribute="top" id="YeL-Pu-v84"/>
+                            <constraint firstItem="SIy-9A-zHR" firstAttribute="top" secondItem="LWz-Hh-XFb" secondAttribute="bottom" constant="4" id="cvT-bD-s5d"/>
+                            <constraint firstItem="07o-1m-TeY" firstAttribute="leading" secondItem="hoG-1H-14j" secondAttribute="leading" constant="24" id="kDB-t7-g48"/>
+                            <constraint firstItem="aAL-Nm-yd4" firstAttribute="centerX" secondItem="ER2-lG-tPX" secondAttribute="centerX" id="n3T-pc-tuF"/>
+                            <constraint firstItem="SIy-9A-zHR" firstAttribute="leading" secondItem="hoG-1H-14j" secondAttribute="leading" constant="24" id="wP3-Xd-1fC"/>
+                            <constraint firstItem="R0U-ay-lpW" firstAttribute="leading" secondItem="hoG-1H-14j" secondAttribute="leading" id="zqC-WS-nhe"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="evg-fr-1rz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="203" y="115"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="iconBack" width="24" height="24"/>
+        <image name="iconSave" width="24" height="24"/>
+        <image name="iconShareInsta" width="56" height="56"/>
+        <image name="iconShareKakao" width="56" height="56"/>
+    </resources>
+</document>
