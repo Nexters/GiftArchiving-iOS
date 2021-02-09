@@ -69,6 +69,7 @@ class RecordVC: UIViewController {
     @IBOutlet var backgroundColorViews: [UIView]!
     
     // image Crop 할 때 바꾸기
+    @IBOutlet weak var croppedStackView: UIStackView!
     @IBOutlet weak var rectagularInstagramCropView: UIView!
     @IBOutlet weak var imageTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var imageBottomConstraint: NSLayoutConstraint!
@@ -158,9 +159,9 @@ class RecordVC: UIViewController {
     
     private var stickerGroups: [UIImageView] = []
     
-    private var categoryImageName: String = "icEtc"
-    private var purposeImageName: String = "icEtc"
-    private var emotionImageName: String = "icEtc"
+    private var categoryImageName: String = "iconCategoryDefault"
+    private var purposeImageName: String = "iconPurposeDefault"
+    private var emotionImageName: String = "iconFeelingDefault"
     
     private var currentBackgroundPopupColor: UIColor = UIColor.Background.charcoalGrey.popup
     
@@ -330,7 +331,7 @@ class RecordVC: UIViewController {
             guard let des = segue.destination as? IconPopupVC else { return }
             des.whichPopup = 0
             des.backgroundColor = currentBackgroundColor
-            des.popupViewHeightByPhones = self.view.frame.height - infoView.frame.origin.y - 154
+            des.popupViewHeightByPhones = self.view.frame.height - infoView.frame.origin.y - 173
         } else if segue.identifier == "purposePopup" {
             popupBackground.animatePopupBackground(true)
             view.bringSubviewToFront(purposeImageView)
@@ -338,7 +339,7 @@ class RecordVC: UIViewController {
             guard let des = segue.destination as? IconPopupVC else { return }
             des.whichPopup = 1
             des.backgroundColor = currentBackgroundColor
-            des.popupViewHeightByPhones = self.view.frame.height - infoView.frame.origin.y - 154
+            des.popupViewHeightByPhones = self.view.frame.height - infoView.frame.origin.y - 173
         } else if segue.identifier == "emotionPopup" {
             popupBackground.animatePopupBackground(true)
             view.bringSubviewToFront(emotionImageView)
@@ -347,7 +348,7 @@ class RecordVC: UIViewController {
             des.whichPopup = 2
             des.backgroundColor = currentBackgroundColor
             des.isSend = self.isSend
-            des.popupViewHeightByPhones = self.view.frame.height - infoView.frame.origin.y - 154
+            des.popupViewHeightByPhones = self.view.frame.height - infoView.frame.origin.y - 173
         }
     }
     
@@ -370,14 +371,22 @@ class RecordVC: UIViewController {
         let croppedImage = cropped.image { _ in
             cropArea.drawHierarchy(in: cropArea.bounds, afterScreenUpdates: true)
         }
+        rectagularInstagramCropView.makeRounded(cornerRadius: 8.0)
         rectagularInstagramCropView.backgroundColor = currentBackgroundColor
         let imageView = UIImageView.init(image: croppedImage)
-        rectagularInstagramCropView.addSubview(imageView)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.leadingAnchor.constraint(equalTo: rectagularInstagramCropView.leadingAnchor, constant: 0).isActive = true
-        imageView.trailingAnchor.constraint(equalTo: rectagularInstagramCropView.trailingAnchor, constant: 0).isActive = true
-        imageView.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
-        imageView.centerYAnchor.constraint(equalTo: rectagularInstagramCropView.centerYAnchor).isActive = true
+        let label = UILabel()
+        label.text = "To 유댕"
+        label.font = UIFont(name: "SpoqaHanSans-Bold", size: 16)
+//        rectagularInstagramCropView.addSubview(imageView)
+        croppedStackView.addArrangedSubview(imageView)
+        croppedStackView.addArrangedSubview(label)
+//        croppedStackView.addSubview(imageView)
+//        croppedStackView.addSubview(label)
+//        imageView.translatesAutoresizingMaskIntoConstraints = false
+//        imageView.leadingAnchor.constraint(equalTo: rectagularInstagramCropView.leadingAnchor, constant: 0).isActive = true
+//        imageView.trailingAnchor.constraint(equalTo: rectagularInstagramCropView.trailingAnchor, constant: 0).isActive = true
+//        imageView.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
+//        imageView.centerYAnchor.constraint(equalTo: rectagularInstagramCropView.centerYAnchor).isActive = true
         let renderer = UIGraphicsImageRenderer(size: rectagularInstagramCropView.bounds.size)
         let renderImage = renderer.image { _ in
             rectagularInstagramCropView.drawHierarchy(in: rectagularInstagramCropView.bounds, afterScreenUpdates: true)
