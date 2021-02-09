@@ -39,6 +39,9 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
     
     @IBOutlet weak var warningView: UIView!
     
+    @IBOutlet weak var resultView: UIView!
+    @IBOutlet weak var searchResultCollectionView: UICollectionView!
+    
     //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()

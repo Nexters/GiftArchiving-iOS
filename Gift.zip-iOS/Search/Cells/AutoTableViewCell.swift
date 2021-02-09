@@ -18,8 +18,6 @@ class AutoTableViewCell: UITableViewCell {
         let s = label as NSString
         let att = NSMutableAttributedString(string: s as String)
         let r = s.range(of: keyword, options: .regularExpression, range: NSMakeRange(0,s.length))
-        print(r.lowerBound)
-        print(r.upperBound)
         if r.length > 0 {
             att.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.white, range: r)
             att.addAttribute(NSAttributedString.Key.font, value: UIFont.boldSystemFont(ofSize: 16),  range: r)
