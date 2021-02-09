@@ -68,6 +68,10 @@ class RecordVC: UIViewController {
     
     @IBOutlet var backgroundColorViews: [UIView]!
     
+    // image Crop 할 때 바꾸기
+    @IBOutlet weak var rectagularInstagramCropView: UIView!
+    @IBOutlet weak var imageTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var imageBottomConstraint: NSLayoutConstraint!
     lazy var picker = UIImagePickerController()
     
     lazy var popupBackground = UIView()
@@ -301,12 +305,6 @@ class RecordVC: UIViewController {
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-    }
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setLayouts()
@@ -365,11 +363,26 @@ class RecordVC: UIViewController {
         // 사진 크롭 저장하는 것 여러가지 방법으로!!
         
         guard let share = UIStoryboard.init(name: "Share", bundle: nil).instantiateViewController(identifier: "ShareVC") as? ShareVC else { return }
+        
         // 인스타에 게시할 이미지 넘기기 작업
-        let renderer = UIGraphicsImageRenderer(size: cropArea.bounds.size)
-        let renderImage = renderer.image { _ in
-             cropArea.drawHierarchy(in: cropArea.bounds, afterScreenUpdates: true)
+        
+        let cropped = UIGraphicsImageRenderer(size: cropArea.bounds.size)
+        let croppedImage = cropped.image { _ in
+            cropArea.drawHierarchy(in: cropArea.bounds, afterScreenUpdates: true)
         }
+        rectagularInstagramCropView.backgroundColor = currentBackgroundColor
+        let imageView = UIImageView.init(image: croppedImage)
+        rectagularInstagramCropView.addSubview(imageView)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.leadingAnchor.constraint(equalTo: rectagularInstagramCropView.leadingAnchor, constant: 0).isActive = true
+        imageView.trailingAnchor.constraint(equalTo: rectagularInstagramCropView.trailingAnchor, constant: 0).isActive = true
+        imageView.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
+        imageView.centerYAnchor.constraint(equalTo: rectagularInstagramCropView.centerYAnchor).isActive = true
+        let renderer = UIGraphicsImageRenderer(size: rectagularInstagramCropView.bounds.size)
+        let renderImage = renderer.image { _ in
+            rectagularInstagramCropView.drawHierarchy(in: rectagularInstagramCropView.bounds, afterScreenUpdates: true)
+        }
+        
         share.currentName = "\(fromLabel.text!) \(nameTextField.text!)"
         share.currentBackgroundColor = currentBackgroundColor
         share.croppedImage = renderImage
