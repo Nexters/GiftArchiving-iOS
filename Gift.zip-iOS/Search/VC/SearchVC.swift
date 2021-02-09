@@ -37,6 +37,8 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
     
     @IBOutlet weak var autoTableView: UITableView!
     
+    @IBOutlet weak var warningView: UIView!
+    
     //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -113,8 +115,7 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
 
         scrollView.addGestureRecognizer(singleTapGestureRecognizer)
         
-        //autoView 설정
-        autoView.isHidden = true
+        setFrontView(idx: 0)
         
         setGiveAndTakeTable()
         
@@ -176,8 +177,7 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
     @IBAction func btnDeleteClicked(_ sender: UIButton) {
         txtFieldSearch.text = ""
         self.view.endEditing(true)
-        scrollView.isHidden = false
-        autoView.isHidden = true
+        setFrontView(idx: 0)
     }
     @IBAction func btnSearchClicked(_ sender: UIButton) {
     }
@@ -219,8 +219,7 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
         if let keyword = textField.text{
             autoArr.removeAll()
             if keyword.count > 0 {
-                scrollView.isHidden = true
-                autoView.isHidden = false
+                setFrontView(idx: 1)
                 //keyword로 검색 해서. 자동완성 띄우기
                 
                 for model in receivedModels + sentModels{
@@ -248,6 +247,9 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
                     }
                     
                 }
+            }
+            if autoArr.count == 0 {
+                setFrontView(idx: 2)
             }
             autoTableView.reloadData()
         }
@@ -277,6 +279,28 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
         }
         if(textTagCollectionView == self.tagCollectionView2){
             //reason 태그
+        }
+    }
+    
+    //MARK: 맨 앞에 보여지는 view 변경
+    //0 : default scrollview , 1 : 자동화면 뷰 , 2 : warning 뷰, 3 : 결과 리스트 뷰
+    func setFrontView(idx: Int){
+        if idx == 0{
+            self.scrollView.isHidden = false
+            self.autoView.isHidden = true
+            self.warningView.isHidden = true
+        }else if idx == 1{
+            self.scrollView.isHidden = true
+            self.autoView.isHidden = false
+            self.warningView.isHidden = true
+        }else if idx == 2{
+            self.scrollView.isHidden = true
+            self.autoView.isHidden = true
+            self.warningView.isHidden = false
+        }else if idx == 3{
+            self.scrollView.isHidden = true
+            self.autoView.isHidden = true
+            self.warningView.isHidden = true
         }
     }
 }

@@ -312,6 +312,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="bottomMargin" secondItem="Vvp-k3-Qaj" secondAttribute="bottom" id="9h3-t8-TMK"/>
                                                         <constraint firstItem="KPk-dx-3I5" firstAttribute="top" secondItem="f19-gx-o7g" secondAttribute="top" constant="14" id="Eka-sU-lUV"/>
@@ -338,6 +339,39 @@
                                     <constraint firstAttribute="trailing" secondItem="ogP-X9-GIh" secondAttribute="trailing" id="P5M-Vq-cmo"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BV9-KN-Cqn">
+                                <rect key="frame" x="0.0" y="56" width="375" height="611"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="searchIllustNone" translatesAutoresizingMaskIntoConstraints="NO" id="fEQ-v0-oZw">
+                                        <rect key="frame" x="118.5" y="141" width="138" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="666-x4-b9U"/>
+                                            <constraint firstAttribute="width" constant="138" id="bIO-04-Q8q"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="검색 결과가 없습니다" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RSu-ns-fYJ">
+                                        <rect key="frame" x="113.5" y="257" width="148.5" height="21"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="다른 키워드로 검색해 보세요." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LxY-TT-lC1">
+                                        <rect key="frame" x="124" y="281" width="127" height="13.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="LxY-TT-lC1" firstAttribute="centerX" secondItem="BV9-KN-Cqn" secondAttribute="centerX" id="Ayu-ER-zsJ"/>
+                                    <constraint firstItem="RSu-ns-fYJ" firstAttribute="centerX" secondItem="BV9-KN-Cqn" secondAttribute="centerX" id="TnX-cV-1lB"/>
+                                    <constraint firstItem="RSu-ns-fYJ" firstAttribute="top" secondItem="fEQ-v0-oZw" secondAttribute="bottom" constant="16" id="ZXf-AZ-SJQ"/>
+                                    <constraint firstItem="fEQ-v0-oZw" firstAttribute="top" secondItem="BV9-KN-Cqn" secondAttribute="top" constant="141" id="ex9-0A-cZQ"/>
+                                    <constraint firstItem="fEQ-v0-oZw" firstAttribute="centerX" secondItem="BV9-KN-Cqn" secondAttribute="centerX" id="nvi-QD-7tR"/>
+                                    <constraint firstItem="LxY-TT-lC1" firstAttribute="top" secondItem="RSu-ns-fYJ" secondAttribute="bottom" constant="3" id="uVU-OL-rSu"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="aQA-WC-Hr6"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -346,6 +380,9 @@
                             <constraint firstItem="g9T-5l-kgy" firstAttribute="bottom" secondItem="aQA-WC-Hr6" secondAttribute="bottom" id="9t0-bo-pxA"/>
                             <constraint firstItem="g9T-5l-kgy" firstAttribute="leading" secondItem="aQA-WC-Hr6" secondAttribute="leading" id="A5C-A0-Aim"/>
                             <constraint firstItem="aQA-WC-Hr6" firstAttribute="trailing" secondItem="PQm-cn-FMc" secondAttribute="trailing" id="CPE-f3-swv"/>
+                            <constraint firstItem="BV9-KN-Cqn" firstAttribute="leading" secondItem="aQA-WC-Hr6" secondAttribute="leading" id="CxN-0R-JAS"/>
+                            <constraint firstItem="BV9-KN-Cqn" firstAttribute="top" secondItem="DLV-eR-6HD" secondAttribute="bottom" id="INP-ga-YFl"/>
+                            <constraint firstItem="aQA-WC-Hr6" firstAttribute="bottom" secondItem="BV9-KN-Cqn" secondAttribute="bottom" id="JqF-hz-1tG"/>
                             <constraint firstItem="DLV-eR-6HD" firstAttribute="leading" secondItem="aQA-WC-Hr6" secondAttribute="leading" id="N4D-OF-WKI"/>
                             <constraint firstItem="aQA-WC-Hr6" firstAttribute="trailing" secondItem="DLV-eR-6HD" secondAttribute="trailing" id="SBU-RP-4aA"/>
                             <constraint firstItem="g9T-5l-kgy" firstAttribute="top" secondItem="DLV-eR-6HD" secondAttribute="bottom" id="dxh-QN-393"/>
@@ -353,6 +390,7 @@
                             <constraint firstItem="PQm-cn-FMc" firstAttribute="top" secondItem="DLV-eR-6HD" secondAttribute="bottom" id="jmC-gd-lJ2"/>
                             <constraint firstItem="g9T-5l-kgy" firstAttribute="trailing" secondItem="aQA-WC-Hr6" secondAttribute="trailing" id="wfb-2b-bIm"/>
                             <constraint firstItem="DLV-eR-6HD" firstAttribute="top" secondItem="aQA-WC-Hr6" secondAttribute="top" id="z19-Y8-uai"/>
+                            <constraint firstItem="aQA-WC-Hr6" firstAttribute="trailing" secondItem="BV9-KN-Cqn" secondAttribute="trailing" id="zcg-2c-T0U"/>
                         </constraints>
                     </view>
                     <connections>
@@ -368,6 +406,7 @@
                         <outlet property="txtFieldSearch" destination="6i2-X3-RNX" id="ljC-QD-3Gv"/>
                         <outlet property="viewRecent" destination="me4-vW-RZa" id="liQ-Lc-ElQ"/>
                         <outlet property="viewTxtFieldBack" destination="jkx-f9-fLz" id="t7B-9s-3Zm"/>
+                        <outlet property="warningView" destination="BV9-KN-Cqn" id="nX6-kt-3Xd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QSU-4S-k0N" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -380,5 +419,6 @@
         <image name="icDelete" width="24" height="24"/>
         <image name="icSearchS" width="24" height="24"/>
         <image name="iconBack" width="24" height="24"/>
+        <image name="searchIllustNone" width="138" height="100"/>
     </resources>
 </document>
