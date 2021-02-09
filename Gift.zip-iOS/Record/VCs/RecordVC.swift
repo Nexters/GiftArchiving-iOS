@@ -366,22 +366,15 @@ class RecordVC: UIViewController {
         
         guard let share = UIStoryboard.init(name: "Share", bundle: nil).instantiateViewController(identifier: "ShareVC") as? ShareVC else { return }
         // 인스타에 게시할 이미지 넘기기 작업
-        self.navigationController?.pushViewController(share, animated: true)
-        
-//        let renderer = UIGraphicsImageRenderer(size: cropArea.bounds.size)
-//        let renderImage = renderer.image { _ in
-//             cropArea.drawHierarchy(in: cropArea.bounds, afterScreenUpdates: true)
-//        }
-//        UIImageWriteToSavedPhotosAlbum(renderImage, self, #selector(image(image:didFinishSavingWithError:contextInfo:)), nil)
-
-    }
-    
-    @objc func image(image: UIImage, didFinishSavingWithError error: NSError?, contextInfo:UnsafeRawPointer) {
-        if error == nil {
-            print("saved cropped image")
-        } else {
-            print("error saving cropped image")
+        let renderer = UIGraphicsImageRenderer(size: cropArea.bounds.size)
+        let renderImage = renderer.image { _ in
+             cropArea.drawHierarchy(in: cropArea.bounds, afterScreenUpdates: true)
         }
+        share.currentName = "\(fromLabel.text!) \(nameTextField.text!)"
+        share.currentBackgroundColor = currentBackgroundColor
+        share.croppedImage = renderImage
+        self.navigationController?.pushViewController(share, animated: true)
+
     }
     
     @IBAction func selectPhoto(_ sender: UIButton) {
