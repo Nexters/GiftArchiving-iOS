@@ -1,18 +1,18 @@
 {
   "images" : [
     {
-      "idiom" : "universal",
+      "filename" : "icnAppversion.png",
       "scale" : "1x",
-      "filename" : "iconBackBk.png"
+      "idiom" : "universal"
     },
     {
-      "filename" : "iconBackBk@2x.png",
+      "filename" : "icnAppversion@2x.png",
       "scale" : "2x",
       "idiom" : "universal"
     },
     {
       "scale" : "3x",
-      "filename" : "iconBackBk@3x.png",
+      "filename" : "icnAppversion@3x.png",
       "idiom" : "universal"
     }
   ],

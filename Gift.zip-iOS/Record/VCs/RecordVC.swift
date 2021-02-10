@@ -13,6 +13,7 @@ enum FrameOfImage {
     case square
     case circle
     case windowFrame
+    case full
 }
 
 class RecordVC: UIViewController {
@@ -52,6 +53,19 @@ class RecordVC: UIViewController {
     
     @IBOutlet var colorButtons: [UIButton]!
     
+    
+    // Frame관련 IBOutlets
+    @IBOutlet weak var changeFrameView: UIView!
+    @IBOutlet weak var squareFrameView: UIView!
+    @IBOutlet weak var circleFrameView: UIView!
+    @IBOutlet weak var windowFrameView: UIView!
+    @IBOutlet weak var fullFrameView: UIView!
+    @IBOutlet weak var squareViewLabel: UILabel!
+    @IBOutlet weak var circleViewLabel: UILabel!
+    @IBOutlet weak var windowViewLabel: UILabel!
+    @IBOutlet weak var fullViewLabel: UILabel!
+    @IBOutlet weak var clearView: UIView!
+    
     @IBOutlet var backgroundColorViews: [UIView]!
     
     lazy var picker = UIImagePickerController()
@@ -68,7 +82,69 @@ class RecordVC: UIViewController {
     
     var editedImage: UIImage? // cropped Image
     
-    private var currentFrameOfImage: FrameOfImage = .square
+    private var currentFrameOfImage: FrameOfImage = .square {
+        didSet {
+            let radius = cropImageView.frame.width / 2
+            switch currentFrameOfImage {
+            case .full:
+                fullFrameView.alpha = 1.0
+                squareFrameView.alpha = 0.6
+                circleFrameView.alpha = 0.6
+                windowFrameView.alpha = 0.6
+                
+                fullViewLabel.alpha = 1.0
+                squareViewLabel.alpha = 0.6
+                circleViewLabel.alpha = 0.6
+                windowViewLabel.alpha = 0.6
+                
+                cropImageView.makeRounded(cornerRadius: 0)
+                break
+            case .square:
+                fullFrameView.alpha = 0.6
+                squareFrameView.alpha = 1.0
+                circleFrameView.alpha = 0.6
+                windowFrameView.alpha = 0.6
+                
+                
+                fullViewLabel.alpha = 0.6
+                squareViewLabel.alpha = 1.0
+                circleViewLabel.alpha = 0.6
+                windowViewLabel.alpha = 0.6
+                
+                cropImageView.makeRounded(cornerRadius: 0)
+                break
+            case .circle:
+                fullFrameView.alpha = 0.6
+                squareFrameView.alpha = 0.6
+                circleFrameView.alpha = 1.0
+                windowFrameView.alpha = 0.6
+                
+                
+                fullViewLabel.alpha = 0.6
+                squareViewLabel.alpha = 0.6
+                circleViewLabel.alpha = 1.0
+                windowViewLabel.alpha = 0.6
+                
+                cropImageView.roundCorners(cornerRadius: radius, maskedCorners: [.layerMaxXMinYCorner, .layerMinXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner])
+                break
+            
+            case .windowFrame:
+                fullFrameView.alpha = 0.6
+                squareFrameView.alpha = 0.6
+                circleFrameView.alpha = 0.6
+                windowFrameView.alpha = 1.0
+                
+                
+                fullViewLabel.alpha = 0.6
+                squareViewLabel.alpha = 0.6
+                circleViewLabel.alpha = 0.6
+                windowViewLabel.alpha = 1.0
+                
+                cropImageView.roundCorners(cornerRadius: radius, maskedCorners: [.layerMaxXMinYCorner, .layerMinXMinYCorner])
+                break
+            }
+        }
+    }
     
     private var currentInfoViewOriginY: CGFloat = 0
     
@@ -184,6 +260,8 @@ class RecordVC: UIViewController {
     
     private var isStickerEditing: Bool = false
     
+    private var isFrameEditing: Bool = false
+    
     private var isSend: Bool = false
     
     private var dateToRecord: String = "" {
@@ -235,12 +313,6 @@ class RecordVC: UIViewController {
         setNotificationCenter()
         initTextField()
         initializeDelegates()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        print("viewDidLayoutSubviews")
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -324,7 +396,20 @@ class RecordVC: UIViewController {
     }
     
     @IBAction func changeFrame(_ sender: UIButton) {
-        
+        if isFrameEditing {
+            changeButtonContainerColor(false)
+            changeFrameButtonInteraction(true)
+            animateFrameView(false)
+            makeButtonNormalOpacity()
+            isFrameEditing = false
+        } else {
+            changeButtonContainerColor(true)
+            changeFrameButtonInteraction(false)
+            animateFrameView(true)
+            changeFrameView.backgroundColor = currentBackgroundPopupColor
+            makeButtonLowOpacity(index: 1)
+            isFrameEditing = true
+        }
     }
     
     @IBAction func useSticker(_ sender: UIButton) {
@@ -340,11 +425,21 @@ class RecordVC: UIViewController {
             changeStickerButtonInteraction(false)
             stickerPopupView.outsideBackgroundColor = currentBackgroundColor
             stickerPopupView.animateStickerView(true)
-            isStickerEditing = true
             makeButtonLowOpacity(index: 2)
-            
+            isStickerEditing = true
         }
     }
+    
+    private func animateFrameView(_ direction: Bool) {
+        clearView.isHidden = !direction
+        changeFrameView.isHidden = !direction
+        let alpha: CGFloat = direction ? 1.0 : 0.0
+        UIView.animate(withDuration: 0.25, animations: {
+            self.changeFrameView.alpha = alpha
+            self.clearView.alpha = alpha
+        }, completion: nil)
+    }
+    
     
     private func changeButtonContainerColor(_ direction: Bool) {
         if direction {
@@ -358,6 +453,13 @@ class RecordVC: UIViewController {
                 self.view.backgroundColor = self.currentBackgroundColor
             }
         }
+    }
+    
+    
+    private func changeFrameButtonInteraction(_ direction: Bool) {
+        photoButton.isUserInteractionEnabled = direction
+        stickerButton.isUserInteractionEnabled = direction
+        colorButton.isUserInteractionEnabled = direction
     }
     
     private func changeStickerButtonInteraction(_ direction: Bool) {
@@ -406,6 +508,21 @@ class RecordVC: UIViewController {
     @IBAction func changeToCharcoalGreyColor(_ sender: UIButton) {
         currentBackgroundColor = .charcoalGrey
     }
+    
+    @IBAction func changeToSquareFrame(_ sender: UIButton) {
+        currentFrameOfImage = .square
+    }
+    @IBAction func changeToCircleFrame(_ sender: UIButton) {
+        currentFrameOfImage = .circle
+    }
+    @IBAction func changeToWindowFrame(_ sender: UIButton) {
+        currentFrameOfImage = .windowFrame
+    }
+    @IBAction func changeToFullFrame(_ sender: UIButton) {
+        currentFrameOfImage = .full
+        
+    }
+    
 }
 
 //MARK: - Private Methods
@@ -462,6 +579,32 @@ extension RecordVC {
                                             .bottomAnchor, constant: 0).isActive = true
         stickerPopupView.alpha = 0
         stickerPopupView.isHidden = true
+        
+        squareFrameView.layer.borderWidth = 2
+        squareFrameView.layer.borderColor = UIColor.white.cgColor
+        squareFrameView.alpha = 1.0
+        
+        circleFrameView.layer.borderWidth = 2
+        circleFrameView.layer.borderColor = UIColor.white.cgColor
+        circleFrameView.alpha = 0.6
+        let circleRadius = circleFrameView.frame.width / 2
+        circleFrameView.makeRounded(cornerRadius: circleRadius)
+        
+        windowFrameView.layer.borderWidth = 2
+        windowFrameView.layer.borderColor = UIColor.white.cgColor
+        windowFrameView.alpha = 0.6
+        let windowRadius = windowFrameView.frame.width / 2
+        windowFrameView.roundCorners(cornerRadius: windowRadius, maskedCorners: [.layerMaxXMinYCorner, .layerMinXMinYCorner])
+        
+        fullFrameView.layer.borderWidth = 2
+        fullFrameView.layer.borderColor = UIColor.white.cgColor
+        fullFrameView.alpha = 0.6
+        
+        fullViewLabel.alpha = 0.6
+        squareViewLabel.alpha = 1.0
+        circleViewLabel.alpha = 0.6
+        windowViewLabel.alpha = 0.6
+        
     }
     
     @objc func dismissColorBottomContainer() {
@@ -520,17 +663,11 @@ extension RecordVC {
         singleStickerView.heightAnchor.constraint(equalToConstant: 70).isActive = true
     }
     
-    private func updateStickerFrame() {
-        
-    }
-    
     @objc func handleLongPress() {
         
     }
     
     @objc func handlePan(_ gesture: UIPanGestureRecognizer) {
-
-        print("PAN")
         let translation = gesture.translation(in: view)
         
         guard let gestureView = gesture.view as? UIImageView else {
@@ -718,7 +855,6 @@ extension RecordVC: UIImagePickerControllerDelegate, UINavigationControllerDeleg
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         if let image = info[.originalImage] as? UIImage, let editedImage = info[.editedImage] as? UIImage {
-            print(image)
             self.cropImageView.image = editedImage
             self.cropImageView.eraseBorder()
             self.originalFullImage = image

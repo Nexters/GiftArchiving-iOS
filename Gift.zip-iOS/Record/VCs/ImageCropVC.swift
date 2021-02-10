@@ -64,6 +64,8 @@ class ImageCropVC: UIViewController, UIScrollViewDelegate {
             let holeRect = CGRect(x: holeX, y: holeY, width: holeWidth, height: holeHeight) // 269
             holeView = UIView.init(frame: holeRect)
             break
+        case .full:
+            break
         }
 
     }

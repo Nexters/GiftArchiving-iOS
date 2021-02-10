@@ -157,6 +157,10 @@ class VC: UIViewController{
                                 shape: 0))
         
     }
+    @IBAction func settingButtonClicked(_ sender: UIButton) {
+        guard let settingsVC = UIStoryboard.init(name: "Settings", bundle: nil).instantiateViewController(identifier: "SettingsVC") as? SettingsVC else { return }
+        self.navigationController?.pushViewController(settingsVC, animated: true)
+    }
     
     @IBAction func btnSentClicked(_ sender: UIButton) {
         self.btnSent.titleLabel?.textColor = UIColor.white

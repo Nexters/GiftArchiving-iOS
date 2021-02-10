@@ -40,7 +40,7 @@ extension UIView {
     // animate popup background
     func animatePopupBackground(_ direction: Bool) {
         let duration: TimeInterval = direction ? 0.35 : 0.20
-        let alpha: CGFloat = direction ? 0.40 : 0.0
+        let alpha: CGFloat = direction ? 0.60 : 0.0
         self.isHidden = !direction
         UIView.animate(withDuration: duration) {
             self.alpha = alpha
@@ -72,6 +72,7 @@ extension UIView {
         mViewBorder.path = UIBezierPath(rect: self.bounds).cgPath
         mViewBorder.name = "dash"
         self.layer.addSublayer(mViewBorder)
+        
     }
     
     func eraseBorder() {
@@ -80,5 +81,12 @@ extension UIView {
                 layer.removeFromSuperlayer()
             }
         }
+    }
+    
+    // 특정 모서리만 둥글게
+    func roundCorners(cornerRadius: CGFloat, maskedCorners: CACornerMask) {
+        clipsToBounds = true
+        layer.cornerRadius = cornerRadius
+        layer.maskedCorners = CACornerMask(arrayLiteral: maskedCorners)
     }
 }

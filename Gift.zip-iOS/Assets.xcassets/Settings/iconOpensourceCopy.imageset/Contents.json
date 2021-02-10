@@ -1,19 +1,19 @@
 {
   "images" : [
     {
+      "filename" : "iconOpensourceCopy.png",
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "iconBackBk.png"
+      "scale" : "1x"
     },
     {
-      "filename" : "iconBackBk@2x.png",
       "scale" : "2x",
+      "filename" : "iconOpensourceCopy@2x.png",
       "idiom" : "universal"
     },
     {
       "scale" : "3x",
-      "filename" : "iconBackBk@3x.png",
-      "idiom" : "universal"
+      "idiom" : "universal",
+      "filename" : "iconOpensourceCopy@3x.png"
     }
   ],
   "info" : {
