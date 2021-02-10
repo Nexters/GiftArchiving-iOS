@@ -10,43 +10,68 @@ import AuthenticationServices
 import KakaoSDKAuth
 
 class OnboardingVC: UIViewController, ASAuthorizationControllerPresentationContextProviding ,ASAuthorizationControllerDelegate {
-    let imgs = [UIImage(named: "img_test"), UIImage(named: "img_test"), UIImage(named: "img_test"), UIImage(named: "img_test")]
+    
+    let imgs = [UIImage(named: "imgOnboarding1"), UIImage(named: "imgOnboarding2"), UIImage(named: "imgOnboarding3"), UIImage(named: "imgOnboarding4")]
+    let txtTop1 = ["주고받은", "주고받은", "친구에게 기록을", "선물 기록을"]
+    let txtTop2 = ["선물을 기록해보세요", "선물을 기록해보세요", "공유해보세요", "차곡차곡 모아보세요"]
+    let txtTop3 = ["선물 종류부터 감정, 원하는 스티커까지", "선물 종류부터 감정, 원하는 스티커까지", "",
+    ""]
+    
     
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var collectionView: UICollectionView!
+    
+    @IBOutlet weak var btnKakaoLogin: UIButton!
+    
+    @IBOutlet weak var btnAppleLogin: UIButton!
+    
+    @IBOutlet weak var cnstCollectionViewTop: NSLayoutConstraint!
+    @IBOutlet weak var cnstAppleBtnBottom: NSLayoutConstraint!
+    @IBOutlet weak var cnstPageControlTop: NSLayoutConstraint!
+    var device = 0
+    var itemHeight = 455
+    
+    
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         return self.view.window!
     }
     
     
     
-    @IBOutlet weak var appleSignInBtn: UIStackView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setlayout()
         
     }
     private func setlayout(){
+        if view.bounds.height > 840 {
+            device = 1
+        }else{
+            device = 0
+        }
+        if device == 0 {
+            cnstCollectionViewTop.constant = 30
+            cnstAppleBtnBottom.constant = 25
+            itemHeight = 410
+            cnstPageControlTop.constant = -20
+        }
         collectionView.collectionViewLayout = self.createCompositionalLayout()
         let nib = UINib(nibName: "OnboardingCollectionViewCell", bundle: nil)
         collectionView.register(nib, forCellWithReuseIdentifier: "OnboardingCollectionViewCell")
         collectionView.dataSource = self
         
-
-        self.setAppleSignInButton()
         
         pageControl.hidesForSinglePage = true
         pageControl.numberOfPages = imgs.count
         pageControl.pageIndicatorTintColor = .darkGray
-    }
-    // Apple ID 로그인 버튼 생성
-    func setAppleSignInButton() {
-        let authorizationButton = ASAuthorizationAppleIDButton(type: .signIn, style: .whiteOutline)
-        authorizationButton.addTarget(self, action: #selector(appleSignInButtonPress), for: .touchUpInside)
-        self.appleSignInBtn.addArrangedSubview(authorizationButton)
+        
+        btnKakaoLogin.layer.cornerRadius = 6
+        btnKakaoLogin.backgroundColor = UIColor.dandelion
+        btnAppleLogin.layer.cornerRadius = 6
     }
     // Apple Login Button Pressed
-    @objc func appleSignInButtonPress() {
+    @IBAction func btnAppleLoginClicked(_ sender: UIButton) {
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         let request = appleIDProvider.createRequest()
         request.requestedScopes = [.fullName, .email]
@@ -178,7 +203,7 @@ extension OnboardingVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "OnboardingCollectionViewCell", for: indexPath) as! OnboardingCollectionViewCell
-        cell.configure(img: imgs[indexPath.row]! )
+        cell.configure(img: imgs[indexPath.row]!, txtTop1: txtTop1[indexPath.row], txtTop2: txtTop2[indexPath.row], txtTop3: txtTop3[indexPath.row], device: device)
         return cell
             
         
@@ -192,7 +217,7 @@ extension OnboardingVC{
             // 만들게 되면 튜플 (키: 값, 키: 값) 의 묶음으로 들어옴
             (sectionIndex: Int, layoutEvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             //아이템에 대한 사이즈 - absolute 는 고정값, estimated 는 추측, fraction은 퍼센트
-            let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(200), heightDimension: .absolute(200))
+            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(CGFloat(self.itemHeight)))
             
             //위에서 만든 아이템 사이즈로 아이템 만들기
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -200,7 +225,7 @@ extension OnboardingVC{
             item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
             
             //그룹 사이즈
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(200))
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(CGFloat(self.itemHeight)))
             //그룹사이즈로 그룹 만들기
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 1)
             //group.interItemSpacing = .fixed(16)
@@ -221,4 +246,3 @@ extension OnboardingVC{
         return layout
     }
 }
-
