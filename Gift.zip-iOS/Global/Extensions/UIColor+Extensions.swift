@@ -67,7 +67,9 @@ extension UIColor {
     @nonobjc class var steel: UIColor {
         return UIColor(red: 142.0 / 255.0, green: 142.0 / 255.0, blue: 155.0 / 255.0, alpha: 1.0)
     }
-
+    @nonobjc class var primary400: UIColor {
+        return UIColor(white: 41.0 / 255.0, alpha: 1.0)
+    }
     enum Background {
         enum charcoalGrey {
             static let `default`: UIColor = .charcoalGrey

@@ -19,7 +19,7 @@ class GridCollectionViewCell: UICollectionViewCell {
         self.labelName.text = model.name
         self.labelDate.text = model.date
         self.backView.backgroundColor = color
-        
+        self.labelDate.textColor = UIColor.whiteOpacity
     }
     
 }
