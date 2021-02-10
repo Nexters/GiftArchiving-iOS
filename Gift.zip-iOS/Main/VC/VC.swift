@@ -209,6 +209,11 @@ class VC: UIViewController{
         }
     }
     
+    @IBAction func btnSearchClicked(_ sender: UIButton) {
+        let searchSB = UIStoryboard(name: "SearchSB", bundle: nil)
+        let vc = searchSB.instantiateViewController(withIdentifier: "SearchVC")
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     
 }
 
