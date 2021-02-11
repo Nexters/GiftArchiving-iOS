@@ -52,7 +52,27 @@ extension UIColor {
     @nonobjc class var midBlue: UIColor {
         return UIColor(red: 28.0 / 255.0, green: 89.0 / 255.0, blue: 172.0 / 255.0, alpha: 1.0)
     }
-    
+    @nonobjc class var charcoalGreyTwo: UIColor {
+        return UIColor(red: 67.0 / 255.0, green: 67.0 / 255.0, blue: 72.0 / 255.0, alpha: 1.0)
+    }
+    @nonobjc class var charcoalGreyThree: UIColor {
+        return UIColor(red: 47.0 / 255.0, green: 47.0 / 255.0, blue: 54.0 / 255.0, alpha: 1.0)
+    }
+    @nonobjc class var colorTagClicked: UIColor {
+        return UIColor(red: 29.0 / 255.0, green: 29.0 / 255.0, blue: 32.0 / 255.0, alpha: 1.0)
+    }
+    @nonobjc class var secondary400: UIColor {
+        return UIColor(red: 33.0 / 255.0, green: 33.0 / 255.0, blue: 36.0 / 255.0, alpha: 1.0)
+    }
+    @nonobjc class var steel: UIColor {
+        return UIColor(red: 142.0 / 255.0, green: 142.0 / 255.0, blue: 155.0 / 255.0, alpha: 1.0)
+    }
+    @nonobjc class var primary400: UIColor {
+        return UIColor(white: 41.0 / 255.0, alpha: 1.0)
+    }
+    @nonobjc class var dandelion: UIColor {
+        return UIColor(red: 1.0, green: 230.0 / 255.0, blue: 0.0, alpha: 1.0)
+      }
     enum Background {
         enum charcoalGrey {
             static let `default`: UIColor = .charcoalGrey

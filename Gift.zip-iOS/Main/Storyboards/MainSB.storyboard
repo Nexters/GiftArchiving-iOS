@@ -21,7 +21,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mJg-oC-FIm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1113" y="-48"/>
+            <point key="canvasLocation" x="-1409" y="-56"/>
         </scene>
         <!--VC-->
         <scene sceneID="tne-QT-ifu">
@@ -127,6 +127,9 @@
                                             <constraint firstAttribute="width" constant="24" id="Gpc-ik-R8U"/>
                                         </constraints>
                                         <state key="normal" image="btn_search"/>
+                                        <connections>
+                                            <action selector="btnSearchClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vha-yc-VEi"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -209,6 +209,11 @@ class VC: UIViewController{
         }
     }
     
+    @IBAction func btnSearchClicked(_ sender: UIButton) {
+        let searchSB = UIStoryboard(name: "SearchSB", bundle: nil)
+        let vc = searchSB.instantiateViewController(withIdentifier: "SearchVC")
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     
 }
 
@@ -292,10 +297,22 @@ extension VC : UIScrollViewDelegate {
                 roundedIndex = currentIndex
             }
         }
+        
         if collectionViewFlag {
+            if Int(currentIndex) == receivedModels.count{
+                currentIndex -= 1
+            }
+           
             self.changeUI(shape: receivedModels[Int(currentIndex)].shape)
+            
+            
         }else{
+            if Int(currentIndex) == receivedModels.count{
+                currentIndex -= 1
+            }
             self.changeUI(shape: sentModels[Int(currentIndex)].shape)
+            
+            
         }
         
         

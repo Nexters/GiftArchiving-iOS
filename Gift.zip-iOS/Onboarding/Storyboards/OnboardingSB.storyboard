@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,27 +16,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="H53-gB-tjQ">
-                                <rect key="frame" x="20" y="759" width="374" height="53"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="53" id="bcB-5m-72v"/>
-                                </constraints>
-                            </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vyW-sf-m8e">
-                                <rect key="frame" x="20" y="680" width="374" height="45"/>
+                                <rect key="frame" x="24" y="723" width="366" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="45" id="s6c-ut-OOE"/>
+                                    <constraint firstAttribute="height" constant="50" id="s6c-ut-OOE"/>
                                 </constraints>
-                                <state key="normal" image="kakaoLogin"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                <state key="normal" title="카카오톡으로 로그인">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
                                 <connections>
                                     <action selector="kakaoSignInBtnClicked:" destination="cPT-3X-HqY" eventType="touchUpInside" id="zt4-e5-ElV"/>
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="aye-gt-FPc">
-                                <rect key="frame" x="20" y="178" width="374" height="200"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <rect key="frame" x="0.0" y="99" width="414" height="455"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="umm-st-RPD"/>
+                                    <constraint firstAttribute="height" constant="455" id="umm-st-RPD"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="zKg-8b-wRp">
                                     <size key="itemSize" width="128" height="128"/>
@@ -57,28 +53,64 @@
                                 </cells>
                             </collectionView>
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="Tni-Zs-ic0">
-                                <rect key="frame" x="0.0" y="398" width="414" height="28"/>
+                                <rect key="frame" x="0.0" y="574" width="414" height="27.666666666666629"/>
                             </pageControl>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconkakao" translatesAutoresizingMaskIntoConstraints="NO" id="E1Z-SQ-Rni">
+                                <rect key="frame" x="43" y="742" width="14" height="14"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="14" id="249-hy-CLs"/>
+                                    <constraint firstAttribute="width" constant="14" id="mt7-T5-hM8"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mHX-bt-IjP">
+                                <rect key="frame" x="24" y="783" width="366" height="50"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="JP9-IX-zVG"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                <state key="normal" title="Apple로 로그인">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnAppleLoginClicked:" destination="cPT-3X-HqY" eventType="touchUpInside" id="qZN-JA-qbk"/>
+                                </connections>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconApple" translatesAutoresizingMaskIntoConstraints="NO" id="ats-lc-LkQ">
+                                <rect key="frame" x="43" y="800" width="15" height="16"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="15" id="LXt-BX-VaL"/>
+                                    <constraint firstAttribute="height" constant="16" id="kU3-et-j9p"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="xK0-LD-mzY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Tni-Zs-ic0" firstAttribute="leading" secondItem="xK0-LD-mzY" secondAttribute="leading" id="8O1-3i-AFv"/>
-                            <constraint firstItem="xK0-LD-mzY" firstAttribute="trailing" secondItem="aye-gt-FPc" secondAttribute="trailing" constant="20" id="Arc-50-TVz"/>
-                            <constraint firstItem="vyW-sf-m8e" firstAttribute="leading" secondItem="xK0-LD-mzY" secondAttribute="leading" constant="20" id="CER-bQ-NRl"/>
-                            <constraint firstItem="H53-gB-tjQ" firstAttribute="top" secondItem="vyW-sf-m8e" secondAttribute="bottom" constant="34" id="FEa-Kw-iEr"/>
+                            <constraint firstItem="xK0-LD-mzY" firstAttribute="trailing" secondItem="aye-gt-FPc" secondAttribute="trailing" id="Arc-50-TVz"/>
+                            <constraint firstItem="vyW-sf-m8e" firstAttribute="leading" secondItem="xK0-LD-mzY" secondAttribute="leading" constant="24" id="CER-bQ-NRl"/>
+                            <constraint firstItem="mHX-bt-IjP" firstAttribute="leading" secondItem="xK0-LD-mzY" secondAttribute="leading" constant="24" id="G4U-U4-MJX"/>
                             <constraint firstItem="Tni-Zs-ic0" firstAttribute="top" secondItem="aye-gt-FPc" secondAttribute="bottom" constant="20" id="HAo-tg-eNS"/>
-                            <constraint firstItem="xK0-LD-mzY" firstAttribute="bottom" secondItem="H53-gB-tjQ" secondAttribute="bottom" constant="50" id="JD5-3W-fJu"/>
-                            <constraint firstItem="aye-gt-FPc" firstAttribute="top" secondItem="xK0-LD-mzY" secondAttribute="top" constant="134" id="bF0-uj-lcH"/>
-                            <constraint firstItem="xK0-LD-mzY" firstAttribute="trailing" secondItem="vyW-sf-m8e" secondAttribute="trailing" constant="20" id="gLV-TO-xcb"/>
-                            <constraint firstItem="xK0-LD-mzY" firstAttribute="trailing" secondItem="H53-gB-tjQ" secondAttribute="trailing" constant="20" id="kgY-ZQ-tl6"/>
-                            <constraint firstItem="H53-gB-tjQ" firstAttribute="leading" secondItem="xK0-LD-mzY" secondAttribute="leading" constant="20" id="lQB-fk-S9d"/>
-                            <constraint firstItem="aye-gt-FPc" firstAttribute="leading" secondItem="xK0-LD-mzY" secondAttribute="leading" constant="20" id="tp7-Te-hL0"/>
+                            <constraint firstItem="ats-lc-LkQ" firstAttribute="leading" secondItem="mHX-bt-IjP" secondAttribute="leading" constant="19" id="VwH-yU-JuO"/>
+                            <constraint firstAttribute="bottom" secondItem="mHX-bt-IjP" secondAttribute="bottom" constant="63" id="awm-O5-LG2"/>
+                            <constraint firstItem="aye-gt-FPc" firstAttribute="top" secondItem="xK0-LD-mzY" secondAttribute="top" constant="55" id="bF0-uj-lcH"/>
+                            <constraint firstItem="xK0-LD-mzY" firstAttribute="trailing" secondItem="mHX-bt-IjP" secondAttribute="trailing" constant="24" id="ddO-0f-ZLd"/>
+                            <constraint firstItem="xK0-LD-mzY" firstAttribute="trailing" secondItem="vyW-sf-m8e" secondAttribute="trailing" constant="24" id="gLV-TO-xcb"/>
+                            <constraint firstItem="mHX-bt-IjP" firstAttribute="top" secondItem="vyW-sf-m8e" secondAttribute="bottom" constant="10" id="kvI-f7-u8Z"/>
+                            <constraint firstItem="E1Z-SQ-Rni" firstAttribute="top" secondItem="vyW-sf-m8e" secondAttribute="top" constant="19" id="mIP-sM-X2H"/>
+                            <constraint firstItem="ats-lc-LkQ" firstAttribute="top" secondItem="mHX-bt-IjP" secondAttribute="top" constant="17" id="pMs-os-8GK"/>
+                            <constraint firstItem="aye-gt-FPc" firstAttribute="leading" secondItem="xK0-LD-mzY" secondAttribute="leading" id="tp7-Te-hL0"/>
                             <constraint firstItem="xK0-LD-mzY" firstAttribute="trailing" secondItem="Tni-Zs-ic0" secondAttribute="trailing" id="vtp-IQ-OHa"/>
+                            <constraint firstItem="E1Z-SQ-Rni" firstAttribute="leading" secondItem="vyW-sf-m8e" secondAttribute="leading" constant="19" id="xhl-1B-YDU"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="appleSignInBtn" destination="H53-gB-tjQ" id="zip-SD-rda"/>
+                        <outlet property="btnAppleLogin" destination="mHX-bt-IjP" id="aNm-py-F1P"/>
+                        <outlet property="btnKakaoLogin" destination="vyW-sf-m8e" id="LiK-dH-dsO"/>
+                        <outlet property="cnstAppleBtnBottom" destination="awm-O5-LG2" id="2Kw-NH-rJp"/>
+                        <outlet property="cnstCollectionViewTop" destination="bF0-uj-lcH" id="0Qr-eZ-E3g"/>
+                        <outlet property="cnstPageControlTop" destination="HAo-tg-eNS" id="vKn-xT-vi8"/>
                         <outlet property="collectionView" destination="aye-gt-FPc" id="EF2-j7-xc2"/>
                         <outlet property="pageControl" destination="Tni-Zs-ic0" id="LRP-8t-2Pp"/>
                     </connections>
@@ -89,9 +121,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="kakaoLogin" width="300" height="45"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
+        <image name="iconApple" width="15" height="16"/>
+        <image name="iconkakao" width="14" height="14"/>
     </resources>
 </document>

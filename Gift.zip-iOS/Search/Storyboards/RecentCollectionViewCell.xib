@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RecentCollectionViewCell" id="Af5-Vv-9nf" customClass="RecentCollectionViewCell" customModule="Gift_zip_iOS" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="109" height="54"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="Gsb-WB-LUd">
+                <rect key="frame" x="0.0" y="0.0" width="109" height="54"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="23z-C2-kTR" customClass="PaddingLabel" customModule="Gift_zip_iOS" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="109" height="32"/>
+                        <color key="backgroundColor" red="0.18431372549019609" green="0.18431372549019609" blue="0.21176470588235294" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="32" id="J6v-Eg-lkj"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="16"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="23z-C2-kTR" firstAttribute="top" secondItem="Gsb-WB-LUd" secondAttribute="top" id="Zwa-MQ-1GY"/>
+                    <constraint firstItem="23z-C2-kTR" firstAttribute="leading" secondItem="Gsb-WB-LUd" secondAttribute="leading" id="aI3-YI-0BD"/>
+                    <constraint firstAttribute="bottom" secondItem="23z-C2-kTR" secondAttribute="bottom" id="hXj-36-rPR"/>
+                    <constraint firstAttribute="trailing" secondItem="23z-C2-kTR" secondAttribute="trailing" id="zby-O1-7rt"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <size key="customSize" width="109" height="54"/>
+            <connections>
+                <outlet property="labelTxt" destination="23z-C2-kTR" id="txl-Q9-UJx"/>
+            </connections>
+            <point key="canvasLocation" x="170.28985507246378" y="58.928571428571423"/>
+        </collectionViewCell>
+    </objects>
+</document>

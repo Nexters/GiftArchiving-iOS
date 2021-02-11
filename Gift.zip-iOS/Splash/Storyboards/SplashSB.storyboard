@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="f4B-ab-ZyA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
@@ -31,8 +31,21 @@
                     <view key="view" contentMode="scaleToFill" id="JEB-1E-sTr">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconSplash" translatesAutoresizingMaskIntoConstraints="NO" id="cbX-NB-oTA">
+                                <rect key="frame" x="147" y="388" width="120" height="120"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="KRo-6E-I0q"/>
+                                    <constraint firstAttribute="width" constant="120" id="bS8-dU-hay"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="udy-ZI-6ai"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="cbX-NB-oTA" firstAttribute="centerY" secondItem="JEB-1E-sTr" secondAttribute="centerY" id="A6Y-hE-Cq0"/>
+                            <constraint firstItem="cbX-NB-oTA" firstAttribute="centerX" secondItem="JEB-1E-sTr" secondAttribute="centerX" id="HXh-G1-5C2"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="khM-bM-T85"/>
                 </viewController>
@@ -42,6 +55,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="iconSplash" width="180" height="180"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
