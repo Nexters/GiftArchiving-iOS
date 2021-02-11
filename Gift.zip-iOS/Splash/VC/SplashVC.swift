@@ -20,8 +20,8 @@ class SplashVC: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             self.checkLoginAndDisplay()
         }
-        
     }
+
     private func checkLoginAndDisplay(){
         let SPREF = UserDefaults.standard
         if let appleId = SPREF.string(forKey: "appleId"){
