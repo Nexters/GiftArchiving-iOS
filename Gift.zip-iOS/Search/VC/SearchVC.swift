@@ -243,7 +243,7 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
         //임시
         if let searchData = textField.text {
             setResDataByKeyword(keyword: searchData)
-            showResultView(gifts: resArr, keyword: searchData)
+            showResultView(gifts: resArr, keyword: searchData, isTagSearched: false)
         }
         return true
     }
@@ -318,12 +318,12 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
         if(textTagCollectionView == self.tagCollectionView){
             //카테고리 태그
             setResDataByTag(tag: tagText)
-            showResultView(gifts: resArr, keyword: tagText)
+            showResultView(gifts: resArr, keyword: tagText, isTagSearched: true)
         }
         if(textTagCollectionView == self.tagCollectionView2){
             //reason 태그
             setResDataByTag(tag: tagText)
-            showResultView(gifts: resArr, keyword: tagText)
+            showResultView(gifts: resArr, keyword: tagText, isTagSearched: true)
         }
     }
     private func setResDataByTag(tag: String){
@@ -337,7 +337,7 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
         }
     }
     //MARK: 결과 뷰 띄우기
-    private func showResultView(gifts: [Gift], keyword: String){
+    private func showResultView(gifts: [Gift], keyword: String, isTagSearched: Bool){
         self.resArr = gifts
         self.resReceivedArr.removeAll()
         self.resSentArr.removeAll()
@@ -382,10 +382,12 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
         searchResultCollectionView.reloadData()
         
         //keyword를 최근 검색어에 저장 , textfield를 keyword로
-        self.txtFieldCanListen = false
-        self.txtFieldSearch.text = keyword
-        self.txtFieldCanListen = true
-        self.addRecentSearchData(val: keyword)
+        if !isTagSearched {
+            self.txtFieldCanListen = false
+            self.txtFieldSearch.text = keyword
+            self.txtFieldCanListen = true
+            self.addRecentSearchData(val: keyword)
+        }
     }
     private func setResDataByKeyword(keyword : String){
         resArr.removeAll()
@@ -496,7 +498,7 @@ extension SearchVC : UICollectionViewDelegateFlowLayout, UICollectionViewDataSou
         if collectionView == self.collectionView{
             let keyword = self.recentSearchArr[indexPath.row]
             setResDataByKeyword(keyword: keyword)
-            self.showResultView(gifts: resArr, keyword: keyword)
+            self.showResultView(gifts: resArr, keyword: keyword, isTagSearched: false)
         }
         if collectionView == self.searchResultCollectionView{
             //상세화면 이동
@@ -537,12 +539,12 @@ extension SearchVC : UITableViewDataSource, UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         if tableView == self.autoTableView {
-            showResultView(gifts: self.autoArr[indexPath.row].gifts, keyword: self.autoArr[indexPath.row].label)
+            showResultView(gifts: self.autoArr[indexPath.row].gifts, keyword: self.autoArr[indexPath.row].label, isTagSearched: false)
         }
         if tableView == self.tableView {
             let keyword = nameArr[indexPath.row]
             setResDataByKeyword(keyword: keyword)
-            self.showResultView(gifts: resArr, keyword: keyword )
+            self.showResultView(gifts: resArr, keyword: keyword , isTagSearched: false)
         }
         
     }
