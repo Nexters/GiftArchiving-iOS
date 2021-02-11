@@ -297,10 +297,22 @@ extension VC : UIScrollViewDelegate {
                 roundedIndex = currentIndex
             }
         }
+        
         if collectionViewFlag {
+            if Int(currentIndex) == receivedModels.count{
+                currentIndex -= 1
+            }
+           
             self.changeUI(shape: receivedModels[Int(currentIndex)].shape)
+            
+            
         }else{
+            if Int(currentIndex) == receivedModels.count{
+                currentIndex -= 1
+            }
             self.changeUI(shape: sentModels[Int(currentIndex)].shape)
+            
+            
         }
         
         
