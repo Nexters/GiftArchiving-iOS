@@ -81,6 +81,8 @@ class RecordVC: UIViewController {
     
     lazy var exitButton = UIButton()
     
+    var isReceiveGift: Bool = true
+    
     private var textViewPlaceholderFlag: Bool = true
     
     private var originalFullImage: UIImage? // full Image
@@ -163,21 +165,32 @@ class RecordVC: UIViewController {
     private var purposeImageName: String = "iconPurposeDefault"
     private var emotionImageName: String = "iconFeelingDefault"
     
+    private var isImageSelected: Bool = false
+    private var isNameTyped: Bool = false
+    private var isCategoryIconSelected: Bool = false
+    private var isPurposeIconSelected: Bool = false
+    private var isEmotionIconSelected: Bool = false
+    
     private var currentBackgroundPopupColor: UIColor = UIColor.Background.charcoalGrey.popup
     
+    private var currentBackgroundColorString: String = "charcoalGrey"
     private var currentBackgroundColor: UIColor = UIColor.charcoalGrey {
         didSet {
             switch currentBackgroundColor {
             case .charcoalGrey:
+                currentBackgroundColorString = "charcoalGrey"
                 currentBackgroundPopupColor = UIColor.Background.charcoalGrey.popup
                 break
             case .ceruleanBlue:
+                currentBackgroundColorString = "ceruleanBlue"
                 currentBackgroundPopupColor = UIColor.Background.ceruleanBlue.popup
                 break
             case .wheat:
+                currentBackgroundColorString = "wheat"
                 currentBackgroundPopupColor = UIColor.Background.wheat.popup
                 break
             case .pinkishOrange:
+                currentBackgroundColorString = "pinkishOrange"
                 currentBackgroundPopupColor = UIColor.Background.pinkishOrange.popup
                 break
             default:
@@ -262,6 +275,8 @@ class RecordVC: UIViewController {
             }
         }
     }
+    
+    private var selectedDate: Date = Date()
     
     private var isStickerEditing: Bool = false
     
@@ -366,7 +381,6 @@ class RecordVC: UIViewController {
         guard let share = UIStoryboard.init(name: "Share", bundle: nil).instantiateViewController(identifier: "ShareVC") as? ShareVC else { return }
         
         // 인스타에 게시할 이미지 넘기기 작업
-        
         let cropped = UIGraphicsImageRenderer(size: cropArea.bounds.size)
         let croppedImage = cropped.image { _ in
             cropArea.drawHierarchy(in: cropArea.bounds, afterScreenUpdates: true)
@@ -405,9 +419,117 @@ class RecordVC: UIViewController {
         share.currentBackgroundColor = currentBackgroundColor
         share.croppedImage = renderImage
         share.letterImage = renderLetterImage
-        self.navigationController?.pushViewController(share, animated: true)
-
+        
+        if isImageSelected {
+            if isNameTyped {
+                if isCategoryIconSelected && isPurposeIconSelected && isEmotionIconSelected {
+                    let content = emotionTextView.text ?? ""
+                    let name = nameTextField.text ?? ""
+                    
+                    // 날짜
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZ"
+                    let dateString = dateFormatter.string(from: selectedDate)
+                    print(dateString)
+                    let dateArr = dateString.components(separatedBy: [" "," "])
+                    let first = dateArr[0]
+                    let second = dateArr[1]
+                    print(dateArr[2])
+                    let third = dateArr[2].replacingOccurrences(of: "+", with: ".")
+                    let date = first + "T" + second + third
+                    
+                    print(content)
+                    print(name)
+                    print(date)
+                    print(currentBackgroundColorString)
+                    
+                    print(categoryImageName)
+                    print(purposeImageName)
+                    print(emotionImageName)
+                    // 아이콘 이름
+                    
+                    var categoryName: String = ""
+                    var purposeName: String = ""
+                    var emotionName: String = ""
+                    for category in Icons.category {
+                        if category.imageName == categoryImageName {
+                            categoryName = category.englishName
+                        }
+                    }
+                    
+                    for purpose in Icons.purpose {
+                        if purpose.imageName == purposeImageName {
+                            purposeName = purpose.englishName
+                        }
+                    }
+                    
+                    if isReceiveGift {
+                        for emotion in Icons.emotionGet {
+                            if emotion.imageName == emotionImageName {
+                                emotionName = emotion.englishName
+                            }
+                        }
+                    } else {
+                        for emotion in Icons.emotionSend {
+                            if emotion.imageName == emotionImageName {
+                                emotionName = emotion.englishName
+                            }
+                        }
+                    }
+                    RecordGiftService.shared.recordGift(content: content, isReceiveGift: isReceiveGift, name: name, receiveDate: date, createdBy: "000871.31eedc54c602460da26f4765dd27e985.1412", category: categoryName, emotion: emotionName, reason: purposeName, bgColor: currentBackgroundColorString, bgImg: renderImage, noBgImg: renderLetterImage) { networkResult -> Void in
+                        switch networkResult {
+                        case .success(let data):
+                            if let bgData = data as? RecordGiftData {
+                                print(bgData)
+                            }
+                            
+                        case .requestErr:
+                            let alertViewController = UIAlertController(title: "통신 실패", message: "💩", preferredStyle: .alert)
+                            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+                            alertViewController.addAction(action)
+                            self.present(alertViewController, animated: true, completion: nil)
+                            
+                        case .pathErr: print("path")
+                        case .serverErr:
+                            let alertViewController = UIAlertController(title: "통신 실패", message: "서버 오류", preferredStyle: .alert)
+                            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+                            alertViewController.addAction(action)
+                            self.present(alertViewController, animated: true, completion: nil)
+                            print("networkFail")
+                            print("serverErr")
+                        case .networkFail:
+                            let alertViewController = UIAlertController(title: "통신 실패", message: "네트워크 오류", preferredStyle: .alert)
+                            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+                            alertViewController.addAction(action)
+                            self.present(alertViewController, animated: true, completion: nil)
+                            print("networkFail")
+                        }
+                    }
+                } else {
+                    
+                    let alertViewController = UIAlertController(title: "저장 실패", message: "선물에 해당하는 아이콘을 선택해주세요 🥰", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+                    alertViewController.addAction(action)
+                    self.present(alertViewController, animated: true, completion: nil)
+                }
+            } else {
+                
+                let alertViewController = UIAlertController(title: "저장 실패", message: "이름을 입력해주세요 🥰", preferredStyle: .alert)
+                let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+                alertViewController.addAction(action)
+                self.present(alertViewController, animated: true, completion: nil)
+            }
+        } else {
+            
+            let alertViewController = UIAlertController(title: "저장 실패", message: "이미지를 선택해주세요 🥰", preferredStyle: .alert)
+            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+            alertViewController.addAction(action)
+            self.present(alertViewController, animated: true, completion: nil)
+        }
+        
+        //        self.navigationController?.pushViewController(share, animated: true)
     }
+    
     
     @IBAction func selectPhoto(_ sender: UIButton) {
         let alert = UIAlertController(title: "사진 선택", message: "선물을 골라주세요. 🎁", preferredStyle: .actionSheet)
@@ -635,6 +757,12 @@ extension RecordVC {
         circleViewLabel.alpha = 0.6
         windowViewLabel.alpha = 0.6
         
+        let formatter  = DateFormatter()
+        formatter.dateFormat = "yyyy. MM. dd. "
+        let todayDate = formatter.string(from: selectedDate)
+        
+        dateToRecord = todayDate + getDayOfWeek(selectedDate)
+
     }
     
     @objc func dismissColorBottomContainer() {
@@ -763,14 +891,17 @@ extension RecordVC {
             categoryImageView.image = UIImage(named: iconImage)
             categoryLabel.text = iconName
             categoryImageName = iconImage
+            isCategoryIconSelected = true
         } else if iconKind == "purpose" {
             purposeImageView.image = UIImage(named: iconImage)
             purposeLabel.text = iconName
             purposeImageName = iconImage
+            isPurposeIconSelected = true
         } else {
             emotionImageView.image = UIImage(named: iconImage)
             emotionLabel.text = iconName
             emotionImageName = iconImage
+            isEmotionIconSelected = true
         }
     }
     
@@ -868,7 +999,14 @@ extension RecordVC: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        nameStackView.layoutIfNeeded()
+//        nameStackView.layoutIfNeeded()
+        if let text = textField.text {
+            if text.isEmpty {
+                isNameTyped = false
+            } else {
+                isNameTyped = true
+            }
+        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -889,6 +1027,7 @@ extension RecordVC: UIImagePickerControllerDelegate, UINavigationControllerDeleg
             self.cropImageView.eraseBorder()
             self.originalFullImage = image
             self.emptyImageLabel.isHidden = true
+            isImageSelected = true
             self.dismiss(animated: true, completion: nil)
         }
     }
@@ -942,6 +1081,7 @@ extension RecordVC: PopupViewDelegate {
         let todayDate = formatter.string(from: date!)
         
         dateToRecord = todayDate + getDayOfWeek(date!)
+        selectedDate = date!
     }
     
     func sendIconDataButtonTapped() {

@@ -6,7 +6,6 @@
 //
 
 import UIKit
-
 class IconPopupVC: UIViewController {
     
     @IBOutlet weak var backgroundView: UIView!
