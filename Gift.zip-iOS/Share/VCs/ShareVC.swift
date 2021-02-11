@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import KakaoSDKLink
+import KakaoSDKAuth
+import KakaoSDKTalk
 
 class ShareVC: UIViewController {
     
@@ -18,6 +21,8 @@ class ShareVC: UIViewController {
     var currentName: String?
     var letterImage: UIImage?
     
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -29,14 +34,14 @@ class ShareVC: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-//        UIView.animate(withDuration: 1.0, delay: 0.0, options: [.repeat,.autoreverse,.curveEaseIn], animations: {}) { _ in
-
-            UIView.animate(withDuration: 3.0, delay: 0.9, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.0, options: [.repeat,.autoreverse,.curveEaseIn], animations: {
-                self.cardView.frame.origin.y = self.cardView.frame.origin.y + 52
-            }, completion: {_ in
-            })
-            
-//        }
+        //        UIView.animate(withDuration: 1.0, delay: 0.0, options: [.repeat,.autoreverse,.curveEaseIn], animations: {}) { _ in
+        
+        UIView.animate(withDuration: 3.0, delay: 0.9, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.0, options: [.repeat,.autoreverse,.curveEaseIn], animations: {
+            self.cardView.frame.origin.y = self.cardView.frame.origin.y + 52
+        }, completion: {_ in
+        })
+        
+        //        }
     }
     
     
@@ -104,4 +109,25 @@ class ShareVC: UIViewController {
             print("error saving cropped image")
         }
     }
+    @IBAction func shareToKakaoButtonTapped(_ sender: UIButton) {
+        let title: String = "🎁기프트집 선물 도착🎁"
+        let description: String = "\n님이 나에게 보낸 선물이 도착했어요!"
+        let imageURL: String = "https://gift-zip.s3.ap-northeast-2.amazonaws.com/000871.31eedc54c602460da26f4765dd27e985.1412/test2.jpegFri Feb 12 03:20:19 KST 2021"
+        let templateId = 47251
+
+        LinkApi.shared.customLink(templateId: Int64(templateId), templateArgs:["title": title, "description": description, "imageURL": imageURL]) { (linkResult, error) in
+            if let error = error {
+                print(error)
+            }
+            else {
+                print("customLink() success.")
+                if let linkResult = linkResult {
+                    UIApplication.shared.open(linkResult.url, options: [:], completionHandler: nil)
+                }
+            }
+        }
+    }
+}
+
+extension ShareVC {
 }

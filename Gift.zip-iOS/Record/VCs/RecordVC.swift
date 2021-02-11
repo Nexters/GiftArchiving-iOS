@@ -425,7 +425,7 @@ class RecordVC: UIViewController {
                 if isCategoryIconSelected && isPurposeIconSelected && isEmotionIconSelected {
                     let content = emotionTextView.text ?? ""
                     let name = nameTextField.text ?? ""
-                    
+
                     // 날짜
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZ"
@@ -437,17 +437,17 @@ class RecordVC: UIViewController {
                     print(dateArr[2])
                     let third = dateArr[2].replacingOccurrences(of: "+", with: ".")
                     let date = first + "T" + second + third
-                    
+
                     print(content)
                     print(name)
                     print(date)
                     print(currentBackgroundColorString)
-                    
+
                     print(categoryImageName)
                     print(purposeImageName)
                     print(emotionImageName)
                     // 아이콘 이름
-                    
+
                     var categoryName: String = ""
                     var purposeName: String = ""
                     var emotionName: String = ""
@@ -456,13 +456,13 @@ class RecordVC: UIViewController {
                             categoryName = category.englishName
                         }
                     }
-                    
+
                     for purpose in Icons.purpose {
                         if purpose.imageName == purposeImageName {
                             purposeName = purpose.englishName
                         }
                     }
-                    
+
                     if isReceiveGift {
                         for emotion in Icons.emotionGet {
                             if emotion.imageName == emotionImageName {
@@ -483,12 +483,13 @@ class RecordVC: UIViewController {
                                 print(bgData)
                             }
                             
+                            self.navigationController?.pushViewController(share, animated: true)
                         case .requestErr:
                             let alertViewController = UIAlertController(title: "통신 실패", message: "💩", preferredStyle: .alert)
                             let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
                             alertViewController.addAction(action)
                             self.present(alertViewController, animated: true, completion: nil)
-                            
+
                         case .pathErr: print("path")
                         case .serverErr:
                             let alertViewController = UIAlertController(title: "통신 실패", message: "서버 오류", preferredStyle: .alert)
@@ -506,28 +507,27 @@ class RecordVC: UIViewController {
                         }
                     }
                 } else {
-                    
+
                     let alertViewController = UIAlertController(title: "저장 실패", message: "선물에 해당하는 아이콘을 선택해주세요 🥰", preferredStyle: .alert)
                     let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
                     alertViewController.addAction(action)
                     self.present(alertViewController, animated: true, completion: nil)
                 }
             } else {
-                
+
                 let alertViewController = UIAlertController(title: "저장 실패", message: "이름을 입력해주세요 🥰", preferredStyle: .alert)
                 let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
                 alertViewController.addAction(action)
                 self.present(alertViewController, animated: true, completion: nil)
             }
         } else {
-            
+
             let alertViewController = UIAlertController(title: "저장 실패", message: "이미지를 선택해주세요 🥰", preferredStyle: .alert)
             let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
             alertViewController.addAction(action)
             self.present(alertViewController, animated: true, completion: nil)
         }
         
-        //        self.navigationController?.pushViewController(share, animated: true)
     }
     
     
