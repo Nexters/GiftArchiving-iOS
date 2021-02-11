@@ -36,6 +36,8 @@
 		D4336D2825BE80D500D27568 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4336D2725BE80D500D27568 /* Assets.xcassets */; };
 		D4336D2B25BE80D500D27568 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4336D2925BE80D500D27568 /* LaunchScreen.storyboard */; };
 		D4336D4225BE81FB00D27568 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4336D4125BE81FB00D27568 /* UIView+Extensions.swift */; };
+		D463E97425D4FDBD00295B42 /* APIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D463E97325D4FDBD00295B42 /* APIConstants.swift */; };
+		D463E97825D503D100295B42 /* NetworkResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D463E97725D503D100295B42 /* NetworkResult.swift */; };
 		D465156925CE9F8100CDA2EB /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D465156825CE9F8100CDA2EB /* SettingsVC.swift */; };
 		D465156D25CE9F9000CDA2EB /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D465156C25CE9F9000CDA2EB /* Settings.storyboard */; };
 		D465157225CEA44B00CDA2EB /* SettingsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D465157125CEA44B00CDA2EB /* SettingsTVC.swift */; };
@@ -99,6 +101,8 @@
 		D4336D2A25BE80D500D27568 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D4336D2C25BE80D600D27568 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D4336D4125BE81FB00D27568 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
+		D463E97325D4FDBD00295B42 /* APIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConstants.swift; sourceTree = "<group>"; };
+		D463E97725D503D100295B42 /* NetworkResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResult.swift; sourceTree = "<group>"; };
 		D465156825CE9F8100CDA2EB /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		D465156C25CE9F9000CDA2EB /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		D465157125CEA44B00CDA2EB /* SettingsTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTVC.swift; sourceTree = "<group>"; };
@@ -318,6 +322,7 @@
 		D4336D1D25BE80D500D27568 /* Gift.zip-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				D463E97125D4FD9C00295B42 /* APIService */,
 				D4A7140E25D13CAB0095CE68 /* Share */,
 				D465156525CE9F6600CDA2EB /* Settings */,
 				4004498025CDDA5D004E9EB1 /* lottiegift.json */,
@@ -375,6 +380,23 @@
 				D4336D2C25BE80D600D27568 /* Info.plist */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D463E97125D4FD9C00295B42 /* APIService */ = {
+			isa = PBXGroup;
+			children = (
+				D463E97225D4FDB100295B42 /* New Group */,
+				D463E97325D4FDBD00295B42 /* APIConstants.swift */,
+				D463E97725D503D100295B42 /* NetworkResult.swift */,
+			);
+			path = APIService;
+			sourceTree = "<group>";
+		};
+		D463E97225D4FDB100295B42 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 		D465156525CE9F6600CDA2EB /* Settings */ = {
@@ -685,6 +707,7 @@
 				D41F926925CF00CA009B9743 /* FooterTVC.swift in Sources */,
 				4004497325CDD8B4004E9EB1 /* OnboardingCollectionViewCell.swift in Sources */,
 				D4A08EBD25C01D32009CFCC4 /* PopupViewDelegate.swift in Sources */,
+				D463E97825D503D100295B42 /* NetworkResult.swift in Sources */,
 				40DE15C925C8629300184320 /* ListCollectionViewCell.swift in Sources */,
 				D41F926625CEDE30009B9743 /* HeaderTVC.swift in Sources */,
 				408E51A025CB201C0037EC9B /* OnboardingVC.swift in Sources */,
@@ -697,6 +720,7 @@
 				D4A7141625D13CEC0095CE68 /* ShareVC.swift in Sources */,
 				D4F4915C25CD9E5F00FE9BF6 /* SingleStickerCVC.swift in Sources */,
 				D4336D1F25BE80D500D27568 /* AppDelegate.swift in Sources */,
+				D463E97425D4FDBD00295B42 /* APIConstants.swift in Sources */,
 				D4336D4225BE81FB00D27568 /* UIView+Extensions.swift in Sources */,
 				D4336D2125BE80D500D27568 /* SceneDelegate.swift in Sources */,
 				D465156925CE9F8100CDA2EB /* SettingsVC.swift in Sources */,

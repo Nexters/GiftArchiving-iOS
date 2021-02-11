@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             SPREF.setValue(nil, forKey: "appleId")
         }
         //kakao sdk 초기화
-        KakaoSDKCommon.initSDK(appKey: "kakao native app key")
+        KakaoSDKCommon.initSDK(appKey: "kakao app key")
         
         return true
     }

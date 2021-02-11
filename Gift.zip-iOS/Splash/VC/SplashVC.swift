@@ -37,6 +37,9 @@ class SplashVC: UIViewController {
             self.animationView.removeFromSuperview()
             
             let SPREF = UserDefaults.standard
+            print(UserDefaults.standard.string(forKey: "kakaoId"))
+            print(UserDefaults.standard.string(forKey: "appleId"))
+            print(Date())
             if let appleId = SPREF.string(forKey: "appleId"){
                 if !appleId.isEmpty {
                     self.moveToMain()

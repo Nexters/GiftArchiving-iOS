@@ -377,24 +377,34 @@ class RecordVC: UIViewController {
         let label = UILabel()
         label.text = "To 유댕"
         label.font = UIFont(name: "SpoqaHanSans-Bold", size: 16)
-//        rectagularInstagramCropView.addSubview(imageView)
-        croppedStackView.addArrangedSubview(imageView)
-        croppedStackView.addArrangedSubview(label)
-//        croppedStackView.addSubview(imageView)
-//        croppedStackView.addSubview(label)
-//        imageView.translatesAutoresizingMaskIntoConstraints = false
-//        imageView.leadingAnchor.constraint(equalTo: rectagularInstagramCropView.leadingAnchor, constant: 0).isActive = true
-//        imageView.trailingAnchor.constraint(equalTo: rectagularInstagramCropView.trailingAnchor, constant: 0).isActive = true
-//        imageView.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
-//        imageView.centerYAnchor.constraint(equalTo: rectagularInstagramCropView.centerYAnchor).isActive = true
+        label.textColor = .white
+        rectagularInstagramCropView.addSubview(imageView)
+        rectagularInstagramCropView.addSubview(label)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.leadingAnchor.constraint(equalTo: rectagularInstagramCropView.leadingAnchor, constant: 0).isActive = true
+        imageView.trailingAnchor.constraint(equalTo: rectagularInstagramCropView.trailingAnchor, constant: 0).isActive = true
+        imageView.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
+        imageView.centerYAnchor.constraint(equalTo: rectagularInstagramCropView.centerYAnchor, constant: -10).isActive = true
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -10).isActive = true
+        label.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
+        
         let renderer = UIGraphicsImageRenderer(size: rectagularInstagramCropView.bounds.size)
         let renderImage = renderer.image { _ in
             rectagularInstagramCropView.drawHierarchy(in: rectagularInstagramCropView.bounds, afterScreenUpdates: true)
         }
         
+        label.removeFromSuperview()
+        imageView.centerYAnchor.constraint(equalTo: rectagularInstagramCropView.centerYAnchor, constant: 0).isActive = true
+        let letter = UIGraphicsImageRenderer(size: rectagularInstagramCropView.bounds.size)
+        let renderLetterImage = letter.image { _ in
+            rectagularInstagramCropView.drawHierarchy(in: rectagularInstagramCropView.bounds, afterScreenUpdates: true)
+        }
+            
         share.currentName = "\(fromLabel.text!) \(nameTextField.text!)"
         share.currentBackgroundColor = currentBackgroundColor
         share.croppedImage = renderImage
+        share.letterImage = renderLetterImage
         self.navigationController?.pushViewController(share, animated: true)
 
     }

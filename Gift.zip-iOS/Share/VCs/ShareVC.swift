@@ -16,6 +16,7 @@ class ShareVC: UIViewController {
     var croppedImage: UIImage?
     var currentBackgroundColor: UIColor?
     var currentName: String?
+    var letterImage: UIImage?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -28,20 +29,22 @@ class ShareVC: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        UIView.animate(withDuration: 2.0, delay: 5.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.0, options: [.repeat,.autoreverse,.curveEaseIn], animations: {
-            self.cardView.frame.origin.y = self.cardView.frame.origin.y + 52
-        }, completion: {_ in
-            UIView.animate(withDuration: 2.0, animations: {
-                
-            }, completion: nil)
-        })
-        
+//        UIView.animate(withDuration: 1.0, delay: 0.0, options: [.repeat,.autoreverse,.curveEaseIn], animations: {}) { _ in
+
+            UIView.animate(withDuration: 3.0, delay: 0.9, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.0, options: [.repeat,.autoreverse,.curveEaseIn], animations: {
+                self.cardView.frame.origin.y = self.cardView.frame.origin.y + 52
+            }, completion: {_ in
+            })
+            
+//        }
     }
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        croppedImageView.image = croppedImage
+        croppedImageView.image = letterImage
     }
     
     private func changeImageToPNG(_ image: UIImage) -> Data {
