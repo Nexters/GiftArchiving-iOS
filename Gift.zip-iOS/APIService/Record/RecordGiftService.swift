@@ -22,8 +22,8 @@ struct RecordGiftService{
                     bgImg: UIImage,
                     noBgImg: UIImage,
                     completion : @escaping (NetworkResult<Any>) -> (Void)) {
-        let url = "http://ec2-3-34-177-12.ap-northeast-2.compute.amazonaws.com:10000/api/gift/create"
-        
+        let url = APIConstants.baseURL + APIConstants.recordGiftURL
+
         let header : HTTPHeaders = [
             "Content-Type":"multipart/form-data"
         ]
@@ -72,7 +72,7 @@ struct RecordGiftService{
                 guard let statusCode = response.response?.statusCode else { return }
                 guard let value = response.value else { return }
                 let networkResult = self.judge(status: statusCode, data: value)
-                print(url)
+
                 completion(networkResult)
             case .failure(let err):
                 print(err.localizedDescription)
@@ -86,7 +86,6 @@ struct RecordGiftService{
         guard let decodedData = try? decoder.decode(RecordGiftData.self, from : data) else {
             return .pathErr
         }
-        print("HELLO")
         print(decodedData)
         switch status{
         case 200..<300:

@@ -319,6 +319,9 @@ class RecordVC: UIViewController {
             button.layer.borderColor = UIColor.white.cgColor
             button.layer.borderWidth = 1
         }
+        
+        fromLabel.text = isReceiveGift ? "From." : "To."
+        
     }
     
     override func viewDidLoad() {
@@ -362,7 +365,7 @@ class RecordVC: UIViewController {
             guard let des = segue.destination as? IconPopupVC else { return }
             des.whichPopup = 2
             des.backgroundColor = currentBackgroundColor
-            des.isSend = self.isSend
+            des.isReceiveGift = isReceiveGift
             des.popupViewHeightByPhones = self.view.frame.height - infoView.frame.origin.y - 173
         }
     }
@@ -380,36 +383,37 @@ class RecordVC: UIViewController {
         
         guard let share = UIStoryboard.init(name: "Share", bundle: nil).instantiateViewController(identifier: "ShareVC") as? ShareVC else { return }
         
-        // 인스타에 게시할 이미지 넘기기 작업
+        // 공유할 게시할 이미지 넘기기 작업
         let cropped = UIGraphicsImageRenderer(size: cropArea.bounds.size)
         let croppedImage = cropped.image { _ in
             cropArea.drawHierarchy(in: cropArea.bounds, afterScreenUpdates: true)
         }
-        rectagularInstagramCropView.makeRounded(cornerRadius: 8.0)
-        rectagularInstagramCropView.backgroundColor = currentBackgroundColor
-        let imageView = UIImageView.init(image: croppedImage)
-        let label = UILabel()
-        label.text = "To 유댕"
-        label.font = UIFont(name: "SpoqaHanSans-Bold", size: 16)
-        label.textColor = .white
-        rectagularInstagramCropView.addSubview(imageView)
-        rectagularInstagramCropView.addSubview(label)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.leadingAnchor.constraint(equalTo: rectagularInstagramCropView.leadingAnchor, constant: 0).isActive = true
-        imageView.trailingAnchor.constraint(equalTo: rectagularInstagramCropView.trailingAnchor, constant: 0).isActive = true
-        imageView.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
-        imageView.centerYAnchor.constraint(equalTo: rectagularInstagramCropView.centerYAnchor, constant: -10).isActive = true
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -10).isActive = true
-        label.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
         
+//        rectagularInstagramCropView.makeRounded(cornerRadius: 8.0)
+//        rectagularInstagramCropView.backgroundColor = currentBackgroundColor
+//        let imageView = UIImageView.init(image: croppedImage)
+//        let label = UILabel()
+//        label.text = "To 유댕"
+//        label.font = UIFont(name: "SpoqaHanSans-Bold", size: 16)
+//        label.textColor = .white
+//        rectagularInstagramCropView.addSubview(imageView)
+//        rectagularInstagramCropView.addSubview(label)
+//        imageView.translatesAutoresizingMaskIntoConstraints = false
+//        imageView.leadingAnchor.constraint(equalTo: rectagularInstagramCropView.leadingAnchor, constant: 0).isActive = true
+//        imageView.trailingAnchor.constraint(equalTo: rectagularInstagramCropView.trailingAnchor, constant: 0).isActive = true
+//        imageView.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
+//        imageView.centerYAnchor.constraint(equalTo: rectagularInstagramCropView.centerYAnchor, constant: -10).isActive = true
+//        label.translatesAutoresizingMaskIntoConstraints = false
+//        label.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -10).isActive = true
+//        label.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
+//
         let renderer = UIGraphicsImageRenderer(size: rectagularInstagramCropView.bounds.size)
         let renderImage = renderer.image { _ in
             rectagularInstagramCropView.drawHierarchy(in: rectagularInstagramCropView.bounds, afterScreenUpdates: true)
         }
         
-        label.removeFromSuperview()
-        imageView.centerYAnchor.constraint(equalTo: rectagularInstagramCropView.centerYAnchor, constant: 0).isActive = true
+//        label.removeFromSuperview()
+//        imageView.centerYAnchor.constraint(equalTo: rectagularInstagramCropView.centerYAnchor, constant: 0).isActive = true
         let letter = UIGraphicsImageRenderer(size: rectagularInstagramCropView.bounds.size)
         let renderLetterImage = letter.image { _ in
             rectagularInstagramCropView.drawHierarchy(in: rectagularInstagramCropView.bounds, afterScreenUpdates: true)
@@ -419,114 +423,107 @@ class RecordVC: UIViewController {
         share.currentBackgroundColor = currentBackgroundColor
         share.croppedImage = renderImage
         share.letterImage = renderLetterImage
-        
-        if isImageSelected {
-            if isNameTyped {
-                if isCategoryIconSelected && isPurposeIconSelected && isEmotionIconSelected {
-                    let content = emotionTextView.text ?? ""
-                    let name = nameTextField.text ?? ""
-
-                    // 날짜
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZ"
-                    let dateString = dateFormatter.string(from: selectedDate)
-                    print(dateString)
-                    let dateArr = dateString.components(separatedBy: [" "," "])
-                    let first = dateArr[0]
-                    let second = dateArr[1]
-                    print(dateArr[2])
-                    let third = dateArr[2].replacingOccurrences(of: "+", with: ".")
-                    let date = first + "T" + second + third
-
-                    print(content)
-                    print(name)
-                    print(date)
-                    print(currentBackgroundColorString)
-
-                    print(categoryImageName)
-                    print(purposeImageName)
-                    print(emotionImageName)
-                    // 아이콘 이름
-
-                    var categoryName: String = ""
-                    var purposeName: String = ""
-                    var emotionName: String = ""
-                    for category in Icons.category {
-                        if category.imageName == categoryImageName {
-                            categoryName = category.englishName
-                        }
-                    }
-
-                    for purpose in Icons.purpose {
-                        if purpose.imageName == purposeImageName {
-                            purposeName = purpose.englishName
-                        }
-                    }
-
-                    if isReceiveGift {
-                        for emotion in Icons.emotionGet {
-                            if emotion.imageName == emotionImageName {
-                                emotionName = emotion.englishName
-                            }
-                        }
-                    } else {
-                        for emotion in Icons.emotionSend {
-                            if emotion.imageName == emotionImageName {
-                                emotionName = emotion.englishName
-                            }
-                        }
-                    }
-                    RecordGiftService.shared.recordGift(content: content, isReceiveGift: isReceiveGift, name: name, receiveDate: date, createdBy: "000871.31eedc54c602460da26f4765dd27e985.1412", category: categoryName, emotion: emotionName, reason: purposeName, bgColor: currentBackgroundColorString, bgImg: renderImage, noBgImg: renderLetterImage) { networkResult -> Void in
-                        switch networkResult {
-                        case .success(let data):
-                            if let bgData = data as? RecordGiftData {
-                                print(bgData)
-                            }
-                            
-                            self.navigationController?.pushViewController(share, animated: true)
-                        case .requestErr:
-                            let alertViewController = UIAlertController(title: "통신 실패", message: "💩", preferredStyle: .alert)
-                            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
-                            alertViewController.addAction(action)
-                            self.present(alertViewController, animated: true, completion: nil)
-
-                        case .pathErr: print("path")
-                        case .serverErr:
-                            let alertViewController = UIAlertController(title: "통신 실패", message: "서버 오류", preferredStyle: .alert)
-                            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
-                            alertViewController.addAction(action)
-                            self.present(alertViewController, animated: true, completion: nil)
-                            print("networkFail")
-                            print("serverErr")
-                        case .networkFail:
-                            let alertViewController = UIAlertController(title: "통신 실패", message: "네트워크 오류", preferredStyle: .alert)
-                            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
-                            alertViewController.addAction(action)
-                            self.present(alertViewController, animated: true, completion: nil)
-                            print("networkFail")
-                        }
-                    }
-                } else {
-
-                    let alertViewController = UIAlertController(title: "저장 실패", message: "선물에 해당하는 아이콘을 선택해주세요 🥰", preferredStyle: .alert)
-                    let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
-                    alertViewController.addAction(action)
-                    self.present(alertViewController, animated: true, completion: nil)
-                }
-            } else {
-
-                let alertViewController = UIAlertController(title: "저장 실패", message: "이름을 입력해주세요 🥰", preferredStyle: .alert)
-                let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
-                alertViewController.addAction(action)
-                self.present(alertViewController, animated: true, completion: nil)
-            }
-        } else {
-
-            let alertViewController = UIAlertController(title: "저장 실패", message: "이미지를 선택해주세요 🥰", preferredStyle: .alert)
-            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
-            alertViewController.addAction(action)
-            self.present(alertViewController, animated: true, completion: nil)
-        }
+        share.currentFrameOfImage = currentFrameOfImage
+        self.navigationController?.pushViewController(share, animated: true)
+//        if isImageSelected {
+//            if isNameTyped {
+//                if isCategoryIconSelected && isPurposeIconSelected && isEmotionIconSelected {
+//                    let content = emotionTextView.text ?? ""
+//                    let name = nameTextField.text ?? ""
+//
+//                    // 날짜
+//                    let dateFormatter = DateFormatter()
+//                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZ"
+//                    let dateString = dateFormatter.string(from: selectedDate)
+//                    print(dateString)
+//                    let dateArr = dateString.components(separatedBy: [" "," "])
+//                    let first = dateArr[0]
+//                    let second = dateArr[1]
+//                    print(dateArr[2])
+//                    let third = dateArr[2].replacingOccurrences(of: "+", with: ".")
+//                    let date = first + "T" + second + third
+//
+//                    // 아이콘 이름
+//
+//                    var categoryName: String = ""
+//                    var purposeName: String = ""
+//                    var emotionName: String = ""
+//                    for category in Icons.category {
+//                        if category.imageName == categoryImageName {
+//                            categoryName = category.englishName
+//                        }
+//                    }
+//
+//                    for purpose in Icons.purpose {
+//                        if purpose.imageName == purposeImageName {
+//                            purposeName = purpose.englishName
+//                        }
+//                    }
+//
+//                    if isReceiveGift {
+//                        for emotion in Icons.emotionGet {
+//                            if emotion.imageName == emotionImageName {
+//                                emotionName = emotion.englishName
+//                            }
+//                        }
+//                    } else {
+//                        for emotion in Icons.emotionSend {
+//                            if emotion.imageName == emotionImageName {
+//                                emotionName = emotion.englishName
+//                            }
+//                        }
+//                    }
+//                    RecordGiftService.shared.recordGift(content: content, isReceiveGift: isReceiveGift, name: name, receiveDate: date, createdBy: "000871.31eedc54c602460da26f4765dd27e985.1412", category: categoryName, emotion: emotionName, reason: purposeName, bgColor: currentBackgroundColorString, bgImg: renderImage, noBgImg: renderLetterImage) { networkResult -> Void in
+//                        switch networkResult {
+//                        case .success(let data):
+//                            if let bgData = data as? RecordGiftData {
+//                                print(bgData)
+//                            }
+//
+//
+//                        case .requestErr:
+//                            let alertViewController = UIAlertController(title: "통신 실패", message: "💩", preferredStyle: .alert)
+//                            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+//                            alertViewController.addAction(action)
+//                            self.present(alertViewController, animated: true, completion: nil)
+//
+//                        case .pathErr: print("path")
+//                        case .serverErr:
+//                            let alertViewController = UIAlertController(title: "통신 실패", message: "서버 오류", preferredStyle: .alert)
+//                            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+//                            alertViewController.addAction(action)
+//                            self.present(alertViewController, animated: true, completion: nil)
+//                            print("networkFail")
+//                            print("serverErr")
+//                        case .networkFail:
+//                            let alertViewController = UIAlertController(title: "통신 실패", message: "네트워크 오류", preferredStyle: .alert)
+//                            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+//                            alertViewController.addAction(action)
+//                            self.present(alertViewController, animated: true, completion: nil)
+//                            print("networkFail")
+//                        }
+//                    }
+//                } else {
+//
+//                    let alertViewController = UIAlertController(title: "저장 실패", message: "선물에 해당하는 아이콘을 선택해주세요 🥰", preferredStyle: .alert)
+//                    let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+//                    alertViewController.addAction(action)
+//                    self.present(alertViewController, animated: true, completion: nil)
+//                }
+//            } else {
+//
+//                let alertViewController = UIAlertController(title: "저장 실패", message: "이름을 입력해주세요 🥰", preferredStyle: .alert)
+//                let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+//                alertViewController.addAction(action)
+//                self.present(alertViewController, animated: true, completion: nil)
+//            }
+//        } else {
+//
+//            let alertViewController = UIAlertController(title: "저장 실패", message: "이미지를 선택해주세요 🥰", preferredStyle: .alert)
+//            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+//            alertViewController.addAction(action)
+//            self.present(alertViewController, animated: true, completion: nil)
+//        }
         
     }
     

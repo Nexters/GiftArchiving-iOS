@@ -7,20 +7,19 @@
 
 import UIKit
 import KakaoSDKLink
-import KakaoSDKAuth
-import KakaoSDKTalk
 
 class ShareVC: UIViewController {
     
     @IBOutlet weak var croppedImageView: UIImageView!
     @IBOutlet weak var cardView: UIView!
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var logoImageView: UIImageView!
     
     var croppedImage: UIImage?
     var currentBackgroundColor: UIColor?
     var currentName: String?
     var letterImage: UIImage?
-    
+    var currentFrameOfImage: FrameOfImage?
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -29,12 +28,47 @@ class ShareVC: UIViewController {
         cardView.backgroundColor = currentBackgroundColor
         cardView.makeRounded(cornerRadius: 8.0)
         nameLabel.text = currentName
+        
+        logoImageView.backgroundColor = currentBackgroundColor
+        if currentBackgroundColor == .wheat {
+            switch currentFrameOfImage {
+            case .square:
+                logoImageView.image = UIImage(named: "logoYellowRectangle")
+                break
+            case .circle:
+                logoImageView.image = UIImage(named: "logoYellowCircle")
+                break
+            case .full:
+                logoImageView.image = UIImage(named: "logoYellowRectangle")
+                break
+            case .windowFrame:
+                logoImageView.image = UIImage(named: "logoYellowWindow")
+                break
+            case .none:
+                break
+            }
+        } else {
+            switch currentFrameOfImage {
+            case .square:
+                break
+            case .circle:
+                let radius = logoImageView.bounds.width / 2
+                logoImageView.makeRounded(cornerRadius: radius)
+                break
+            case .full:
+                break
+            case .windowFrame:
+                let radius = logoImageView.bounds.width / 2
+                logoImageView.roundCorners(cornerRadius: radius, maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
+                break
+            case .none:
+                break
+            }
+        }
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
-        //        UIView.animate(withDuration: 1.0, delay: 0.0, options: [.repeat,.autoreverse,.curveEaseIn], animations: {}) { _ in
         
         UIView.animate(withDuration: 3.0, delay: 0.9, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.0, options: [.repeat,.autoreverse,.curveEaseIn], animations: {
             self.cardView.frame.origin.y = self.cardView.frame.origin.y + 52

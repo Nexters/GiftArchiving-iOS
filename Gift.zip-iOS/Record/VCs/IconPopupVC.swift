@@ -23,7 +23,7 @@ class IconPopupVC: UIViewController {
     
     weak var delegate: PopupViewDelegate?
     
-    var isSend: Bool = false
+    var isReceiveGift: Bool = true
     
     var categoryImageArray: [String] = ["icDigital", "icGroceries", "icLiving", "icPet", "icBaby", "icGiftCard", "icSports", "icFashion"]
     let categoryNameArray: [String] = ["디지털", "식품", "리빙", "펫", "유아동", "상품권", "스포츠", "패션"]
@@ -46,6 +46,7 @@ class IconPopupVC: UIViewController {
         super.viewWillAppear(animated)
         
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -123,12 +124,11 @@ extension IconPopupVC: UICollectionViewDataSource, UICollectionViewDelegateFlowL
                 return UICollectionViewCell()
             }
             icon.setBorder()
-            if isSend {
-                icon.setCategories(iconNames: emotionNameSendArray, iconImages: emotionImageSendArray)
-                icon.iconKind = "emotion"
-                
-            } else {
+            if isReceiveGift {
                 icon.setCategories(iconNames: emotionNameGetArray, iconImages: emotionImageGetArray)
+                icon.iconKind = "emotion"
+            } else {
+                icon.setCategories(iconNames: emotionNameSendArray, iconImages: emotionImageSendArray)
                 icon.iconKind = "emotion"
             }
             if let bc = backgroundColor {
@@ -245,12 +245,10 @@ extension IconPopupVC: CollectionViewButtonSelectedProtocol {
                 NotificationCenter.default.post(name: .init("selectIcon"), object: nil, userInfo: ["iconImageName": purposeImageArray2[index], "iconName": purposeNameArray2[index], "iconKind": iconKind])
             }
         } else if iconKind == "emotion" {
-            if isSend {
-                NotificationCenter.default.post(name: .init("selectIcon"), object: nil, userInfo: ["iconImageName": emotionImageSendArray[index], "iconName": emotionNameSendArray[index], "iconKind": iconKind])
-                
-            } else {
+            if isReceiveGift {
                 NotificationCenter.default.post(name: .init("selectIcon"), object: nil, userInfo: ["iconImageName": emotionImageGetArray[index], "iconName": emotionNameGetArray[index], "iconKind": iconKind])
-                
+            } else {
+                NotificationCenter.default.post(name: .init("selectIcon"), object: nil, userInfo: ["iconImageName": emotionImageSendArray[index], "iconName": emotionNameSendArray[index], "iconKind": iconKind])
             }
         }
         
