@@ -77,7 +77,7 @@ class RecordVC: UIViewController {
     
     lazy var popupBackground = UIView()
     
-    lazy var stickerPopupView = StickerView()
+    lazy var stickerPopupView = StickerPopupView()
     
     lazy var exitButton = UIButton()
     
@@ -86,6 +86,28 @@ class RecordVC: UIViewController {
     private var textViewPlaceholderFlag: Bool = true
     
     private var originalFullImage: UIImage? // full Image
+    
+    private var _selectedStickerView:StickerView?
+    
+    var selectedStickerView:StickerView? {
+        get {
+            return _selectedStickerView
+        }
+        set {
+            // if other sticker choosed then resign the handler
+            if _selectedStickerView != newValue {
+                if let selectedStickerView = _selectedStickerView {
+                    selectedStickerView.showEditingHandlers = false
+                }
+                _selectedStickerView = newValue
+            }
+            // assign handler to new sticker added
+            if let selectedStickerView = _selectedStickerView {
+                selectedStickerView.showEditingHandlers = true
+                selectedStickerView.superview?.bringSubviewToFront(selectedStickerView)
+            }
+        }
+    }
     
     var editedImage: UIImage? // cropped Image
     
@@ -391,6 +413,7 @@ class RecordVC: UIViewController {
         
         rectagularInstagramCropView.makeRounded(cornerRadius: 8.0)
         rectagularInstagramCropView.backgroundColor = currentBackgroundColor
+        
         let imageView = UIImageView.init(image: croppedImage)
         rectagularInstagramCropView.addSubview(imageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -398,33 +421,38 @@ class RecordVC: UIViewController {
         imageView.trailingAnchor.constraint(equalTo: rectagularInstagramCropView.trailingAnchor, constant: 0).isActive = true
         imageView.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
         imageView.centerYAnchor.constraint(equalTo: rectagularInstagramCropView.centerYAnchor, constant: 0).isActive = true
-//        let label = UILabel()
-//        label.text = "To 유댕"
-//        label.font = UIFont(name: "SpoqaHanSans-Bold", size: 16)
-//        label.textColor = .white
-       
-//        rectagularInstagramCropView.addSubview(label)
-//         label.translatesAutoresizingMaskIntoConstraints = false
-//        label.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -10).isActive = true
-//        label.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
-//
-        // 편지봉투에 넣어질 정사각형 이미지
-        let renderer = UIGraphicsImageRenderer(size: rectagularInstagramCropView.bounds.size)
-        let renderImage = renderer.image { _ in
-            rectagularInstagramCropView.drawHierarchy(in: rectagularInstagramCropView.bounds, afterScreenUpdates: true)
-        }
         
-//        label.removeFromSuperview()
-//        imageView.centerYAnchor.constraint(equalTo: rectagularInstagramCropView.centerYAnchor, constant: 0).isActive = true
-        let letter = UIGraphicsImageRenderer(size: rectagularInstagramCropView.bounds.size)
-        let renderLetterImage = letter.image { _ in
+        // 편지봉투에 넣어질 정사각형 이미지
+        let envelop = UIGraphicsImageRenderer(size: rectagularInstagramCropView.bounds.size)
+        let envelopImage = envelop.image { _ in
             rectagularInstagramCropView.drawHierarchy(in: rectagularInstagramCropView.bounds, afterScreenUpdates: true)
         }
-            
+        imageView.leadingAnchor.constraint(equalTo: rectagularInstagramCropView.leadingAnchor, constant: 30).isActive = true
+        imageView.trailingAnchor.constraint(equalTo: rectagularInstagramCropView.trailingAnchor, constant: 30).isActive = true
+        imageView.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
+        imageView.topAnchor.constraint(equalTo: rectagularInstagramCropView.topAnchor, constant: 28).isActive = true
+        imageView.bottomAnchor.constraint(equalTo: rectagularInstagramCropView.bottomAnchor, constant: -65).isActive = true
+        imageView.contentMode = .scaleAspectFit
+        
+        let label = UILabel()
+        label.text = fromLabel.text! + nameTextField.text!
+        label.font = UIFont(name: "SpoqaHanSansNeo-Bold", size: 16)
+        label.textColor = .white
+       
+        rectagularInstagramCropView.addSubview(label)
+         label.translatesAutoresizingMaskIntoConstraints = false
+        label.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 13).isActive = true
+        label.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
+
+        let instagram = UIGraphicsImageRenderer(size: rectagularInstagramCropView.bounds.size)
+        let instagramImage = instagram.image { _ in
+            rectagularInstagramCropView.drawHierarchy(in: rectagularInstagramCropView.bounds, afterScreenUpdates: true)
+        }
+    
         share.currentName = "\(fromLabel.text!) \(nameTextField.text!)"
         share.currentBackgroundColor = currentBackgroundColor
-        share.croppedImage = renderImage
-        share.letterImage = renderLetterImage
+        share.envelopImage = envelopImage
+        share.instagramImage = instagramImage
         share.currentFrameOfImage = currentFrameOfImage
         self.navigationController?.pushViewController(share, animated: true)
 //        if isImageSelected {
@@ -784,40 +812,54 @@ extension RecordVC {
     
     private func addStickerToCropView(_ stickerName: String) {
         
-        let sticker = UIImage.init(named: stickerName)!
-        let singleStickerView = UIImageView(image: sticker)
-        let panGesture = UIPanGestureRecognizer(
-            target: self,
-            action: #selector(handlePan)
-        )
-        let pinchGesture = UIPinchGestureRecognizer(
-            target: self,
-            action: #selector(handlePinch)
-        )
-        let rotateGesture = UIRotationGestureRecognizer(
-            target: self,
-            action: #selector(handleRotate)
-        )
-        let longPressGesture = UILongPressGestureRecognizer(
-            target: self,
-            action: #selector(handleLongPress)
-        )
-        longPressGesture.minimumPressDuration = 0
-        panGesture.delegate = self
-        pinchGesture.delegate = self
-        rotateGesture.delegate = self
-        longPressGesture.delegate = self
+        let testImage = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 100, height: 100))
+        testImage.image = UIImage.init(named: stickerName)!
+        testImage.contentMode = .scaleAspectFit
+        let stickerView3 = StickerView.init(contentView: testImage)
+        stickerView3.center = CGPoint.init(x: 150, y: 150)
+        stickerView3.delegate = self
+        stickerView3.setImage(UIImage.init(named: "Close")!, forHandler: StickerViewHandler.close)
+        stickerView3.setImage(UIImage.init(named: "Rotate")!, forHandler: StickerViewHandler.rotate)
+        stickerView3.showEditingHandlers = false
+        stickerView3.tag = 999
+        self.cropArea.addSubview(stickerView3)
+        self.selectedStickerView = stickerView3
+
         
-        singleStickerView.addGestureRecognizer(panGesture)
-        singleStickerView.addGestureRecognizer(pinchGesture)
-        singleStickerView.addGestureRecognizer(rotateGesture)
-        singleStickerView.addGestureRecognizer(longPressGesture)
-        singleStickerView.isUserInteractionEnabled = true
-        cropArea.addSubview(singleStickerView)
-        stickerGroups.append(singleStickerView)
-        
-        singleStickerView.widthAnchor.constraint(equalToConstant: 70).isActive = true
-        singleStickerView.heightAnchor.constraint(equalToConstant: 70).isActive = true
+//        let sticker = UIImage.init(named: stickerName)!
+//        let singleStickerView = UIImageView(image: sticker)
+//        let panGesture = UIPanGestureRecognizer(
+//            target: self,
+//            action: #selector(handlePan)
+//        )
+//        let pinchGesture = UIPinchGestureRecognizer(
+//            target: self,
+//            action: #selector(handlePinch)
+//        )
+//        let rotateGesture = UIRotationGestureRecognizer(
+//            target: self,
+//            action: #selector(handleRotate)
+//        )
+//        let longPressGesture = UILongPressGestureRecognizer(
+//            target: self,
+//            action: #selector(handleLongPress)
+//        )
+//        longPressGesture.minimumPressDuration = 0
+//        panGesture.delegate = self
+//        pinchGesture.delegate = self
+//        rotateGesture.delegate = self
+//        longPressGesture.delegate = self
+//
+//        singleStickerView.addGestureRecognizer(panGesture)
+//        singleStickerView.addGestureRecognizer(pinchGesture)
+//        singleStickerView.addGestureRecognizer(rotateGesture)
+//        singleStickerView.addGestureRecognizer(longPressGesture)
+//        singleStickerView.isUserInteractionEnabled = true
+//        cropArea.addSubview(singleStickerView)
+//        stickerGroups.append(singleStickerView)
+//
+//        singleStickerView.widthAnchor.constraint(equalToConstant: 70).isActive = true
+//        singleStickerView.heightAnchor.constraint(equalToConstant: 70).isActive = true
     }
     
     @objc func handleLongPress() {
@@ -1126,5 +1168,41 @@ extension RecordVC: UIGestureRecognizerDelegate {
             }
         }
         return true
+    }
+}
+
+extension RecordVC: StickerViewDelegate {
+    
+    func stickerViewDidTap(_ stickerView: StickerView) {
+        self.selectedStickerView = stickerView
+    }
+    
+    func stickerViewDidBeginMoving(_ stickerView: StickerView) {
+        self.selectedStickerView = stickerView
+    }
+    
+    /// Other delegate methods which we not used currently but choose method according to your event and requirements.
+    func stickerViewDidChangeMoving(_ stickerView: StickerView) {
+        
+    }
+    
+    func stickerViewDidEndMoving(_ stickerView: StickerView) {
+        
+    }
+    
+    func stickerViewDidBeginRotating(_ stickerView: StickerView) {
+        
+    }
+    
+    func stickerViewDidChangeRotating(_ stickerView: StickerView) {
+        
+    }
+    
+    func stickerViewDidEndRotating(_ stickerView: StickerView) {
+        
+    }
+    
+    func stickerViewDidClose(_ stickerView: StickerView) {
+        
     }
 }

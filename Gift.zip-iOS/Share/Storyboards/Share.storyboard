@@ -60,19 +60,19 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="저장하거나 공유해보세요" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LWz-Hh-XFb">
-                                <rect key="frame" x="24.000000000000014" y="153" width="248.33333333333337" height="29"/>
+                                <rect key="frame" x="24.000000000000014" y="152" width="235.33333333333337" height="28"/>
                                 <fontDescription key="fontDescription" name="SpoqaHanSansNeo-Bold" family="Spoqa Han Sans Neo" pointSize="24"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="선물.zip이 보관됐어요" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="07o-1m-TeY">
-                                <rect key="frame" x="24.000000000000014" y="120" width="223.33333333333337" height="29"/>
+                                <rect key="frame" x="23.999999999999986" y="120" width="210.66666666666663" height="28"/>
                                 <fontDescription key="fontDescription" name="SpoqaHanSansNeo-Bold" family="Spoqa Han Sans Neo" pointSize="24"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="받은 마음은 널리널리 자랑하기" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SIy-9A-zHR">
-                                <rect key="frame" x="24" y="186" width="177" height="17"/>
+                                <rect key="frame" x="24" y="184" width="169.33333333333334" height="16.333333333333343"/>
                                 <fontDescription key="fontDescription" name="SpoqaHanSansNeo-Regular" family="Spoqa Han Sans Neo" pointSize="14"/>
                                 <color key="textColor" red="0.58039215686274503" green="0.58039215686274503" blue="0.58039215686274503" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -94,7 +94,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="From 먹방위" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bsJ-w2-kQg">
-                                        <rect key="frame" x="10" y="227.66666666666669" width="227" height="19.333333333333343"/>
+                                        <rect key="frame" x="10" y="228.33333333333331" width="227" height="18.666666666666657"/>
                                         <fontDescription key="fontDescription" name="SpoqaHanSansNeo-Bold" family="Spoqa Han Sans Neo" pointSize="16"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -194,11 +194,114 @@
             </objects>
             <point key="canvasLocation" x="202.40000000000001" y="114.53201970443351"/>
         </scene>
+        <!--Instagram ShareVC-->
+        <scene sceneID="mVs-d9-HdS">
+            <objects>
+                <viewController storyboardIdentifier="InstagramShareVC" id="rJ3-Xi-wyX" customClass="InstagramShareVC" customModule="Gift_zip_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hK0-O2-lD6">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B3f-MT-tCF">
+                                <rect key="frame" x="0.0" y="44" width="375" height="56"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vfm-Yg-mjq">
+                                        <rect key="frame" x="16" y="16" width="24" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="24" id="tkN-Cn-YvJ"/>
+                                            <constraint firstAttribute="width" constant="24" id="unB-4y-HWh"/>
+                                        </constraints>
+                                        <state key="normal" image="iconCancel"/>
+                                        <connections>
+                                            <action selector="dismiss:" destination="rJ3-Xi-wyX" eventType="touchUpInside" id="6cP-y4-5OK"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="instagram에 게시" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EbC-Tj-pDH">
+                                        <rect key="frame" x="124" y="18.333333333333336" width="127" height="19.333333333333336"/>
+                                        <fontDescription key="fontDescription" name="SpoqaHanSansNeo-Bold" family="Spoqa Han Sans Neo" pointSize="16"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.031372549020000001" green="0.031372549020000001" blue="0.031372549020000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="vfm-Yg-mjq" firstAttribute="centerY" secondItem="B3f-MT-tCF" secondAttribute="centerY" id="Afq-NV-SJG"/>
+                                    <constraint firstItem="EbC-Tj-pDH" firstAttribute="centerY" secondItem="B3f-MT-tCF" secondAttribute="centerY" id="EhQ-xy-JG5"/>
+                                    <constraint firstAttribute="height" constant="56" id="GqQ-bm-pwk"/>
+                                    <constraint firstItem="vfm-Yg-mjq" firstAttribute="leading" secondItem="B3f-MT-tCF" secondAttribute="leading" constant="16" id="Vmh-Wj-g3e"/>
+                                    <constraint firstItem="EbC-Tj-pDH" firstAttribute="centerX" secondItem="B3f-MT-tCF" secondAttribute="centerX" id="kNe-Jg-xdZ"/>
+                                </constraints>
+                            </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iob-yo-sgY">
+                                <rect key="frame" x="40" y="256" width="295" height="300"/>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="71" translatesAutoresizingMaskIntoConstraints="NO" id="7nw-fm-rLO">
+                                <rect key="frame" x="121" y="664" width="133" height="31"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="duy-Ej-Mtt">
+                                        <rect key="frame" x="0.0" y="0.0" width="31" height="31"/>
+                                        <state key="normal" image="iconShareInstaStory"/>
+                                        <connections>
+                                            <action selector="shareStory:" destination="rJ3-Xi-wyX" eventType="touchUpInside" id="SJG-HT-HFy"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fdw-gs-xDY">
+                                        <rect key="frame" x="102" y="0.66666666666662877" width="31" height="30"/>
+                                        <state key="normal" image="iconShareInstaFeed"/>
+                                        <connections>
+                                            <action selector="shareFeed:" destination="rJ3-Xi-wyX" eventType="touchUpInside" id="cfE-h0-UcQ"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="스토리" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bX7-UJ-9su">
+                                <rect key="frame" x="114.33333333333333" y="720" width="44.333333333333329" height="19.333333333333371"/>
+                                <fontDescription key="fontDescription" name="SpoqaHanSansNeo-Regular" family="Spoqa Han Sans Neo" pointSize="16"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="피드" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IBV-kp-Shm">
+                                <rect key="frame" x="223.66666666666666" y="719.66666666666663" width="29.666666666666657" height="19.333333333333371"/>
+                                <fontDescription key="fontDescription" name="SpoqaHanSansNeo-Regular" family="Spoqa Han Sans Neo" pointSize="16"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="JvJ-RE-1Mr"/>
+                        <color key="backgroundColor" red="0.031372549020000001" green="0.031372549020000001" blue="0.031372549020000001" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="7nw-fm-rLO" firstAttribute="centerX" secondItem="hK0-O2-lD6" secondAttribute="centerX" id="2Yh-Da-9vS"/>
+                            <constraint firstAttribute="trailing" secondItem="B3f-MT-tCF" secondAttribute="trailing" id="7U5-ci-gLd"/>
+                            <constraint firstItem="iob-yo-sgY" firstAttribute="centerY" secondItem="hK0-O2-lD6" secondAttribute="centerY" id="7fA-mq-wuM"/>
+                            <constraint firstItem="IBV-kp-Shm" firstAttribute="centerX" secondItem="fdw-gs-xDY" secondAttribute="centerX" id="AXd-Pn-rdU"/>
+                            <constraint firstItem="IBV-kp-Shm" firstAttribute="top" secondItem="fdw-gs-xDY" secondAttribute="bottom" constant="25" id="Bsg-3v-qjY"/>
+                            <constraint firstItem="7nw-fm-rLO" firstAttribute="top" secondItem="iob-yo-sgY" secondAttribute="bottom" constant="108" id="IMY-ne-jrd"/>
+                            <constraint firstItem="iob-yo-sgY" firstAttribute="top" secondItem="B3f-MT-tCF" secondAttribute="bottom" constant="156" id="NPA-uy-PQx"/>
+                            <constraint firstItem="B3f-MT-tCF" firstAttribute="top" secondItem="JvJ-RE-1Mr" secondAttribute="top" id="beN-GE-m2F"/>
+                            <constraint firstItem="iob-yo-sgY" firstAttribute="leading" secondItem="JvJ-RE-1Mr" secondAttribute="leading" constant="40" id="djq-Ns-Kye"/>
+                            <constraint firstItem="JvJ-RE-1Mr" firstAttribute="trailing" secondItem="iob-yo-sgY" secondAttribute="trailing" constant="40" id="gYG-Ff-OHh"/>
+                            <constraint firstItem="B3f-MT-tCF" firstAttribute="leading" secondItem="JvJ-RE-1Mr" secondAttribute="leading" id="lQl-Eh-kdk"/>
+                            <constraint firstItem="iob-yo-sgY" firstAttribute="centerX" secondItem="hK0-O2-lD6" secondAttribute="centerX" id="oUQ-wV-oWg"/>
+                            <constraint firstItem="bX7-UJ-9su" firstAttribute="top" secondItem="duy-Ej-Mtt" secondAttribute="bottom" constant="25" id="p73-Ow-Cwb"/>
+                            <constraint firstItem="bX7-UJ-9su" firstAttribute="centerX" secondItem="duy-Ej-Mtt" secondAttribute="centerX" id="zPY-RP-XpT"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="iob-yo-sgY" id="Yoi-8K-tdH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1wJ-6O-PSD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="873" y="115"/>
+        </scene>
     </scenes>
     <resources>
         <image name="iconBack" width="24" height="24"/>
+        <image name="iconCancel" width="24" height="24"/>
         <image name="iconSave" width="24" height="24"/>
         <image name="iconShareInsta" width="56" height="56"/>
+        <image name="iconShareInstaFeed" width="30" height="30"/>
+        <image name="iconShareInstaStory" width="31" height="31"/>
         <image name="iconShareKakao" width="56" height="56"/>
         <image name="illustShareLetter" width="265" height="146"/>
         <image name="logoBgcolorNoneWhite" width="40" height="40"/>

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class StickerView: XibView {
+class StickerPopupView: XibView {
     
     @IBOutlet weak var singleSticker: UIButton!
     @IBOutlet weak var packageSticker: UIButton!
@@ -115,7 +115,7 @@ class StickerView: XibView {
     
 }
 
-extension StickerView: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+extension StickerPopupView: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 2

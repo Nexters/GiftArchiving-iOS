@@ -12,7 +12,7 @@
         </array>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StickerView" customModule="Gift_zip_iOS" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StickerPopupView" customModule="Gift_zip_iOS" customModuleProvider="target">
             <connections>
                 <outlet property="packageSticker" destination="aTO-0i-3aR" id="oig-5s-GMD"/>
                 <outlet property="singleSticker" destination="8b5-Vz-eMH" id="F5y-Xi-x9v"/>

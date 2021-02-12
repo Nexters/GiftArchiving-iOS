@@ -15,10 +15,10 @@ class ShareVC: UIViewController {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var logoImageView: UIImageView!
     
-    var croppedImage: UIImage?
+    var envelopImage: UIImage?
     var currentBackgroundColor: UIColor?
     var currentName: String?
-    var letterImage: UIImage?
+    var instagramImage: UIImage?
     var currentFrameOfImage: FrameOfImage?
     
     
@@ -82,43 +82,10 @@ class ShareVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        croppedImageView.image = croppedImage
+        croppedImageView.image = envelopImage
     }
     
-    private func changeImageToPNG(_ image: UIImage) -> Data {
-        guard let imageData = image.pngData() else
-        {return Data() }
-        
-        return imageData
-    }
     
-    private func shareToInstagram(_ imageData: Data) {
-        let pasteboardItems : [String:Any] = [
-            "com.instagram.sharedSticker.stickerImage": imageData,
-            "com.instagram.sharedSticker.backgroundTopColor" : "#000000",
-            "com.instagram.sharedSticker.backgroundBottomColor" : "#000000",
-            
-        ]
-        
-        let pasteboardOptions = [
-            UIPasteboard.OptionsKey.expirationDate : Date().addingTimeInterval(300)
-        ]
-        
-        UIPasteboard.general.setItems([pasteboardItems], options: pasteboardOptions)
-        
-        if let storyShareURL = URL(string: "instagram-stories://share") {
-            if UIApplication.shared.canOpenURL(storyShareURL)
-            {
-                UIApplication.shared.open(storyShareURL, options: [:], completionHandler: nil)
-            }
-        }  else
-        {
-            let alert = UIAlertController(title: "알림", message: "인스타그램이 필요합니다", preferredStyle: .alert)
-            let ok = UIAlertAction(title: "확인", style: .default, handler: nil)
-            alert.addAction(ok)
-            self.present(alert, animated: true, completion: nil)
-        }
-    }
     
     @IBAction func popToMain(_ sender: Any) {
         self.navigationController?.popToRootViewController(animated: true)
@@ -126,14 +93,8 @@ class ShareVC: UIViewController {
     
     @IBAction func saveImage(_ sender: UIButton) {
         
-        UIImageWriteToSavedPhotosAlbum(croppedImage!, self, #selector(image(image:didFinishSavingWithError:contextInfo:)), nil)
+        UIImageWriteToSavedPhotosAlbum(instagramImage!, self, #selector(image(image:didFinishSavingWithError:contextInfo:)), nil)
     }
-    
-    @IBAction func shareToInstagramButtonTapped(_ sender: Any) {
-        let pngFile = changeImageToPNG(croppedImage!)
-        shareToInstagram(pngFile)
-    }
-    
     
     @objc func image(image: UIImage, didFinishSavingWithError error: NSError?, contextInfo:UnsafeRawPointer) {
         if error == nil {
@@ -142,6 +103,15 @@ class ShareVC: UIViewController {
             print("error saving cropped image")
         }
     }
+    
+    @IBAction func shareToInstagramButtonTapped(_ sender: Any) {
+        guard let insta = self.storyboard?.instantiateViewController(identifier: "InstagramShareVC") as? InstagramShareVC else { return }
+        insta.instagramImage = instagramImage
+        insta.modalPresentationStyle = .fullScreen
+        self.present(insta, animated: true, completion: nil)
+    }
+    
+    
     @IBAction func shareToKakaoButtonTapped(_ sender: UIButton) {
         let title: String = "🎁기프트집 선물 도착🎁"
         let description: String = "\n님이 나에게 보낸 선물이 도착했어요!"
@@ -162,5 +132,3 @@ class ShareVC: UIViewController {
     }
 }
 
-extension ShareVC {
-}
