@@ -70,12 +70,11 @@ class ShareVC: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        UIView.animate(withDuration: 3.0, delay: 0.9, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.0, options: [.repeat,.autoreverse,.curveEaseIn], animations: {
+        UIView.animate(withDuration: 3.0, delay: 0.0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.2, options: [.repeat,.autoreverse,.curveEaseIn], animations: {
             self.cardView.frame.origin.y = self.cardView.frame.origin.y + 52
         }, completion: {_ in
         })
         
-        //        }
     }
     
     
@@ -83,7 +82,7 @@ class ShareVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        croppedImageView.image = letterImage
+        croppedImageView.image = croppedImage
     }
     
     private func changeImageToPNG(_ image: UIImage) -> Data {
