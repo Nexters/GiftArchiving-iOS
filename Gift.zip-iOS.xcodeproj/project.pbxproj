@@ -46,6 +46,8 @@
 		D4336D4225BE81FB00D27568 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4336D4125BE81FB00D27568 /* UIView+Extensions.swift */; };
 		D435F13825D6AB2200445A9F /* InstagramShareVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D435F13725D6AB2200445A9F /* InstagramShareVC.swift */; };
 		D435F14325D6D65600445A9F /* StickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D435F14225D6D65600445A9F /* StickerView.swift */; };
+		D435F14625D6E75100445A9F /* CustomToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D435F14525D6E75100445A9F /* CustomToastView.swift */; };
+		D435F16A25D6E9A000445A9F /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D435F16925D6E9A000445A9F /* UIViewController+Extensions.swift */; };
 		D463E97425D4FDBD00295B42 /* APIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D463E97325D4FDBD00295B42 /* APIConstants.swift */; };
 		D463E97825D503D100295B42 /* NetworkResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D463E97725D503D100295B42 /* NetworkResult.swift */; };
 		D463E97B25D5080000295B42 /* RecordGiftService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D463E97A25D5080000295B42 /* RecordGiftService.swift */; };
@@ -125,6 +127,8 @@
 		D4336D4125BE81FB00D27568 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		D435F13725D6AB2200445A9F /* InstagramShareVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramShareVC.swift; sourceTree = "<group>"; };
 		D435F14225D6D65600445A9F /* StickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerView.swift; sourceTree = "<group>"; };
+		D435F14525D6E75100445A9F /* CustomToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomToastView.swift; sourceTree = "<group>"; };
+		D435F16925D6E9A000445A9F /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		D463E97325D4FDBD00295B42 /* APIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConstants.swift; sourceTree = "<group>"; };
 		D463E97725D503D100295B42 /* NetworkResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResult.swift; sourceTree = "<group>"; };
 		D463E97A25D5080000295B42 /* RecordGiftService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordGiftService.swift; sourceTree = "<group>"; };
@@ -445,6 +449,7 @@
 			children = (
 				D4336D4125BE81FB00D27568 /* UIView+Extensions.swift */,
 				D4A08E9D25BFE031009CFCC4 /* UIColor+Extensions.swift */,
+				D435F16925D6E9A000445A9F /* UIViewController+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -634,6 +639,7 @@
 			isa = PBXGroup;
 			children = (
 				D4B189A425CBCEEF007C6AE9 /* XibView.swift */,
+				D435F14525D6E75100445A9F /* CustomToastView.swift */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -809,6 +815,7 @@
 				D465157225CEA44B00CDA2EB /* SettingsTVC.swift in Sources */,
 				D4D5261525CB018A00D18386 /* CategoryCVC.swift in Sources */,
 				4052034E25C537110066989C /* VC.swift in Sources */,
+				D435F16A25D6E9A000445A9F /* UIViewController+Extensions.swift in Sources */,
 				D463E97B25D5080000295B42 /* RecordGiftService.swift in Sources */,
 				40C900C525D1B70F00BC38C5 /* AutoTableViewCell.swift in Sources */,
 				D4B189AB25CBDF4B007C6AE9 /* CategorySecondCVC.swift in Sources */,
@@ -824,6 +831,7 @@
 				408E519225CAF81E0037EC9B /* GridCollectionViewCell.swift in Sources */,
 				401C03D125D00D990024B9C5 /* TableViewCell.swift in Sources */,
 				D435F13825D6AB2200445A9F /* InstagramShareVC.swift in Sources */,
+				D435F14625D6E75100445A9F /* CustomToastView.swift in Sources */,
 				401C03B325CEBD160024B9C5 /* SearchVC.swift in Sources */,
 				40ADFC1325C9B03800721F4D /* StickyCellFlowLayout.swift in Sources */,
 				D463E98325D5095500295B42 /* RecordGiftData.swift in Sources */,

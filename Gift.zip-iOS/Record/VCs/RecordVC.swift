@@ -198,6 +198,7 @@ class RecordVC: UIViewController {
     private var currentBackgroundColorString: String = "charcoalGrey"
     private var currentBackgroundColor: UIColor = UIColor.charcoalGrey {
         didSet {
+            selectedStickerView?.currentBackgroundColor = currentBackgroundColor
             switch currentBackgroundColor {
             case .charcoalGrey:
                 currentBackgroundColorString = "charcoalGrey"
@@ -259,8 +260,6 @@ class RecordVC: UIViewController {
                 for btn in colorButtons {
                     btn.layer.borderColor = UIColor.greyishBrown.cgColor
                 }
-                
-                
             } else {
                 backButton.setImage(UIImage.init(named: "iconBack"), for: .normal)
                 dateToRecordLabel.textColor = .white
@@ -356,6 +355,15 @@ class RecordVC: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
+        selectedStickerView?.showEditingHandlers = false
+//        if isStickerEditing {
+//            changeButtonContainerColor(false)
+//            changeStickerButtonInteraction(true)
+//            stickerPopupView.animateStickerView(false)
+//            makeButtonNormalOpacity()
+//            bottomContainer.backgroundColor = currentBackgroundColor
+//            isStickerEditing = false
+//        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -400,7 +408,7 @@ class RecordVC: UIViewController {
     
     @IBAction func completeRecord(_ sender: UIButton) {
         // record server
-
+        selectedStickerView?.showEditingHandlers = false
         // 사진 크롭 저장하는 것 여러가지 방법으로!!
         
         guard let share = UIStoryboard.init(name: "Share", bundle: nil).instantiateViewController(identifier: "ShareVC") as? ShareVC else { return }
@@ -824,98 +832,7 @@ extension RecordVC {
         stickerView3.tag = 999
         self.cropArea.addSubview(stickerView3)
         self.selectedStickerView = stickerView3
-
-        
-//        let sticker = UIImage.init(named: stickerName)!
-//        let singleStickerView = UIImageView(image: sticker)
-//        let panGesture = UIPanGestureRecognizer(
-//            target: self,
-//            action: #selector(handlePan)
-//        )
-//        let pinchGesture = UIPinchGestureRecognizer(
-//            target: self,
-//            action: #selector(handlePinch)
-//        )
-//        let rotateGesture = UIRotationGestureRecognizer(
-//            target: self,
-//            action: #selector(handleRotate)
-//        )
-//        let longPressGesture = UILongPressGestureRecognizer(
-//            target: self,
-//            action: #selector(handleLongPress)
-//        )
-//        longPressGesture.minimumPressDuration = 0
-//        panGesture.delegate = self
-//        pinchGesture.delegate = self
-//        rotateGesture.delegate = self
-//        longPressGesture.delegate = self
-//
-//        singleStickerView.addGestureRecognizer(panGesture)
-//        singleStickerView.addGestureRecognizer(pinchGesture)
-//        singleStickerView.addGestureRecognizer(rotateGesture)
-//        singleStickerView.addGestureRecognizer(longPressGesture)
-//        singleStickerView.isUserInteractionEnabled = true
-//        cropArea.addSubview(singleStickerView)
-//        stickerGroups.append(singleStickerView)
-//
-//        singleStickerView.widthAnchor.constraint(equalToConstant: 70).isActive = true
-//        singleStickerView.heightAnchor.constraint(equalToConstant: 70).isActive = true
     }
-    
-    @objc func handleLongPress() {
-        
-    }
-    
-    @objc func handlePan(_ gesture: UIPanGestureRecognizer) {
-        let translation = gesture.translation(in: view)
-        
-        guard let gestureView = gesture.view as? UIImageView else {
-            return
-        }
-        
-        gestureView.center = CGPoint(
-            x: gestureView.center.x + translation.x,
-            y: gestureView.center.y + translation.y
-        )
-        gesture.setTranslation(.zero, in: view)
-    }
-    
-    @objc func handlePinch(_ gesture: UIPinchGestureRecognizer) {
-        
-        
-        guard let gestureView = gesture.view as? UIImageView else {
-            return
-        }
-        
-        gestureView.transform = gestureView.transform.scaledBy(
-            x: gesture.scale,
-            y: gesture.scale
-        )
-        gesture.scale = 1
-        
-//        if gesture.state == .ended {
-//            self.selectedSticker = nil
-//        }
-    }
-    
-    
-    @objc func handleRotate(_ gesture: UIRotationGestureRecognizer) {
-        
-        guard let gestureView = gesture.view as? UIImageView else {
-            return
-        }
-        
-        gestureView.transform = gestureView.transform.rotated(
-            by: gesture.rotation
-        )
-        gesture.rotation = 0
-        
-//        if gesture.state == .ended {
-//            self.selectedSticker = nil
-//        }
-    }
-    
-    
     
     @objc private func selectIcon(_ notification: Notification) {
         
@@ -1179,6 +1096,7 @@ extension RecordVC: StickerViewDelegate {
     
     func stickerViewDidBeginMoving(_ stickerView: StickerView) {
         self.selectedStickerView = stickerView
+        selectedStickerView?.showEditingHandlers = true
     }
     
     /// Other delegate methods which we not used currently but choose method according to your event and requirements.
@@ -1191,7 +1109,7 @@ extension RecordVC: StickerViewDelegate {
     }
     
     func stickerViewDidBeginRotating(_ stickerView: StickerView) {
-        
+        selectedStickerView?.showEditingHandlers = true
     }
     
     func stickerViewDidChangeRotating(_ stickerView: StickerView) {
@@ -1203,6 +1121,6 @@ extension RecordVC: StickerViewDelegate {
     }
     
     func stickerViewDidClose(_ stickerView: StickerView) {
-        
+        print("close")
     }
 }

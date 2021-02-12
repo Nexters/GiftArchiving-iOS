@@ -71,20 +71,20 @@ public class StickerView: UIView {
             }
         }
     }
-    /// Enable the flip handler or not. Default value is YES.
+    /// Enable the flip handler or not. Default value is YES.ㅇㅇㅇㅇ이ㅣ이재용ㅇ바
     public var enableFlip:Bool = true
-    /// Show close and rotate/resize handlers or not. Default value is YES.
+    /// Show close and rotate/resize handlers or not. Default value is YES
     public var showEditingHandlers:Bool = true {
         didSet {
             if self.showEditingHandlers {
                 self.setEnableClose(self.enableClose)
                 self.setEnableRotate(self.enableRotate)
                 self.setEnableFlip(self.enableFlip)
-                self.contentView?.layer.borderWidth = 2
+                self.contentView?.layer.borderWidth = 1
                 if currentBackgroundColor == UIColor.wheat {
-                    self.contentView?.layer.borderColor = UIColor.white.cgColor
-                } else {
                     self.contentView?.layer.borderColor = UIColor.black.cgColor
+                } else {
+                    self.contentView?.layer.borderColor = UIColor.white.cgColor
                 }
                 
             }

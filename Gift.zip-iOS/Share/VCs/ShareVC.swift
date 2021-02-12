@@ -94,11 +94,12 @@ class ShareVC: UIViewController {
     @IBAction func saveImage(_ sender: UIButton) {
         
         UIImageWriteToSavedPhotosAlbum(instagramImage!, self, #selector(image(image:didFinishSavingWithError:contextInfo:)), nil)
+        
     }
     
     @objc func image(image: UIImage, didFinishSavingWithError error: NSError?, contextInfo:UnsafeRawPointer) {
         if error == nil {
-            print("saved cropped image")
+            self.showToast(text: "저장이 완료되었습니다.")
         } else {
             print("error saving cropped image")
         }
