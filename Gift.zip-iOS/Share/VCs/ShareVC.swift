@@ -14,13 +14,16 @@ class ShareVC: UIViewController {
     @IBOutlet weak var cardView: UIView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var logoImageView: UIImageView!
+    @IBOutlet weak var shareButtons: UIStackView!
+    @IBOutlet weak var kakaoImageCroppedArea: UIView!
     
     var envelopImage: UIImage?
     var currentBackgroundColor: UIColor?
     var currentName: String?
     var instagramImage: UIImage?
     var currentFrameOfImage: FrameOfImage?
-    
+    var userName: String?
+    var kakaoImageURL: String?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -67,8 +70,10 @@ class ShareVC: UIViewController {
         }
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        croppedImageView.image = envelopImage
         
         UIView.animate(withDuration: 3.0, delay: 0.0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.2, options: [.repeat,.autoreverse,.curveEaseIn], animations: {
             self.cardView.frame.origin.y = self.cardView.frame.origin.y + 52
@@ -78,14 +83,40 @@ class ShareVC: UIViewController {
     }
     
     
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    private func showToast(message : String, font: UIFont = UIFont.systemFont(ofSize: 14.0)) {
+        let toastLabel = UILabel()
+        toastLabel.backgroundColor = UIColor(red: 141.0 / 255.0, green: 141.0 / 255.0, blue: 154.0 / 255.0, alpha: 1.0)
+        toastLabel.textColor = UIColor.black
+        toastLabel.font = font
+        toastLabel.textAlignment = .center
+        toastLabel.text = message
         
-        croppedImageView.image = envelopImage
+        toastLabel.alpha = 1.0
+        toastLabel.layer.cornerRadius = 8;
+        toastLabel.clipsToBounds = true
+        
+        self.view.addSubview(toastLabel)
+        
+        toastLabel.translatesAutoresizingMaskIntoConstraints = false
+        toastLabel.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 16.0).isActive = true
+        toastLabel.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -16.0).isActive = true
+        toastLabel.topAnchor.constraint(equalTo: shareButtons.topAnchor, constant: 0.0).isActive = true
+        toastLabel.heightAnchor.constraint(equalToConstant: 56.0).isActive = true
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            toastLabel.alpha = 1
+            
+        },completion: { finish in
+            UIView.animate(withDuration: 0.3, delay: 0.7, animations: {
+                toastLabel.alpha = 0
+
+            }, completion: { finish in
+                if finish {
+                    toastLabel.removeFromSuperview()
+                }
+            })
+        })
     }
-    
-    
     
     @IBAction func popToMain(_ sender: Any) {
         self.navigationController?.popToRootViewController(animated: true)
@@ -99,8 +130,10 @@ class ShareVC: UIViewController {
     
     @objc func image(image: UIImage, didFinishSavingWithError error: NSError?, contextInfo:UnsafeRawPointer) {
         if error == nil {
-            self.showToast(text: "저장이 완료되었습니다.")
+            showToast(message: "저장이 완료되었습니다.", font: UIFont(name: "SpoqaHanSansNeo-Bold", size: 16) ?? UIFont())
+            self.view.layoutIfNeeded()
         } else {
+            showToast(message: "앨범 접근을 허용해주세요.", font: UIFont(name: "SpoqaHanSansNeo-Regular", size: 16) ?? UIFont())
             print("error saving cropped image")
         }
     }
@@ -115,8 +148,8 @@ class ShareVC: UIViewController {
     
     @IBAction func shareToKakaoButtonTapped(_ sender: UIButton) {
         let title: String = "🎁기프트집 선물 도착🎁"
-        let description: String = "\n님이 나에게 보낸 선물이 도착했어요!"
-        let imageURL: String = "https://gift-zip.s3.ap-northeast-2.amazonaws.com/000871.31eedc54c602460da26f4765dd27e985.1412/test2.jpegFri Feb 12 03:20:19 KST 2021"
+        let description: String = "\(userName!)님이 나에게 보낸 선물이 도착했어요!"
+        let imageURL: String = kakaoImageURL!
         let templateId = 47251
 
         LinkApi.shared.customLink(templateId: Int64(templateId), templateArgs:["title": title, "description": description, "imageURL": imageURL]) { (linkResult, error) in
@@ -130,6 +163,7 @@ class ShareVC: UIViewController {
                 }
             }
         }
+        
     }
 }
 
