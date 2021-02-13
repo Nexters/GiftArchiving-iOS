@@ -500,7 +500,7 @@ class RecordVC: UIViewController {
         label.textColor = .white
        
         rectagularInstagramCropView.addSubview(label)
-         label.translatesAutoresizingMaskIntoConstraints = false
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 13).isActive = true
         label.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
 
@@ -564,6 +564,16 @@ class RecordVC: UIViewController {
                             }
                         }
                     }
+                    var token: String = ""
+                    let SPREF = UserDefaults.standard
+                    if let appleId = SPREF.string(forKey: "appleId"){
+                        token = appleId
+                    } else {
+                        if let kakaoId = SPREF.string(forKey: "kakaoId") {
+                            token = kakaoId
+                        }
+                    }
+                    
 //                    print(content)
 //                    print(isReceiveGift)
 //                    print(name)
@@ -578,7 +588,7 @@ class RecordVC: UIViewController {
                     let bgImg = resizeImage(image: kakaoEnvelopImage, newWidth: kakaoEnvelopImage.size.width)
                     let noBgImg = resizeImage(image: envelopImage, newWidth: envelopImage.size.width)
 
-                    RecordGiftService.shared.recordGift(content: content, isReceiveGift: isReceiveGift, name: name, receiveDate: date, createdBy: "1", category: categoryName, emotion: "SORRY", reason: purposeName, bgColor: currentBackgroundColorString, bgImg: bgImg!, noBgImg: noBgImg!) { networkResult -> Void in
+                    RecordGiftService.shared.recordGift(content: content, isReceiveGift: isReceiveGift, name: name, receiveDate: date, createdBy: token, category: categoryName, emotion: emotionName, reason: purposeName, bgColor: currentBackgroundColorString, bgImg: bgImg!, noBgImg: noBgImg!) { networkResult -> Void in
                         switch networkResult {
                         case .success(let data):
                             if let bgData = data as? RecordGiftData {
@@ -890,9 +900,6 @@ extension RecordVC {
     }
     
     @objc func dismissStickerPopupView() {
-        print("ImageArea Tapped")
-        print(isStickerGuideLineEditing)
-        print(_selectedStickerView?.showEditingHandlers)
         if isStickerEditing {
             if isStickerGuideLineEditing {
                 print("sticker O GuideLine O")
