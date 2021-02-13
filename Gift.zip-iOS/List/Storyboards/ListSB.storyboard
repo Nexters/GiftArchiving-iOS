@@ -90,6 +90,9 @@
                                     <constraint firstAttribute="height" constant="24" id="Qhe-fz-LmV"/>
                                 </constraints>
                                 <state key="normal" image="iconArrowBottom"/>
+                                <connections>
+                                    <action selector="btnSortClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HrI-mc-kfN"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="최신순" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NUz-y6-0cO">
                                 <rect key="frame" x="298" y="77" width="39" height="20"/>

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import DropDown
 
 class ListVC: UIViewController {
     var models = [Model]()
@@ -26,6 +27,8 @@ class ListVC: UIViewController {
     var gridCellFlowLayout : UICollectionViewLayout?
     var gridCellNib : UINib?
     var collectionViewFlowLayoutType = true // true는 stickyType false는 gridType
+    let dropDown = DropDown()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -47,14 +50,27 @@ class ListVC: UIViewController {
                 layout.stickyIndexPath.append(IndexPath(row: index, section: 0))
             }
         }
+        makeDropDown()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    //MARK: drop down setting
+    private func makeDropDown(){
+        dropDown.dataSource = ["최신순", "과거순"]
+        dropDown.anchorView = labelSort
+        dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
+        dropDown.textColor = UIColor.white
+        dropDown.selectedTextColor = UIColor.whiteOpacity
+        dropDown.backgroundColor = UIColor.black
+        dropDown.textFont = UIFont.systemFont(ofSize: 14)
+        dropDown.cornerRadius = 10
+        dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
+            print("선택한 아이템 : \(item)")
+            print("인덱스 : \(index)")
+            self.dropDown.clearSelection()
+        }
+        
     }
     
-
+//MARK: 버튼 클릭 이벤트
     @IBAction func btnCollectionViewTypeClicked(_ sender: UIButton) {
         if collectionViewFlowLayoutType {
             sender.setImage(UIImage(named: "iconSticky"), for: .normal)
@@ -78,8 +94,11 @@ class ListVC: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
+    @IBAction func btnSortClicked(_ sender: UIButton) {
+        dropDown.show()
+    }
 }
-
+//MARK: collectionview datasource
 extension ListVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return models.count
