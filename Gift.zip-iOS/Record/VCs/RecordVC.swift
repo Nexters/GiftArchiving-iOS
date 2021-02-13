@@ -340,6 +340,7 @@ class RecordVC: UIViewController {
     private var selectedDate: Date = Date()
     
     private var isStickerEditing: Bool = false
+    private var isStickerGuideLineEditing: Bool = false
     
     private var isFrameEditing: Bool = false
     
@@ -395,15 +396,6 @@ class RecordVC: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
-        selectedStickerView?.showEditingHandlers = false
-//        if isStickerEditing {
-//            changeButtonContainerColor(false)
-//            changeStickerButtonInteraction(true)
-//            stickerPopupView.animateStickerView(false)
-//            makeButtonNormalOpacity()
-//            bottomContainer.backgroundColor = currentBackgroundColor
-//            isStickerEditing = false
-//        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -689,19 +681,26 @@ class RecordVC: UIViewController {
     
     @IBAction func useSticker(_ sender: UIButton) {
         if isStickerEditing {
+            isStickerEditing = false
             changeButtonContainerColor(false)
             changeStickerButtonInteraction(true)
-            stickerPopupView.animateStickerView(false)
+            UIView.animate(withDuration: 0.2, delay: 0.0, options: [.allowUserInteraction,.curveLinear], animations: {
+                self.stickerPopupView.frame.origin.y += 700
+                
+            }, completion: { _ in
+                self.stickerPopupView.animateStickerView(false)
+                self.stickerPopupView.frame.origin.y -= 700
+            })
             makeButtonNormalOpacity()
             bottomContainer.backgroundColor = currentBackgroundColor
-            isStickerEditing = false
         } else {
+            isStickerEditing = true
             changeButtonContainerColor(true)
             changeStickerButtonInteraction(false)
             stickerPopupView.outsideBackgroundColor = currentBackgroundColor
             stickerPopupView.animateStickerView(true)
             makeButtonLowOpacity(index: 2)
-            isStickerEditing = true
+            
         }
     }
     
@@ -885,7 +884,45 @@ extension RecordVC {
         let todayDate = formatter.string(from: selectedDate)
         
         dateToRecord = todayDate + getDayOfWeek(selectedDate)
-
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissStickerPopupView))
+        imageContainer.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func dismissStickerPopupView() {
+        print("ImageArea Tapped")
+        print(isStickerGuideLineEditing)
+        print(_selectedStickerView?.showEditingHandlers)
+        if isStickerEditing {
+            if isStickerGuideLineEditing {
+                print("sticker O GuideLine O")
+                isStickerGuideLineEditing = false
+                _selectedStickerView?.showEditingHandlers = false
+            } else {
+                print("sticker O GuideLine X")
+                isStickerEditing = false
+                changeButtonContainerColor(false)
+                changeStickerButtonInteraction(true)
+                UIView.animate(withDuration: 0.2, delay: 0.0, options: [.allowUserInteraction,.curveLinear], animations: {
+                    self.stickerPopupView.frame.origin.y += 700
+                    
+                }, completion: { _ in
+                    self.stickerPopupView.animateStickerView(false)
+                    self.stickerPopupView.frame.origin.y -= 700
+                })
+                makeButtonNormalOpacity()
+                bottomContainer.backgroundColor = currentBackgroundColor
+            }
+        } else {
+            if isStickerGuideLineEditing {
+                print("sticker X GuideLine O")
+                isStickerGuideLineEditing = false
+                _selectedStickerView?.showEditingHandlers = false
+            } else {
+                print("sticker X GuideLine X")
+            }
+        }
+        
     }
     
     @objc func dismissColorBottomContainer() {
@@ -917,6 +954,7 @@ extension RecordVC {
         stickerView3.setImage(UIImage.init(named: "iconCancelSticker")!, forHandler: StickerViewHandler.close)
         stickerView3.setImage(UIImage.init(named: "iconScale")!, forHandler: StickerViewHandler.rotate)
         stickerView3.showEditingHandlers = false
+        isStickerGuideLineEditing = true
         stickerView3.tag = 999
         self.cropArea.addSubview(stickerView3)
         self.selectedStickerView = stickerView3
@@ -1180,11 +1218,14 @@ extension RecordVC: StickerViewDelegate {
     
     func stickerViewDidTap(_ stickerView: StickerView) {
         self.selectedStickerView = stickerView
+        selectedStickerView?.showEditingHandlers = true
+        isStickerGuideLineEditing = true
     }
     
     func stickerViewDidBeginMoving(_ stickerView: StickerView) {
         self.selectedStickerView = stickerView
         selectedStickerView?.showEditingHandlers = true
+        isStickerGuideLineEditing = true
     }
     
     /// Other delegate methods which we not used currently but choose method according to your event and requirements.
