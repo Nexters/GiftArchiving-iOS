@@ -34,6 +34,7 @@ class ShareVC: UIViewController {
         
         logoImageView.backgroundColor = currentBackgroundColor
         if currentBackgroundColor == .wheat {
+            nameLabel.textColor = UIColor(white: 41.0 / 255.0, alpha: 1.0)
             switch currentFrameOfImage {
             case .square:
                 logoImageView.image = UIImage(named: "logoYellowRectangle")
@@ -70,6 +71,11 @@ class ShareVC: UIViewController {
         }
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        self.cardView.frame.origin.y = self.cardView.frame.origin.y + 52
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -119,7 +125,10 @@ class ShareVC: UIViewController {
     }
     
     @IBAction func popToMain(_ sender: Any) {
-        self.navigationController?.popToRootViewController(animated: true)
+        let mainSB = UIStoryboard.init(name: "MainSB", bundle: nil)
+        guard let mainVC = mainSB.instantiateViewController(identifier: "VC") as? VC else { return }
+        self.navigationController?.popToViewController(mainVC, animated: true)
+        
     }
     
     @IBAction func saveImage(_ sender: UIButton) {
