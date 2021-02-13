@@ -123,14 +123,11 @@ extension StickerPopupView: UICollectionViewDelegateFlowLayout, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.item == 0 {
-            print(indexPath.item)
             guard let singleSticker = collectionView.dequeueReusableCell(withReuseIdentifier: SingleStickerCVC.identifier, for: indexPath) as? SingleStickerCVC else { return UICollectionViewCell() }
             singleSticker.backgroundColor = currentBackgroundColor
-            print("singleSticker.currentBackgroundColor = currentBackgroundColor")
             singleSticker.currentBackgroundColor = currentBackgroundColor
             return singleSticker
         } else if indexPath.item == 1 {
-            print(indexPath.item)
             guard let packageSticker = collectionView.dequeueReusableCell(withReuseIdentifier: PackageStickerCVC.identifier, for: indexPath) as? PackageStickerCVC else { return UICollectionViewCell() }
             packageSticker.backgroundColor = currentBackgroundColor
             packageSticker.backgroundColor = currentBackgroundColor

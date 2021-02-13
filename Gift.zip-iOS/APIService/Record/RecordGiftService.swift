@@ -22,8 +22,8 @@ struct RecordGiftService{
                     bgImg: UIImage,
                     noBgImg: UIImage,
                     completion : @escaping (NetworkResult<Any>) -> (Void)) {
-        let url = "http://ec2-3-34-177-12.ap-northeast-2.compute.amazonaws.com/api/gift/create"
-        //APIConstants.baseURL + APIConstants.recordGiftURL
+        let url = APIConstants.baseURL + APIConstants.recordGiftURL
+        
 
         let header : HTTPHeaders = [
             "Content-Type":"multipart/form-data"
