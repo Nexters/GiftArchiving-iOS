@@ -19,6 +19,7 @@
 		4052034E25C537110066989C /* VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4052034D25C537110066989C /* VC.swift */; };
 		4052035225C537890066989C /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4052035125C537890066989C /* CollectionViewCell.swift */; };
 		40742E1325CEB32200D2005D /* SearchSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40742E1225CEB32200D2005D /* SearchSB.storyboard */; };
+		4078479525D7EDEC003CB616 /* LoadGiftListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4078479425D7EDEC003CB616 /* LoadGiftListService.swift */; };
 		408E518F25CAF5E20037EC9B /* GridCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 408E518E25CAF5E20037EC9B /* GridCollectionViewCell.xib */; };
 		408E519225CAF81E0037EC9B /* GridCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408E519125CAF81E0037EC9B /* GridCollectionViewCell.swift */; };
 		408E519B25CB1E6E0037EC9B /* OnboardingSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 408E519A25CB1E6E0037EC9B /* OnboardingSB.storyboard */; };
@@ -92,6 +93,7 @@
 		4052034D25C537110066989C /* VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VC.swift; sourceTree = "<group>"; };
 		4052035125C537890066989C /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		40742E1225CEB32200D2005D /* SearchSB.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SearchSB.storyboard; sourceTree = "<group>"; };
+		4078479425D7EDEC003CB616 /* LoadGiftListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadGiftListService.swift; sourceTree = "<group>"; };
 		408E518E25CAF5E20037EC9B /* GridCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GridCollectionViewCell.xib; sourceTree = "<group>"; };
 		408E519125CAF81E0037EC9B /* GridCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCollectionViewCell.swift; sourceTree = "<group>"; };
 		408E519A25CB1E6E0037EC9B /* OnboardingSB.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = OnboardingSB.storyboard; sourceTree = "<group>"; };
@@ -283,6 +285,14 @@
 			path = VC;
 			sourceTree = "<group>";
 		};
+		4078479325D7ED78003CB616 /* Load */ = {
+			isa = PBXGroup;
+			children = (
+				4078479425D7EDEC003CB616 /* LoadGiftListService.swift */,
+			);
+			path = Load;
+			sourceTree = "<group>";
+		};
 		408E518C25CA676A0037EC9B /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
@@ -458,6 +468,7 @@
 		D463E97125D4FD9C00295B42 /* APIService */ = {
 			isa = PBXGroup;
 			children = (
+				4078479325D7ED78003CB616 /* Load */,
 				D463E97225D4FDB100295B42 /* Record */,
 				D463E97325D4FDBD00295B42 /* APIConstants.swift */,
 				D463E97725D503D100295B42 /* NetworkResult.swift */,
@@ -824,6 +835,7 @@
 				D4A7141625D13CEC0095CE68 /* ShareVC.swift in Sources */,
 				D4F4915C25CD9E5F00FE9BF6 /* SingleStickerCVC.swift in Sources */,
 				D4336D1F25BE80D500D27568 /* AppDelegate.swift in Sources */,
+				4078479525D7EDEC003CB616 /* LoadGiftListService.swift in Sources */,
 				D463E97425D4FDBD00295B42 /* APIConstants.swift in Sources */,
 				D4336D4225BE81FB00D27568 /* UIView+Extensions.swift in Sources */,
 				D4336D2125BE80D500D27568 /* SceneDelegate.swift in Sources */,
@@ -977,13 +989,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Gift.zip-iOS/Gift.zip-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = TZVHD77BLL;
+				DEVELOPMENT_TEAM = N5FS2H5UXX;
 				INFOPLIST_FILE = "Gift.zip-iOS/Global/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mukbang.Gift-zip";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jaeyong.Gift-zip-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -998,13 +1010,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Gift.zip-iOS/Gift.zip-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = TZVHD77BLL;
+				DEVELOPMENT_TEAM = N5FS2H5UXX;
 				INFOPLIST_FILE = "Gift.zip-iOS/Global/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mukbang.Gift-zip";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jaeyong.Gift-zip-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
