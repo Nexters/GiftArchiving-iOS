@@ -44,6 +44,10 @@
 		D4336D2825BE80D500D27568 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4336D2725BE80D500D27568 /* Assets.xcassets */; };
 		D4336D2B25BE80D500D27568 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4336D2925BE80D500D27568 /* LaunchScreen.storyboard */; };
 		D4336D4225BE81FB00D27568 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4336D4125BE81FB00D27568 /* UIView+Extensions.swift */; };
+		D435F13825D6AB2200445A9F /* InstagramShareVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D435F13725D6AB2200445A9F /* InstagramShareVC.swift */; };
+		D435F14325D6D65600445A9F /* StickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D435F14225D6D65600445A9F /* StickerView.swift */; };
+		D435F14625D6E75100445A9F /* CustomToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D435F14525D6E75100445A9F /* CustomToastView.swift */; };
+		D435F16A25D6E9A000445A9F /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D435F16925D6E9A000445A9F /* UIViewController+Extensions.swift */; };
 		D463E97425D4FDBD00295B42 /* APIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D463E97325D4FDBD00295B42 /* APIConstants.swift */; };
 		D463E97825D503D100295B42 /* NetworkResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D463E97725D503D100295B42 /* NetworkResult.swift */; };
 		D463E97B25D5080000295B42 /* RecordGiftService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D463E97A25D5080000295B42 /* RecordGiftService.swift */; };
@@ -63,9 +67,9 @@
 		D4A08EBD25C01D32009CFCC4 /* PopupViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A08EBC25C01D32009CFCC4 /* PopupViewDelegate.swift */; };
 		D4A7141325D13CDC0095CE68 /* Share.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4A7141225D13CDC0095CE68 /* Share.storyboard */; };
 		D4A7141625D13CEC0095CE68 /* ShareVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A7141525D13CEC0095CE68 /* ShareVC.swift */; };
-		D4B189A125CBCEA2007C6AE9 /* StickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B189A025CBCEA2007C6AE9 /* StickerView.swift */; };
+		D4B189A125CBCEA2007C6AE9 /* StickerPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B189A025CBCEA2007C6AE9 /* StickerPopupView.swift */; };
 		D4B189A525CBCEEF007C6AE9 /* XibView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B189A425CBCEEF007C6AE9 /* XibView.swift */; };
-		D4B189A825CBCF30007C6AE9 /* StickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4B189A725CBCF30007C6AE9 /* StickerView.xib */; };
+		D4B189A825CBCF30007C6AE9 /* StickerPopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4B189A725CBCF30007C6AE9 /* StickerPopupView.xib */; };
 		D4B189AB25CBDF4B007C6AE9 /* CategorySecondCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B189AA25CBDF4B007C6AE9 /* CategorySecondCVC.swift */; };
 		D4D5261025CAFE2400D18386 /* IconPopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D5260F25CAFE2400D18386 /* IconPopupVC.swift */; };
 		D4D5261525CB018A00D18386 /* CategoryCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D5261425CB018A00D18386 /* CategoryCVC.swift */; };
@@ -121,6 +125,10 @@
 		D4336D2A25BE80D500D27568 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D4336D2C25BE80D600D27568 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D4336D4125BE81FB00D27568 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
+		D435F13725D6AB2200445A9F /* InstagramShareVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramShareVC.swift; sourceTree = "<group>"; };
+		D435F14225D6D65600445A9F /* StickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerView.swift; sourceTree = "<group>"; };
+		D435F14525D6E75100445A9F /* CustomToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomToastView.swift; sourceTree = "<group>"; };
+		D435F16925D6E9A000445A9F /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		D463E97325D4FDBD00295B42 /* APIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConstants.swift; sourceTree = "<group>"; };
 		D463E97725D503D100295B42 /* NetworkResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResult.swift; sourceTree = "<group>"; };
 		D463E97A25D5080000295B42 /* RecordGiftService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordGiftService.swift; sourceTree = "<group>"; };
@@ -140,9 +148,9 @@
 		D4A08EBC25C01D32009CFCC4 /* PopupViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupViewDelegate.swift; sourceTree = "<group>"; };
 		D4A7141225D13CDC0095CE68 /* Share.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Share.storyboard; sourceTree = "<group>"; };
 		D4A7141525D13CEC0095CE68 /* ShareVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareVC.swift; sourceTree = "<group>"; };
-		D4B189A025CBCEA2007C6AE9 /* StickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerView.swift; sourceTree = "<group>"; };
+		D4B189A025CBCEA2007C6AE9 /* StickerPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerPopupView.swift; sourceTree = "<group>"; };
 		D4B189A425CBCEEF007C6AE9 /* XibView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XibView.swift; sourceTree = "<group>"; };
-		D4B189A725CBCF30007C6AE9 /* StickerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StickerView.xib; sourceTree = "<group>"; };
+		D4B189A725CBCF30007C6AE9 /* StickerPopupView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StickerPopupView.xib; sourceTree = "<group>"; };
 		D4B189AA25CBDF4B007C6AE9 /* CategorySecondCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySecondCVC.swift; sourceTree = "<group>"; };
 		D4D5260F25CAFE2400D18386 /* IconPopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconPopupVC.swift; sourceTree = "<group>"; };
 		D4D5261425CB018A00D18386 /* CategoryCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCVC.swift; sourceTree = "<group>"; };
@@ -396,6 +404,7 @@
 			children = (
 				D463E97E25D5084E00295B42 /* Model */,
 				D463E97125D4FD9C00295B42 /* APIService */,
+				D4A08E9025BFDCE2009CFCC4 /* Record */,
 				D4A7140E25D13CAB0095CE68 /* Share */,
 				40742E0F25CEB2CF00D2005D /* Search */,
 				D465156525CE9F6600CDA2EB /* Settings */,
@@ -405,7 +414,6 @@
 				408E519625CB16310037EC9B /* Onboarding */,
 				40DE15BA25C858F100184320 /* List */,
 				40141E3E25BEE625003B49B4 /* Main */,
-				D4A08E9025BFDCE2009CFCC4 /* Record */,
 				D4336D2225BE80D500D27568 /* ViewController.swift */,
 				D4336D3D25BE81D200D27568 /* Global */,
 				D4336D2425BE80D500D27568 /* Main.storyboard */,
@@ -441,6 +449,7 @@
 			children = (
 				D4336D4125BE81FB00D27568 /* UIView+Extensions.swift */,
 				D4A08E9D25BFE031009CFCC4 /* UIColor+Extensions.swift */,
+				D435F16925D6E9A000445A9F /* UIViewController+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -589,6 +598,7 @@
 			isa = PBXGroup;
 			children = (
 				D4A7141525D13CEC0095CE68 /* ShareVC.swift */,
+				D435F13725D6AB2200445A9F /* InstagramShareVC.swift */,
 			);
 			path = VCs;
 			sourceTree = "<group>";
@@ -598,6 +608,7 @@
 			children = (
 				D4B1899F25CBCE88007C6AE9 /* Xib */,
 				D4B1899E25CBCE81007C6AE9 /* Cell */,
+				D435F14225D6D65600445A9F /* StickerView.swift */,
 			);
 			path = Stickers;
 			sourceTree = "<group>";
@@ -618,8 +629,8 @@
 		D4B1899F25CBCE88007C6AE9 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
-				D4B189A025CBCEA2007C6AE9 /* StickerView.swift */,
-				D4B189A725CBCF30007C6AE9 /* StickerView.xib */,
+				D4B189A025CBCEA2007C6AE9 /* StickerPopupView.swift */,
+				D4B189A725CBCF30007C6AE9 /* StickerPopupView.xib */,
 			);
 			path = Xib;
 			sourceTree = "<group>";
@@ -628,6 +639,7 @@
 			isa = PBXGroup;
 			children = (
 				D4B189A425CBCEEF007C6AE9 /* XibView.swift */,
+				D435F14525D6E75100445A9F /* CustomToastView.swift */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -711,7 +723,7 @@
 				D4A7141325D13CDC0095CE68 /* Share.storyboard in Resources */,
 				D4336D2B25BE80D500D27568 /* LaunchScreen.storyboard in Resources */,
 				40ADFC0E25C9AFA100721F4D /* ListSB.storyboard in Resources */,
-				D4B189A825CBCF30007C6AE9 /* StickerView.xib in Resources */,
+				D4B189A825CBCF30007C6AE9 /* StickerPopupView.xib in Resources */,
 				40C900CC25D2A4A200BC38C5 /* SearchResultCollectionViewCell.xib in Resources */,
 				408E519B25CB1E6E0037EC9B /* OnboardingSB.storyboard in Resources */,
 				4004497725CDD8D5004E9EB1 /* OnboardingCollectionViewCell.xib in Resources */,
@@ -785,6 +797,7 @@
 				40DE15CC25C8636D00184320 /* ListVC.swift in Sources */,
 				401C03C825CEF84C0024B9C5 /* RecentCollectionViewCell.swift in Sources */,
 				D4B189A525CBCEEF007C6AE9 /* XibView.swift in Sources */,
+				D435F14325D6D65600445A9F /* StickerView.swift in Sources */,
 				D4A08EB425C016BA009CFCC4 /* DatePopupVC.swift in Sources */,
 				D4D6B3D025D1059800231F8E /* LogoutPopupVC.swift in Sources */,
 				D4684D2F25D113FB0065E7A4 /* NoticeVC.swift in Sources */,
@@ -802,6 +815,7 @@
 				D465157225CEA44B00CDA2EB /* SettingsTVC.swift in Sources */,
 				D4D5261525CB018A00D18386 /* CategoryCVC.swift in Sources */,
 				4052034E25C537110066989C /* VC.swift in Sources */,
+				D435F16A25D6E9A000445A9F /* UIViewController+Extensions.swift in Sources */,
 				D463E97B25D5080000295B42 /* RecordGiftService.swift in Sources */,
 				40C900C525D1B70F00BC38C5 /* AutoTableViewCell.swift in Sources */,
 				D4B189AB25CBDF4B007C6AE9 /* CategorySecondCVC.swift in Sources */,
@@ -816,10 +830,12 @@
 				D4D5261025CAFE2400D18386 /* IconPopupVC.swift in Sources */,
 				408E519225CAF81E0037EC9B /* GridCollectionViewCell.swift in Sources */,
 				401C03D125D00D990024B9C5 /* TableViewCell.swift in Sources */,
+				D435F13825D6AB2200445A9F /* InstagramShareVC.swift in Sources */,
+				D435F14625D6E75100445A9F /* CustomToastView.swift in Sources */,
 				401C03B325CEBD160024B9C5 /* SearchVC.swift in Sources */,
 				40ADFC1325C9B03800721F4D /* StickyCellFlowLayout.swift in Sources */,
 				D463E98325D5095500295B42 /* RecordGiftData.swift in Sources */,
-				D4B189A125CBCEA2007C6AE9 /* StickerView.swift in Sources */,
+				D4B189A125CBCEA2007C6AE9 /* StickerPopupView.swift in Sources */,
 				4004497D25CDDA26004E9EB1 /* SplashVC.swift in Sources */,
 				D4A7141625D13CEC0095CE68 /* ShareVC.swift in Sources */,
 				D4F4915C25CD9E5F00FE9BF6 /* SingleStickerCVC.swift in Sources */,
@@ -977,13 +993,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Gift.zip-iOS/Gift.zip-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = N5FS2H5UXX;
+				DEVELOPMENT_TEAM = TZVHD77BLL;
 				INFOPLIST_FILE = "Gift.zip-iOS/Global/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.jaeyong.Gift-zip-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mukbang.Gift-zip";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -998,13 +1014,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Gift.zip-iOS/Gift.zip-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = N5FS2H5UXX;
+				DEVELOPMENT_TEAM = TZVHD77BLL;
 				INFOPLIST_FILE = "Gift.zip-iOS/Global/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.jaeyong.Gift-zip-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mukbang.Gift-zip";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

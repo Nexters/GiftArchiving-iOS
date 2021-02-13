@@ -37,7 +37,6 @@ class CategoryCVC: UICollectionViewCell {
         for index in buttons.indices {
             if buttons[index] == sender {
                 delegate?.iconSelectedAndDismissView(index: index, from: 1, iconKind: iconKind!)
-                
             }
         }
     }

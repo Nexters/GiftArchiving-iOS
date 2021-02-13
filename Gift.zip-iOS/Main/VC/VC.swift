@@ -32,6 +32,8 @@ class VC: UIViewController{
     
     var isOneStepPaging = true
     
+    private var isReceiveGift: Bool = true
+    
     var receivedModels = [Model]()
     var sentModels = [Model]()
     
@@ -166,6 +168,7 @@ class VC: UIViewController{
         self.btnSent.titleLabel?.textColor = UIColor.white
         self.btnReceived.titleLabel?.textColor = UIColor.whiteOpacity
         self.collectionViewFlag = false
+        isReceiveGift = false
         DispatchQueue.main.asyncAfter(deadline: .now()){
             self.moveBarToSentAnimate()
             self.collectionView.reloadData()
@@ -175,6 +178,7 @@ class VC: UIViewController{
         self.btnReceived.titleLabel?.textColor = UIColor.white
         self.btnSent.titleLabel?.textColor = UIColor.whiteOpacity
         self.collectionViewFlag = true
+        isReceiveGift = true
         DispatchQueue.main.asyncAfter(deadline: .now()){
             self.moveBarToReceivedAnimate()
             self.collectionView.reloadData()
@@ -183,7 +187,8 @@ class VC: UIViewController{
     
     @IBAction func btnWriteClicked(_ sender: UIButton) {
         let recordSB = UIStoryboard(name: "Record", bundle: nil)
-        let vc = recordSB.instantiateViewController(withIdentifier: "RecordVC")
+        guard let vc = recordSB.instantiateViewController(withIdentifier: "RecordVC") as? RecordVC else { return }
+        vc.isReceiveGift = isReceiveGift
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -198,6 +203,7 @@ class VC: UIViewController{
         vc.receivedSentFlag = self.collectionViewFlag
         navigationController?.pushViewController(vc, animated: true)
     }
+    
     func moveBarToReceivedAnimate(){
         UIView.animate(withDuration: 0.5) {
             self.viewBar.transform =  CGAffineTransform(translationX: 0, y: 0)

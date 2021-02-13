@@ -9,6 +9,8 @@ target 'Gift.zip-iOS' do
   pod 'Alamofire'
   pod 'Kingfisher'
   pod 'lottie-ios'
+  pod 'SnapKit'
+  pod 'Then'
   pod 'RxSwift', '6.0.0'
   pod 'RxCocoa', '6.0.0'
   pod 'KakaoSDKCommon'  # 필수 요소를 담은 공통 모듈
