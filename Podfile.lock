@@ -4,6 +4,9 @@ PODS:
     - KakaoSDKCommon (= 2.2.0)
   - KakaoSDKCommon (2.2.0):
     - Alamofire (~> 5.1)
+  - KakaoSDKLink (2.2.0):
+    - KakaoSDKCommon (= 2.2.0)
+    - KakaoSDKTemplate (= 2.2.0)
   - KakaoSDKTalk (2.2.0):
     - KakaoSDKAuth (= 2.2.0)
     - KakaoSDKCommon (= 2.2.0)
@@ -27,6 +30,7 @@ DEPENDENCIES:
   - Alamofire
   - KakaoSDKAuth
   - KakaoSDKCommon
+  - KakaoSDKLink
   - KakaoSDKTalk
   - KakaoSDKUser
   - Kingfisher
@@ -40,6 +44,7 @@ SPEC REPOS:
     - Alamofire
     - KakaoSDKAuth
     - KakaoSDKCommon
+    - KakaoSDKLink
     - KakaoSDKTalk
     - KakaoSDKTemplate
     - KakaoSDKUser
@@ -54,6 +59,7 @@ SPEC CHECKSUMS:
   Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
   KakaoSDKAuth: a6fa63eb1a6a4e03de55d87da597a2976aad9cbf
   KakaoSDKCommon: 90adb38b946ff42f26d70aadb67e679f79fe139c
+  KakaoSDKLink: 9aaf7e8e77a473c09c0b0630a1b899b1eee9cdd8
   KakaoSDKTalk: cf4ce154335c4decfcba71cb68cd84761d691bda
   KakaoSDKTemplate: ddf20dd6bb4e0dd08ffc86e94b0df4b7f2ae2b20
   KakaoSDKUser: b5ddfcdaf4adce40f172cafc9d4864d1a8b4f938
@@ -64,6 +70,6 @@ SPEC CHECKSUMS:
   RxSwift: c14e798c59b9f6e9a2df8fd235602e85cc044295
   TTGTagCollectionView: 86fcbfa6a7493c9e860b01c2e693cffc8acf6de1
 
-PODFILE CHECKSUM: f9724282980dd18f2febf3866de3d561652e2d56
+PODFILE CHECKSUM: 3ca3e6ea1f20a4cf7d62a2d119a61ba307b539fc
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.10.0

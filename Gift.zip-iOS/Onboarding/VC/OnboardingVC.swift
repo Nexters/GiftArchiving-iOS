@@ -8,6 +8,7 @@
 import UIKit
 import AuthenticationServices
 import KakaoSDKAuth
+import KakaoSDKUser
 
 class OnboardingVC: UIViewController, ASAuthorizationControllerPresentationContextProviding ,ASAuthorizationControllerDelegate {
     
@@ -119,14 +120,17 @@ class OnboardingVC: UIViewController, ASAuthorizationControllerPresentationConte
                     print(error)
                 }
                 else {
-                    print("loginWithKakaoTalk() success.")
-                    // do something
-                    _ = oauthToken
-                    // 엑세스토큰
-                    if let accessToken = oauthToken?.accessToken{
-                        print(accessToken)
-                        //loginAPI 호출
-                        self.loginAPI(appleToken: "", kakaoToken: accessToken, loginType: "KAKAO", name: "")
+                    //사용자 관리 api 호출
+                    UserApi.shared.me() {(user, error) in
+                        if let error = error {
+                            print(error)
+                        }
+                        else {
+                            _ = user
+                            if let userId = user?.id{
+                                self.loginAPI(appleToken: "", kakaoToken: String(userId), loginType: "KAKAO", name: "")
+                            }
+                        }
                     }
                     
                 }
@@ -135,11 +139,17 @@ class OnboardingVC: UIViewController, ASAuthorizationControllerPresentationConte
     }
     func loginAPI(appleToken : String, kakaoToken: String, loginType : String, name: String){
         // 전송할 값
-        let param = ["appleToken" : appleToken, "kakaoToken" : kakaoToken, "loginType" : loginType, "name": name] // JSON 객체로 전송할 딕셔너리
+        var param : Dictionary<String, String> = [:]
+        if loginType == "KAKAO"{
+            param = ["token" : kakaoToken, "loginType" : loginType, "name": name]
+        }else{
+            param = ["token" : appleToken, "loginType" : loginType, "name": name]
+        }
+        // JSON 객체로 전송할 딕셔너리
         let paramData = try! JSONSerialization.data(withJSONObject: param, options: [])
         
         // URL 객체 정의
-        let url = URL(string: "http://ec2-3-34-177-12.ap-northeast-2.compute.amazonaws.com:10000/api/user/signIn")
+        let url = URL(string: APIConstants.baseURL + APIConstants.signInURL)
         
         // URLRequest 객체를 정의
         var request = URLRequest(url: url!)
