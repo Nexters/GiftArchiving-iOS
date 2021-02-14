@@ -63,8 +63,22 @@ class ListVC: UIViewController {
         dropDown.textFont = UIFont.systemFont(ofSize: 14)
         dropDown.cornerRadius = 10
         dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-            print("선택한 아이템 : \(item)")
-            print("인덱스 : \(index)")
+            let formatter = DateFormatter()
+            formatter.locale = Locale(identifier: "ko")
+            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+            models = models.sorted { model1, model2 in
+                guard let date1 = formatter.date(from: model1.receiveDate) else { return true }
+                guard let date2 = formatter.date(from: model2.receiveDate) else { return false }
+                if index == 0 {
+                    return date1 > date2
+                }else{
+                    return date1 < date2
+                }
+                
+            }
+            self.collectionView.reloadData()
+            self.labelSort.text = item
+            self.collectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
             self.dropDown.clearSelection()
         }
         
