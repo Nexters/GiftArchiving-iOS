@@ -87,7 +87,7 @@ class RecordVC: UIViewController {
     
     lazy var stickerPopupView = StickerPopupView()
     
-    lazy var exitButton = UIButton()
+    lazy var exitColorEditButton = UIButton()
     
     var isReceiveGift: Bool = true
     
@@ -121,6 +121,23 @@ class RecordVC: UIViewController {
     
     private var currentFrameOfImage: FrameOfImage = .square {
         didSet {
+            if !isImageSelected {
+                switch currentFrameOfImage {
+                case .square:
+                    cropImageView.image = UIImage.init(named: "dotRectangle")
+                    break
+                case .circle:
+                    cropImageView.image = UIImage.init(named: "dotCircle")
+                    break
+                case .windowFrame:
+                    cropImageView.image = UIImage.init(named: "dotWindow")
+                    break
+                case .full:
+                    cropImageView.image = UIImage.init(named: "dotRectangle")
+                    break
+                }
+            }
+            
             switch currentFrameOfImage {
             case .square:
                 logoSticker.makeRounded(cornerRadius: 0)
@@ -258,7 +275,6 @@ class RecordVC: UIViewController {
                 completeButton.setImage(UIImage.init(named: "iconCheckBk"), for: .normal)
                 dateDropDownImage.image = UIImage.init(named: "iconArrowBottomBk")
                 emptyImageLabel.textColor = .greyishBrown
-                cropImageView.makeDashedBorder(UIColor.greyishBrown)
                 fromLabel.textColor = .greyishBrown
                 nameTextField.attributedPlaceholder = NSAttributedString(string: "이름",
                                                                          attributes: [NSAttributedString.Key.foregroundColor: UIColor(white: 62.0 / 255.0, alpha: 0.34)])
@@ -295,7 +311,6 @@ class RecordVC: UIViewController {
                 completeButton.setImage(UIImage.init(named: "iconCheck"), for: .normal)
                 dateDropDownImage.image = UIImage.init(named: "iconArrowBottom")
                 emptyImageLabel.textColor = .white
-                cropImageView.makeDashedBorder(UIColor.white)
                 fromLabel.textColor = .white
                 nameTextField.attributedPlaceholder = NSAttributedString(string: "이름",
                                                                          attributes: [NSAttributedString.Key.foregroundColor: UIColor.init(white: 1, alpha: 0.34)])
@@ -345,15 +360,15 @@ class RecordVC: UIViewController {
         didSet {
             if isColorEditing {
                 view.bringSubviewToFront(colorBottomContainer)
-                view.bringSubviewToFront(exitButton)
+                view.bringSubviewToFront(exitColorEditButton)
                 colorBottomContainer.alpha = 1
                 colorBottomContainer.isHidden = false
-                exitButton.isHidden = false
+                exitColorEditButton.isHidden = false
             } else {
                 view.bringSubviewToFront(bottomContainer)
                 colorBottomContainer.alpha = 0
                 colorBottomContainer.isHidden = true
-                exitButton.isHidden = true
+                exitColorEditButton.isHidden = true
             }
         }
     }
@@ -393,10 +408,10 @@ class RecordVC: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "dateSegue" {
-            popupBackground.animatePopupBackground(true)
+//            popupBackground.animatePopupBackground(true)
             guard let des = segue.destination as? DatePopupVC else { return }
             des.delegate = self
-            des.currentBackgroundColor = currentBackgroundColor
+            des.currentBackgroundColor = currentBackgroundPopupColor
         } else if segue.identifier == "categoryPopup" {
             popupBackground.animatePopupBackground(true)
             view.bringSubviewToFront(categoryImageView)
@@ -829,7 +844,6 @@ extension RecordVC {
         currentInfoViewOriginY = infoView.frame.origin.y
         currentBottomContainerOriginY = bottomContainer.frame.origin.y
         currentImageContainerOriginY = imageContainer.frame.origin.y
-        cropImageView.makeDashedBorder(UIColor.white)
         
         colorButton.translatesAutoresizingMaskIntoConstraints = false
         colorButton.widthAnchor.constraint(equalToConstant: 24).isActive = true
@@ -839,14 +853,14 @@ extension RecordVC {
         
         
         // 배경색 바꿀때 원래 메뉴로 돌아가는 버튼
-        exitButton.addTarget(self, action: #selector(dismissColorBottomContainer), for: .touchUpInside)
-        view.addSubview(exitButton)
-        exitButton.translatesAutoresizingMaskIntoConstraints = false
-        exitButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        exitButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-        exitButton.bottomAnchor.constraint(equalTo: colorBottomContainer.topAnchor).isActive = true
-        exitButton.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
-        exitButton.isHidden = true
+        exitColorEditButton.addTarget(self, action: #selector(dismissColorBottomContainer), for: .touchUpInside)
+        view.addSubview(exitColorEditButton)
+        exitColorEditButton.translatesAutoresizingMaskIntoConstraints = false
+        exitColorEditButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        exitColorEditButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        exitColorEditButton.bottomAnchor.constraint(equalTo: colorBottomContainer.topAnchor).isActive = true
+        exitColorEditButton.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+        exitColorEditButton.isHidden = true
         
         // 스티커 뷰
         view.addSubview(stickerPopupView)
@@ -1110,7 +1124,6 @@ extension RecordVC: UIImagePickerControllerDelegate, UINavigationControllerDeleg
         
         if let image = info[.originalImage] as? UIImage, let editedImage = info[.editedImage] as? UIImage {
             self.cropImageView.image = editedImage
-            self.cropImageView.eraseBorder()
             self.originalFullImage = image
             self.emptyImageLabel.isHidden = true
             isImageSelected = true
