@@ -72,14 +72,12 @@ class VC: UIViewController{
         self.sentModels.removeAll()
         LoadGiftListService.shared.getReceivedGifts(page: 0, size: 10000000, isReceiveGift: true, completion: {
             gifts in
-            for gift in gifts{
-                if gift.isReceiveGift {
-                    self.receivedModels.append(gift)
-                }else{
-                    self.sentModels.append(gift)
-                }
-            }
-            self.collectionView.reloadData()
+            self.receivedModels.append(contentsOf: gifts)
+            LoadGiftListService.shared.getReceivedGifts(page: 0, size: 10000000, isReceiveGift: false, completion: {
+                gifts in
+                self.sentModels.append(contentsOf: gifts)
+                self.collectionView.reloadData()
+            })
         })
     }
     func setLayout(){
