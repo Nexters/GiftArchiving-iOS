@@ -9,7 +9,7 @@ import UIKit
 import DropDown
 
 class ListVC: UIViewController {
-    var models = [Model]()
+    var models = [LoadGiftData]()
     var receivedSentFlag = true //보낸인지 받은 인지
     var colors = [UIColor(named: "ceruleanBlue"), UIColor.greyishBrown, UIColor(named: "pinkishOrange"), UIColor(named: "wheat")]
     

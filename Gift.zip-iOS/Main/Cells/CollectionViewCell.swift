@@ -19,11 +19,23 @@ class CollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var constImgTop: NSLayoutConstraint!
     
     
-    public func configure(with model: Model){
+    public func configure(with model: LoadGiftData){
+        if let encoded = model.imgUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let url = URL(string: encoded) {
+            
+            DispatchQueue.global().async {
+                do{
+                    let data = try Data(contentsOf: url)
+                    DispatchQueue.main.async {
+                        self.imgView.image = UIImage(data: data)
+                    }
+                }catch(let err){
+                    debugPrint(err.localizedDescription)
+                }
+            }
+        }
         
-        self.imgView.image = UIImage(named: model.imageName)
         self.labelFrom.text = model.name
-        self.labelDate.text = model.date
+        self.labelDate.text = model.receiveDate
         
     }
     public func setLabelColor(colorIdx : Int){

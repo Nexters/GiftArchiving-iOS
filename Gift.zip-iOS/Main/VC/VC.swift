@@ -32,8 +32,8 @@ class VC: UIViewController{
     
     var isOneStepPaging = true
     
-    var receivedModels = [Model]()
-    var sentModels = [Model]()
+    var receivedModels = [LoadGiftData]()
+    var sentModels = [LoadGiftData]()
     
     var colors = [UIColor(named: "ceruleanBlue"), UIColor.greyishBrown, UIColor(named: "pinkishOrange"), UIColor(named: "wheat")]
     var logos = [[UIImage(named: "logo_blue_rec"), UIImage(named: "logo_blue_circle"), UIImage(named: "logo_blue_oval")],
@@ -57,13 +57,29 @@ class VC: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        reSetData()
         if view.bounds.height > 840 {
             device = 1
         }else{
             device = 0
         }
-        testData()
         setLayout()
+        
+    }
+    private func reSetData(){
+        self.receivedModels.removeAll()
+        self.sentModels.removeAll()
+        LoadGiftListService.shared.getReceivedGifts(page: 0, size: 10000000, isReceiveGift: true, completion: {
+            gifts in
+            for gift in gifts{
+                if gift.isReceiveGift {
+                    self.receivedModels.append(gift)
+                }else{
+                    self.sentModels.append(gift)
+                }
+            }
+            self.collectionView.reloadData()
+        })
     }
     func setLayout(){
         var cellHeight = CGFloat(330)
@@ -109,54 +125,11 @@ class VC: UIViewController{
         (btnWrite as UIView).makeRounded(cornerRadius: 8.0)
         
         if receivedModels.count > 0 {
-            changeUI(shape: receivedModels[0].shape)
+            self.changeUI(shape: 0)
+            //changeUI(shape: receivedModels[0].shape)
         }
     }
     
-    func testData(){
-        receivedModels.append(Model(name: "From.유진",
-                            imageName: "img_test",
-                            isGiven: false,
-                            date: "2020.01.31",
-                            shape: 0))
-        receivedModels.append(Model(name: "From.유진2",
-                            imageName: "img_test",
-                            isGiven: false,
-                            date: "2020.01.31",
-                            shape: 1))
-        receivedModels.append(Model(name: "From.유진3",
-                            imageName: "img_test",
-                            isGiven: false,
-                            date: "2020.01.31",
-                            shape: 2))
-        receivedModels.append(Model(name: "From.유진4",
-                            imageName: "img_test",
-                            isGiven: false,
-                            date: "2020.01.31",
-                            shape: 0))
-        
-        sentModels.append(Model(name: "To.유진1",
-                                imageName: "img_test",
-                                isGiven: false,
-                                date: "2020.01.31",
-                                shape: 0))
-        sentModels.append(Model(name: "To.유진2",
-                                imageName: "img_test",
-                                isGiven: false,
-                                date: "2020.01.31",
-                                shape: 0))
-        sentModels.append(Model(name: "To.유진3",
-                                imageName: "img_test",
-                                isGiven: false,
-                                date: "2020.01.31",
-                                shape: 0))
-        sentModels.append(Model(name: "To.유진4",
-                                imageName: "img_test",
-                                isGiven: false,
-                                date: "2020.01.31",
-                                shape: 0))
-        
-    }
     @IBAction func settingButtonClicked(_ sender: UIButton) {
         guard let settingsVC = UIStoryboard.init(name: "Settings", bundle: nil).instantiateViewController(identifier: "SettingsVC") as? SettingsVC else { return }
         self.navigationController?.pushViewController(settingsVC, animated: true)
@@ -302,15 +275,16 @@ extension VC : UIScrollViewDelegate {
             if Int(currentIndex) == receivedModels.count{
                 currentIndex -= 1
             }
-           
-            self.changeUI(shape: receivedModels[Int(currentIndex)].shape)
+            self.changeUI(shape: 0)
+            //self.changeUI(shape: receivedModels[Int(currentIndex)].shape)
             
             
         }else{
             if Int(currentIndex) == receivedModels.count{
                 currentIndex -= 1
             }
-            self.changeUI(shape: sentModels[Int(currentIndex)].shape)
+            self.changeUI(shape: 0)
+            //self.changeUI(shape: sentModels[Int(currentIndex)].shape)
             
             
         }
@@ -319,21 +293,5 @@ extension VC : UIScrollViewDelegate {
         // 위 코드를 통해 페이징 될 좌표값을 targetContentOffset에 대입하면 된다.
         offset = CGPoint(x: roundedIndex * cellWidthIncludingSpacing - scrollView.contentInset.left, y: -scrollView.contentInset.top)
         targetContentOffset.pointee = offset
-    }
-}
-//임시 모델
-struct Model {
-    let name: String
-    let imageName: String
-    let isGiven: Bool
-    let date: String
-    let shape: Int
-    
-    init(name: String, imageName: String, isGiven: Bool, date: String, shape: Int){
-        self.name = name
-        self.imageName = imageName
-        self.isGiven = isGiven
-        self.date = date
-        self.shape = shape
     }
 }

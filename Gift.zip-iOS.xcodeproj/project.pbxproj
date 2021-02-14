@@ -20,6 +20,8 @@
 		4052035225C537890066989C /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4052035125C537890066989C /* CollectionViewCell.swift */; };
 		40742E1325CEB32200D2005D /* SearchSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40742E1225CEB32200D2005D /* SearchSB.storyboard */; };
 		4078479525D7EDEC003CB616 /* LoadGiftListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4078479425D7EDEC003CB616 /* LoadGiftListService.swift */; };
+		407847D725D807E4003CB616 /* LoadGiftData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407847D625D807E4003CB616 /* LoadGiftData.swift */; };
+		407847EB25D90E25003CB616 /* LoadAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407847EA25D90E25003CB616 /* LoadAPIResponse.swift */; };
 		408E518F25CAF5E20037EC9B /* GridCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 408E518E25CAF5E20037EC9B /* GridCollectionViewCell.xib */; };
 		408E519225CAF81E0037EC9B /* GridCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408E519125CAF81E0037EC9B /* GridCollectionViewCell.swift */; };
 		408E519B25CB1E6E0037EC9B /* OnboardingSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 408E519A25CB1E6E0037EC9B /* OnboardingSB.storyboard */; };
@@ -94,6 +96,8 @@
 		4052035125C537890066989C /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		40742E1225CEB32200D2005D /* SearchSB.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SearchSB.storyboard; sourceTree = "<group>"; };
 		4078479425D7EDEC003CB616 /* LoadGiftListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadGiftListService.swift; sourceTree = "<group>"; };
+		407847D625D807E4003CB616 /* LoadGiftData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadGiftData.swift; sourceTree = "<group>"; };
+		407847EA25D90E25003CB616 /* LoadAPIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadAPIResponse.swift; sourceTree = "<group>"; };
 		408E518E25CAF5E20037EC9B /* GridCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GridCollectionViewCell.xib; sourceTree = "<group>"; };
 		408E519125CAF81E0037EC9B /* GridCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCollectionViewCell.swift; sourceTree = "<group>"; };
 		408E519A25CB1E6E0037EC9B /* OnboardingSB.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = OnboardingSB.storyboard; sourceTree = "<group>"; };
@@ -289,6 +293,15 @@
 			isa = PBXGroup;
 			children = (
 				4078479425D7EDEC003CB616 /* LoadGiftListService.swift */,
+				407847EA25D90E25003CB616 /* LoadAPIResponse.swift */,
+			);
+			path = Load;
+			sourceTree = "<group>";
+		};
+		407847D525D807CC003CB616 /* Load */ = {
+			isa = PBXGroup;
+			children = (
+				407847D625D807E4003CB616 /* LoadGiftData.swift */,
 			);
 			path = Load;
 			sourceTree = "<group>";
@@ -488,6 +501,7 @@
 		D463E97E25D5084E00295B42 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				407847D525D807CC003CB616 /* Load */,
 				D463E97F25D5085300295B42 /* Record */,
 			);
 			path = Model;
@@ -809,6 +823,7 @@
 				40C900CF25D2A5B000BC38C5 /* SearchResultCollectionViewCell.swift in Sources */,
 				D4F3609625C8739F00874874 /* ShiftyImageCropVC.swift in Sources */,
 				D4336D2325BE80D500D27568 /* ViewController.swift in Sources */,
+				407847D725D807E4003CB616 /* LoadGiftData.swift in Sources */,
 				D4EE0A5E25D5552100EAF657 /* Icons.swift in Sources */,
 				D465157225CEA44B00CDA2EB /* SettingsTVC.swift in Sources */,
 				D4D5261525CB018A00D18386 /* CategoryCVC.swift in Sources */,
@@ -828,6 +843,7 @@
 				408E519225CAF81E0037EC9B /* GridCollectionViewCell.swift in Sources */,
 				401C03D125D00D990024B9C5 /* TableViewCell.swift in Sources */,
 				401C03B325CEBD160024B9C5 /* SearchVC.swift in Sources */,
+				407847EB25D90E25003CB616 /* LoadAPIResponse.swift in Sources */,
 				40ADFC1325C9B03800721F4D /* StickyCellFlowLayout.swift in Sources */,
 				D463E98325D5095500295B42 /* RecordGiftData.swift in Sources */,
 				D4B189A125CBCEA2007C6AE9 /* StickerView.swift in Sources */,
