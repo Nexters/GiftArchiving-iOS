@@ -33,9 +33,14 @@ class CollectionViewCell: UICollectionViewCell {
                 }
             }
         }
-        
         self.labelFrom.text = model.name
-        self.labelDate.text = model.receiveDate
+        let dateFor: DateFormatter = DateFormatter()
+        dateFor.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        if let date = dateFor.date(from: model.receiveDate){
+            dateFor.dateFormat = "yyyy.MM.dd"
+            self.labelDate.text = dateFor.string(from: date)
+        }
+        
         
     }
     public func setLabelColor(colorIdx : Int){

@@ -29,7 +29,13 @@ class GridCollectionViewCell: UICollectionViewCell {
         }
     
         self.labelName.text = model.name
-        self.labelDate.text = model.receiveDate
+        let dateFor: DateFormatter = DateFormatter()
+        dateFor.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        if let date = dateFor.date(from: model.receiveDate){
+            dateFor.locale = Locale(identifier: "ko")
+            dateFor.dateFormat = "yyyy. MM. dd(eeee)"
+            self.labelDate.text = dateFor.string(from: date)
+        }
         self.backView.backgroundColor = color
         self.labelDate.textColor = UIColor.whiteOpacity
     
