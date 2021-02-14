@@ -32,13 +32,20 @@ class CollectionViewCell: UICollectionViewCell {
                     debugPrint(err.localizedDescription)
                 }
             }
+        }else{
+            self.imgView.image = UIImage(named: "imgEmptyMainBig")
         }
+        
         self.labelFrom.text = model.name
+        
+        
         let dateFor: DateFormatter = DateFormatter()
         dateFor.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         if let date = dateFor.date(from: model.receiveDate){
             dateFor.dateFormat = "yyyy.MM.dd"
             self.labelDate.text = dateFor.string(from: date)
+        }else{
+            self.labelDate.text = ""
         }
         
         

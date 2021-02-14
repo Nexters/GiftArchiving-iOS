@@ -34,7 +34,8 @@ class VC: UIViewController{
     
     var receivedModels = [LoadGiftData]()
     var sentModels = [LoadGiftData]()
-    
+    var emptyReceivedModels = [LoadGiftData(id: "", imgUrl: "", name: "From. 보낸이", content: "", receiveDate: "", bgColor: "charcoalGrey", isReceiveGift: true, category: "", emotion: "", reason: "")]
+    var emptySentModels = [LoadGiftData(id: "", imgUrl: "", name: "To. 받는이", content: "", receiveDate: "", bgColor: "charcoalGrey", isReceiveGift: false, category: "", emotion: "", reason: "")]
     var colors = [UIColor(named: "ceruleanBlue"), UIColor.greyishBrown, UIColor(named: "pinkishOrange"), UIColor(named: "wheat")]
     var logos = [[UIImage(named: "logo_blue_rec"), UIImage(named: "logo_blue_circle"), UIImage(named: "logo_blue_oval")],
                  [UIImage(named: "logo_grey_rec"), UIImage(named: "logo_grey_circle"), UIImage(named: "logo_grey_oval")],
@@ -197,9 +198,22 @@ extension VC: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionViewFlag {
-            return receivedModels.count
+            if receivedModels.count == 0 {
+                self.collectionView.isScrollEnabled = false
+                return emptyReceivedModels.count
+            }else{
+                self.collectionView.isScrollEnabled = true
+                return receivedModels.count
+            }
         }else{
-            return sentModels.count
+            if sentModels.count == 0 {
+                self.collectionView.isScrollEnabled = false
+                return emptySentModels.count
+            }else{
+                self.collectionView.isScrollEnabled = true
+                return sentModels.count
+            }
+            
         }
         
     }
@@ -208,9 +222,17 @@ extension VC: UICollectionViewDataSource, UICollectionViewDelegate {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionViewCell", for: indexPath) as! CollectionViewCell
         cell.setConstraint(device: device)
         if collectionViewFlag{
-            cell.configure(with: receivedModels[indexPath.row])
+            if receivedModels.count == 0 {
+                cell.configure(with: emptyReceivedModels[0])
+            }else{
+                cell.configure(with: receivedModels[indexPath.row])
+            }
         }else{
-            cell.configure(with: sentModels[indexPath.row])
+            if sentModels.count == 0 {
+                cell.configure(with: emptySentModels[0])
+            }else{
+                cell.configure(with: sentModels[indexPath.row])
+            }
         }
         
         return cell

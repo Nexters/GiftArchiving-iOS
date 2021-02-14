@@ -60,15 +60,15 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="btnCamera" translatesAutoresizingMaskIntoConstraints="NO" id="D7t-3G-hf8">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgEmptyMainBig" translatesAutoresizingMaskIntoConstraints="NO" id="D7t-3G-hf8">
                                                     <rect key="frame" x="79.5" y="52" width="206" height="206"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="206" id="FUf-q0-IVr"/>
                                                         <constraint firstAttribute="height" constant="206" id="eOQ-Kt-dlB"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ff0-Ib-cHJ">
-                                                    <rect key="frame" x="164.5" y="298" width="36" height="20"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ff0-Ib-cHJ">
+                                                    <rect key="frame" x="182.5" y="298" width="0.0" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="1Ap-MO-GC7"/>
                                                     </constraints>
@@ -293,10 +293,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="btnCamera" width="24" height="20"/>
         <image name="btn_arrow_white" width="14" height="10.5"/>
         <image name="btn_search" width="24" height="24"/>
         <image name="btn_setting" width="24.5" height="24.5"/>
+        <image name="imgEmptyMainBig" width="273" height="273"/>
         <image name="logo_blue_circle" width="40" height="40"/>
         <namedColor name="ceruleanBlue">
             <color red="0.0" green="0.3880000114440918" blue="0.88200002908706665" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
