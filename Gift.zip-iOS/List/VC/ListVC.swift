@@ -23,6 +23,7 @@ class ListVC: UIViewController {
     @IBOutlet weak var labelSort: UILabel!
     @IBOutlet weak var btnSort: UIButton!
     
+    @IBOutlet weak var viewEmpty: UIView!
     var stickyCellFlowLayout : StickyCellFlowLayout?
     var gridCellFlowLayout : UICollectionViewLayout?
     var gridCellNib : UINib?
@@ -38,6 +39,13 @@ class ListVC: UIViewController {
         gridCellFlowLayout = createGridLayout()
     }
     private func setLayout(){
+        if models.count == 0 {
+            collectionView.isHidden = true
+            viewEmpty.isHidden = false
+        }else{
+            viewEmpty.isHidden = true
+            collectionView.isHidden = false
+        }
         labelCount.text = "\(models.count)"
         if receivedSentFlag {
             labelTop.text = "받은선물"
