@@ -36,6 +36,10 @@ class VC: UIViewController{
     var sentModels = [LoadGiftData]()
     var emptyReceivedModels = [LoadGiftData(id: "", imgUrl: "", name: "From. 보낸이", content: "", receiveDate: "", bgColor: "charcoalGrey", isReceiveGift: true, category: "", emotion: "", reason: "")]
     var emptySentModels = [LoadGiftData(id: "", imgUrl: "", name: "To. 받는이", content: "", receiveDate: "", bgColor: "charcoalGrey", isReceiveGift: false, category: "", emotion: "", reason: "")]
+
+    private var isReceiveGift: Bool = true
+    
+
     var colors = [UIColor(named: "ceruleanBlue"), UIColor.greyishBrown, UIColor(named: "pinkishOrange"), UIColor(named: "wheat")]
     var logos = [[UIImage(named: "logo_blue_rec"), UIImage(named: "logo_blue_circle"), UIImage(named: "logo_blue_oval")],
                  [UIImage(named: "logo_grey_rec"), UIImage(named: "logo_grey_circle"), UIImage(named: "logo_grey_oval")],
@@ -138,6 +142,7 @@ class VC: UIViewController{
         self.btnSent.titleLabel?.textColor = UIColor.white
         self.btnReceived.titleLabel?.textColor = UIColor.whiteOpacity
         self.collectionViewFlag = false
+        isReceiveGift = false
         DispatchQueue.main.asyncAfter(deadline: .now()){
             self.moveBarToSentAnimate()
             self.collectionView.reloadData()
@@ -147,6 +152,7 @@ class VC: UIViewController{
         self.btnReceived.titleLabel?.textColor = UIColor.white
         self.btnSent.titleLabel?.textColor = UIColor.whiteOpacity
         self.collectionViewFlag = true
+        isReceiveGift = true
         DispatchQueue.main.asyncAfter(deadline: .now()){
             self.moveBarToReceivedAnimate()
             self.collectionView.reloadData()
@@ -155,7 +161,8 @@ class VC: UIViewController{
     
     @IBAction func btnWriteClicked(_ sender: UIButton) {
         let recordSB = UIStoryboard(name: "Record", bundle: nil)
-        let vc = recordSB.instantiateViewController(withIdentifier: "RecordVC")
+        guard let vc = recordSB.instantiateViewController(withIdentifier: "RecordVC") as? RecordVC else { return }
+        vc.isReceiveGift = isReceiveGift
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -170,6 +177,7 @@ class VC: UIViewController{
         vc.receivedSentFlag = self.collectionViewFlag
         navigationController?.pushViewController(vc, animated: true)
     }
+    
     func moveBarToReceivedAnimate(){
         UIView.animate(withDuration: 0.5) {
             self.viewBar.transform =  CGAffineTransform(translationX: 0, y: 0)

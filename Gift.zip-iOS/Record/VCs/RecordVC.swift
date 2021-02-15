@@ -69,15 +69,23 @@ class RecordVC: UIViewController {
     @IBOutlet var backgroundColorViews: [UIView]!
     
     // image Crop 할 때 바꾸기
-    @IBOutlet weak var croppedStackView: UIStackView!
     @IBOutlet weak var rectagularInstagramCropView: UIView!
     @IBOutlet weak var imageTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var imageBottomConstraint: NSLayoutConstraint!
+    
+    // kakaoImageEnvelop
+    @IBOutlet weak var imageViewAfterstickerCropped: UIImageView!
+    @IBOutlet weak var logoSticker: UIImageView!
+    @IBOutlet weak var nameEnvelopLabel: UILabel!
+    @IBOutlet weak var kakaoShareImageView: UIView!
+    @IBOutlet weak var kakaoShareView: UIView!
+    
+    
     lazy var picker = UIImagePickerController()
     
     lazy var popupBackground = UIView()
     
-    lazy var stickerPopupView = StickerView()
+    lazy var stickerPopupView = StickerPopupView()
     
     lazy var exitButton = UIButton()
     
@@ -86,6 +94,28 @@ class RecordVC: UIViewController {
     private var textViewPlaceholderFlag: Bool = true
     
     private var originalFullImage: UIImage? // full Image
+    
+    private var _selectedStickerView:StickerView?
+    
+    var selectedStickerView:StickerView? {
+        get {
+            return _selectedStickerView
+        }
+        set {
+            // if other sticker choosed then resign the handler
+            if _selectedStickerView != newValue {
+                if let selectedStickerView = _selectedStickerView {
+                    selectedStickerView.showEditingHandlers = false
+                }
+                _selectedStickerView = newValue
+            }
+            // assign handler to new sticker added
+            if let selectedStickerView = _selectedStickerView {
+                selectedStickerView.showEditingHandlers = true
+                selectedStickerView.superview?.bringSubviewToFront(selectedStickerView)
+            }
+        }
+    }
     
     var editedImage: UIImage? // cropped Image
     
@@ -176,6 +206,7 @@ class RecordVC: UIViewController {
     private var currentBackgroundColorString: String = "charcoalGrey"
     private var currentBackgroundColor: UIColor = UIColor.charcoalGrey {
         didSet {
+            selectedStickerView?.currentBackgroundColor = currentBackgroundColor
             switch currentBackgroundColor {
             case .charcoalGrey:
                 currentBackgroundColorString = "charcoalGrey"
@@ -202,6 +233,22 @@ class RecordVC: UIViewController {
             }
             
             if currentBackgroundColor == UIColor.wheat {
+                
+                switch currentFrameOfImage {
+                case .square:
+                    logoSticker.image = UIImage(named: "logoYellowRectangle")
+                    break
+                case .circle:
+                    logoSticker.image = UIImage(named: "logoYellowCircle")
+                    break
+                case .full:
+                    logoSticker.image = UIImage(named: "logoYellowRectangle")
+                    break
+                case .windowFrame:
+                    logoSticker.image = UIImage(named: "logoYellowWindow")
+                    break
+                }
+                
                 backButton.setImage(UIImage.init(named: "iconBackBk"), for: .normal)
                 dateToRecordLabel.textColor = .greyishBrown
                 completeButton.setImage(UIImage.init(named: "iconCheckBk"), for: .normal)
@@ -237,9 +284,23 @@ class RecordVC: UIViewController {
                 for btn in colorButtons {
                     btn.layer.borderColor = UIColor.greyishBrown.cgColor
                 }
-                
-                
             } else {
+                
+                switch currentFrameOfImage {
+                case .square:
+                    break
+                case .circle:
+                    let radius = logoSticker.bounds.width / 2
+                    logoSticker.makeRounded(cornerRadius: radius)
+                    break
+                case .full:
+                    break
+                case .windowFrame:
+                    let radius = logoSticker.bounds.width / 2
+                    logoSticker.roundCorners(cornerRadius: radius, maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
+                    break
+                }
+                
                 backButton.setImage(UIImage.init(named: "iconBack"), for: .normal)
                 dateToRecordLabel.textColor = .white
                 completeButton.setImage(UIImage.init(named: "iconCheck"), for: .normal)
@@ -279,6 +340,7 @@ class RecordVC: UIViewController {
     private var selectedDate: Date = Date()
     
     private var isStickerEditing: Bool = false
+    private var isStickerGuideLineEditing: Bool = false
     
     private var isFrameEditing: Bool = false
     
@@ -319,6 +381,9 @@ class RecordVC: UIViewController {
             button.layer.borderColor = UIColor.white.cgColor
             button.layer.borderWidth = 1
         }
+        
+        fromLabel.text = isReceiveGift ? "From." : "To."
+        
     }
     
     override func viewDidLoad() {
@@ -362,7 +427,7 @@ class RecordVC: UIViewController {
             guard let des = segue.destination as? IconPopupVC else { return }
             des.whichPopup = 2
             des.backgroundColor = currentBackgroundColor
-            des.isSend = self.isSend
+            des.isReceiveGift = isReceiveGift
             des.popupViewHeightByPhones = self.view.frame.height - infoView.frame.origin.y - 173
         }
     }
@@ -375,57 +440,88 @@ class RecordVC: UIViewController {
     
     @IBAction func completeRecord(_ sender: UIButton) {
         // record server
-
+        selectedStickerView?.showEditingHandlers = false
         // 사진 크롭 저장하는 것 여러가지 방법으로!!
         
         guard let share = UIStoryboard.init(name: "Share", bundle: nil).instantiateViewController(identifier: "ShareVC") as? ShareVC else { return }
         
-        // 인스타에 게시할 이미지 넘기기 작업
+        // 공유할 게시할 이미지 넘기기 작업
+        
+        // 편지봉투에 넣어질 정사각형 이미지
         let cropped = UIGraphicsImageRenderer(size: cropArea.bounds.size)
         let croppedImage = cropped.image { _ in
             cropArea.drawHierarchy(in: cropArea.bounds, afterScreenUpdates: true)
         }
+        
         rectagularInstagramCropView.makeRounded(cornerRadius: 8.0)
         rectagularInstagramCropView.backgroundColor = currentBackgroundColor
+        
         let imageView = UIImageView.init(image: croppedImage)
-        let label = UILabel()
-        label.text = "To 유댕"
-        label.font = UIFont(name: "SpoqaHanSans-Bold", size: 16)
-        label.textColor = .white
         rectagularInstagramCropView.addSubview(imageView)
-        rectagularInstagramCropView.addSubview(label)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.leadingAnchor.constraint(equalTo: rectagularInstagramCropView.leadingAnchor, constant: 0).isActive = true
         imageView.trailingAnchor.constraint(equalTo: rectagularInstagramCropView.trailingAnchor, constant: 0).isActive = true
         imageView.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
-        imageView.centerYAnchor.constraint(equalTo: rectagularInstagramCropView.centerYAnchor, constant: -10).isActive = true
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -10).isActive = true
-        label.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
-        
-        let renderer = UIGraphicsImageRenderer(size: rectagularInstagramCropView.bounds.size)
-        let renderImage = renderer.image { _ in
-            rectagularInstagramCropView.drawHierarchy(in: rectagularInstagramCropView.bounds, afterScreenUpdates: true)
-        }
-        
-        label.removeFromSuperview()
         imageView.centerYAnchor.constraint(equalTo: rectagularInstagramCropView.centerYAnchor, constant: 0).isActive = true
-        let letter = UIGraphicsImageRenderer(size: rectagularInstagramCropView.bounds.size)
-        let renderLetterImage = letter.image { _ in
+        
+        
+        let envelop = UIGraphicsImageRenderer(size: rectagularInstagramCropView.bounds.size)
+        let envelopImage = envelop.image { _ in
             rectagularInstagramCropView.drawHierarchy(in: rectagularInstagramCropView.bounds, afterScreenUpdates: true)
         }
-            
+         
+        // 편지봉투 카카오톡 공유하기에 들어갈 이미지
+        imageViewAfterstickerCropped.image = envelopImage
+        nameEnvelopLabel.text = "\(fromLabel.text!) \(nameTextField.text!)"
+        nameEnvelopLabel.textColor = currentBackgroundColor == UIColor.wheat ? .black : .white
+        kakaoShareView.backgroundColor = currentBackgroundColor
+        imageViewAfterstickerCropped.backgroundColor = currentBackgroundColor
+        logoSticker.backgroundColor = currentBackgroundColor
+        
+        let kakaoImage = UIGraphicsImageRenderer(size: kakaoShareImageView.bounds.size)
+        
+        let kakaoEnvelopImage = kakaoImage.image { _ in
+            kakaoShareImageView.drawHierarchy(in: kakaoShareImageView.bounds, afterScreenUpdates: true)
+        }
+         
+        
+        // 인스타그램 공유하기에 들어갈 이미지
+        
+        imageView.leadingAnchor.constraint(equalTo: rectagularInstagramCropView.leadingAnchor, constant: 30).isActive = true
+        imageView.trailingAnchor.constraint(equalTo: rectagularInstagramCropView.trailingAnchor, constant: 30).isActive = true
+        imageView.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
+        imageView.topAnchor.constraint(equalTo: rectagularInstagramCropView.topAnchor, constant: 28).isActive = true
+        imageView.bottomAnchor.constraint(equalTo: rectagularInstagramCropView.bottomAnchor, constant: -65).isActive = true
+        imageView.contentMode = .scaleAspectFit
+        
+        let label = UILabel()
+        label.text = fromLabel.text! + nameTextField.text!
+        label.font = UIFont(name: "SpoqaHanSansNeo-Bold", size: 16)
+        label.textColor = .white
+       
+        rectagularInstagramCropView.addSubview(label)
+         label.translatesAutoresizingMaskIntoConstraints = false
+        label.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 13).isActive = true
+        label.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
+
+        let instagram = UIGraphicsImageRenderer(size: rectagularInstagramCropView.bounds.size)
+        let instagramSquareImage = instagram.image { _ in
+            rectagularInstagramCropView.drawHierarchy(in: rectagularInstagramCropView.bounds, afterScreenUpdates: true)
+        }
+        
         share.currentName = "\(fromLabel.text!) \(nameTextField.text!)"
         share.currentBackgroundColor = currentBackgroundColor
-        share.croppedImage = renderImage
-        share.letterImage = renderLetterImage
+        share.envelopImage = envelopImage
+        share.instagramImage = instagramSquareImage
+        share.currentFrameOfImage = currentFrameOfImage
+        share.userName = nameTextField.text
         
         if isImageSelected {
             if isNameTyped {
                 if isCategoryIconSelected && isPurposeIconSelected && isEmotionIconSelected {
                     let content = emotionTextView.text ?? ""
                     let name = nameTextField.text ?? ""
-                    
+
                     // 날짜
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZ"
@@ -437,17 +533,9 @@ class RecordVC: UIViewController {
                     print(dateArr[2])
                     let third = dateArr[2].replacingOccurrences(of: "+", with: ".")
                     let date = first + "T" + second + third
-                    
-                    print(content)
-                    print(name)
-                    print(date)
-                    print(currentBackgroundColorString)
-                    
-                    print(categoryImageName)
-                    print(purposeImageName)
-                    print(emotionImageName)
+
                     // 아이콘 이름
-                    
+
                     var categoryName: String = ""
                     var purposeName: String = ""
                     var emotionName: String = ""
@@ -456,13 +544,13 @@ class RecordVC: UIViewController {
                             categoryName = category.englishName
                         }
                     }
-                    
+
                     for purpose in Icons.purpose {
                         if purpose.imageName == purposeImageName {
                             purposeName = purpose.englishName
                         }
                     }
-                    
+
                     if isReceiveGift {
                         for emotion in Icons.emotionGet {
                             if emotion.imageName == emotionImageName {
@@ -476,19 +564,38 @@ class RecordVC: UIViewController {
                             }
                         }
                     }
-                    RecordGiftService.shared.recordGift(content: content, isReceiveGift: isReceiveGift, name: name, receiveDate: date, createdBy: "000871.31eedc54c602460da26f4765dd27e985.1412", category: categoryName, emotion: emotionName, reason: purposeName, bgColor: currentBackgroundColorString, bgImg: renderImage, noBgImg: renderLetterImage) { networkResult -> Void in
+//                    print(content)
+//                    print(isReceiveGift)
+//                    print(name)
+//                    print(date)
+//                    print(categoryName)
+//                    print(emotionName)
+//                    print(purposeName)
+//                    print(currentBackgroundColorString)
+//                    print(kakaoEnvelopImage)
+//                    print(envelopImage)
+                    
+                    let bgImg = resizeImage(image: kakaoEnvelopImage, newWidth: kakaoEnvelopImage.size.width)
+                    let noBgImg = resizeImage(image: envelopImage, newWidth: envelopImage.size.width)
+
+                    RecordGiftService.shared.recordGift(content: content, isReceiveGift: isReceiveGift, name: name, receiveDate: date, createdBy: "1", category: categoryName, emotion: "SORRY", reason: purposeName, bgColor: currentBackgroundColorString, bgImg: bgImg!, noBgImg: noBgImg!) { networkResult -> Void in
                         switch networkResult {
                         case .success(let data):
                             if let bgData = data as? RecordGiftData {
                                 print(bgData)
+                                share.kakaoImageURL = bgData.bgImg
+                                self.navigationController?.pushViewController(share, animated: true)
                             }
+
                             
+                            
+
                         case .requestErr:
                             let alertViewController = UIAlertController(title: "통신 실패", message: "💩", preferredStyle: .alert)
                             let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
                             alertViewController.addAction(action)
                             self.present(alertViewController, animated: true, completion: nil)
-                            
+
                         case .pathErr: print("path")
                         case .serverErr:
                             let alertViewController = UIAlertController(title: "통신 실패", message: "서버 오류", preferredStyle: .alert)
@@ -506,30 +613,38 @@ class RecordVC: UIViewController {
                         }
                     }
                 } else {
-                    
+
                     let alertViewController = UIAlertController(title: "저장 실패", message: "선물에 해당하는 아이콘을 선택해주세요 🥰", preferredStyle: .alert)
                     let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
                     alertViewController.addAction(action)
                     self.present(alertViewController, animated: true, completion: nil)
                 }
             } else {
-                
+
                 let alertViewController = UIAlertController(title: "저장 실패", message: "이름을 입력해주세요 🥰", preferredStyle: .alert)
                 let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
                 alertViewController.addAction(action)
                 self.present(alertViewController, animated: true, completion: nil)
             }
         } else {
-            
+
             let alertViewController = UIAlertController(title: "저장 실패", message: "이미지를 선택해주세요 🥰", preferredStyle: .alert)
             let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
             alertViewController.addAction(action)
             self.present(alertViewController, animated: true, completion: nil)
         }
-        
-        //        self.navigationController?.pushViewController(share, animated: true)
+
     }
     
+    func resizeImage(image: UIImage, newWidth: CGFloat) -> UIImage? {
+        let scale = newWidth / image.size.width // 새 이미지 확대/축소 비율
+        let newHeight = image.size.height * scale
+        UIGraphicsBeginImageContext(CGSize.init(width: newWidth, height: newHeight))
+        image.draw(in: CGRect(x: 0, y: 0, width: newWidth, height: newHeight))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage
+    }
     
     @IBAction func selectPhoto(_ sender: UIButton) {
         let alert = UIAlertController(title: "사진 선택", message: "선물을 골라주세요. 🎁", preferredStyle: .actionSheet)
@@ -566,19 +681,26 @@ class RecordVC: UIViewController {
     
     @IBAction func useSticker(_ sender: UIButton) {
         if isStickerEditing {
+            isStickerEditing = false
             changeButtonContainerColor(false)
             changeStickerButtonInteraction(true)
-            stickerPopupView.animateStickerView(false)
+            UIView.animate(withDuration: 0.2, delay: 0.0, options: [.allowUserInteraction,.curveLinear], animations: {
+                self.stickerPopupView.frame.origin.y += 700
+                
+            }, completion: { _ in
+                self.stickerPopupView.animateStickerView(false)
+                self.stickerPopupView.frame.origin.y -= 700
+            })
             makeButtonNormalOpacity()
             bottomContainer.backgroundColor = currentBackgroundColor
-            isStickerEditing = false
         } else {
+            isStickerEditing = true
             changeButtonContainerColor(true)
             changeStickerButtonInteraction(false)
             stickerPopupView.outsideBackgroundColor = currentBackgroundColor
             stickerPopupView.animateStickerView(true)
             makeButtonLowOpacity(index: 2)
-            isStickerEditing = true
+            
         }
     }
     
@@ -762,7 +884,45 @@ extension RecordVC {
         let todayDate = formatter.string(from: selectedDate)
         
         dateToRecord = todayDate + getDayOfWeek(selectedDate)
-
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissStickerPopupView))
+        imageContainer.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func dismissStickerPopupView() {
+        print("ImageArea Tapped")
+        print(isStickerGuideLineEditing)
+        print(_selectedStickerView?.showEditingHandlers)
+        if isStickerEditing {
+            if isStickerGuideLineEditing {
+                print("sticker O GuideLine O")
+                isStickerGuideLineEditing = false
+                _selectedStickerView?.showEditingHandlers = false
+            } else {
+                print("sticker O GuideLine X")
+                isStickerEditing = false
+                changeButtonContainerColor(false)
+                changeStickerButtonInteraction(true)
+                UIView.animate(withDuration: 0.2, delay: 0.0, options: [.allowUserInteraction,.curveLinear], animations: {
+                    self.stickerPopupView.frame.origin.y += 700
+                    
+                }, completion: { _ in
+                    self.stickerPopupView.animateStickerView(false)
+                    self.stickerPopupView.frame.origin.y -= 700
+                })
+                makeButtonNormalOpacity()
+                bottomContainer.backgroundColor = currentBackgroundColor
+            }
+        } else {
+            if isStickerGuideLineEditing {
+                print("sticker X GuideLine O")
+                isStickerGuideLineEditing = false
+                _selectedStickerView?.showEditingHandlers = false
+            } else {
+                print("sticker X GuideLine X")
+            }
+        }
+        
     }
     
     @objc func dismissColorBottomContainer() {
@@ -785,96 +945,20 @@ extension RecordVC {
     
     private func addStickerToCropView(_ stickerName: String) {
         
-        let sticker = UIImage.init(named: stickerName)!
-        let singleStickerView = UIImageView(image: sticker)
-        let panGesture = UIPanGestureRecognizer(
-            target: self,
-            action: #selector(handlePan)
-        )
-        let pinchGesture = UIPinchGestureRecognizer(
-            target: self,
-            action: #selector(handlePinch)
-        )
-        let rotateGesture = UIRotationGestureRecognizer(
-            target: self,
-            action: #selector(handleRotate)
-        )
-        let longPressGesture = UILongPressGestureRecognizer(
-            target: self,
-            action: #selector(handleLongPress)
-        )
-        longPressGesture.minimumPressDuration = 0
-        panGesture.delegate = self
-        pinchGesture.delegate = self
-        rotateGesture.delegate = self
-        longPressGesture.delegate = self
-        
-        singleStickerView.addGestureRecognizer(panGesture)
-        singleStickerView.addGestureRecognizer(pinchGesture)
-        singleStickerView.addGestureRecognizer(rotateGesture)
-        singleStickerView.addGestureRecognizer(longPressGesture)
-        singleStickerView.isUserInteractionEnabled = true
-        cropArea.addSubview(singleStickerView)
-        stickerGroups.append(singleStickerView)
-        
-        singleStickerView.widthAnchor.constraint(equalToConstant: 70).isActive = true
-        singleStickerView.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        let testImage = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 100, height: 100))
+        testImage.image = UIImage.init(named: stickerName)!
+        testImage.contentMode = .scaleAspectFit
+        let stickerView3 = StickerView.init(contentView: testImage)
+        stickerView3.center = CGPoint.init(x: 150, y: 150)
+        stickerView3.delegate = self
+        stickerView3.setImage(UIImage.init(named: "iconCancelSticker")!, forHandler: StickerViewHandler.close)
+        stickerView3.setImage(UIImage.init(named: "iconScale")!, forHandler: StickerViewHandler.rotate)
+        stickerView3.showEditingHandlers = false
+        isStickerGuideLineEditing = true
+        stickerView3.tag = 999
+        self.cropArea.addSubview(stickerView3)
+        self.selectedStickerView = stickerView3
     }
-    
-    @objc func handleLongPress() {
-        
-    }
-    
-    @objc func handlePan(_ gesture: UIPanGestureRecognizer) {
-        let translation = gesture.translation(in: view)
-        
-        guard let gestureView = gesture.view as? UIImageView else {
-            return
-        }
-        
-        gestureView.center = CGPoint(
-            x: gestureView.center.x + translation.x,
-            y: gestureView.center.y + translation.y
-        )
-        gesture.setTranslation(.zero, in: view)
-    }
-    
-    @objc func handlePinch(_ gesture: UIPinchGestureRecognizer) {
-        
-        
-        guard let gestureView = gesture.view as? UIImageView else {
-            return
-        }
-        
-        gestureView.transform = gestureView.transform.scaledBy(
-            x: gesture.scale,
-            y: gesture.scale
-        )
-        gesture.scale = 1
-        
-//        if gesture.state == .ended {
-//            self.selectedSticker = nil
-//        }
-    }
-    
-    
-    @objc func handleRotate(_ gesture: UIRotationGestureRecognizer) {
-        
-        guard let gestureView = gesture.view as? UIImageView else {
-            return
-        }
-        
-        gestureView.transform = gestureView.transform.rotated(
-            by: gesture.rotation
-        )
-        gesture.rotation = 0
-        
-//        if gesture.state == .ended {
-//            self.selectedSticker = nil
-//        }
-    }
-    
-    
     
     @objc private func selectIcon(_ notification: Notification) {
         
@@ -1127,5 +1211,45 @@ extension RecordVC: UIGestureRecognizerDelegate {
             }
         }
         return true
+    }
+}
+
+extension RecordVC: StickerViewDelegate {
+    
+    func stickerViewDidTap(_ stickerView: StickerView) {
+        self.selectedStickerView = stickerView
+        selectedStickerView?.showEditingHandlers = true
+        isStickerGuideLineEditing = true
+    }
+    
+    func stickerViewDidBeginMoving(_ stickerView: StickerView) {
+        self.selectedStickerView = stickerView
+        selectedStickerView?.showEditingHandlers = true
+        isStickerGuideLineEditing = true
+    }
+    
+    /// Other delegate methods which we not used currently but choose method according to your event and requirements.
+    func stickerViewDidChangeMoving(_ stickerView: StickerView) {
+        
+    }
+    
+    func stickerViewDidEndMoving(_ stickerView: StickerView) {
+        
+    }
+    
+    func stickerViewDidBeginRotating(_ stickerView: StickerView) {
+        selectedStickerView?.showEditingHandlers = true
+    }
+    
+    func stickerViewDidChangeRotating(_ stickerView: StickerView) {
+        
+    }
+    
+    func stickerViewDidEndRotating(_ stickerView: StickerView) {
+        
+    }
+    
+    func stickerViewDidClose(_ stickerView: StickerView) {
+        print("close")
     }
 }
