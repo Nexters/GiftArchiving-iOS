@@ -596,7 +596,7 @@ class RecordVC: UIViewController {
 //                    let bgImg = resizeImage(image: kakaoEnvelopImage, newWidth: kakaoEnvelopImage.size.width)
 //                    let noBgImg = resizeImage(image: envelopImage, newWidth: envelopImage.size.width)
 //
-//                    RecordGiftService.shared.recordGift(content: content, isReceiveGift: isReceiveGift, name: name, receiveDate: date, createdBy: token, category: categoryName, emotion: emotionName, reason: purposeName, bgColor: currentBackgroundColorString, bgImg: bgImg!, noBgImg: noBgImg!) { networkResult -> Void in
+//                    GiftService.shared.recordGift(content: content, isReceiveGift: isReceiveGift, name: name, receiveDate: date, createdBy: token, category: categoryName, emotion: emotionName, reason: purposeName, bgColor: currentBackgroundColorString, bgImg: bgImg!, noBgImg: noBgImg!) { networkResult -> Void in
 //                        switch networkResult {
 //                        case .success(let data):
 //                            if let bgData = data as? RecordGiftData {
@@ -1172,6 +1172,13 @@ extension RecordVC: UITextViewDelegate {
 
 extension RecordVC: PopupViewDelegate {
     
+    
+    func sendIconDataButtonTapped() {
+        popupBackground.animatePopupBackground(false)
+        
+    }
+    
+    
     func sendDateButtonTapped(_ date: Date?) {
         popupBackground.animatePopupBackground(false)
         if date == nil { return }
@@ -1181,11 +1188,6 @@ extension RecordVC: PopupViewDelegate {
         
         dateToRecord = todayDate + getDayOfWeek(date!)
         selectedDate = date!
-    }
-    
-    func sendIconDataButtonTapped() {
-        popupBackground.animatePopupBackground(false)
-        
     }
     
     func getDayOfWeek(_ today: Date) -> String {
