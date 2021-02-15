@@ -29,6 +29,7 @@ class DetailVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        // 선물기록 정보들 가져오기
         GiftService.shared.getOneGift(id: giftId) { (result) in
             switch result {
             case .success(let data):
@@ -68,7 +69,18 @@ class DetailVC: UIViewController {
             }
         }
     }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        for btn in tagButtons {
+            btn.makeRounded(cornerRadius: 8.0)
+        }
+        NotificationCenter.default.addObserver(self, selector: #selector(popupChange), name: .init("popupchange"), object: nil)
+    }
     
+    
+    // UI 작업
     private func setPageInformation(imageURL : String, name: String, receiveDate: String, isReceiveGift: Bool,  category: String, emotion: String, reason: String, content: String) {
 
         let url = URL(string: imageURL.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)!)
@@ -85,8 +97,52 @@ class DetailVC: UIViewController {
         let dateToRecord = dateAfterParsing + getDayOfWeek(date!)
         dateLabel.text = dateToRecord
         
+        var categoryName: String = ""
+        var purposeName: String = ""
+        var emotionName: String = ""
+        var categoryImageName: String = ""
+        var purposeImageName: String = ""
+        var emotionImageName: String = ""
+        for c in Icons.category {
+            if c.englishName == category {
+                categoryName = c.name
+                categoryImageName = c.imageName
+            }
+        }
+        for p in Icons.purpose{
+            if p.englishName == category {
+                purposeName = p.name
+                purposeImageName = p.imageName
+            }
+        }
+        if isReceiveGift {
+            for e in Icons.emotionGet {
+                if e.englishName == category {
+                    categoryName = e.name
+                    categoryImageName = e.imageName
+                }
+            }
+        } else {
+            for e in Icons.emotionSend {
+                if e.englishName == category {
+                    categoryName = e.name
+                    categoryImageName = e.imageName
+                }
+            }
+        }
+        
+        categoryLabel.text = categoryName
+        categoryImageView.image = UIImage.init(named: categoryImageName)
+        purposeLabel.text = purposeName
+        purposeImageView.image = UIImage.init(named: purposeImageName)
+        emotionLabel.text = purposeName
+        
+        
+        
+        
     }
     
+    // 요일 생성
     func getDayOfWeek(_ today: Date) -> String {
         let myCalendar = Calendar(identifier: .gregorian)
         let weekDay = myCalendar.component(.weekday, from: today)
@@ -109,15 +165,6 @@ class DetailVC: UIViewController {
         default:
             return "NILL"
         }
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        for btn in tagButtons {
-            btn.makeRounded(cornerRadius: 8.0)
-        }
-        NotificationCenter.default.addObserver(self, selector: #selector(popupChange), name: .init("popupchange"), object: nil)
     }
     
     @objc func popupChange() {
