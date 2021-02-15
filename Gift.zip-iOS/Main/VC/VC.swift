@@ -32,11 +32,14 @@ class VC: UIViewController{
     
     var isOneStepPaging = true
     
+    var receivedModels = [LoadGiftData]()
+    var sentModels = [LoadGiftData]()
+    var emptyReceivedModels = [LoadGiftData(id: "", imgUrl: "", name: "From. 보낸이", content: "", receiveDate: "", bgColor: "charcoalGrey", isReceiveGift: true, category: "", emotion: "", reason: "")]
+    var emptySentModels = [LoadGiftData(id: "", imgUrl: "", name: "To. 받는이", content: "", receiveDate: "", bgColor: "charcoalGrey", isReceiveGift: false, category: "", emotion: "", reason: "")]
+
     private var isReceiveGift: Bool = true
     
-    var receivedModels = [Model]()
-    var sentModels = [Model]()
-    
+
     var colors = [UIColor(named: "ceruleanBlue"), UIColor.greyishBrown, UIColor(named: "pinkishOrange"), UIColor(named: "wheat")]
     var logos = [[UIImage(named: "logo_blue_rec"), UIImage(named: "logo_blue_circle"), UIImage(named: "logo_blue_oval")],
                  [UIImage(named: "logo_grey_rec"), UIImage(named: "logo_grey_circle"), UIImage(named: "logo_grey_oval")],
@@ -59,13 +62,27 @@ class VC: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        reSetData()
         if view.bounds.height > 840 {
             device = 1
         }else{
             device = 0
         }
-        testData()
         setLayout()
+        
+    }
+    private func reSetData(){
+        self.receivedModels.removeAll()
+        self.sentModels.removeAll()
+        LoadGiftListService.shared.getReceivedGifts(page: 0, size: 10000000, isReceiveGift: true, completion: {
+            gifts in
+            self.receivedModels.append(contentsOf: gifts)
+            LoadGiftListService.shared.getReceivedGifts(page: 0, size: 10000000, isReceiveGift: false, completion: {
+                gifts in
+                self.sentModels.append(contentsOf: gifts)
+                self.collectionView.reloadData()
+            })
+        })
     }
     func setLayout(){
         var cellHeight = CGFloat(330)
@@ -111,54 +128,11 @@ class VC: UIViewController{
         (btnWrite as UIView).makeRounded(cornerRadius: 8.0)
         
         if receivedModels.count > 0 {
-            changeUI(shape: receivedModels[0].shape)
+            self.changeUI(shape: 0)
+            //changeUI(shape: receivedModels[0].shape)
         }
     }
     
-    func testData(){
-        receivedModels.append(Model(name: "From.유진",
-                            imageName: "img_test",
-                            isGiven: false,
-                            date: "2020.01.31",
-                            shape: 0))
-        receivedModels.append(Model(name: "From.유진2",
-                            imageName: "img_test",
-                            isGiven: false,
-                            date: "2020.01.31",
-                            shape: 1))
-        receivedModels.append(Model(name: "From.유진3",
-                            imageName: "img_test",
-                            isGiven: false,
-                            date: "2020.01.31",
-                            shape: 2))
-        receivedModels.append(Model(name: "From.유진4",
-                            imageName: "img_test",
-                            isGiven: false,
-                            date: "2020.01.31",
-                            shape: 0))
-        
-        sentModels.append(Model(name: "To.유진1",
-                                imageName: "img_test",
-                                isGiven: false,
-                                date: "2020.01.31",
-                                shape: 0))
-        sentModels.append(Model(name: "To.유진2",
-                                imageName: "img_test",
-                                isGiven: false,
-                                date: "2020.01.31",
-                                shape: 0))
-        sentModels.append(Model(name: "To.유진3",
-                                imageName: "img_test",
-                                isGiven: false,
-                                date: "2020.01.31",
-                                shape: 0))
-        sentModels.append(Model(name: "To.유진4",
-                                imageName: "img_test",
-                                isGiven: false,
-                                date: "2020.01.31",
-                                shape: 0))
-        
-    }
     @IBAction func settingButtonClicked(_ sender: UIButton) {
         guard let settingsVC = UIStoryboard.init(name: "Settings", bundle: nil).instantiateViewController(identifier: "SettingsVC") as? SettingsVC else { return }
         self.navigationController?.pushViewController(settingsVC, animated: true)
@@ -217,7 +191,9 @@ class VC: UIViewController{
     
     @IBAction func btnSearchClicked(_ sender: UIButton) {
         let searchSB = UIStoryboard(name: "SearchSB", bundle: nil)
-        let vc = searchSB.instantiateViewController(withIdentifier: "SearchVC")
+        let vc = searchSB.instantiateViewController(withIdentifier: "SearchVC") as! SearchVC
+        vc.receivedModels = self.receivedModels
+        vc.sentModels = self.sentModels
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -230,9 +206,22 @@ extension VC: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionViewFlag {
-            return receivedModels.count
+            if receivedModels.count == 0 {
+                self.collectionView.isScrollEnabled = false
+                return emptyReceivedModels.count
+            }else{
+                self.collectionView.isScrollEnabled = true
+                return receivedModels.count
+            }
         }else{
-            return sentModels.count
+            if sentModels.count == 0 {
+                self.collectionView.isScrollEnabled = false
+                return emptySentModels.count
+            }else{
+                self.collectionView.isScrollEnabled = true
+                return sentModels.count
+            }
+            
         }
         
     }
@@ -241,9 +230,17 @@ extension VC: UICollectionViewDataSource, UICollectionViewDelegate {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionViewCell", for: indexPath) as! CollectionViewCell
         cell.setConstraint(device: device)
         if collectionViewFlag{
-            cell.configure(with: receivedModels[indexPath.row])
+            if receivedModels.count == 0 {
+                cell.configure(with: emptyReceivedModels[0])
+            }else{
+                cell.configure(with: receivedModels[indexPath.row])
+            }
         }else{
-            cell.configure(with: sentModels[indexPath.row])
+            if sentModels.count == 0 {
+                cell.configure(with: emptySentModels[0])
+            }else{
+                cell.configure(with: sentModels[indexPath.row])
+            }
         }
         
         return cell
@@ -308,15 +305,16 @@ extension VC : UIScrollViewDelegate {
             if Int(currentIndex) == receivedModels.count{
                 currentIndex -= 1
             }
-           
-            self.changeUI(shape: receivedModels[Int(currentIndex)].shape)
+            self.changeUI(shape: 0)
+            //self.changeUI(shape: receivedModels[Int(currentIndex)].shape)
             
             
         }else{
             if Int(currentIndex) == receivedModels.count{
                 currentIndex -= 1
             }
-            self.changeUI(shape: sentModels[Int(currentIndex)].shape)
+            self.changeUI(shape: 0)
+            //self.changeUI(shape: sentModels[Int(currentIndex)].shape)
             
             
         }
@@ -325,21 +323,5 @@ extension VC : UIScrollViewDelegate {
         // 위 코드를 통해 페이징 될 좌표값을 targetContentOffset에 대입하면 된다.
         offset = CGPoint(x: roundedIndex * cellWidthIncludingSpacing - scrollView.contentInset.left, y: -scrollView.contentInset.top)
         targetContentOffset.pointee = offset
-    }
-}
-//임시 모델
-struct Model {
-    let name: String
-    let imageName: String
-    let isGiven: Bool
-    let date: String
-    let shape: Int
-    
-    init(name: String, imageName: String, isGiven: Bool, date: String, shape: Int){
-        self.name = name
-        self.imageName = imageName
-        self.isGiven = isGiven
-        self.date = date
-        self.shape = shape
     }
 }

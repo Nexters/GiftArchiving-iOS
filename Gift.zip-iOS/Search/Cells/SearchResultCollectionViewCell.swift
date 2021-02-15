@@ -16,9 +16,21 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var labelDate: UILabel!
     @IBOutlet weak var backView: UIView!
     
-    public func configure(with model: Gift, color : UIColor){
+    public func configure(with model: LoadGiftData, color : UIColor){
         
-        self.imgVIew.image = UIImage(named: "img_test")
+        if let encoded = model.imgUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let url = URL(string: encoded) {
+            
+            DispatchQueue.global().async {
+                do{
+                    let data = try Data(contentsOf: url)
+                    DispatchQueue.main.async {
+                        self.imgVIew.image = UIImage(data: data)
+                    }
+                }catch(let err){
+                    debugPrint(err.localizedDescription)
+                }
+            }
+        }
         self.labelName.text = model.name
         self.labelDate.text = model.receiveDate
         self.backView.backgroundColor = color
