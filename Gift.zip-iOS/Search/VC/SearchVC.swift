@@ -9,16 +9,18 @@ import UIKit
 import TTGTagCollectionView
 
 class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldDelegate, UIScrollViewDelegate{
-    var receivedModels = [Gift]()
-    var sentModels = [Gift]()
+    var receivedModels = [LoadGiftData]()
+    var sentModels = [LoadGiftData]()
     var nameArr = Array<String>() //그동안 주고 받은 사람들 테이블 뷰의 data
     var autoArr = Array<AutoSearchCellData>() // 자동완성 테이블 뷰의 data
-    var resArr = Array<Gift>()
-    var resReceivedArr = Array<Gift>()
-    var resSentArr = Array<Gift>()
+    var resArr = Array<LoadGiftData>()
+    var resReceivedArr = Array<LoadGiftData>()
+    var resSentArr = Array<LoadGiftData>()
     var resFlag = true // true는 받은 선물
+    let dicCategory = ["VOUCHER" : "모바일교환권", "FASHION" : "패션", "BEAUTY" : "화장품", "FOOD" : "식품", "CULTURE" : "생활잡화", "DIGITAL" : "디지털", "SPORTS" : "스포츠", "BABY" : "육아용품", "PET" :  "펫", "LIVING" : "리빙", "GIFT_CARD" : "상품권", "ETC" : "기타"]
     var giftCategory = ["모바일교환권", "패션", "화장품", "식품", "생활잡화", "디지털", "스포츠", "육아용품", "펫", "리빙", "상품권", "기타"]
-    var giftReason = ["생일", "기념일", "취업", "집들이", "결혼", "학업", "명절", "응원", "사과", "감사", "그냥", "기타"]
+    let giftReason = ["생일", "기념일", "취업", "집들이", "결혼", "학업", "명절", "응원", "사과", "감사", "그냥", "기타"]
+    var dicReason = ["BIRTHDAY" : "생일", "ANNIVERSARY" : "기념일", "EMPLOYMENT" : "취업", "HOUSES" : "집들이", "MARRIAGE" : "결혼", "STUDY" : "학업", "HOLIDAY" : "명절", "CHEER_UP" : "응원", "APOLOGIZE" : "사과", "THANKS" : "감사", "JUST" : "그냥", "ETC" : "기타"]
     var recentSearchArr : Array<String> = []
     
     var colors = [UIColor(named: "ceruleanBlue"), UIColor.greyishBrown, UIColor(named: "pinkishOrange"), UIColor(named: "wheat")]
@@ -70,11 +72,12 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
         collectionView.delegate = self
         searchResultCollectionView.delegate = self
         searchResultCollectionView.dataSource = self
-        makeTestData()
+        //makeTestData()
         setLayout()
         
         
     }
+    /*
     //MARK: 테스트 데이터 생성
     private func makeTestData(){
         receivedModels.append(Gift(name: "이름1", isReceiveGift: true, content: "내생일에 받음", receiveDate: "2020. 11. 02 (수)", category: "화장품", reason: "생일"))
@@ -82,7 +85,7 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
         receivedModels.append(Gift(name: "이름2", isReceiveGift: false, content: "음식이었다.", receiveDate: "2020. 11. 03 (목)", category: "식품", reason: "기념일"))
         receivedModels.append(Gift(name: "이름3", isReceiveGift: true, content: "고양이 장난감", receiveDate: "2020. 11. 03 (목)", category: "펫", reason: "기타"))
         receivedModels.append(Gift(name: "이름4", isReceiveGift: true, content: "취업선물로 패딩받음", receiveDate: "2020. 11. 04 (금)", category: "패션", reason: "취업"))
-    }
+    }*/
     // MARK: 레이아웃 관련 초기 세팅
     private func setTagCollectionView(tagCollectionView: TTGTextTagCollectionView, flag: Bool){
         tagCollectionView.alignment = .left
@@ -296,7 +299,7 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
         }
         autoTableView.reloadData()
     }
-    private func checkAndAddToAutoArr(keyword: String, label: String, gift: Gift){
+    private func checkAndAddToAutoArr(keyword: String, label: String, gift: LoadGiftData){
         //autoArr에 같은 label 있는지 체크하고 있으면 거기에 gift만 추가. 없으면 autoArr에 새로추가
         var flag = true
         if(autoArr.count > 0){
@@ -329,15 +332,15 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
     private func setResDataByTag(tag: String){
         resArr.removeAll()
         for model in receivedModels + sentModels{
-            if model.category == tag {
+            if dicCategory[model.category] == tag {
                 resArr.append(model)
-            }else if model.reason == tag{
+            }else if dicReason[model.reason] == tag{
                 resArr.append(model)
             }
         }
     }
     //MARK: 결과 뷰 띄우기
-    private func showResultView(gifts: [Gift], keyword: String, isTagSearched: Bool){
+    private func showResultView(gifts: [LoadGiftData], keyword: String, isTagSearched: Bool){
         self.resArr = gifts
         self.resReceivedArr.removeAll()
         self.resSentArr.removeAll()
@@ -603,8 +606,8 @@ struct Gift {
 struct AutoSearchCellData{
     let keyword: String
     let label: String
-    var gifts: Array<Gift>
-    init(keyword: String, label: String, gifts: Array<Gift>) {
+    var gifts: Array<LoadGiftData>
+    init(keyword: String, label: String, gifts: Array<LoadGiftData>) {
         self.keyword = keyword
         self.label = label
         self.gifts = gifts
