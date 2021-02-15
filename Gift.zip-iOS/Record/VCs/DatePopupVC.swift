@@ -11,6 +11,7 @@ class DatePopupVC: UIViewController {
 
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet var backgroundColorViews: [UIView]!
+    @IBOutlet weak var checkButton: UIButton!
     
     weak var delegate: PopupViewDelegate?
     
@@ -24,7 +25,14 @@ class DatePopupVC: UIViewController {
     }
     
     private func setLayouts() {
-        datePicker.setValue(UIColor.white, forKey: "textColor")
+        if currentBackgroundColor == UIColor.wheat {
+            let textColor = UIColor(white: 62.0 / 255.0, alpha: 1.0)
+            datePicker.setValue(textColor, forKey: "textColor")
+            checkButton.setTitleColor(textColor, for: .normal)
+        } else {
+            datePicker.setValue(UIColor.white, forKey: "textColor")
+        }
+        
         datePicker.setValue(false, forKey: "highlightsToday")
     }
     

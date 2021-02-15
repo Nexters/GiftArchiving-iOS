@@ -11,27 +11,33 @@ import AuthenticationServices
 
 class SplashVC: UIViewController {
     
-    
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        
         view.backgroundColor = .black
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             self.checkLoginAndDisplay()
         }
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+    }
+
     private func checkLoginAndDisplay(){
         let SPREF = UserDefaults.standard
         if let appleId = SPREF.string(forKey: "appleId"){
             if !appleId.isEmpty {
+                print("apple")
                 self.moveToMain()
             }else{
                 self.moveToOnboarding()
             }
         }else{
             if SPREF.string(forKey: "kakaoId") != nil{
+                print("kakao")
                 self.moveToMain()
             }else{
                 self.moveToOnboarding()
