@@ -137,6 +137,9 @@ class VC: UIViewController{
         isReceiveGift = false
         DispatchQueue.main.asyncAfter(deadline: .now()){
             self.moveBarToSentAnimate()
+            if self.sentModels.count > 0 {
+                self.changeUI(frameType: self.sentModels[0].frameType, color: self.sentModels[0].bgColor)
+            }
             self.collectionView.reloadData()
         }
     }
@@ -147,6 +150,9 @@ class VC: UIViewController{
         isReceiveGift = true
         DispatchQueue.main.asyncAfter(deadline: .now()){
             self.moveBarToReceivedAnimate()
+            if self.receivedModels.count > 0 {
+                self.changeUI(frameType: self.receivedModels[0].frameType, color: self.receivedModels[0].bgColor)
+            }
             self.collectionView.reloadData()
         }
     }
@@ -171,12 +177,12 @@ class VC: UIViewController{
     }
     
     func moveBarToReceivedAnimate(){
-        UIView.animate(withDuration: 0.5) {
+        UIView.animate(withDuration: 0.3) {
             self.viewBar.transform =  CGAffineTransform(translationX: 0, y: 0)
         }
     }
     func moveBarToSentAnimate(){
-        UIView.animate(withDuration: 0.5) {
+        UIView.animate(withDuration: 0.3) {
             self.viewBar.transform =  CGAffineTransform(translationX:  self.viewBar.frame.width + 26, y: 0)
         }
     }
@@ -190,7 +196,7 @@ class VC: UIViewController{
     }
     
 }
-
+//MARK: 컬랙션뷰 datasource, delegate, changeUI
 extension VC: UICollectionViewDataSource, UICollectionViewDelegate {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -224,18 +230,26 @@ extension VC: UICollectionViewDataSource, UICollectionViewDelegate {
         if collectionViewFlag{
             if receivedModels.count == 0 {
                 cell.configure(with: emptyReceivedModels[0])
+                changeUIEmpty()
             }else{
                 cell.configure(with: receivedModels[indexPath.row])
             }
         }else{
             if sentModels.count == 0 {
                 cell.configure(with: emptySentModels[0])
+                changeUIEmpty()
             }else{
                 cell.configure(with: sentModels[indexPath.row])
             }
         }
         
         return cell
+    }
+    func changeUIEmpty(){
+        self.imgLogo.image = UIImage(named: "logo_charcoalGrey_SQUARE")
+        self.collectionView.backgroundColor = UIColor(named: "charcoalGrey")
+        self.btnGfitBox.titleLabel?.textColor = UIColor.white
+        self.btnArrow.imageView?.image = UIImage(named: "btn_arrow_white")
     }
     func changeUI(frameType: String, color: String){
         if(color == "wheat"){
@@ -253,7 +267,7 @@ extension VC: UICollectionViewDataSource, UICollectionViewDelegate {
     }
     
 }
-
+//MARK: 스크롤뷰 델리겟
 extension VC : UIScrollViewDelegate {
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>)
