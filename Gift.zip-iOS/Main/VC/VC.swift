@@ -34,19 +34,11 @@ class VC: UIViewController{
     
     var receivedModels = [LoadGiftData]()
     var sentModels = [LoadGiftData]()
-    var emptyReceivedModels = [LoadGiftData(id: "", imgUrl: "", name: "From. 보낸이", content: "", receiveDate: "", bgColor: "charcoalGrey", isReceiveGift: true, category: "", emotion: "", reason: "")]
-    var emptySentModels = [LoadGiftData(id: "", imgUrl: "", name: "To. 받는이", content: "", receiveDate: "", bgColor: "charcoalGrey", isReceiveGift: false, category: "", emotion: "", reason: "")]
+    var emptyReceivedModels = [LoadGiftData(id: "", imgUrl: "", name: "From. 보낸이", content: "", receiveDate: "", bgColor: "charcoalGrey", isReceiveGift: true, category: "", emotion: "", reason: "", frameType: "")]
+    var emptySentModels = [LoadGiftData(id: "", imgUrl: "", name: "To. 받는이", content: "", receiveDate: "", bgColor: "charcoalGrey", isReceiveGift: false, category: "", emotion: "", reason: "", frameType: "")]
 
     private var isReceiveGift: Bool = true
-    
 
-    var colors = [UIColor(named: "ceruleanBlue"), UIColor.greyishBrown, UIColor(named: "pinkishOrange"), UIColor(named: "wheat")]
-    var logos = [[UIImage(named: "logo_blue_rec"), UIImage(named: "logo_blue_circle"), UIImage(named: "logo_blue_oval")],
-                 [UIImage(named: "logo_grey_rec"), UIImage(named: "logo_grey_circle"), UIImage(named: "logo_grey_oval")],
-                 [UIImage(named: "logo_orange_rec"), UIImage(named: "logo_orange_circle"), UIImage(named: "logo_orange_oval")],
-                 [UIImage(named: "logo_yellow_rec"), UIImage(named: "logo_yellow_circle"), UIImage(named: "logo_yellow_oval")]]
-    
-    var colorIdx = 0
     private var collectionViewFlag = true // true는 받은 flase는 보낸
     
     private var device = 0 //device 크기 flag
@@ -80,6 +72,10 @@ class VC: UIViewController{
             LoadGiftListService.shared.getReceivedGifts(page: 0, size: 10000000, isReceiveGift: false, completion: {
                 gifts in
                 self.sentModels.append(contentsOf: gifts)
+                //초기 ui 세팅
+                if self.receivedModels.count > 0 {
+                    self.changeUI(frameType: self.receivedModels[0].frameType, color: self.receivedModels[0].bgColor)
+                }
                 self.collectionView.reloadData()
             })
         })
@@ -127,10 +123,6 @@ class VC: UIViewController{
         
         (btnWrite as UIView).makeRounded(cornerRadius: 8.0)
         
-        if receivedModels.count > 0 {
-            self.changeUI(shape: 0)
-            //changeUI(shape: receivedModels[0].shape)
-        }
     }
     
     @IBAction func settingButtonClicked(_ sender: UIButton) {
@@ -245,23 +237,19 @@ extension VC: UICollectionViewDataSource, UICollectionViewDelegate {
         
         return cell
     }
-    func changeUI(shape: Int){
-        if (colorIdx == 4){
-            colorIdx = 0
-        }
-        if(colorIdx == 3){
+    func changeUI(frameType: String, color: String){
+        if(color == "wheat"){
             btnArrow.imageView?.image = UIImage(named: "btn_arrow_black")
             btnGfitBox.titleLabel?.textColor = UIColor.greyishBrown
         }else{
             btnArrow.imageView?.image = UIImage(named: "btn_arrow_white")
             btnGfitBox.titleLabel?.textColor = UIColor.white
         }
-        collectionView.backgroundColor = colors[colorIdx]
+        collectionView.backgroundColor = UIColor(named: color)
         if let cell : CollectionViewCell = collectionView.cellForItem(at: IndexPath(row: Int(currentIndex), section: 0)) as? CollectionViewCell{
-            cell.setLabelColor(colorIdx: colorIdx)
+            cell.setLabelColor(color: color)
         }
-        imgLogo.image = logos[colorIdx][shape]
-        colorIdx += 1
+        imgLogo.image = UIImage(named: "logo_"+color+"_"+frameType)
     }
     
 }
@@ -305,17 +293,14 @@ extension VC : UIScrollViewDelegate {
             if Int(currentIndex) == receivedModels.count{
                 currentIndex -= 1
             }
-            self.changeUI(shape: 0)
-            //self.changeUI(shape: receivedModels[Int(currentIndex)].shape)
+            self.changeUI(frameType: receivedModels[Int(currentIndex)].frameType, color: receivedModels[Int(currentIndex)].bgColor)
             
             
         }else{
             if Int(currentIndex) == receivedModels.count{
                 currentIndex -= 1
             }
-            self.changeUI(shape: 0)
-            //self.changeUI(shape: sentModels[Int(currentIndex)].shape)
-            
+            self.changeUI(frameType: sentModels[Int(currentIndex)].frameType, color: sentModels[Int(currentIndex)].bgColor)
             
         }
         

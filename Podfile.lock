@@ -5,7 +5,6 @@ PODS:
     - KakaoSDKCommon (= 2.3.2)
   - KakaoSDKCommon (2.3.2):
     - Alamofire (~> 5.1)
-
   - KakaoSDKLink (2.3.2):
     - KakaoSDKCommon (= 2.3.2)
     - KakaoSDKTemplate (= 2.3.2)
@@ -20,7 +19,6 @@ PODS:
     - KakaoSDKCommon (= 2.3.2)
   - Kingfisher (6.1.0)
   - lottie-ios (3.2.1)
-
   - RxCocoa (6.0.0):
     - RxRelay (= 6.0.0)
     - RxSwift (= 6.0.0)
@@ -84,8 +82,6 @@ SPEC CHECKSUMS:
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
   TTGTagCollectionView: 86fcbfa6a7493c9e860b01c2e693cffc8acf6de1
 
-
-PODFILE CHECKSUM: 2b6f180deb6b8132293eff8c8fd3aa651ac7ee4f
-
+PODFILE CHECKSUM: f0413bcba5adf43cc5ed4c345b8dd06c2d21e1c0
 
 COCOAPODS: 1.10.0

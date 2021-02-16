@@ -17,5 +17,6 @@ struct LoadGiftData: Codable {
     let category: String
     let emotion: String
     let reason: String
+    let frameType: String
 }
 
