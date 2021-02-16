@@ -44,16 +44,16 @@ struct Icons {
     ]
     
     static let emotionSend: [Icons] = [
-        Icons(index: 0, imageName: "icEmojiCheer", name: "응원해", englishName: "GOOD"),
+        Icons(index: 0, imageName: "icEmojiCheer", name: "응원해", englishName: "CHEER"),
         Icons(index: 0, imageName: "icEmojiSorry", name: "미안해", englishName: "SORRY"),
-        Icons(index: 0, imageName: "icEmojiBest", name: "나최고지", englishName: "BEST"),
-        Icons(index: 0, imageName: "icEmojiCelebration", name: "축하해", englishName: "CELEBRATE"),
+        Icons(index: 0, imageName: "icEmojiBest", name: "나최고지", englishName: "BOAST"),
+        Icons(index: 0, imageName: "icEmojiCelebration", name: "축하해", englishName: "CONGRATULATIONS"),
     ]
     static let emotionGet: [Icons] = [
-        Icons(index: 0, imageName: "icEmojiSense", name: "센스최고", englishName: "GOOD"),
-        Icons(index: 0, imageName: "icEmojiLove", name: "사랑해", englishName: "LOVE"),
-        Icons(index: 0, imageName: "icEmojiTouch", name: "감동이야", englishName: "TOUCH"),
-        Icons(index: 0, imageName: "icEmojiSurprisal", name: "놀라워", englishName: "SURPRISE"),
+        Icons(index: 0, imageName: "icEmojiSense", name: "센스최고", englishName: "NICE_SENSE"),
+        Icons(index: 0, imageName: "icEmojiLove", name: "사랑해", englishName: "LOVE_YOU"),
+        Icons(index: 0, imageName: "icEmojiTouch", name: "감동이야", englishName: "IMPRESSION"),
+        Icons(index: 0, imageName: "icEmojiSurprisal", name: "놀라워", englishName: "AMAZING"),
     ]
     
 }

@@ -87,7 +87,7 @@ class RecordVC: UIViewController {
     
     lazy var stickerPopupView = StickerPopupView()
     
-    lazy var exitButton = UIButton()
+    lazy var exitColorEditButton = UIButton()
     
     var isReceiveGift: Bool = true
     
@@ -121,6 +121,40 @@ class RecordVC: UIViewController {
     
     private var currentFrameOfImage: FrameOfImage = .square {
         didSet {
+            if !isImageSelected {
+                switch currentFrameOfImage {
+                case .square:
+                    cropImageView.image = UIImage.init(named: "dotRectangle")
+                    break
+                case .circle:
+                    cropImageView.image = UIImage.init(named: "dotCircle")
+                    break
+                case .windowFrame:
+                    cropImageView.image = UIImage.init(named: "dotWindow")
+                    break
+                case .full:
+                    cropImageView.image = UIImage.init(named: "dotRectangle")
+                    break
+                }
+            }
+            
+            switch currentFrameOfImage {
+            case .square:
+                logoSticker.makeRounded(cornerRadius: 0)
+                break
+            case .circle:
+                let radius = logoSticker.bounds.width / 2
+                logoSticker.makeRounded(cornerRadius: radius)
+                break
+            case .full:
+                logoSticker.makeRounded(cornerRadius: 0)
+                break
+            case .windowFrame:
+                let radius = logoSticker.bounds.width / 2
+                logoSticker.roundCorners(cornerRadius: radius, maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
+                break
+            }
+            
             let radius = cropImageView.frame.width / 2
             switch currentFrameOfImage {
             case .full:
@@ -135,6 +169,7 @@ class RecordVC: UIViewController {
                 windowViewLabel.alpha = 0.6
                 
                 cropImageView.makeRounded(cornerRadius: 0)
+                
                 break
             case .square:
                 fullFrameView.alpha = 0.6
@@ -234,27 +269,12 @@ class RecordVC: UIViewController {
             
             if currentBackgroundColor == UIColor.wheat {
                 
-                switch currentFrameOfImage {
-                case .square:
-                    logoSticker.image = UIImage(named: "logoYellowRectangle")
-                    break
-                case .circle:
-                    logoSticker.image = UIImage(named: "logoYellowCircle")
-                    break
-                case .full:
-                    logoSticker.image = UIImage(named: "logoYellowRectangle")
-                    break
-                case .windowFrame:
-                    logoSticker.image = UIImage(named: "logoYellowWindow")
-                    break
-                }
-                
+                logoSticker.image = UIImage.init(named: "logoBgcolorNoneBlack")
                 backButton.setImage(UIImage.init(named: "iconBackBk"), for: .normal)
                 dateToRecordLabel.textColor = .greyishBrown
                 completeButton.setImage(UIImage.init(named: "iconCheckBk"), for: .normal)
                 dateDropDownImage.image = UIImage.init(named: "iconArrowBottomBk")
                 emptyImageLabel.textColor = .greyishBrown
-                cropImageView.makeDashedBorder(UIColor.greyishBrown)
                 fromLabel.textColor = .greyishBrown
                 nameTextField.attributedPlaceholder = NSAttributedString(string: "이름",
                                                                          attributes: [NSAttributedString.Key.foregroundColor: UIColor(white: 62.0 / 255.0, alpha: 0.34)])
@@ -285,28 +305,12 @@ class RecordVC: UIViewController {
                     btn.layer.borderColor = UIColor.greyishBrown.cgColor
                 }
             } else {
-                
-                switch currentFrameOfImage {
-                case .square:
-                    break
-                case .circle:
-                    let radius = logoSticker.bounds.width / 2
-                    logoSticker.makeRounded(cornerRadius: radius)
-                    break
-                case .full:
-                    break
-                case .windowFrame:
-                    let radius = logoSticker.bounds.width / 2
-                    logoSticker.roundCorners(cornerRadius: radius, maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
-                    break
-                }
-                
+                logoSticker.image = UIImage.init(named: "logoBgcolorNoneWhite")
                 backButton.setImage(UIImage.init(named: "iconBack"), for: .normal)
                 dateToRecordLabel.textColor = .white
                 completeButton.setImage(UIImage.init(named: "iconCheck"), for: .normal)
                 dateDropDownImage.image = UIImage.init(named: "iconArrowBottom")
                 emptyImageLabel.textColor = .white
-                cropImageView.makeDashedBorder(UIColor.white)
                 fromLabel.textColor = .white
                 nameTextField.attributedPlaceholder = NSAttributedString(string: "이름",
                                                                          attributes: [NSAttributedString.Key.foregroundColor: UIColor.init(white: 1, alpha: 0.34)])
@@ -356,11 +360,15 @@ class RecordVC: UIViewController {
         didSet {
             if isColorEditing {
                 view.bringSubviewToFront(colorBottomContainer)
-                view.bringSubviewToFront(exitButton)
-                exitButton.isHidden = false
+                view.bringSubviewToFront(exitColorEditButton)
+                colorBottomContainer.alpha = 1
+                colorBottomContainer.isHidden = false
+                exitColorEditButton.isHidden = false
             } else {
                 view.bringSubviewToFront(bottomContainer)
-                exitButton.isHidden = true
+                colorBottomContainer.alpha = 0
+                colorBottomContainer.isHidden = true
+                exitColorEditButton.isHidden = true
             }
         }
     }
@@ -400,10 +408,10 @@ class RecordVC: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "dateSegue" {
-            popupBackground.animatePopupBackground(true)
+//            popupBackground.animatePopupBackground(true)
             guard let des = segue.destination as? DatePopupVC else { return }
             des.delegate = self
-            des.currentBackgroundColor = currentBackgroundColor
+            des.currentBackgroundColor = currentBackgroundPopupColor
         } else if segue.identifier == "categoryPopup" {
             popupBackground.animatePopupBackground(true)
             view.bringSubviewToFront(categoryImageView)
@@ -500,7 +508,7 @@ class RecordVC: UIViewController {
         label.textColor = .white
        
         rectagularInstagramCropView.addSubview(label)
-         label.translatesAutoresizingMaskIntoConstraints = false
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 13).isActive = true
         label.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
 
@@ -515,124 +523,134 @@ class RecordVC: UIViewController {
         share.instagramImage = instagramSquareImage
         share.currentFrameOfImage = currentFrameOfImage
         share.userName = nameTextField.text
-        
-        if isImageSelected {
-            if isNameTyped {
-                if isCategoryIconSelected && isPurposeIconSelected && isEmotionIconSelected {
-                    let content = emotionTextView.text ?? ""
-                    let name = nameTextField.text ?? ""
-
-                    // 날짜
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZ"
-                    let dateString = dateFormatter.string(from: selectedDate)
-                    print(dateString)
-                    let dateArr = dateString.components(separatedBy: [" "," "])
-                    let first = dateArr[0]
-                    let second = dateArr[1]
-                    print(dateArr[2])
-                    let third = dateArr[2].replacingOccurrences(of: "+", with: ".")
-                    let date = first + "T" + second + third
-
-                    // 아이콘 이름
-
-                    var categoryName: String = ""
-                    var purposeName: String = ""
-                    var emotionName: String = ""
-                    for category in Icons.category {
-                        if category.imageName == categoryImageName {
-                            categoryName = category.englishName
-                        }
-                    }
-
-                    for purpose in Icons.purpose {
-                        if purpose.imageName == purposeImageName {
-                            purposeName = purpose.englishName
-                        }
-                    }
-
-                    if isReceiveGift {
-                        for emotion in Icons.emotionGet {
-                            if emotion.imageName == emotionImageName {
-                                emotionName = emotion.englishName
-                            }
-                        }
-                    } else {
-                        for emotion in Icons.emotionSend {
-                            if emotion.imageName == emotionImageName {
-                                emotionName = emotion.englishName
-                            }
-                        }
-                    }
-//                    print(content)
-//                    print(isReceiveGift)
-//                    print(name)
-//                    print(date)
-//                    print(categoryName)
-//                    print(emotionName)
-//                    print(purposeName)
-//                    print(currentBackgroundColorString)
-//                    print(kakaoEnvelopImage)
-//                    print(envelopImage)
-                    
-                    let bgImg = resizeImage(image: kakaoEnvelopImage, newWidth: kakaoEnvelopImage.size.width)
-                    let noBgImg = resizeImage(image: envelopImage, newWidth: envelopImage.size.width)
-
-                    RecordGiftService.shared.recordGift(content: content, isReceiveGift: isReceiveGift, name: name, receiveDate: date, createdBy: "1", category: categoryName, emotion: "SORRY", reason: purposeName, bgColor: currentBackgroundColorString, bgImg: bgImg!, noBgImg: noBgImg!) { networkResult -> Void in
-                        switch networkResult {
-                        case .success(let data):
-                            if let bgData = data as? RecordGiftData {
-                                print(bgData)
-                                share.kakaoImageURL = bgData.bgImg
-                                self.navigationController?.pushViewController(share, animated: true)
-                            }
-
-                            
-                            
-
-                        case .requestErr:
-                            let alertViewController = UIAlertController(title: "통신 실패", message: "💩", preferredStyle: .alert)
-                            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
-                            alertViewController.addAction(action)
-                            self.present(alertViewController, animated: true, completion: nil)
-
-                        case .pathErr: print("path")
-                        case .serverErr:
-                            let alertViewController = UIAlertController(title: "통신 실패", message: "서버 오류", preferredStyle: .alert)
-                            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
-                            alertViewController.addAction(action)
-                            self.present(alertViewController, animated: true, completion: nil)
-                            print("networkFail")
-                            print("serverErr")
-                        case .networkFail:
-                            let alertViewController = UIAlertController(title: "통신 실패", message: "네트워크 오류", preferredStyle: .alert)
-                            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
-                            alertViewController.addAction(action)
-                            self.present(alertViewController, animated: true, completion: nil)
-                            print("networkFail")
-                        }
-                    }
-                } else {
-
-                    let alertViewController = UIAlertController(title: "저장 실패", message: "선물에 해당하는 아이콘을 선택해주세요 🥰", preferredStyle: .alert)
-                    let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
-                    alertViewController.addAction(action)
-                    self.present(alertViewController, animated: true, completion: nil)
-                }
-            } else {
-
-                let alertViewController = UIAlertController(title: "저장 실패", message: "이름을 입력해주세요 🥰", preferredStyle: .alert)
-                let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
-                alertViewController.addAction(action)
-                self.present(alertViewController, animated: true, completion: nil)
-            }
-        } else {
-
-            let alertViewController = UIAlertController(title: "저장 실패", message: "이미지를 선택해주세요 🥰", preferredStyle: .alert)
-            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
-            alertViewController.addAction(action)
-            self.present(alertViewController, animated: true, completion: nil)
-        }
+        self.navigationController?.pushViewController(share, animated: true)
+//        if isImageSelected {
+//            if isNameTyped {
+//                if isCategoryIconSelected && isPurposeIconSelected && isEmotionIconSelected {
+//                    let content = emotionTextView.text ?? ""
+//                    let name = nameTextField.text ?? ""
+//
+//                    // 날짜
+//                    let dateFormatter = DateFormatter()
+//                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZ"
+//                    let dateString = dateFormatter.string(from: selectedDate)
+//                    print(dateString)
+//                    let dateArr = dateString.components(separatedBy: [" "," "])
+//                    let first = dateArr[0]
+//                    let second = dateArr[1]
+//                    print(dateArr[2])
+//                    let third = dateArr[2].replacingOccurrences(of: "+", with: ".")
+//                    let date = first + "T" + second + third
+//
+//                    // 아이콘 이름
+//
+//                    var categoryName: String = ""
+//                    var purposeName: String = ""
+//                    var emotionName: String = ""
+//                    for category in Icons.category {
+//                        if category.imageName == categoryImageName {
+//                            categoryName = category.englishName
+//                        }
+//                    }
+//
+//                    for purpose in Icons.purpose {
+//                        if purpose.imageName == purposeImageName {
+//                            purposeName = purpose.englishName
+//                        }
+//                    }
+//
+//                    if isReceiveGift {
+//                        for emotion in Icons.emotionGet {
+//                            if emotion.imageName == emotionImageName {
+//                                emotionName = emotion.englishName
+//                            }
+//                        }
+//                    } else {
+//                        for emotion in Icons.emotionSend {
+//                            if emotion.imageName == emotionImageName {
+//                                emotionName = emotion.englishName
+//                            }
+//                        }
+//                    }
+//                    var token: String = ""
+//                    let SPREF = UserDefaults.standard
+//                    if let appleId = SPREF.string(forKey: "appleId"){
+//                        token = appleId
+//                    } else {
+//                        if let kakaoId = SPREF.string(forKey: "kakaoId") {
+//                            token = kakaoId
+//                        }
+//                    }
+//                    
+////                    print(content)
+////                    print(isReceiveGift)
+////                    print(name)
+////                    print(date)
+////                    print(categoryName)
+////                    print(emotionName)
+////                    print(purposeName)
+////                    print(currentBackgroundColorString)
+////                    print(kakaoEnvelopImage)
+////                    print(envelopImage)
+//                    
+//                    let bgImg = resizeImage(image: kakaoEnvelopImage, newWidth: kakaoEnvelopImage.size.width)
+//                    let noBgImg = resizeImage(image: envelopImage, newWidth: envelopImage.size.width)
+//
+//                    GiftService.shared.recordGift(content: content, isReceiveGift: isReceiveGift, name: name, receiveDate: date, createdBy: token, category: categoryName, emotion: emotionName, reason: purposeName, bgColor: currentBackgroundColorString, bgImg: bgImg!, noBgImg: noBgImg!) { networkResult -> Void in
+//                        switch networkResult {
+//                        case .success(let data):
+//                            if let bgData = data as? RecordGiftData {
+//                                print(bgData)
+//                                share.kakaoImageURL = bgData.bgImg
+//                                self.navigationController?.pushViewController(share, animated: true)
+//                            }
+//
+//                            
+//                            
+//
+//                        case .requestErr:
+//                            let alertViewController = UIAlertController(title: "통신 실패", message: "💩", preferredStyle: .alert)
+//                            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+//                            alertViewController.addAction(action)
+//                            self.present(alertViewController, animated: true, completion: nil)
+//
+//                        case .pathErr: print("path")
+//                        case .serverErr:
+//                            let alertViewController = UIAlertController(title: "통신 실패", message: "서버 오류", preferredStyle: .alert)
+//                            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+//                            alertViewController.addAction(action)
+//                            self.present(alertViewController, animated: true, completion: nil)
+//                            print("networkFail")
+//                            print("serverErr")
+//                        case .networkFail:
+//                            let alertViewController = UIAlertController(title: "통신 실패", message: "네트워크 오류", preferredStyle: .alert)
+//                            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+//                            alertViewController.addAction(action)
+//                            self.present(alertViewController, animated: true, completion: nil)
+//                            print("networkFail")
+//                        }
+//                    }
+//                } else {
+//
+//                    let alertViewController = UIAlertController(title: "저장 실패", message: "선물에 해당하는 아이콘을 선택해주세요 🥰", preferredStyle: .alert)
+//                    let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+//                    alertViewController.addAction(action)
+//                    self.present(alertViewController, animated: true, completion: nil)
+//                }
+//            } else {
+//
+//                let alertViewController = UIAlertController(title: "저장 실패", message: "이름을 입력해주세요 🥰", preferredStyle: .alert)
+//                let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+//                alertViewController.addAction(action)
+//                self.present(alertViewController, animated: true, completion: nil)
+//            }
+//        } else {
+//
+//            let alertViewController = UIAlertController(title: "저장 실패", message: "이미지를 선택해주세요 🥰", preferredStyle: .alert)
+//            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+//            alertViewController.addAction(action)
+//            self.present(alertViewController, animated: true, completion: nil)
+//        }
 
     }
     
@@ -804,6 +822,8 @@ class RecordVC: UIViewController {
 extension RecordVC {
     
     private func setLayouts() {
+        colorBottomContainer.alpha = 0
+        colorBottomContainer.isHidden = true
         for button in buttons {
             button.makeRounded(cornerRadius: 8.0)
         }
@@ -824,7 +844,6 @@ extension RecordVC {
         currentInfoViewOriginY = infoView.frame.origin.y
         currentBottomContainerOriginY = bottomContainer.frame.origin.y
         currentImageContainerOriginY = imageContainer.frame.origin.y
-        cropImageView.makeDashedBorder(UIColor.white)
         
         colorButton.translatesAutoresizingMaskIntoConstraints = false
         colorButton.widthAnchor.constraint(equalToConstant: 24).isActive = true
@@ -834,14 +853,14 @@ extension RecordVC {
         
         
         // 배경색 바꿀때 원래 메뉴로 돌아가는 버튼
-        exitButton.addTarget(self, action: #selector(dismissColorBottomContainer), for: .touchUpInside)
-        view.addSubview(exitButton)
-        exitButton.translatesAutoresizingMaskIntoConstraints = false
-        exitButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        exitButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-        exitButton.bottomAnchor.constraint(equalTo: colorBottomContainer.topAnchor).isActive = true
-        exitButton.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
-        exitButton.isHidden = true
+        exitColorEditButton.addTarget(self, action: #selector(dismissColorBottomContainer), for: .touchUpInside)
+        view.addSubview(exitColorEditButton)
+        exitColorEditButton.translatesAutoresizingMaskIntoConstraints = false
+        exitColorEditButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        exitColorEditButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        exitColorEditButton.bottomAnchor.constraint(equalTo: colorBottomContainer.topAnchor).isActive = true
+        exitColorEditButton.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+        exitColorEditButton.isHidden = true
         
         // 스티커 뷰
         view.addSubview(stickerPopupView)
@@ -890,9 +909,6 @@ extension RecordVC {
     }
     
     @objc func dismissStickerPopupView() {
-        print("ImageArea Tapped")
-        print(isStickerGuideLineEditing)
-        print(_selectedStickerView?.showEditingHandlers)
         if isStickerEditing {
             if isStickerGuideLineEditing {
                 print("sticker O GuideLine O")
@@ -1108,7 +1124,6 @@ extension RecordVC: UIImagePickerControllerDelegate, UINavigationControllerDeleg
         
         if let image = info[.originalImage] as? UIImage, let editedImage = info[.editedImage] as? UIImage {
             self.cropImageView.image = editedImage
-            self.cropImageView.eraseBorder()
             self.originalFullImage = image
             self.emptyImageLabel.isHidden = true
             isImageSelected = true
@@ -1157,6 +1172,13 @@ extension RecordVC: UITextViewDelegate {
 
 extension RecordVC: PopupViewDelegate {
     
+    
+    func sendIconDataButtonTapped() {
+        popupBackground.animatePopupBackground(false)
+        
+    }
+    
+    
     func sendDateButtonTapped(_ date: Date?) {
         popupBackground.animatePopupBackground(false)
         if date == nil { return }
@@ -1166,11 +1188,6 @@ extension RecordVC: PopupViewDelegate {
         
         dateToRecord = todayDate + getDayOfWeek(date!)
         selectedDate = date!
-    }
-    
-    func sendIconDataButtonTapped() {
-        popupBackground.animatePopupBackground(false)
-        
     }
     
     func getDayOfWeek(_ today: Date) -> String {
