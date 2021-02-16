@@ -50,8 +50,8 @@ class CollectionViewCell: UICollectionViewCell {
         
         
     }
-    public func setLabelColor(colorIdx : Int){
-        if(colorIdx == 3){
+    public func setLabelColor(color : String){
+        if(color == "wheat"){
             labelFrom.textColor = UIColor.greyishBrown
             labelDate.textColor = UIColor.greyishBrownOpacity
         }else{
