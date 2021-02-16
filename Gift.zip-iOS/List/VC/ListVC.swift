@@ -11,7 +11,7 @@ import DropDown
 class ListVC: UIViewController {
     var models = [LoadGiftData]()
     var receivedSentFlag = true //보낸인지 받은 인지
-    var colors = [UIColor(named: "ceruleanBlue"), UIColor.greyishBrown, UIColor(named: "pinkishOrange"), UIColor(named: "wheat")]
+
     
     
     @IBOutlet weak var collectionView:UICollectionView!
@@ -130,12 +130,12 @@ extension ListVC: UICollectionViewDataSource {
         
         if collectionViewFlowLayoutType {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! ListCollectionViewCell
-            cell.configure(with: models[indexPath.row], color: colors[indexPath.row % 4]! )
+            cell.configure(with: models[indexPath.row], color: UIColor(named: models[indexPath.row].bgColor)! )
             return cell
             
         }else{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GridCollectionViewCell", for: indexPath) as! GridCollectionViewCell
-            cell.configure(with: models[indexPath.row], color: colors[indexPath.row % 4]! )
+            cell.configure(with: models[indexPath.row], color: UIColor(named: models[indexPath.row].bgColor)! )
             return cell
         }
     }
