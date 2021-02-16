@@ -11,7 +11,7 @@ import Alamofire
 struct LoadGiftListService{
     static let shared = LoadGiftListService()
     func getReceivedGifts(page : Int, size : Int, isReceiveGift: Bool, completion: @escaping([LoadGiftData]) -> ()) {
-        let createdBy = "3"
+        let createdBy = getId()
         let url = APIConstants.baseURL + APIConstants.getGiftsURL + "/" + createdBy
         let params = ["createdBy" : createdBy, "page" : page, "size" : size , "isReceiveGift" : isReceiveGift] as [String : Any]
         AF.request(url, method: .get, parameters: params).responseJSON(completionHandler: { response in
