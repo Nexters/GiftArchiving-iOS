@@ -22,6 +22,7 @@ struct GiftService {
                     bgColor: String,
                     bgImg: UIImage,
                     noBgImg: UIImage,
+                    frameType: String,
                     completion : @escaping (NetworkResult<Any>) -> (Void)) {
         let url = APIConstants.baseURL + APIConstants.recordGiftURL
         
@@ -40,6 +41,7 @@ struct GiftService {
             "emotion": emotion,
             "reason": reason,
             "bgColor": bgColor,
+            "frameType": frameType
         ]
         
         AF.upload(multipartFormData: { multiPartFormData in
@@ -129,6 +131,7 @@ struct GiftService {
                     
                     let networkResult = self.judgeOneGift(status: statusCode, data: value)
                     
+                    print(statusCode)
                     completion(networkResult)
                 case .failure: completion(.networkFail)
                     
@@ -152,6 +155,15 @@ struct GiftService {
         }
     }
     
+    func getOneGift(data: Data) -> NetworkResult<Any> {
+        let decoder = JSONDecoder()
+        guard let decodedData = try? decoder.decode(GiftModel.self, from : data) else {
+            return .pathErr
+        }
+        
+        return .success(decodedData)
+    }
+    
     func judge(status : Int, data : Data) -> NetworkResult<Any> {
       
         switch status{
@@ -169,14 +181,6 @@ struct GiftService {
     func recordGift(data: Data) -> NetworkResult<Any> {
         let decoder = JSONDecoder()
         guard let decodedData = try? decoder.decode(RecordGiftData.self, from : data) else {
-            return .pathErr
-        }
-        
-        return .success(decodedData)
-    }
-    func getOneGift(data: Data) -> NetworkResult<Any> {
-        let decoder = JSONDecoder()
-        guard let decodedData = try? decoder.decode(GiftModel.self, from : data) else {
             return .pathErr
         }
         

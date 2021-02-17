@@ -195,11 +195,14 @@
                     <connections>
                         <outlet property="categoryImageView" destination="PUB-oR-wlv" id="Ncw-Jc-Hsg"/>
                         <outlet property="categoryLabel" destination="Jgr-zu-GA3" id="gHI-TD-8ZH"/>
+                        <outlet property="contentTextView" destination="WBJ-Sn-hBb" id="IBI-OG-OYN"/>
                         <outlet property="dateLabel" destination="U0y-vd-Civ" id="Tq3-QB-hhT"/>
                         <outlet property="emotionLabel" destination="RB6-6u-pco" id="jHg-t6-npU"/>
+                        <outlet property="exitButton" destination="EMj-Kk-bgU" id="d6u-rw-Hhu"/>
                         <outlet property="feelingImageView" destination="AIq-Nm-3ag" id="CFu-T4-p5y"/>
                         <outlet property="giftImageView" destination="2Pd-Ed-R6a" id="Iou-kT-vOD"/>
                         <outlet property="isReceiveLabel" destination="HaX-Tu-Hbo" id="1EP-O8-o7Y"/>
+                        <outlet property="moreButton" destination="26K-Wd-Ky9" id="pOz-PP-U8s"/>
                         <outlet property="nameLabel" destination="u3j-z2-gPk" id="NQw-ja-bOn"/>
                         <outlet property="purposeImageView" destination="lmF-hS-IQm" id="r13-Zq-boi"/>
                         <outlet property="purposeLabel" destination="z0f-lW-G8N" id="iLb-sa-VgF"/>
@@ -207,6 +210,10 @@
                         <outletCollection property="tagButtons" destination="uOo-3M-ve7" collectionClass="NSMutableArray" id="Srb-h3-ERP"/>
                         <outletCollection property="tagButtons" destination="2Qm-uf-6fk" collectionClass="NSMutableArray" id="EJd-fn-4yV"/>
                         <outletCollection property="tagButtons" destination="Eej-Tf-gQR" collectionClass="NSMutableArray" id="bcO-DW-zQX"/>
+                        <outletCollection property="textsToChangeColor" destination="HaX-Tu-Hbo" collectionClass="NSMutableArray" id="SqA-zF-H3o"/>
+                        <outletCollection property="textsToChangeColor" destination="Jgr-zu-GA3" collectionClass="NSMutableArray" id="wWo-0W-auK"/>
+                        <outletCollection property="textsToChangeColor" destination="RB6-6u-pco" collectionClass="NSMutableArray" id="q5s-gB-xdz"/>
+                        <outletCollection property="textsToChangeColor" destination="z0f-lW-G8N" collectionClass="NSMutableArray" id="aP0-gK-XIg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F7E-ER-1LO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
