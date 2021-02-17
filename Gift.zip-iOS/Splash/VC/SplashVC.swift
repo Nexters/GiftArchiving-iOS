@@ -9,7 +9,7 @@ import UIKit
 import Lottie
 import AuthenticationServices
 
-class SplashVC: UIViewController {
+class SplashVC: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -23,7 +23,7 @@ class SplashVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
 
     private func checkLoginAndDisplay(){

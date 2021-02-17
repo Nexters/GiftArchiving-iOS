@@ -414,7 +414,8 @@ class RecordVC: UIViewController {
             button.layer.borderColor = UIColor.white.cgColor
             button.layer.borderWidth = 1
         }
-        
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+
         fromLabel.text = isReceiveGift ? "From." : "To."
         
     }
@@ -1300,5 +1301,12 @@ extension RecordVC: StickerViewDelegate {
     
     func stickerViewDidClose(_ stickerView: StickerView) {
         print("close")
+    }
+}
+
+
+extension RecordVC {
+    func gestureRecognizer(_ gestrueRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        return false
     }
 }

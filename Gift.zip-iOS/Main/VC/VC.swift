@@ -51,6 +51,11 @@ class VC: UIViewController{
     @IBOutlet weak var constLabelMain2Width: NSLayoutConstraint!
     @IBOutlet weak var constBtnWriteTop: NSLayoutConstraint!
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -322,5 +327,11 @@ extension VC : UIScrollViewDelegate {
         // 위 코드를 통해 페이징 될 좌표값을 targetContentOffset에 대입하면 된다.
         offset = CGPoint(x: roundedIndex * cellWidthIncludingSpacing - scrollView.contentInset.left, y: -scrollView.contentInset.top)
         targetContentOffset.pointee = offset
+    }
+}
+
+extension VC: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestrueRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        return true
     }
 }
