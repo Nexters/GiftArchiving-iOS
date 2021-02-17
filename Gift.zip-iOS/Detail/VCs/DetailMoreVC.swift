@@ -12,9 +12,10 @@ class DetailMoreVC: UIViewController {
     @IBOutlet weak var roundView: UIView!
     @IBOutlet weak var cancelButton: UIButton!
     
+    var currentBackgroundColor: String = "charcoalGrey"
     override func viewDidLoad() {
         super.viewDidLoad()
-
+//        roundView.backgroundColor = UIColor.init(named:currentBackgroundColor)
         roundView.roundCorners(cornerRadius: 8.0, maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
         cancelButton.makeRounded(cornerRadius: 8.0)
     }

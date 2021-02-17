@@ -23,8 +23,13 @@ class DetailVC: UIViewController {
     @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var nameLabel: UITextField!
+    @IBOutlet weak var contentTextView: UITextView!
     
-    var giftId: String = "6024cd650b372841ffb814bb"
+    @IBOutlet weak var moreButton: UIButton!
+    @IBOutlet weak var exitButton: UIButton!
+    @IBOutlet var textsToChangeColor: [UILabel]!
+    var giftId: String = "6024c92e0b372841ffb814b8"
+    var currentBackgroundColor: String = "charcoalGrey"
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -35,6 +40,19 @@ class DetailVC: UIViewController {
             case .success(let data):
                 guard let gift = data as? GiftModel else { return }
                 
+                if gift.bgColor == "wheat" {
+                    for label in self.textsToChangeColor {
+                        label.textColor = .black
+                    }
+                    self.contentTextView.textColor = .black
+                    self.dateLabel.textColor = .black
+                    self.nameLabel.textColor = .black
+                    
+                } else {
+                    
+                }
+                self.upperContainer.backgroundColor = UIColor.init(named: gift.bgColor)
+                self.view.backgroundColor = UIColor.init(named: gift.bgColor)
                 self.setPageInformation(
                     imageURL: gift.noBgImgURL,
                     name: gift.name,
@@ -43,7 +61,8 @@ class DetailVC: UIViewController {
                     category: gift.category,
                     emotion: gift.emotion,
                     reason: gift.reason,
-                    content: gift.content)
+                    content: gift.content,
+                    bgColor: gift.bgColor)
                 
             case .requestErr(let message):
                 guard let message = message as? String else { return }
@@ -81,7 +100,7 @@ class DetailVC: UIViewController {
     
     
     // UI 작업
-    private func setPageInformation(imageURL : String, name: String, receiveDate: String, isReceiveGift: Bool,  category: String, emotion: String, reason: String, content: String) {
+    private func setPageInformation(imageURL : String, name: String, receiveDate: String, isReceiveGift: Bool,  category: String, emotion: String, reason: String, content: String, bgColor: String) {
 
         let url = URL(string: imageURL.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)!)
         giftImageView.kf.setImage(with: url)
@@ -97,46 +116,62 @@ class DetailVC: UIViewController {
         let dateToRecord = dateAfterParsing + getDayOfWeek(date!)
         dateLabel.text = dateToRecord
         
-        var categoryName: String = ""
-        var purposeName: String = ""
-        var emotionName: String = ""
-        var categoryImageName: String = ""
-        var purposeImageName: String = ""
-        var emotionImageName: String = ""
+        var categoryName: String = "카테고리"
+        var purposeName: String = "목적"
+        var emotionName: String = "감정"
+        var categoryImageName: String = category
+        var purposeImageName: String = reason
+        var emotionImageName: String = emotion
         for c in Icons.category {
             if c.englishName == category {
                 categoryName = c.name
                 categoryImageName = c.imageName
+                if bgColor == "wheat" {
+                    categoryImageName += "B"
+                }
             }
         }
         for p in Icons.purpose{
-            if p.englishName == category {
+            if p.englishName == reason {
                 purposeName = p.name
                 purposeImageName = p.imageName
+                if bgColor == "wheat" {
+                    purposeImageName += "B"
+                }
             }
         }
+        
         if isReceiveGift {
             for e in Icons.emotionGet {
-                if e.englishName == category {
-                    categoryName = e.name
-                    categoryImageName = e.imageName
+                if e.englishName == emotion {
+                    emotionName = e.name
+                    emotionImageName = e.imageName
+                    if bgColor == "wheat" {
+                        emotionImageName += "B"
+                    }
                 }
             }
         } else {
             for e in Icons.emotionSend {
-                if e.englishName == category {
-                    categoryName = e.name
-                    categoryImageName = e.imageName
+                if e.englishName == emotion {
+                    emotionName = e.name
+                    emotionImageName = e.imageName
+                    if bgColor == "wheat" {
+                        emotionImageName += "B"
+                    }
                 }
             }
         }
+        
+        // 아이콘 검은색으로 바꾸기
         
         categoryLabel.text = categoryName
         categoryImageView.image = UIImage.init(named: categoryImageName)
         purposeLabel.text = purposeName
         purposeImageView.image = UIImage.init(named: purposeImageName)
-        emotionLabel.text = purposeName
-        
+        emotionLabel.text = emotionName
+        feelingImageView.image = UIImage.init(named: emotionImageName)
+        contentTextView.text = content
         
         
         
@@ -190,6 +225,7 @@ class DetailVC: UIViewController {
         
         guard let moreVC = self.storyboard?.instantiateViewController(identifier: "DetailMoreVC") as? DetailMoreVC else { return }
         
+        moreVC.currentBackgroundColor = self.currentBackgroundColor
         moreVC.modalPresentationStyle = .overCurrentContext
         self.present(moreVC, animated: true, completion: nil)
     }

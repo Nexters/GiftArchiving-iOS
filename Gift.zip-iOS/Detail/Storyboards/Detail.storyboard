@@ -195,11 +195,14 @@
                     <connections>
                         <outlet property="categoryImageView" destination="PUB-oR-wlv" id="Ncw-Jc-Hsg"/>
                         <outlet property="categoryLabel" destination="Jgr-zu-GA3" id="gHI-TD-8ZH"/>
+                        <outlet property="contentTextView" destination="WBJ-Sn-hBb" id="IBI-OG-OYN"/>
                         <outlet property="dateLabel" destination="U0y-vd-Civ" id="Tq3-QB-hhT"/>
                         <outlet property="emotionLabel" destination="RB6-6u-pco" id="jHg-t6-npU"/>
+                        <outlet property="exitButton" destination="EMj-Kk-bgU" id="d6u-rw-Hhu"/>
                         <outlet property="feelingImageView" destination="AIq-Nm-3ag" id="CFu-T4-p5y"/>
                         <outlet property="giftImageView" destination="2Pd-Ed-R6a" id="Iou-kT-vOD"/>
                         <outlet property="isReceiveLabel" destination="HaX-Tu-Hbo" id="1EP-O8-o7Y"/>
+                        <outlet property="moreButton" destination="26K-Wd-Ky9" id="pOz-PP-U8s"/>
                         <outlet property="nameLabel" destination="u3j-z2-gPk" id="NQw-ja-bOn"/>
                         <outlet property="purposeImageView" destination="lmF-hS-IQm" id="r13-Zq-boi"/>
                         <outlet property="purposeLabel" destination="z0f-lW-G8N" id="iLb-sa-VgF"/>
@@ -207,6 +210,10 @@
                         <outletCollection property="tagButtons" destination="uOo-3M-ve7" collectionClass="NSMutableArray" id="Srb-h3-ERP"/>
                         <outletCollection property="tagButtons" destination="2Qm-uf-6fk" collectionClass="NSMutableArray" id="EJd-fn-4yV"/>
                         <outletCollection property="tagButtons" destination="Eej-Tf-gQR" collectionClass="NSMutableArray" id="bcO-DW-zQX"/>
+                        <outletCollection property="textsToChangeColor" destination="HaX-Tu-Hbo" collectionClass="NSMutableArray" id="SqA-zF-H3o"/>
+                        <outletCollection property="textsToChangeColor" destination="Jgr-zu-GA3" collectionClass="NSMutableArray" id="wWo-0W-auK"/>
+                        <outletCollection property="textsToChangeColor" destination="RB6-6u-pco" collectionClass="NSMutableArray" id="q5s-gB-xdz"/>
+                        <outletCollection property="textsToChangeColor" destination="z0f-lW-G8N" collectionClass="NSMutableArray" id="aP0-gK-XIg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F7E-ER-1LO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -244,13 +251,13 @@
                                         <rect key="frame" x="32" y="44" width="319" height="81"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="dRp-5W-pFI">
-                                                <rect key="frame" x="0.0" y="0.0" width="95.666666666666671" height="24"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="99" height="24"/>
                                                 <subviews>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconEdit" translatesAutoresizingMaskIntoConstraints="NO" id="egq-3V-2QJ">
                                                         <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="수정하기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="irP-0R-Lrx">
-                                                        <rect key="frame" x="40" y="2.6666666666666288" width="55.666666666666657" height="18.666666666666668"/>
+                                                        <rect key="frame" x="40" y="2.3333333333333712" width="59" height="19.333333333333332"/>
                                                         <fontDescription key="fontDescription" name="SpoqaHanSansNeo-Bold" family="Spoqa Han Sans Neo" pointSize="16"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -265,13 +272,13 @@
                                                 </constraints>
                                             </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="TGt-2Z-C9r">
-                                                <rect key="frame" x="0.0" y="57" width="95.666666666666671" height="24"/>
+                                                <rect key="frame" x="0.0" y="57" width="99" height="24"/>
                                                 <subviews>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconDelete" translatesAutoresizingMaskIntoConstraints="NO" id="Zsy-Aj-kNg">
                                                         <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="삭제하기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nfx-BK-aps">
-                                                        <rect key="frame" x="40" y="2.6666666666666288" width="55.666666666666657" height="18.666666666666668"/>
+                                                        <rect key="frame" x="40" y="2.3333333333333712" width="59" height="19.333333333333332"/>
                                                         <fontDescription key="fontDescription" name="SpoqaHanSansNeo-Bold" family="Spoqa Han Sans Neo" pointSize="16"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -341,13 +348,13 @@
                                 <rect key="frame" x="0.0" y="580" width="375" height="232"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="해당 선물을 삭제하시겠습니까?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZbP-u8-5EJ">
-                                        <rect key="frame" x="64.000000000000014" y="47" width="247.33333333333337" height="23.333333333333329"/>
+                                        <rect key="frame" x="58.333333333333343" y="47" width="258.66666666666663" height="24"/>
                                         <fontDescription key="fontDescription" name="SpoqaHanSansNeo-Bold" family="Spoqa Han Sans Neo" pointSize="20"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="기록을 삭제하면 복구가 불가합니다." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dMy-tP-4gV">
-                                        <rect key="frame" x="74.666666666666671" y="76.333333333333371" width="225.66666666666663" height="18.666666666666671"/>
+                                        <rect key="frame" x="70.000000000000014" y="77" width="235.33333333333337" height="19.333333333333329"/>
                                         <fontDescription key="fontDescription" name="SpoqaHanSansNeo-Regular" family="Spoqa Han Sans Neo" pointSize="16"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
