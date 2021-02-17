@@ -9,8 +9,6 @@ import UIKit
 import TTGTagCollectionView
 
 class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldDelegate, UIScrollViewDelegate{
-    var receivedModels = [LoadGiftData]()
-    var sentModels = [LoadGiftData]()
     var nameArr = Array<String>() //그동안 주고 받은 사람들 테이블 뷰의 data
     var autoArr = Array<AutoSearchCellData>() // 자동완성 테이블 뷰의 data
     var resArr = Array<LoadGiftData>()
@@ -71,20 +69,10 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
         collectionView.delegate = self
         searchResultCollectionView.delegate = self
         searchResultCollectionView.dataSource = self
-        //makeTestData()
         setLayout()
         
         
     }
-    /*
-    //MARK: 테스트 데이터 생성
-    private func makeTestData(){
-        receivedModels.append(Gift(name: "이름1", isReceiveGift: true, content: "내생일에 받음", receiveDate: "2020. 11. 02 (수)", category: "화장품", reason: "생일"))
-        receivedModels.append(Gift(name: "이름1", isReceiveGift: true, content: "집들이 선물 받음", receiveDate: "2020. 11. 02 (수)", category: "기타", reason: "집들이"))
-        receivedModels.append(Gift(name: "이름2", isReceiveGift: false, content: "음식이었다.", receiveDate: "2020. 11. 03 (목)", category: "식품", reason: "기념일"))
-        receivedModels.append(Gift(name: "이름3", isReceiveGift: true, content: "고양이 장난감", receiveDate: "2020. 11. 03 (목)", category: "펫", reason: "기타"))
-        receivedModels.append(Gift(name: "이름4", isReceiveGift: true, content: "취업선물로 패딩받음", receiveDate: "2020. 11. 04 (금)", category: "패션", reason: "취업"))
-    }*/
     // MARK: 레이아웃 관련 초기 세팅
     private func setTagCollectionView(tagCollectionView: TTGTextTagCollectionView, flag: Bool){
         tagCollectionView.alignment = .left
@@ -155,11 +143,11 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
         //그동안 주고 받은 사람들 테이블 세팅
         //받은 선물리스트와 보낸 선물리스트에서 이름을 읽어서 nameArr에 저장. nameArr의 값들이 table의 cell의 label 값
         var set = Set<String>()
-        for model in receivedModels {
+        for model in Gifts.receivedModels {
             
             set.insert(model.name)
         }
-        for model in sentModels {
+        for model in Gifts.sentModels {
             set.insert(model.name)
         }
         for name in set {
@@ -269,7 +257,7 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
         autoArr.removeAll()
         if keyword.count > 0{
             setFrontView(idx: 1)
-            for model in receivedModels + sentModels{
+            for model in Gifts.receivedModels + Gifts.sentModels{
                 if model.name.contains(keyword) {
                     
                     checkAndAddToAutoArr(keyword: keyword, label: model.name, gift: model)
@@ -330,7 +318,7 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
     }
     private func setResDataByTag(tag: String){
         resArr.removeAll()
-        for model in receivedModels + sentModels{
+        for model in Gifts.receivedModels + Gifts.sentModels{
             if dicCategory[model.category] == tag {
                 resArr.append(model)
             }else if dicReason[model.reason] == tag{
@@ -353,24 +341,7 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
                 }
             }
             self.resFlag = true
-            var s = "받은 선물 " + String(self.resReceivedArr.count) as NSString
-            self.btnReceived.setTitle(s as String, for: .normal)
-            self.btnReceived.setTitleColor(UIColor.white, for:  .normal)
-            var att = NSMutableAttributedString(string: s as String)
-            var r = s.range(of: "[0-9]", options: .regularExpression, range: NSMakeRange(0,s.length))
-            if r.length > 0 {
-                att.addAttribute(NSAttributedString.Key.font, value: UIFont.boldSystemFont(ofSize: 16),  range: r)
-                btnReceived.setAttributedTitle(att, for: .normal)
-            }
-            s = "보낸 선물 " + String(self.resSentArr.count) as NSString
-            self.btnSent.setTitle(s as String, for: .normal)
-            self.btnSent.setTitleColor(UIColor.greyishBrown, for: .normal)
-            att = NSMutableAttributedString(string: s as String)
-            r = s.range(of: "[0-9]", options: .regularExpression, range: NSMakeRange(0,s.length))
-            if r.length > 0 {
-                att.addAttribute(NSAttributedString.Key.font, value: UIFont.boldSystemFont(ofSize: 16),  range: r)
-                btnSent.setAttributedTitle(att, for: .normal)
-            }
+            setResBtnText()
             
             setFrontView(idx: 3)
         }else{
@@ -393,7 +364,7 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
     }
     private func setResDataByKeyword(keyword : String){
         resArr.removeAll()
-        for model in receivedModels + sentModels{
+        for model in Gifts.receivedModels + Gifts.sentModels{
             if model.name.contains(keyword) {
                 resArr.append(model)
             }else{
@@ -412,6 +383,26 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
                 
             }
             
+        }
+    }
+    private func setResBtnText(){
+        var s = "받은 선물 " + String(self.resReceivedArr.count) as NSString
+        self.btnReceived.setTitle(s as String, for: .normal)
+        self.btnReceived.setTitleColor(UIColor.white, for:  .normal)
+        var att = NSMutableAttributedString(string: s as String)
+        var r = s.range(of: "[0-9]", options: .regularExpression, range: NSMakeRange(0,s.length))
+        if r.length > 0 {
+            att.addAttribute(NSAttributedString.Key.font, value: UIFont.boldSystemFont(ofSize: 16),  range: r)
+            btnReceived.setAttributedTitle(att, for: .normal)
+        }
+        s = "보낸 선물 " + String(self.resSentArr.count) as NSString
+        self.btnSent.setTitle(s as String, for: .normal)
+        self.btnSent.setTitleColor(UIColor.greyishBrown, for: .normal)
+        att = NSMutableAttributedString(string: s as String)
+        r = s.range(of: "[0-9]", options: .regularExpression, range: NSMakeRange(0,s.length))
+        if r.length > 0 {
+            att.addAttribute(NSAttributedString.Key.font, value: UIFont.boldSystemFont(ofSize: 16),  range: r)
+            btnSent.setAttributedTitle(att, for: .normal)
         }
     }
     //MARK: 맨 앞에 보여지는 view 변경
@@ -438,6 +429,36 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
             self.warningView.isHidden = true
             self.resultView.isHidden = false
         }
+    }
+    //MARK: 삭제 후 호출
+    public func deleteGift(giftId: String){
+        if resFlag{
+            var target = -1
+            var idx = 0
+            for gift in resReceivedArr{
+                if gift.id == giftId{
+                    target = idx
+                }
+                idx += 0
+            }
+            if target != -1 {
+                resReceivedArr.remove(at: target)
+            }
+        }else{
+            var target = -1
+            var idx = 0
+            for gift in resSentArr{
+                if gift.id == giftId{
+                    target = idx
+                }
+                idx += 0
+            }
+            if target != -1 {
+                resSentArr.remove(at: target)
+            }
+        }
+        setResBtnText()
+        self.searchResultCollectionView.reloadData()
     }
 }
 //MARK: collectionview delegate, datasource extension
@@ -504,11 +525,14 @@ extension SearchVC : UICollectionViewDelegateFlowLayout, UICollectionViewDataSou
         }
         if collectionView == self.searchResultCollectionView{
             //상세화면 이동
-            if resFlag{
-                
+            let detailSB = UIStoryboard(name: "Detail", bundle: nil)
+            guard let vc = detailSB.instantiateViewController(withIdentifier: "DetailVC") as? DetailVC else { return }
+            if self.resFlag {
+                vc.giftId = resReceivedArr[indexPath.row].id
             }else{
-                
+                vc.giftId = resSentArr[indexPath.row].id
             }
+            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
 }
