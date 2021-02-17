@@ -23,6 +23,7 @@ class VC: UIViewController{
     @IBOutlet weak var btnWrite: UIButton!
     @IBOutlet weak var btnGfitBox: UIButton!
     @IBOutlet weak var btnArrow: UIButton!
+    @IBOutlet weak var bottomView: UIView!
     
     var currentIndex: CGFloat = 0
     

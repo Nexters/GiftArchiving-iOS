@@ -49,14 +49,16 @@ class SplashVC: UIViewController, UIGestureRecognizerDelegate {
         let SPREF = UserDefaults.standard
         if let appleId = SPREF.string(forKey: "appleId"){
             if !appleId.isEmpty {
-
+                print("apple")
+                print(appleId)
                 self.moveToMain()
             }else{
                 self.moveToOnboarding()
             }
         }else{
             if let kakaoId = SPREF.string(forKey: "kakaoId"){
-
+                print("kakao")
+                print(kakaoId)
                 self.moveToMain()
             }else{
                 self.moveToOnboarding()
