@@ -89,6 +89,8 @@ class RecordVC: UIViewController {
     
     lazy var exitColorEditButton = UIButton()
     
+    lazy var exitFrameEditButton = UIButton()
+    
     var isReceiveGift: Bool = true
     
     private var textViewPlaceholderFlag: Bool = true
@@ -351,7 +353,25 @@ class RecordVC: UIViewController {
     private var isStickerEditing: Bool = false
     private var isStickerGuideLineEditing: Bool = false
     
-    private var isFrameEditing: Bool = false
+    private var isFrameEditing: Bool = false {
+        didSet {
+            if isFrameEditing {
+                changeButtonContainerColor(true)
+                changeFrameButtonInteraction(false)
+                animateFrameView(true)
+                changeFrameView.backgroundColor = currentBackgroundPopupColor
+                makeButtonLowOpacity(index: 1)
+                exitFrameEditButton.isHidden = false
+            } else {
+                view.bringSubviewToFront(exitFrameEditButton)
+                changeButtonContainerColor(false)
+                changeFrameButtonInteraction(true)
+                animateFrameView(false)
+                makeButtonNormalOpacity()
+                exitFrameEditButton.isHidden = true
+            }
+        }
+    }
     
     private var isSend: Bool = false
     
@@ -687,17 +707,10 @@ class RecordVC: UIViewController {
     
     @IBAction func changeFrame(_ sender: UIButton) {
         if isFrameEditing {
-            changeButtonContainerColor(false)
-            changeFrameButtonInteraction(true)
-            animateFrameView(false)
-            makeButtonNormalOpacity()
+            print("button false")
             isFrameEditing = false
         } else {
-            changeButtonContainerColor(true)
-            changeFrameButtonInteraction(false)
-            animateFrameView(true)
-            changeFrameView.backgroundColor = currentBackgroundPopupColor
-            makeButtonLowOpacity(index: 1)
+            print("button true")
             isFrameEditing = true
         }
     }
@@ -857,7 +870,7 @@ extension RecordVC {
         colorButton.layer.borderColor = UIColor.white.cgColor
         
         
-        // 배경색 바꿀때 원래 메뉴로 돌아가는 버튼
+        // 배경색 바꿀 때 원래 메뉴로 돌아가는 버튼
         exitColorEditButton.addTarget(self, action: #selector(dismissColorBottomContainer), for: .touchUpInside)
         view.addSubview(exitColorEditButton)
         exitColorEditButton.translatesAutoresizingMaskIntoConstraints = false
@@ -866,6 +879,16 @@ extension RecordVC {
         exitColorEditButton.bottomAnchor.constraint(equalTo: colorBottomContainer.topAnchor).isActive = true
         exitColorEditButton.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
         exitColorEditButton.isHidden = true
+        
+        // 프레임 바꿀 때 원래 메뉴로 돌아가는 버튼
+        exitFrameEditButton.addTarget(self, action: #selector(dismissFrameButton), for: .touchUpInside)
+        view.addSubview(exitFrameEditButton)
+        exitFrameEditButton.translatesAutoresizingMaskIntoConstraints = false
+        exitFrameEditButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        exitFrameEditButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        exitFrameEditButton.bottomAnchor.constraint(equalTo: changeFrameView.topAnchor).isActive = true
+        exitFrameEditButton.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+        exitFrameEditButton.isHidden = true
         
         // 스티커 뷰
         view.addSubview(stickerPopupView)
@@ -944,6 +967,10 @@ extension RecordVC {
             }
         }
         
+    }
+    
+    @objc func dismissFrameButton() {
+        isFrameEditing = false
     }
     
     @objc func dismissColorBottomContainer() {
