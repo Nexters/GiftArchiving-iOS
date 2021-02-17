@@ -28,7 +28,8 @@ class DetailVC: UIViewController {
     @IBOutlet weak var moreButton: UIButton!
     @IBOutlet weak var exitButton: UIButton!
     @IBOutlet var textsToChangeColor: [UILabel]!
-    var giftId: String = "6024c92e0b372841ffb814b8"
+    
+    var giftId: String = "602cf0ff00eec17e8db2b4dd"
     var currentBackgroundColor: String = "charcoalGrey"
     
     override func viewWillAppear(_ animated: Bool) {

@@ -275,7 +275,7 @@ class RecordVC: UIViewController {
             }
             
             if currentBackgroundColor == UIColor.wheat {
-                
+                nameEnvelopLabel.textColor = .black
                 logoSticker.image = UIImage.init(named: "logoBgcolorNoneBlack")
                 backButton.setImage(UIImage.init(named: "iconBackBk"), for: .normal)
                 dateToRecordLabel.textColor = .greyishBrown
@@ -312,6 +312,7 @@ class RecordVC: UIViewController {
                     btn.layer.borderColor = UIColor.greyishBrown.cgColor
                 }
             } else {
+                nameEnvelopLabel.textColor = .white
                 logoSticker.image = UIImage.init(named: "logoBgcolorNoneWhite")
                 backButton.setImage(UIImage.init(named: "iconBack"), for: .normal)
                 dateToRecordLabel.textColor = .white
@@ -487,7 +488,6 @@ class RecordVC: UIViewController {
             cropArea.drawHierarchy(in: cropArea.bounds, afterScreenUpdates: true)
         }
         
-        rectagularInstagramCropView.makeRounded(cornerRadius: 8.0)
         rectagularInstagramCropView.backgroundColor = currentBackgroundColor
         
         let imageView = UIImageView.init(image: croppedImage)
@@ -532,21 +532,30 @@ class RecordVC: UIViewController {
         label.text = fromLabel.text! + nameTextField.text!
         label.font = UIFont(name: "SpoqaHanSansNeo-Bold", size: 16)
         label.textColor = .white
-       
+        
         rectagularInstagramCropView.addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 13).isActive = true
         label.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
 
+        
+        let myPhone = UIGraphicsImageRenderer(size: rectagularInstagramCropView.bounds.size)
+        let myPhonePhoto = myPhone.image { _ in
+            rectagularInstagramCropView.drawHierarchy(in: rectagularInstagramCropView.bounds, afterScreenUpdates: true)
+        }
+        
+        rectagularInstagramCropView.makeRounded(cornerRadius: 8.0)
         let instagram = UIGraphicsImageRenderer(size: rectagularInstagramCropView.bounds.size)
         let instagramSquareImage = instagram.image { _ in
             rectagularInstagramCropView.drawHierarchy(in: rectagularInstagramCropView.bounds, afterScreenUpdates: true)
         }
         
+        
         share.currentName = "\(fromLabel.text!) \(nameTextField.text!)"
         share.currentBackgroundColor = currentBackgroundColor
         share.envelopImage = envelopImage
         share.instagramImage = instagramSquareImage
+        share.myPhonePhoto = myPhonePhoto
         share.currentFrameOfImage = currentFrameOfImage
         share.userName = nameTextField.text
         
@@ -573,6 +582,12 @@ class RecordVC: UIViewController {
                     var categoryName: String = ""
                     var purposeName: String = ""
                     var emotionName: String = ""
+                    if currentBackgroundColor == UIColor.wheat {
+                        categoryImageName.trimmingCharacters(in: ["B"])
+                        purposeImageName.trimmingCharacters(in: ["B"])
+                        emotionImageName.trimmingCharacters(in: ["B"])
+                    }
+                    
                     for category in Icons.category {
                         if category.imageName == categoryImageName {
                             categoryName = category.englishName

@@ -139,6 +139,53 @@ struct GiftService {
                 
             }
     }
+//    {
+//      "bgColor": "string",
+//      "category": "LIVING",
+//      "content": "string",
+//      "emotion": "CHEER",
+//      "name": "string",
+//      "reason": "ANNIVERSARY",
+//      "receiveDate": "2021-02-17T04:47:09.010Z"
+//    }
+    func putGift(bgColor: String, category: String, content: String, emotion: String, name: String, reason: String, receiveDate: String, giftId: String ,completion: @escaping (NetworkResult<Any>) -> Void) {
+       
+        let header: HTTPHeaders = ["Accept": "application/json"]
+        
+        let url = APIConstants.baseURL + APIConstants.getOneGiftURL + "/\(giftId)"
+        
+        
+        let body : Parameters = [
+            "content" : content,
+            "name": name,
+            "receiveDate": receiveDate,
+            "category" : category,
+            "emotion": emotion,
+            "reason": reason,
+            "bgColor": bgColor
+        ]
+        
+        let dataRequest = AF.request(url, method: .put, parameters: body, headers: header)
+        
+        dataRequest.validate(statusCode: 200..<500)
+            .responseData { (response) in
+                switch response.result {
+                case .success:
+                    guard let statusCode = response.response?.statusCode else { return }
+                    guard let value = response.value else { return }
+                    
+                    let networkResult = self.judgeOneGift(status: statusCode, data: value)
+                    
+                    print(statusCode)
+                    completion(networkResult)
+                case .failure: completion(.networkFail)
+                    
+                }
+                
+            }
+    }
+    
+    
 
     
     func judgeOneGift(status : Int, data : Data) -> NetworkResult<Any> {

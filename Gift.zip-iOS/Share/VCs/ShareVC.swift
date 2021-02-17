@@ -24,6 +24,7 @@ class ShareVC: UIViewController {
     var currentFrameOfImage: FrameOfImage?
     var userName: String?
     var kakaoImageURL: String?
+    var myPhonePhoto: UIImage?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -35,18 +36,19 @@ class ShareVC: UIViewController {
         logoImageView.backgroundColor = currentBackgroundColor
         if currentBackgroundColor == .wheat {
             nameLabel.textColor = UIColor(white: 41.0 / 255.0, alpha: 1.0)
+            logoImageView.image = UIImage(named: "logoBgcolorNoneBlack")
             switch currentFrameOfImage {
             case .square:
-                logoImageView.image = UIImage(named: "logoYellowRectangle")
                 break
             case .circle:
-                logoImageView.image = UIImage(named: "logoYellowCircle")
+                let radius = logoImageView.layer.bounds.width / 2
+                logoImageView.makeRounded(cornerRadius: radius)
                 break
             case .full:
-                logoImageView.image = UIImage(named: "logoYellowRectangle")
                 break
             case .windowFrame:
-                logoImageView.image = UIImage(named: "logoYellowWindow")
+                let radius = logoImageView.layer.bounds.width / 2
+                logoImageView.roundCorners(cornerRadius: radius, maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
                 break
             case .none:
                 break
@@ -136,7 +138,7 @@ class ShareVC: UIViewController {
     
     @IBAction func saveImage(_ sender: UIButton) {
         
-        UIImageWriteToSavedPhotosAlbum(instagramImage!, self, #selector(image(image:didFinishSavingWithError:contextInfo:)), nil)
+        UIImageWriteToSavedPhotosAlbum(myPhonePhoto!, self, #selector(image(image:didFinishSavingWithError:contextInfo:)), nil)
         
     }
     
