@@ -49,14 +49,14 @@ class SplashVC: UIViewController {
         let SPREF = UserDefaults.standard
         if let appleId = SPREF.string(forKey: "appleId"){
             if !appleId.isEmpty {
-                print(appleId)
+
                 self.moveToMain()
             }else{
                 self.moveToOnboarding()
             }
         }else{
             if let kakaoId = SPREF.string(forKey: "kakaoId"){
-                print(kakaoId)
+
                 self.moveToMain()
             }else{
                 self.moveToOnboarding()

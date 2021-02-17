@@ -89,6 +89,8 @@ class RecordVC: UIViewController {
     
     lazy var exitColorEditButton = UIButton()
     
+    lazy var exitFrameEditButton = UIButton()
+    
     var isReceiveGift: Bool = true
     
     private var textViewPlaceholderFlag: Bool = true
@@ -97,6 +99,7 @@ class RecordVC: UIViewController {
     
     private var _selectedStickerView:StickerView?
     
+    private var frameType: String = "SQUARE"
     var selectedStickerView:StickerView? {
         get {
             return _selectedStickerView
@@ -140,16 +143,20 @@ class RecordVC: UIViewController {
             
             switch currentFrameOfImage {
             case .square:
+                frameType = "SQUARE"
                 logoSticker.makeRounded(cornerRadius: 0)
                 break
             case .circle:
+                frameType = "CIRCLE"
                 let radius = logoSticker.bounds.width / 2
                 logoSticker.makeRounded(cornerRadius: radius)
                 break
             case .full:
+                frameType = "SQUARE"
                 logoSticker.makeRounded(cornerRadius: 0)
                 break
             case .windowFrame:
+                frameType = "ARCH"
                 let radius = logoSticker.bounds.width / 2
                 logoSticker.roundCorners(cornerRadius: radius, maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
                 break
@@ -346,7 +353,25 @@ class RecordVC: UIViewController {
     private var isStickerEditing: Bool = false
     private var isStickerGuideLineEditing: Bool = false
     
-    private var isFrameEditing: Bool = false
+    private var isFrameEditing: Bool = false {
+        didSet {
+            if isFrameEditing {
+                changeButtonContainerColor(true)
+                changeFrameButtonInteraction(false)
+                animateFrameView(true)
+                changeFrameView.backgroundColor = currentBackgroundPopupColor
+                makeButtonLowOpacity(index: 1)
+                exitFrameEditButton.isHidden = false
+            } else {
+                view.bringSubviewToFront(exitFrameEditButton)
+                changeButtonContainerColor(false)
+                changeFrameButtonInteraction(true)
+                animateFrameView(false)
+                makeButtonNormalOpacity()
+                exitFrameEditButton.isHidden = true
+            }
+        }
+    }
     
     private var isSend: Bool = false
     
@@ -523,134 +548,134 @@ class RecordVC: UIViewController {
         share.instagramImage = instagramSquareImage
         share.currentFrameOfImage = currentFrameOfImage
         share.userName = nameTextField.text
-        self.navigationController?.pushViewController(share, animated: true)
-//        if isImageSelected {
-//            if isNameTyped {
-//                if isCategoryIconSelected && isPurposeIconSelected && isEmotionIconSelected {
-//                    let content = emotionTextView.text ?? ""
-//                    let name = nameTextField.text ?? ""
-//
-//                    // 날짜
-//                    let dateFormatter = DateFormatter()
-//                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZ"
-//                    let dateString = dateFormatter.string(from: selectedDate)
-//                    print(dateString)
-//                    let dateArr = dateString.components(separatedBy: [" "," "])
-//                    let first = dateArr[0]
-//                    let second = dateArr[1]
-//                    print(dateArr[2])
-//                    let third = dateArr[2].replacingOccurrences(of: "+", with: ".")
-//                    let date = first + "T" + second + third
-//
-//                    // 아이콘 이름
-//
-//                    var categoryName: String = ""
-//                    var purposeName: String = ""
-//                    var emotionName: String = ""
-//                    for category in Icons.category {
-//                        if category.imageName == categoryImageName {
-//                            categoryName = category.englishName
-//                        }
-//                    }
-//
-//                    for purpose in Icons.purpose {
-//                        if purpose.imageName == purposeImageName {
-//                            purposeName = purpose.englishName
-//                        }
-//                    }
-//
-//                    if isReceiveGift {
-//                        for emotion in Icons.emotionGet {
-//                            if emotion.imageName == emotionImageName {
-//                                emotionName = emotion.englishName
-//                            }
-//                        }
-//                    } else {
-//                        for emotion in Icons.emotionSend {
-//                            if emotion.imageName == emotionImageName {
-//                                emotionName = emotion.englishName
-//                            }
-//                        }
-//                    }
-//                    var token: String = ""
-//                    let SPREF = UserDefaults.standard
-//                    if let appleId = SPREF.string(forKey: "appleId"){
-//                        token = appleId
-//                    } else {
-//                        if let kakaoId = SPREF.string(forKey: "kakaoId") {
-//                            token = kakaoId
-//                        }
-//                    }
-//                    
-////                    print(content)
-////                    print(isReceiveGift)
-////                    print(name)
-////                    print(date)
-////                    print(categoryName)
-////                    print(emotionName)
-////                    print(purposeName)
-////                    print(currentBackgroundColorString)
-////                    print(kakaoEnvelopImage)
-////                    print(envelopImage)
-//                    
-//                    let bgImg = resizeImage(image: kakaoEnvelopImage, newWidth: kakaoEnvelopImage.size.width)
-//                    let noBgImg = resizeImage(image: envelopImage, newWidth: envelopImage.size.width)
-//
-//                    GiftService.shared.recordGift(content: content, isReceiveGift: isReceiveGift, name: name, receiveDate: date, createdBy: token, category: categoryName, emotion: emotionName, reason: purposeName, bgColor: currentBackgroundColorString, bgImg: bgImg!, noBgImg: noBgImg!) { networkResult -> Void in
-//                        switch networkResult {
-//                        case .success(let data):
-//                            if let bgData = data as? RecordGiftData {
-//                                print(bgData)
-//                                share.kakaoImageURL = bgData.bgImg
-//                                self.navigationController?.pushViewController(share, animated: true)
-//                            }
-//
-//                            
-//                            
-//
-//                        case .requestErr:
-//                            let alertViewController = UIAlertController(title: "통신 실패", message: "💩", preferredStyle: .alert)
-//                            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
-//                            alertViewController.addAction(action)
-//                            self.present(alertViewController, animated: true, completion: nil)
-//
-//                        case .pathErr: print("path")
-//                        case .serverErr:
-//                            let alertViewController = UIAlertController(title: "통신 실패", message: "서버 오류", preferredStyle: .alert)
-//                            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
-//                            alertViewController.addAction(action)
-//                            self.present(alertViewController, animated: true, completion: nil)
-//                            print("networkFail")
-//                            print("serverErr")
-//                        case .networkFail:
-//                            let alertViewController = UIAlertController(title: "통신 실패", message: "네트워크 오류", preferredStyle: .alert)
-//                            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
-//                            alertViewController.addAction(action)
-//                            self.present(alertViewController, animated: true, completion: nil)
-//                            print("networkFail")
-//                        }
-//                    }
-//                } else {
-//
-//                    let alertViewController = UIAlertController(title: "저장 실패", message: "선물에 해당하는 아이콘을 선택해주세요 🥰", preferredStyle: .alert)
-//                    let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
-//                    alertViewController.addAction(action)
-//                    self.present(alertViewController, animated: true, completion: nil)
-//                }
-//            } else {
-//
-//                let alertViewController = UIAlertController(title: "저장 실패", message: "이름을 입력해주세요 🥰", preferredStyle: .alert)
-//                let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
-//                alertViewController.addAction(action)
-//                self.present(alertViewController, animated: true, completion: nil)
-//            }
-//        } else {
-//
-//            let alertViewController = UIAlertController(title: "저장 실패", message: "이미지를 선택해주세요 🥰", preferredStyle: .alert)
-//            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
-//            alertViewController.addAction(action)
-//            self.present(alertViewController, animated: true, completion: nil)
-//        }
+        
+        if isImageSelected {
+            if isNameTyped {
+                if isCategoryIconSelected && isPurposeIconSelected && isEmotionIconSelected {
+                    let content = emotionTextView.text ?? ""
+                    let name = nameTextField.text ?? ""
+
+                    // 날짜
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZ"
+                    let dateString = dateFormatter.string(from: selectedDate)
+                    print(dateString)
+                    let dateArr = dateString.components(separatedBy: [" "," "])
+                    let first = dateArr[0]
+                    let second = dateArr[1]
+                    print(dateArr[2])
+                    let third = dateArr[2].replacingOccurrences(of: "+", with: ".")
+                    let date = first + "T" + second + third
+
+                    // 아이콘 이름
+
+                    var categoryName: String = ""
+                    var purposeName: String = ""
+                    var emotionName: String = ""
+                    for category in Icons.category {
+                        if category.imageName == categoryImageName {
+                            categoryName = category.englishName
+                        }
+                    }
+
+                    for purpose in Icons.purpose {
+                        if purpose.imageName == purposeImageName {
+                            purposeName = purpose.englishName
+                        }
+                    }
+
+                    if isReceiveGift {
+                        for emotion in Icons.emotionGet {
+                            if emotion.imageName == emotionImageName {
+                                emotionName = emotion.englishName
+                            }
+                        }
+                    } else {
+                        for emotion in Icons.emotionSend {
+                            if emotion.imageName == emotionImageName {
+                                emotionName = emotion.englishName
+                            }
+                        }
+                    }
+                    var token: String = ""
+                    let SPREF = UserDefaults.standard
+                    if let appleId = SPREF.string(forKey: "appleId"){
+                        token = appleId
+                    } else {
+                        if let kakaoId = SPREF.string(forKey: "kakaoId") {
+                            token = kakaoId
+                        }
+                    }
+                    
+//                    print(content)
+//                    print(isReceiveGift)
+//                    print(name)
+//                    print(date)
+//                    print(categoryName)
+//                    print(emotionName)
+//                    print(purposeName)
+//                    print(currentBackgroundColorString)
+//                    print(kakaoEnvelopImage)
+//                    print(envelopImage)
+                    
+                    let bgImg = resizeImage(image: kakaoEnvelopImage, newWidth: kakaoEnvelopImage.size.width)
+                    let noBgImg = resizeImage(image: envelopImage, newWidth: envelopImage.size.width)
+
+                    GiftService.shared.recordGift(content: content, isReceiveGift: isReceiveGift, name: name, receiveDate: date, createdBy: token, category: categoryName, emotion: emotionName, reason: purposeName, bgColor: currentBackgroundColorString, bgImg: bgImg!, noBgImg: noBgImg!, frameType: frameType) { networkResult -> Void in
+                        switch networkResult {
+                        case .success(let data):
+                            if let bgData = data as? RecordGiftData {
+                                print(bgData)
+                                share.kakaoImageURL = bgData.bgImg
+                                self.navigationController?.pushViewController(share, animated: true)
+                            }
+
+                            
+                            
+
+                        case .requestErr:
+                            let alertViewController = UIAlertController(title: "통신 실패", message: "💩", preferredStyle: .alert)
+                            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+                            alertViewController.addAction(action)
+                            self.present(alertViewController, animated: true, completion: nil)
+
+                        case .pathErr: print("path")
+                        case .serverErr:
+                            let alertViewController = UIAlertController(title: "통신 실패", message: "서버 오류", preferredStyle: .alert)
+                            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+                            alertViewController.addAction(action)
+                            self.present(alertViewController, animated: true, completion: nil)
+                            print("networkFail")
+                            print("serverErr")
+                        case .networkFail:
+                            let alertViewController = UIAlertController(title: "통신 실패", message: "네트워크 오류", preferredStyle: .alert)
+                            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+                            alertViewController.addAction(action)
+                            self.present(alertViewController, animated: true, completion: nil)
+                            print("networkFail")
+                        }
+                    }
+                } else {
+
+                    let alertViewController = UIAlertController(title: "저장 실패", message: "선물에 해당하는 아이콘을 선택해주세요 🥰", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+                    alertViewController.addAction(action)
+                    self.present(alertViewController, animated: true, completion: nil)
+                }
+            } else {
+
+                let alertViewController = UIAlertController(title: "저장 실패", message: "이름을 입력해주세요 🥰", preferredStyle: .alert)
+                let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+                alertViewController.addAction(action)
+                self.present(alertViewController, animated: true, completion: nil)
+            }
+        } else {
+
+            let alertViewController = UIAlertController(title: "저장 실패", message: "이미지를 선택해주세요 🥰", preferredStyle: .alert)
+            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+            alertViewController.addAction(action)
+            self.present(alertViewController, animated: true, completion: nil)
+        }
 
     }
     
@@ -682,17 +707,10 @@ class RecordVC: UIViewController {
     
     @IBAction func changeFrame(_ sender: UIButton) {
         if isFrameEditing {
-            changeButtonContainerColor(false)
-            changeFrameButtonInteraction(true)
-            animateFrameView(false)
-            makeButtonNormalOpacity()
+            print("button false")
             isFrameEditing = false
         } else {
-            changeButtonContainerColor(true)
-            changeFrameButtonInteraction(false)
-            animateFrameView(true)
-            changeFrameView.backgroundColor = currentBackgroundPopupColor
-            makeButtonLowOpacity(index: 1)
+            print("button true")
             isFrameEditing = true
         }
     }
@@ -852,7 +870,7 @@ extension RecordVC {
         colorButton.layer.borderColor = UIColor.white.cgColor
         
         
-        // 배경색 바꿀때 원래 메뉴로 돌아가는 버튼
+        // 배경색 바꿀 때 원래 메뉴로 돌아가는 버튼
         exitColorEditButton.addTarget(self, action: #selector(dismissColorBottomContainer), for: .touchUpInside)
         view.addSubview(exitColorEditButton)
         exitColorEditButton.translatesAutoresizingMaskIntoConstraints = false
@@ -861,6 +879,16 @@ extension RecordVC {
         exitColorEditButton.bottomAnchor.constraint(equalTo: colorBottomContainer.topAnchor).isActive = true
         exitColorEditButton.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
         exitColorEditButton.isHidden = true
+        
+        // 프레임 바꿀 때 원래 메뉴로 돌아가는 버튼
+        exitFrameEditButton.addTarget(self, action: #selector(dismissFrameButton), for: .touchUpInside)
+        view.addSubview(exitFrameEditButton)
+        exitFrameEditButton.translatesAutoresizingMaskIntoConstraints = false
+        exitFrameEditButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        exitFrameEditButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        exitFrameEditButton.bottomAnchor.constraint(equalTo: changeFrameView.topAnchor).isActive = true
+        exitFrameEditButton.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+        exitFrameEditButton.isHidden = true
         
         // 스티커 뷰
         view.addSubview(stickerPopupView)
@@ -939,6 +967,10 @@ extension RecordVC {
             }
         }
         
+    }
+    
+    @objc func dismissFrameButton() {
+        isFrameEditing = false
     }
     
     @objc func dismissColorBottomContainer() {
