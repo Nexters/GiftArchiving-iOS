@@ -31,6 +31,7 @@ class SplashVC: UIViewController {
         if let appleId = SPREF.string(forKey: "appleId"){
             if !appleId.isEmpty {
                 print("apple")
+                print(appleId)
                 self.moveToMain()
             }else{
                 self.moveToOnboarding()
@@ -38,6 +39,7 @@ class SplashVC: UIViewController {
         }else{
             if SPREF.string(forKey: "kakaoId") != nil{
                 print("kakao")
+                print(SPREF.string(forKey: "kakaoId")!)
                 self.moveToMain()
             }else{
                 self.moveToOnboarding()

@@ -22,6 +22,7 @@ struct GiftService {
                     bgColor: String,
                     bgImg: UIImage,
                     noBgImg: UIImage,
+                    frameType: String,
                     completion : @escaping (NetworkResult<Any>) -> (Void)) {
         let url = APIConstants.baseURL + APIConstants.recordGiftURL
         
@@ -40,6 +41,7 @@ struct GiftService {
             "emotion": emotion,
             "reason": reason,
             "bgColor": bgColor,
+            "frameType": frameType
         ]
         
         AF.upload(multipartFormData: { multiPartFormData in

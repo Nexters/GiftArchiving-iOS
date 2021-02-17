@@ -126,9 +126,12 @@ class ShareVC: UIViewController {
     
     @IBAction func popToMain(_ sender: Any) {
         let mainSB = UIStoryboard.init(name: "MainSB", bundle: nil)
-        guard let mainVC = mainSB.instantiateViewController(identifier: "VC") as? VC else { return }
-        self.navigationController?.popToViewController(mainVC, animated: true)
-        
+        guard let mainVC = mainSB.instantiateViewController(identifier: "MainVC") as? VC else { return }
+        print("mainVC")
+        print(mainVC)
+        guard let navivc = self.navigationController else { return }
+        let main = navivc.viewControllers[navivc.viewControllers.count - 3]
+        navivc.popToViewController(main, animated: true)
     }
     
     @IBAction func saveImage(_ sender: UIButton) {

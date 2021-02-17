@@ -25,7 +25,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>kakao+appkey</string>
+				<string>kakao0beb54f6ec7d3aaba0e0940341a4ba9d</string>
 			</array>
 		</dict>
 	</array>
@@ -67,7 +67,7 @@
 					<key>UISceneDelegateClassName</key>
 					<string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
 					<key>UISceneStoryboardFile</key>
-					<string>Detail</string>
+					<string>SplashSB</string>
 				</dict>
 			</array>
 		</dict>
