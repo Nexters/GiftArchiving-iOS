@@ -50,6 +50,17 @@ class CollectionViewCell: UICollectionViewCell {
         
         
     }
+    public func configureEmpty(flag: Bool){
+        if flag{
+            self.labelFrom.text = "From. 보낸이"
+        }else{
+            self.labelFrom.text = "From. 받는이"
+        }
+        labelFrom.textColor = UIColor.white
+        labelDate.text = ""
+        self.labelDate.text = ""
+        self.imgView.image = UIImage(named: "imgEmptyMainBig")
+    }
     public func setLabelColor(color : String){
         if(color == "wheat"){
             labelFrom.textColor = UIColor.greyishBrown

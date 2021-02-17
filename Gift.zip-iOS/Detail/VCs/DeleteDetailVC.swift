@@ -27,12 +27,11 @@ class DeleteDetailVC: UIViewController {
     }
     @IBAction func deleteButtonTapped(_ sender: Any) {
         // 삭제 API
-        
+        NotificationCenter.default.post(name: .init("broadcastDelete"), object: nil)
         GiftService.shared.deleteGift(giftId: giftId!) { result in
             switch result {
             case .success(let data):
                 guard let _ = data as? RecordGiftData else { return }
-                
 //                showToast(message: "삭제되었습니다.", font: UIFont(name: "AppleSDGothicNeo-Medium", size: 14.0) ?? UIFont.systemFont(ofSize: 14.0))
             case .requestErr(let message):
                 guard let message = message as? String else { return }
@@ -59,5 +58,6 @@ class DeleteDetailVC: UIViewController {
         }
         self.dismiss(animated: true, completion: nil)
     }
+    
     
 }

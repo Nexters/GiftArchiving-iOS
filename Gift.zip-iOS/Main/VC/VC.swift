@@ -31,18 +31,12 @@ class VC: UIViewController{
     let cellRatio: CGFloat = 0.65
     
     var isOneStepPaging = true
-    
-    var receivedModels = [LoadGiftData]()
-    var sentModels = [LoadGiftData]()
-    var emptyReceivedModels = [LoadGiftData(id: "", imgUrl: "", name: "From. 보낸이", content: "", receiveDate: "", bgColor: "charcoalGrey", isReceiveGift: true, category: "", emotion: "", reason: "", frameType: "")]
-    var emptySentModels = [LoadGiftData(id: "", imgUrl: "", name: "To. 받는이", content: "", receiveDate: "", bgColor: "charcoalGrey", isReceiveGift: false, category: "", emotion: "", reason: "", frameType: "")]
 
     private var isReceiveGift: Bool = true
 
     private var collectionViewFlag = true // true는 받은 flase는 보낸
     
     private var device = 0 //device 크기 flag
-    
     
     @IBOutlet weak var constLabelMain1Top: NSLayoutConstraint!
     @IBOutlet weak var constLabelMainWidth: NSLayoutConstraint!
@@ -53,37 +47,20 @@ class VC: UIViewController{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
+        collectionView.reloadData()
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        reSetData()
         if view.bounds.height > 840 {
             device = 1
         }else{
             device = 0
         }
         setLayout()
-        
-    }
-    private func reSetData(){
-        self.receivedModels.removeAll()
-        self.sentModels.removeAll()
-        LoadGiftListService.shared.getReceivedGifts(page: 0, size: 10000000, isReceiveGift: true, completion: {
-            gifts in
-            self.receivedModels.append(contentsOf: gifts)
-            LoadGiftListService.shared.getReceivedGifts(page: 0, size: 10000000, isReceiveGift: false, completion: {
-                gifts in
-                self.sentModels.append(contentsOf: gifts)
-                //초기 ui 세팅
-                if self.receivedModels.count > 0 {
-                    self.changeUI(frameType: self.receivedModels[0].frameType, color: self.receivedModels[0].bgColor)
-                }
-                self.collectionView.reloadData()
-            })
-        })
     }
     func setLayout(){
         var cellHeight = CGFloat(330)
@@ -128,6 +105,10 @@ class VC: UIViewController{
         
         (btnWrite as UIView).makeRounded(cornerRadius: 8.0)
         
+        if Gifts.receivedModels.count > 0 {
+            changeUI(frameType: Gifts.receivedModels[0].frameType, color: Gifts.receivedModels[0].bgColor)
+        }
+        
     }
     
     @IBAction func settingButtonClicked(_ sender: UIButton) {
@@ -142,8 +123,8 @@ class VC: UIViewController{
         isReceiveGift = false
         DispatchQueue.main.asyncAfter(deadline: .now()){
             self.moveBarToSentAnimate()
-            if self.sentModels.count > 0 {
-                self.changeUI(frameType: self.sentModels[0].frameType, color: self.sentModels[0].bgColor)
+            if Gifts.sentModels.count > 0 {
+                self.changeUI(frameType: Gifts.sentModels[0].frameType, color: Gifts.sentModels[0].bgColor)
             }
             self.collectionView.reloadData()
         }
@@ -155,8 +136,8 @@ class VC: UIViewController{
         isReceiveGift = true
         DispatchQueue.main.asyncAfter(deadline: .now()){
             self.moveBarToReceivedAnimate()
-            if self.receivedModels.count > 0 {
-                self.changeUI(frameType: self.receivedModels[0].frameType, color: self.receivedModels[0].bgColor)
+            if Gifts.receivedModels.count > 0 {
+                self.changeUI(frameType: Gifts.receivedModels[0].frameType, color: Gifts.receivedModels[0].bgColor)
             }
             self.collectionView.reloadData()
         }
@@ -172,11 +153,6 @@ class VC: UIViewController{
     @IBAction func btnGfitBoxClicked(_ sender: UIButton) {
         let listSB = UIStoryboard(name: "ListSB", bundle: nil)
         let vc = listSB.instantiateViewController(withIdentifier: "ListVC") as! ListVC
-        if self.collectionViewFlag{
-            vc.models = self.receivedModels
-        }else{
-            vc.models = self.sentModels
-        }
         vc.receivedSentFlag = self.collectionViewFlag
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -195,11 +171,8 @@ class VC: UIViewController{
     @IBAction func btnSearchClicked(_ sender: UIButton) {
         let searchSB = UIStoryboard(name: "SearchSB", bundle: nil)
         let vc = searchSB.instantiateViewController(withIdentifier: "SearchVC") as! SearchVC
-        vc.receivedModels = self.receivedModels
-        vc.sentModels = self.sentModels
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    
 }
 //MARK: 컬랙션뷰 datasource, delegate, changeUI
 extension VC: UICollectionViewDataSource, UICollectionViewDelegate {
@@ -209,20 +182,20 @@ extension VC: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionViewFlag {
-            if receivedModels.count == 0 {
+            if Gifts.receivedModels.count == 0 {
                 self.collectionView.isScrollEnabled = false
-                return emptyReceivedModels.count
+                return 1
             }else{
                 self.collectionView.isScrollEnabled = true
-                return receivedModels.count
+                return Gifts.receivedModels.count
             }
         }else{
-            if sentModels.count == 0 {
+            if Gifts.sentModels.count == 0 {
                 self.collectionView.isScrollEnabled = false
-                return emptySentModels.count
+                return 1
             }else{
                 self.collectionView.isScrollEnabled = true
-                return sentModels.count
+                return Gifts.sentModels.count
             }
             
         }
@@ -233,28 +206,51 @@ extension VC: UICollectionViewDataSource, UICollectionViewDelegate {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionViewCell", for: indexPath) as! CollectionViewCell
         cell.setConstraint(device: device)
         if collectionViewFlag{
-            if receivedModels.count == 0 {
-                cell.configure(with: emptyReceivedModels[0])
+            if Gifts.receivedModels.count == 0 {
+                cell.configureEmpty(flag: true)
                 changeUIEmpty()
             }else{
-                cell.configure(with: receivedModels[indexPath.row])
+                cell.configure(with: Gifts.receivedModels[indexPath.row])
             }
         }else{
-            if sentModels.count == 0 {
-                cell.configure(with: emptySentModels[0])
+            if Gifts.sentModels.count == 0 {
+                cell.configureEmpty(flag: false)
                 changeUIEmpty()
             }else{
-                cell.configure(with: sentModels[indexPath.row])
+                cell.configure(with: Gifts.sentModels[indexPath.row])
             }
         }
         
         return cell
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionViewFlag{
+            if Gifts.receivedModels.count != 0 {
+                let detailSB = UIStoryboard(name: "Detail", bundle: nil)
+                guard let vc = detailSB.instantiateViewController(withIdentifier: "DetailVC") as? DetailVC else { return }
+                
+                vc.giftId = Gifts.receivedModels[indexPath.row].id
+                
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }else{
+            if Gifts.sentModels.count != 0 {
+                let detailSB = UIStoryboard(name: "Detail", bundle: nil)
+                guard let vc = detailSB.instantiateViewController(withIdentifier: "DetailVC") as? DetailVC else { return }
+                
+                vc.giftId = Gifts.sentModels[indexPath.row].id
+                
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
+        
     }
     func changeUIEmpty(){
         self.imgLogo.image = UIImage(named: "logo_charcoalGrey_SQUARE")
         self.collectionView.backgroundColor = UIColor(named: "charcoalGrey")
         self.btnGfitBox.titleLabel?.textColor = UIColor.white
         self.btnArrow.imageView?.image = UIImage(named: "btn_arrow_white")
+        currentIndex = 0
     }
     func changeUI(frameType: String, color: String){
         if(color == "wheat"){
@@ -309,17 +305,16 @@ extension VC : UIScrollViewDelegate {
         }
         
         if collectionViewFlag {
-            if Int(currentIndex) == receivedModels.count{
+            if Int(currentIndex) == Gifts.receivedModels.count{
                 currentIndex -= 1
             }
-            self.changeUI(frameType: receivedModels[Int(currentIndex)].frameType, color: receivedModels[Int(currentIndex)].bgColor)
-            
+            self.changeUI(frameType: Gifts.receivedModels[Int(currentIndex)].frameType, color: Gifts.receivedModels[Int(currentIndex)].bgColor)
             
         }else{
-            if Int(currentIndex) == receivedModels.count{
+            if Int(currentIndex) == Gifts.sentModels.count{
                 currentIndex -= 1
             }
-            self.changeUI(frameType: sentModels[Int(currentIndex)].frameType, color: sentModels[Int(currentIndex)].bgColor)
+            self.changeUI(frameType: Gifts.sentModels[Int(currentIndex)].frameType, color: Gifts.sentModels[Int(currentIndex)].bgColor)
             
         }
         

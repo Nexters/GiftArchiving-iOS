@@ -25,6 +25,7 @@ class DetailVC: UIViewController {
     @IBOutlet weak var nameLabel: UITextField!
     @IBOutlet weak var contentTextView: UITextView!
     
+
     @IBOutlet weak var moreButton: UIButton!
     @IBOutlet weak var exitButton: UIButton!
     @IBOutlet var textsToChangeColor: [UILabel]!
@@ -34,7 +35,6 @@ class DetailVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         // 선물기록 정보들 가져오기
         GiftService.shared.getOneGift(id: giftId) { (result) in
             switch result {
@@ -92,11 +92,11 @@ class DetailVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         for btn in tagButtons {
             btn.makeRounded(cornerRadius: 8.0)
         }
         NotificationCenter.default.addObserver(self, selector: #selector(popupChange), name: .init("popupchange"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(broadcastDelete), name: .init("broadcastDelete"), object: nil)
     }
     
     
@@ -229,5 +229,39 @@ class DetailVC: UIViewController {
         moreVC.currentBackgroundColor = self.currentBackgroundColor
         moreVC.modalPresentationStyle = .overCurrentContext
         self.present(moreVC, animated: true, completion: nil)
+    }
+    
+    //MARK: 삭제 API success 후,  로컬에서도 삭제시키기
+    @objc func broadcastDelete(){
+        var target = -1
+        var idx = 0
+        for model in Gifts.receivedModels{
+            if model.id == giftId {
+                target = idx
+                break
+            }
+            idx += 1
+        }
+        if target != -1 {
+            Gifts.receivedModels.remove(at: target)
+        }else{
+            idx = 0
+            for model in Gifts.sentModels{
+                if model.id == giftId {
+                    target = idx
+                    break
+                }
+                idx += 1
+            }
+            Gifts.sentModels.remove(at: target)
+        }
+        if let vcCnt = self.navigationController?.viewControllers.count{
+            if let searchVC = self.navigationController?.viewControllers[vcCnt - 2] as? SearchVC{
+                searchVC.deleteGift(giftId: giftId)
+            }
+        }
+        
+        self.navigationController?.popViewController(animated: true)
+        
     }
 }
