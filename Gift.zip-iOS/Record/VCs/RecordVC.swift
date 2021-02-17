@@ -206,7 +206,7 @@ class RecordVC: UIViewController {
                 
                 cropImageView.roundCorners(cornerRadius: radius, maskedCorners: [.layerMaxXMinYCorner, .layerMinXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner])
                 break
-            
+                
             case .windowFrame:
                 fullFrameView.alpha = 0.6
                 squareFrameView.alpha = 0.6
@@ -298,7 +298,7 @@ class RecordVC: UIViewController {
                 emotionImageView.image = UIImage(named: emotionImageName)
                 
                 emotionTextView.textColor = .greyishBrown
-
+                
                 
                 let photo = UIImage(named: "iconCameraBk")
                 let frame = UIImage(named: "iconShapeBk")
@@ -416,7 +416,7 @@ class RecordVC: UIViewController {
             button.layer.borderWidth = 1
         }
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
-
+        
         fromLabel.text = isReceiveGift ? "From." : "To."
         
     }
@@ -435,7 +435,7 @@ class RecordVC: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "dateSegue" {
-//            popupBackground.animatePopupBackground(true)
+            //            popupBackground.animatePopupBackground(true)
             guard let des = segue.destination as? DatePopupVC else { return }
             des.delegate = self
             des.currentBackgroundColor = currentBackgroundPopupColor
@@ -478,93 +478,82 @@ class RecordVC: UIViewController {
         selectedStickerView?.showEditingHandlers = false
         // 사진 크롭 저장하는 것 여러가지 방법으로!!
         
-        guard let share = UIStoryboard.init(name: "Share", bundle: nil).instantiateViewController(identifier: "ShareVC") as? ShareVC else { return }
-        
-        // 공유할 게시할 이미지 넘기기 작업
-        
-        // 편지봉투에 넣어질 정사각형 이미지
-        let cropped = UIGraphicsImageRenderer(size: cropArea.bounds.size)
-        let croppedImage = cropped.image { _ in
-            cropArea.drawHierarchy(in: cropArea.bounds, afterScreenUpdates: true)
-        }
-        
-        rectagularInstagramCropView.backgroundColor = currentBackgroundColor
-        
-        let imageView = UIImageView.init(image: croppedImage)
-        rectagularInstagramCropView.addSubview(imageView)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.leadingAnchor.constraint(equalTo: rectagularInstagramCropView.leadingAnchor, constant: 0).isActive = true
-        imageView.trailingAnchor.constraint(equalTo: rectagularInstagramCropView.trailingAnchor, constant: 0).isActive = true
-        imageView.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
-        imageView.centerYAnchor.constraint(equalTo: rectagularInstagramCropView.centerYAnchor, constant: 0).isActive = true
-        
-        
-        let envelop = UIGraphicsImageRenderer(size: rectagularInstagramCropView.bounds.size)
-        let envelopImage = envelop.image { _ in
-            rectagularInstagramCropView.drawHierarchy(in: rectagularInstagramCropView.bounds, afterScreenUpdates: true)
-        }
-         
-        // 편지봉투 카카오톡 공유하기에 들어갈 이미지
-        imageViewAfterstickerCropped.image = envelopImage
-        nameEnvelopLabel.text = "\(fromLabel.text!) \(nameTextField.text!)"
-        nameEnvelopLabel.textColor = currentBackgroundColor == UIColor.wheat ? .black : .white
-        kakaoShareView.backgroundColor = currentBackgroundColor
-        imageViewAfterstickerCropped.backgroundColor = currentBackgroundColor
-        logoSticker.backgroundColor = currentBackgroundColor
-        
-        let kakaoImage = UIGraphicsImageRenderer(size: kakaoShareImageView.bounds.size)
-        
-        let kakaoEnvelopImage = kakaoImage.image { _ in
-            kakaoShareImageView.drawHierarchy(in: kakaoShareImageView.bounds, afterScreenUpdates: true)
-        }
-         
-        
-        // 인스타그램 공유하기에 들어갈 이미지
-        
-        imageView.leadingAnchor.constraint(equalTo: rectagularInstagramCropView.leadingAnchor, constant: 30).isActive = true
-        imageView.trailingAnchor.constraint(equalTo: rectagularInstagramCropView.trailingAnchor, constant: 30).isActive = true
-        imageView.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
-        imageView.topAnchor.constraint(equalTo: rectagularInstagramCropView.topAnchor, constant: 28).isActive = true
-        imageView.bottomAnchor.constraint(equalTo: rectagularInstagramCropView.bottomAnchor, constant: -65).isActive = true
-        imageView.contentMode = .scaleAspectFit
-        
-        let label = UILabel()
-        label.text = fromLabel.text! + nameTextField.text!
-        label.font = UIFont(name: "SpoqaHanSansNeo-Bold", size: 16)
-        label.textColor = .white
-        
-        rectagularInstagramCropView.addSubview(label)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 13).isActive = true
-        label.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
-
-        
-        let myPhone = UIGraphicsImageRenderer(size: rectagularInstagramCropView.bounds.size)
-        let myPhonePhoto = myPhone.image { _ in
-            rectagularInstagramCropView.drawHierarchy(in: rectagularInstagramCropView.bounds, afterScreenUpdates: true)
-        }
-        
-        rectagularInstagramCropView.makeRounded(cornerRadius: 8.0)
-        let instagram = UIGraphicsImageRenderer(size: rectagularInstagramCropView.bounds.size)
-        let instagramSquareImage = instagram.image { _ in
-            rectagularInstagramCropView.drawHierarchy(in: rectagularInstagramCropView.bounds, afterScreenUpdates: true)
-        }
-        
-        
-        share.currentName = "\(fromLabel.text!) \(nameTextField.text!)"
-        share.currentBackgroundColor = currentBackgroundColor
-        share.envelopImage = envelopImage
-        share.instagramImage = instagramSquareImage
-        share.myPhonePhoto = myPhonePhoto
-        share.currentFrameOfImage = currentFrameOfImage
-        share.userName = nameTextField.text
-        
         if isImageSelected {
             if isNameTyped {
                 if isCategoryIconSelected && isPurposeIconSelected && isEmotionIconSelected {
+                    guard let share = UIStoryboard.init(name: "Share", bundle: nil).instantiateViewController(identifier: "ShareVC") as? ShareVC else { return }
+                    
+                    // 공유할 게시할 이미지 넘기기 작업
+                    
+                    let noBackgroundCroppedImage = cropArea.saveAsImage()
+                    let noBackgroundImageView = UIImageView.init(image: noBackgroundCroppedImage)
+                    rectagularInstagramCropView.addSubview(noBackgroundImageView)
+                    noBackgroundImageView.translatesAutoresizingMaskIntoConstraints = false
+                    noBackgroundImageView.leadingAnchor.constraint(equalTo: rectagularInstagramCropView.leadingAnchor, constant: 0).isActive = true
+                    noBackgroundImageView.trailingAnchor.constraint(equalTo: rectagularInstagramCropView.trailingAnchor, constant: 0).isActive = true
+                    noBackgroundImageView.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
+                    noBackgroundImageView.centerYAnchor.constraint(equalTo: rectagularInstagramCropView.centerYAnchor, constant: 0).isActive = true
+                    let noBackgroundSquare = UIGraphicsImageRenderer(size: rectagularInstagramCropView.bounds.size)
+                    let noBackgroundSquareImage = noBackgroundSquare.image { _ in
+                        rectagularInstagramCropView.drawHierarchy(in: rectagularInstagramCropView.bounds, afterScreenUpdates: true)
+                    }
+                    
+                    // 편지봉투 카카오톡 공유하기에 들어갈 이미지
+                    imageViewAfterstickerCropped.image = noBackgroundSquareImage
+                    nameEnvelopLabel.text = "\(fromLabel.text!) \(nameTextField.text!)"
+                    nameEnvelopLabel.textColor = currentBackgroundColor == UIColor.wheat ? .black : .white
+                    kakaoShareView.backgroundColor = currentBackgroundColor
+                    imageViewAfterstickerCropped.backgroundColor = currentBackgroundColor
+                    logoSticker.backgroundColor = currentBackgroundColor
+                    
+                    let kakaoImage = UIGraphicsImageRenderer(size: kakaoShareImageView.bounds.size)
+                    let kakaoEnvelopImage = kakaoImage.image { _ in
+                        kakaoShareImageView.drawHierarchy(in: kakaoShareImageView.bounds, afterScreenUpdates: true)
+                    }
+                    
+                    nameEnvelopLabel.isHidden = true
+                    
+                    // 인스타그램 공유하기에 들어갈 이미지
+                    noBackgroundImageView.leadingAnchor.constraint(equalTo: rectagularInstagramCropView.leadingAnchor, constant: 30).isActive = true
+                    noBackgroundImageView.trailingAnchor.constraint(equalTo: rectagularInstagramCropView.trailingAnchor, constant: 30).isActive = true
+                    noBackgroundImageView.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
+                    noBackgroundImageView.topAnchor.constraint(equalTo: rectagularInstagramCropView.topAnchor, constant: 28).isActive = true
+                    noBackgroundImageView.bottomAnchor.constraint(equalTo: rectagularInstagramCropView.bottomAnchor, constant: -65).isActive = true
+                    noBackgroundImageView.contentMode = .scaleAspectFit
+                    
+                    let label = UILabel()
+                    label.text = fromLabel.text! + nameTextField.text!
+                    label.font = UIFont(name: "SpoqaHanSansNeo-Bold", size: 16)
+                    label.textColor = currentBackgroundColor == UIColor.wheat ? .black : .white
+                    
+                    rectagularInstagramCropView.addSubview(label)
+                    label.translatesAutoresizingMaskIntoConstraints = false
+                    label.topAnchor.constraint(equalTo: noBackgroundImageView.bottomAnchor, constant: 13).isActive = true
+                    label.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
+                    
+                    rectagularInstagramCropView.backgroundColor = currentBackgroundColor
+                    let myPhone = UIGraphicsImageRenderer(size: rectagularInstagramCropView.bounds.size)
+                    let myPhonePhoto = myPhone.image { _ in
+                        rectagularInstagramCropView.drawHierarchy(in: rectagularInstagramCropView.bounds, afterScreenUpdates: true)
+                    }
+                    
+                    rectagularInstagramCropView.makeRounded(cornerRadius: 8.0)
+                    let instagram = UIGraphicsImageRenderer(size: rectagularInstagramCropView.bounds.size)
+                    let instagramSquareImage = instagram.image { _ in
+                        rectagularInstagramCropView.drawHierarchy(in: rectagularInstagramCropView.bounds, afterScreenUpdates: true)
+                    }
+                    
+                    share.currentName = "\(fromLabel.text!) \(nameTextField.text!)"
+                    share.currentBackgroundColor = currentBackgroundColor
+                    share.envelopImage = noBackgroundSquareImage
+                    share.instagramImage = instagramSquareImage
+                    share.myPhonePhoto = myPhonePhoto
+                    share.currentFrameOfImage = currentFrameOfImage
+                    share.userName = nameTextField.text
+                    
                     let content = emotionTextView.text ?? ""
                     let name = nameTextField.text ?? ""
-
+                    
                     // 날짜
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZ"
@@ -576,16 +565,16 @@ class RecordVC: UIViewController {
                     print(dateArr[2])
                     let third = dateArr[2].replacingOccurrences(of: "+", with: ".")
                     let date = first + "T" + second + third
-
+                    
                     // 아이콘 이름
-
+                    
                     var categoryName: String = ""
                     var purposeName: String = ""
                     var emotionName: String = ""
                     if currentBackgroundColor == UIColor.wheat {
-                        categoryImageName.trimmingCharacters(in: ["B"])
-                        purposeImageName.trimmingCharacters(in: ["B"])
-                        emotionImageName.trimmingCharacters(in: ["B"])
+                        categoryImageName = categoryImageName.trimmingCharacters(in: ["B"])
+                        purposeImageName = purposeImageName.trimmingCharacters(in: ["B"])
+                        emotionImageName = emotionImageName.trimmingCharacters(in: ["B"])
                     }
                     
                     for category in Icons.category {
@@ -593,13 +582,13 @@ class RecordVC: UIViewController {
                             categoryName = category.englishName
                         }
                     }
-
+                    
                     for purpose in Icons.purpose {
                         if purpose.imageName == purposeImageName {
                             purposeName = purpose.englishName
                         }
                     }
-
+                    
                     if isReceiveGift {
                         for emotion in Icons.emotionGet {
                             if emotion.imageName == emotionImageName {
@@ -623,20 +612,9 @@ class RecordVC: UIViewController {
                         }
                     }
                     
-//                    print(content)
-//                    print(isReceiveGift)
-//                    print(name)
-//                    print(date)
-//                    print(categoryName)
-//                    print(emotionName)
-//                    print(purposeName)
-//                    print(currentBackgroundColorString)
-//                    print(kakaoEnvelopImage)
-//                    print(envelopImage)
-                    
                     let bgImg = resizeImage(image: kakaoEnvelopImage, newWidth: kakaoEnvelopImage.size.width)
-                    let noBgImg = resizeImage(image: envelopImage, newWidth: envelopImage.size.width)
-
+                    let noBgImg = resizeImage(image: noBackgroundSquareImage, newWidth: noBackgroundSquareImage.size.width)
+                    
                     GiftService.shared.recordGift(content: content, isReceiveGift: isReceiveGift, name: name, receiveDate: date, createdBy: token, category: categoryName, emotion: emotionName, reason: purposeName, bgColor: currentBackgroundColorString, bgImg: bgImg!, noBgImg: noBgImg!, frameType: frameType) { networkResult -> Void in
                         switch networkResult {
                         case .success(let data):
@@ -645,16 +623,16 @@ class RecordVC: UIViewController {
                                 share.kakaoImageURL = bgData.bgImg
                                 self.navigationController?.pushViewController(share, animated: true)
                             }
-
                             
                             
-
+                            
+                            
                         case .requestErr:
                             let alertViewController = UIAlertController(title: "통신 실패", message: "💩", preferredStyle: .alert)
                             let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
                             alertViewController.addAction(action)
                             self.present(alertViewController, animated: true, completion: nil)
-
+                            
                         case .pathErr: print("path")
                         case .serverErr:
                             let alertViewController = UIAlertController(title: "통신 실패", message: "서버 오류", preferredStyle: .alert)
@@ -672,27 +650,27 @@ class RecordVC: UIViewController {
                         }
                     }
                 } else {
-
+                    
                     let alertViewController = UIAlertController(title: "저장 실패", message: "선물에 해당하는 아이콘을 선택해주세요 🥰", preferredStyle: .alert)
                     let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
                     alertViewController.addAction(action)
                     self.present(alertViewController, animated: true, completion: nil)
                 }
             } else {
-
+                
                 let alertViewController = UIAlertController(title: "저장 실패", message: "이름을 입력해주세요 🥰", preferredStyle: .alert)
                 let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
                 alertViewController.addAction(action)
                 self.present(alertViewController, animated: true, completion: nil)
             }
         } else {
-
+            
             let alertViewController = UIAlertController(title: "저장 실패", message: "이미지를 선택해주세요 🥰", preferredStyle: .alert)
             let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
             alertViewController.addAction(action)
             self.present(alertViewController, animated: true, completion: nil)
         }
-
+        
     }
     
     func resizeImage(image: UIImage, newWidth: CGFloat) -> UIImage? {
@@ -913,7 +891,7 @@ extension RecordVC {
         stickerPopupView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
         stickerPopupView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
         stickerPopupView.topAnchor.constraint(equalTo: imageContainer
-                                            .bottomAnchor, constant: 0).isActive = true
+                                                .bottomAnchor, constant: 0).isActive = true
         stickerPopupView.alpha = 0
         stickerPopupView.isHidden = true
         
@@ -1071,11 +1049,11 @@ extension RecordVC {
         let heightConstant = isAppearing ? keyboardHeight - 34 : 0
         
         if isNameTouched {
-
+            
             self.bottomBarBottomConstraintWithBottomSafeArea.constant = heightConstant
             isNameTouched = false
             self.view.layoutIfNeeded()
-
+            
         } else {
             UIView.animate(withDuration: keyboardAnimationDuration, animations: {
                 if isAppearing {
@@ -1147,7 +1125,7 @@ extension RecordVC: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-//        nameStackView.layoutIfNeeded()
+        //        nameStackView.layoutIfNeeded()
         if let text = textField.text {
             if text.isEmpty {
                 isNameTyped = false
@@ -1323,5 +1301,26 @@ extension RecordVC: StickerViewDelegate {
 extension RecordVC {
     func gestureRecognizer(_ gestrueRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         return false
+    }
+}
+
+extension UIView {
+    
+    func saveAsImage()-> UIImage? {
+        UIGraphicsBeginImageContext(self.bounds.size)
+        guard let context = UIGraphicsGetCurrentContext() else { return nil }
+        
+        UIColor.clear.set()
+        context.fill(self.bounds)
+        
+        self.isOpaque = false
+        self.layer.isOpaque = false
+        self.backgroundColor = UIColor.clear
+        self.layer.backgroundColor = UIColor.clear.cgColor
+        
+        self.layer.render(in: context)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        
+        return image
     }
 }

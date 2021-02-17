@@ -52,14 +52,14 @@
                                 </constraints>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2Pd-Ed-R6a">
-                                <rect key="frame" x="52.666666666666657" y="130" width="270" height="270"/>
+                                <rect key="frame" x="37.666666666666657" y="110" width="300" height="300"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="270" id="LwY-so-e4T"/>
+                                    <constraint firstAttribute="height" constant="300" id="LwY-so-e4T"/>
                                     <constraint firstAttribute="width" secondItem="2Pd-Ed-R6a" secondAttribute="height" multiplier="1:1" id="wft-Ta-6Zz"/>
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Py-ep-JFj" userLabel="Name Stack View">
-                                <rect key="frame" x="144.33333333333334" y="400" width="86.333333333333343" height="24"/>
+                                <rect key="frame" x="157" y="410" width="61" height="24"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="From." textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HaX-Tu-Hbo">
                                         <rect key="frame" x="0.0" y="1" width="47" height="22"/>
@@ -67,8 +67,8 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="이름" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="u3j-z2-gPk">
-                                        <rect key="frame" x="55.000000000000007" y="0.0" width="31.333333333333336" height="24"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="u3j-z2-gPk">
+                                        <rect key="frame" x="55" y="0.0" width="6" height="24"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="Cl6-I0-k3H"/>
@@ -83,13 +83,13 @@
                                 </constraints>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2021.02.14. Wed" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U0y-vd-Civ">
-                                <rect key="frame" x="134.66666666666666" y="428" width="106" height="16.333333333333314"/>
+                                <rect key="frame" x="134.66666666666666" y="438" width="106" height="16.333333333333314"/>
                                 <fontDescription key="fontDescription" name="SpoqaHanSansNeo-Regular" family="Spoqa Han Sans Neo" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="4ak-cg-oW3" userLabel="Buttons">
-                                <rect key="frame" x="95.666666666666686" y="465.33333333333331" width="184" height="40"/>
+                                <rect key="frame" x="95.666666666666686" y="475.33333333333331" width="184" height="39.999999999999943"/>
                                 <subviews>
                                     <button opaque="NO" alpha="0.10000000000000001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uOo-3M-ve7" userLabel="Category Button">
                                         <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
@@ -119,34 +119,34 @@
                                 </subviews>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="목적" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z0f-lW-G8N">
-                                <rect key="frame" x="177" y="513.33333333333337" width="21" height="14"/>
+                                <rect key="frame" x="177" y="523.33333333333337" width="21" height="14"/>
                                 <fontDescription key="fontDescription" name="SpoqaHanSansNeo-Regular" family="Spoqa Han Sans Neo" pointSize="12"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="감정" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RB6-6u-pco">
-                                <rect key="frame" x="249" y="513.33333333333337" width="21" height="14"/>
+                                <rect key="frame" x="249" y="523.33333333333337" width="21" height="14"/>
                                 <fontDescription key="fontDescription" name="SpoqaHanSansNeo-Regular" family="Spoqa Han Sans Neo" pointSize="12"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconCategoryDefault" translatesAutoresizingMaskIntoConstraints="NO" id="PUB-oR-wlv">
-                                <rect key="frame" x="95.666666666666671" y="465.33333333333331" width="40.000000000000014" height="40"/>
+                                <rect key="frame" x="95.666666666666671" y="475.33333333333331" width="40.000000000000014" height="39.999999999999943"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconPurposeDefault" translatesAutoresizingMaskIntoConstraints="NO" id="lmF-hS-IQm">
-                                <rect key="frame" x="167.66666666666666" y="465.33333333333331" width="40" height="40"/>
+                                <rect key="frame" x="167.66666666666666" y="475.33333333333331" width="40" height="39.999999999999943"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconFeelingDefault" translatesAutoresizingMaskIntoConstraints="NO" id="AIq-Nm-3ag">
-                                <rect key="frame" x="239.66666666666663" y="465.33333333333331" width="40" height="40"/>
+                                <rect key="frame" x="239.66666666666663" y="475.33333333333331" width="40" height="39.999999999999943"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="카테고리" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jgr-zu-GA3">
-                                <rect key="frame" x="94.666666666666671" y="513.33333333333337" width="41.666666666666671" height="14"/>
+                                <rect key="frame" x="94.666666666666671" y="523.33333333333337" width="41.666666666666671" height="14"/>
                                 <fontDescription key="fontDescription" name="SpoqaHanSansNeo-Regular" family="Spoqa Han Sans Neo" pointSize="12"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="WBJ-Sn-hBb">
-                                <rect key="frame" x="20" y="550.33333333333337" width="335" height="214.66666666666663"/>
+                                <rect key="frame" x="20" y="560.33333333333337" width="335" height="204.66666666666663"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -158,7 +158,7 @@
                         <color key="backgroundColor" name="charcoalGrey"/>
                         <constraints>
                             <constraint firstItem="PUB-oR-wlv" firstAttribute="bottom" secondItem="uOo-3M-ve7" secondAttribute="bottom" id="0Wf-jN-cPY"/>
-                            <constraint firstItem="2Pd-Ed-R6a" firstAttribute="top" secondItem="i7h-Vn-TkV" secondAttribute="bottom" constant="30" id="4PQ-TZ-Bsd"/>
+                            <constraint firstItem="2Pd-Ed-R6a" firstAttribute="top" secondItem="i7h-Vn-TkV" secondAttribute="bottom" constant="10" id="4PQ-TZ-Bsd"/>
                             <constraint firstItem="i7h-Vn-TkV" firstAttribute="leading" secondItem="BwC-C0-L9W" secondAttribute="leading" id="5bI-8x-dTh"/>
                             <constraint firstItem="i7h-Vn-TkV" firstAttribute="top" secondItem="ADP-C2-DA0" secondAttribute="top" id="AjJ-RM-nhl"/>
                             <constraint firstItem="WBJ-Sn-hBb" firstAttribute="top" secondItem="z0f-lW-G8N" secondAttribute="bottom" constant="23" id="BIU-NI-cC8"/>
