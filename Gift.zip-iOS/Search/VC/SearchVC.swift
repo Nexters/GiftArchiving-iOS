@@ -23,7 +23,6 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
     var dicReason = ["BIRTHDAY" : "생일", "ANNIVERSARY" : "기념일", "EMPLOYMENT" : "취업", "HOUSES" : "집들이", "MARRIAGE" : "결혼", "STUDY" : "학업", "HOLIDAY" : "명절", "CHEER_UP" : "응원", "APOLOGIZE" : "사과", "THANKS" : "감사", "JUST" : "그냥", "ETC" : "기타"]
     var recentSearchArr : Array<String> = []
     
-    var colors = [UIColor(named: "ceruleanBlue"), UIColor.greyishBrown, UIColor(named: "pinkishOrange"), UIColor(named: "wheat")]
     var txtFieldCanListen = true
     @IBOutlet weak var tagCollectionView: TTGTextTagCollectionView!
     
@@ -477,11 +476,11 @@ extension SearchVC : UICollectionViewDelegateFlowLayout, UICollectionViewDataSou
         if collectionView == self.searchResultCollectionView{
             if resFlag {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SearchResultCollectionViewCell", for: indexPath) as! SearchResultCollectionViewCell
-                cell.configure(with: resReceivedArr[indexPath.row], color: colors[indexPath.row % 4]!)
+                cell.configure(with: resReceivedArr[indexPath.row], color: UIColor(named: resReceivedArr[indexPath.row].bgColor)!)
                 return cell
             }else{
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SearchResultCollectionViewCell", for: indexPath) as! SearchResultCollectionViewCell
-                cell.configure(with: resSentArr[indexPath.row], color: colors[indexPath.row % 4]!)
+                cell.configure(with: resSentArr[indexPath.row], color: UIColor(named: resSentArr[indexPath.row].bgColor)!)
                 return cell
             }
         }

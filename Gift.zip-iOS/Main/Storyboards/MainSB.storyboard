@@ -87,7 +87,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H3v-sZ-YIw">
                                 <rect key="frame" x="0.0" y="8" width="375" height="56"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_blue_circle" translatesAutoresizingMaskIntoConstraints="NO" id="iyL-BI-oCr">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_charcoalGrey_SQUARE" translatesAutoresizingMaskIntoConstraints="NO" id="iyL-BI-oCr">
                                         <rect key="frame" x="24" y="8" width="40" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="40" id="7cG-l5-Dd5"/>
@@ -282,7 +282,7 @@
         <image name="btn_search" width="24" height="24"/>
         <image name="btn_setting" width="24.5" height="24.5"/>
         <image name="imgEmptyMainBig" width="273" height="273"/>
-        <image name="logo_blue_circle" width="40" height="40"/>
+        <image name="logo_charcoalGrey_SQUARE" width="40" height="40"/>
         <namedColor name="ceruleanBlue">
             <color red="0.0" green="0.3880000114440918" blue="0.88200002908706665" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

@@ -452,6 +452,7 @@
 				D4336D2225BE80D500D27568 /* ViewController.swift */,
 				D4336D2425BE80D500D27568 /* Main.storyboard */,
 				D4336D2725BE80D500D27568 /* Assets.xcassets */,
+				D4336D3E25BE81D800D27568 /* Delegate */,
 				D4336D2925BE80D500D27568 /* LaunchScreen.storyboard */,
 			);
 			path = "Gift.zip-iOS";
@@ -464,7 +465,6 @@
 				D4A08EBA25C01D06009CFCC4 /* Protocols */,
 				D4336D4425BE822A00D27568 /* Supporting Files */,
 				D4336D4025BE81E700D27568 /* Extensions */,
-				D4336D3E25BE81D800D27568 /* Delegate */,
 			);
 			path = Global;
 			sourceTree = "<group>";
