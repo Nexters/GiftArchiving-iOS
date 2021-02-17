@@ -1453,7 +1453,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="dRY-b2-dpd"/>
+        <segue reference="ESM-do-b2Q"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="btnFin" width="21" height="16.666666030883789"/>

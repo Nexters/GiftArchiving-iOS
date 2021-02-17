@@ -17,6 +17,13 @@ class SingleStickerCVC: UICollectionViewCell {
         }
     }
     
+    var stickers: [String] = {
+        var array: [String] = []
+        for i in 0..<37 {
+            array.append("sticker\(i+1)")
+        }
+        return array
+    }()
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -30,13 +37,13 @@ class SingleStickerCVC: UICollectionViewCell {
 
 extension SingleStickerCVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return stickers.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SingleCVC.identifier, for: indexPath) as? SingleCVC else { return UICollectionViewCell() }
         
-        cell.setSticker(imageName: "searchIllustError")
+        cell.setSticker(imageName: stickers[indexPath.item])
         return cell
     }
     
