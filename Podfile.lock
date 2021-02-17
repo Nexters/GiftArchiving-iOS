@@ -17,7 +17,7 @@ PODS:
   - KakaoSDKUser (2.3.2):
     - KakaoSDKAuth (= 2.3.2)
     - KakaoSDKCommon (= 2.3.2)
-  - Kingfisher (6.1.0)
+  - Kingfisher (6.1.1)
   - lottie-ios (3.2.1)
   - RxCocoa (6.0.0):
     - RxRelay (= 6.0.0)
@@ -73,7 +73,7 @@ SPEC CHECKSUMS:
   KakaoSDKTalk: 29c318667d51bbc2b6271779167e4fddd8ecb598
   KakaoSDKTemplate: 51a1d3f294f460be43b472a674eaf4f2ec2ac36a
   KakaoSDKUser: e6c0017a41e87a94bdcd873d0178ad75be8126d4
-  Kingfisher: f5d8d60a0ef3edd642fd781bae60918599901aff
+  Kingfisher: 676d63307fbef6ed5d5ed400bff36983480d7500
   lottie-ios: 106e92eaf11fbed0a76590b4cdb9b5ec26123ff7
   RxCocoa: 3f79328fafa3645b34600f37c31e64c73ae3a80e
   RxRelay: 8d593be109c06ea850df027351beba614b012ffb

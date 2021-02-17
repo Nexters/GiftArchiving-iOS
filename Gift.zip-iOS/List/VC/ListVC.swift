@@ -29,7 +29,10 @@ class ListVC: UIViewController {
     var gridCellNib : UINib?
     var collectionViewFlowLayoutType = true // true는 stickyType false는 gridType
     let dropDown = DropDown()
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        resetData()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -38,7 +41,12 @@ class ListVC: UIViewController {
         gridCellNib = UINib(nibName: "GridCollectionViewCell", bundle: nil)
         gridCellFlowLayout = createGridLayout()
     }
-    private func setLayout(){
+    public func resetData() {
+        if receivedSentFlag {
+            models = Gifts.receivedModels
+        }else{
+            models = Gifts.sentModels
+        }
         if models.count == 0 {
             collectionView.isHidden = true
             viewEmpty.isHidden = false
@@ -47,6 +55,10 @@ class ListVC: UIViewController {
             collectionView.isHidden = false
         }
         labelCount.text = "\(models.count)"
+        self.collectionView.reloadData()
+    }
+    private func setLayout(){
+        resetData()
         if receivedSentFlag {
             labelTop.text = "받은선물"
         }else{
@@ -121,7 +133,7 @@ class ListVC: UIViewController {
     }
 }
 //MARK: collectionview datasource
-extension ListVC: UICollectionViewDataSource {
+extension ListVC: UICollectionViewDataSource , UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return models.count
     }
@@ -138,6 +150,12 @@ extension ListVC: UICollectionViewDataSource {
             cell.configure(with: models[indexPath.row], color: UIColor(named: models[indexPath.row].bgColor)! )
             return cell
         }
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let detailSB = UIStoryboard(name: "Detail", bundle: nil)
+        guard let vc = detailSB.instantiateViewController(withIdentifier: "DetailVC") as? DetailVC else { return }
+        vc.giftId = models[indexPath.row].id
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 //MARK: - collectionview 콤포지셔널 레이아웃
