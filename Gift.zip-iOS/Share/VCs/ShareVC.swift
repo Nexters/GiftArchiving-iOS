@@ -25,6 +25,7 @@ class ShareVC: UIViewController {
     var userName: String?
     var kakaoImageURL: String?
     var myPhonePhoto: UIImage?
+    var whereToGo: Int = 0
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -78,6 +79,7 @@ class ShareVC: UIViewController {
         
         self.cardView.frame.origin.y = self.cardView.frame.origin.y + 52
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -127,13 +129,14 @@ class ShareVC: UIViewController {
     }
     
     @IBAction func popToMain(_ sender: Any) {
-        let mainSB = UIStoryboard.init(name: "MainSB", bundle: nil)
-        guard let mainVC = mainSB.instantiateViewController(identifier: "MainVC") as? VC else { return }
-        print("mainVC")
-        print(mainVC)
-        guard let navivc = self.navigationController else { return }
-        let main = navivc.viewControllers[navivc.viewControllers.count - 3]
-        navivc.popToViewController(main, animated: true)
+        if whereToGo == 0 {
+            guard let navivc = self.navigationController else { return }
+            let main = navivc.viewControllers[navivc.viewControllers.count - 3]
+            navivc.popToViewController(main, animated: true)
+        } else {
+            self.dismiss(animated: true, completion: nil)
+        }
+        
     }
     
     @IBAction func saveImage(_ sender: UIButton) {

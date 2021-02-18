@@ -148,23 +148,23 @@ struct GiftService {
 //      "reason": "ANNIVERSARY",
 //      "receiveDate": "2021-02-17T04:47:09.010Z"
 //    }
-    func putGift(bgColor: String, category: String, content: String, emotion: String, name: String, reason: String, receiveDate: String, giftId: String ,completion: @escaping (NetworkResult<Any>) -> Void) {
+    func putGift(category: String, content: String, emotion: String, reason: String, receiveDate: String, giftId: String ,completion: @escaping (NetworkResult<Any>) -> Void) {
        
         let header: HTTPHeaders = ["Accept": "application/json"]
         
         let url = APIConstants.baseURL + APIConstants.getOneGiftURL + "/\(giftId)"
         
+        print(url)
         
         let body : Parameters = [
             "content" : content,
-            "name": name,
             "receiveDate": receiveDate,
             "category" : category,
             "emotion": emotion,
             "reason": reason,
         ]
-        
-        let dataRequest = AF.request(url, method: .put, parameters: body, headers: header)
+        print(body)
+        let dataRequest = AF.request(url, method: .put, parameters: body, encoding: JSONEncoding.default, headers: header)
         
         dataRequest.validate(statusCode: 200..<500)
             .responseData { (response) in

@@ -60,7 +60,10 @@ class IconPopupVC: UIViewController {
             safeAreaView.backgroundColor = bc
             popupViewHeight.constant = height
             
+            print("IConPopupVC")
+            print(bc)
             if bc == UIColor.wheat {
+                print("HELLO")
                 for index in categoryImageArray.indices {
                     categoryImageArray[index] += "B"
                     purposeImageArray[index] += "B"
