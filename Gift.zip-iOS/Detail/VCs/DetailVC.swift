@@ -159,6 +159,14 @@ class DetailVC: UIViewController {
     @objc private func keyboardWillHide(_ sender: Notification) {
         handleKeyboardIssue(sender, isAppearing: false)
     }
+
+    deinit {
+        print("deninit")
+        NotificationCenter.default.removeObserver(self, name: .init("broadcastUpdate"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: .init("popupchange"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: .init("broadcastDelete"), object: nil)
+        
+    }
     
     private func handleKeyboardIssue(_ notification: Notification, isAppearing: Bool) {
         guard let userInfo = notification.userInfo as? [String: Any] else { return }
@@ -181,13 +189,8 @@ class DetailVC: UIViewController {
         
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        NotificationCenter.default.removeObserver(self, name: .init("broadcastUpdate"), object: nil)
-        NotificationCenter.default.removeObserver(self, name: .init("popupchange"), object: nil)
-        NotificationCenter.default.removeObserver(self, name: .init("broadcastDelete"), object: nil)
+
         
-    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
@@ -549,16 +552,12 @@ class DetailVC: UIViewController {
             }
             Gifts.sentModels.remove(at: target)
         }
-        if let vcCnt = self.navigationController?.viewControllers.count{
-            if let searchVC = self.navigationController?.viewControllers[vcCnt - 2] as? SearchVC{
-                searchVC.deleteGift(giftId: giftId)
-            }
-        }
+        let data = ["giftId" : giftId]
+        NotificationCenter.default.post(name: .init("deleteGift"), object: nil, userInfo: data)
         self.dismiss(animated: true, completion: nil)
     }
     
     @objc func broadcastUpdate(_ notification: Notification){
-        guard let name = notification.userInfo?["name"] as? String else { return }
         guard let content = notification.userInfo?["content"] as? String else { return }
         var target = -1
         var idx = 0
@@ -571,7 +570,6 @@ class DetailVC: UIViewController {
         }
         if target != -1 {
             Gifts.receivedModels[target].content = content
-            Gifts.receivedModels[target].name = name
         }else{
             idx = 0
             for model in Gifts.sentModels{
@@ -582,13 +580,9 @@ class DetailVC: UIViewController {
                 idx += 1
             }
             Gifts.sentModels[target].content = content
-            Gifts.sentModels[target].name = name
         }
-        if let vcCnt = self.navigationController?.viewControllers.count{
-            if let searchVC = self.navigationController?.viewControllers[vcCnt - 2] as? SearchVC{
-                searchVC.updateGift(giftId: giftId, content: content, name: name)
-            }
-        }
+        let data = ["giftId" : giftId, "content" : content]
+        NotificationCenter.default.post(name: .init("updateGift"), object: nil, userInfo: data)
         self.dismiss(animated: true, completion: nil)
     }
     

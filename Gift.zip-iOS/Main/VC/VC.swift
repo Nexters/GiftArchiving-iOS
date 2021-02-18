@@ -27,9 +27,9 @@ class VC: UIViewController{
     
     var currentIndex: Int = 0
     
-    let lineSpacing: CGFloat = 20
+    let lineSpacing: CGFloat = 0
     
-    let cellRatio: CGFloat = 0.65
+    let cellRatio: CGFloat = 0.7
     
     var isOneStepPaging = true
 
@@ -80,7 +80,9 @@ class VC: UIViewController{
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        if view.bounds.height > 840 {
+        print(view.bounds.height)
+        if view.bounds.height > 810 {
+            
             device = 1
         }else{
             device = 0
@@ -152,6 +154,7 @@ class VC: UIViewController{
             if Gifts.sentModels.count > 0 {
                 self.changeUI(frameType: Gifts.sentModels[0].frameType, color: Gifts.sentModels[0].bgColor)
             }
+            self.collectionView.setContentOffset(CGPoint(x: -self.collectionView.contentInset.left,y:0), animated: true)
             self.collectionView.reloadData()
         }
     }
@@ -167,6 +170,7 @@ class VC: UIViewController{
             if Gifts.receivedModels.count > 0 {
                 self.changeUI(frameType: Gifts.receivedModels[0].frameType, color: Gifts.receivedModels[0].bgColor)
             }
+            self.collectionView.setContentOffset(CGPoint(x: -self.collectionView.contentInset.left,y:0), animated: true)
             self.collectionView.reloadData()
         }
     }
@@ -201,6 +205,13 @@ class VC: UIViewController{
         let vc = searchSB.instantiateViewController(withIdentifier: "SearchVC") as! SearchVC
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    @IBAction func btnArrowClicked(_ sender: UIButton) {
+        let listSB = UIStoryboard(name: "ListSB", bundle: nil)
+        let vc = listSB.instantiateViewController(withIdentifier: "ListVC") as! ListVC
+        vc.receivedSentFlag = self.collectionViewFlag
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
 }
 
 //MARK: 컬랙션뷰 datasource, delegate, changeUI
@@ -236,14 +247,14 @@ extension VC: UICollectionViewDataSource, UICollectionViewDelegate {
         cell.setConstraint(device: device)
         if collectionViewFlag {
             if Gifts.receivedModels.count == 0 {
-                cell.configureEmpty(flag: true)
+                cell.configureEmpty(flag: true, device: device)
                 changeUIEmpty()
             } else {
                 cell.configure(with: Gifts.receivedModels[indexPath.row])
             }
         } else {
             if Gifts.sentModels.count == 0 {
-                cell.configureEmpty(flag: false)
+                cell.configureEmpty(flag: false, device: device)
                 changeUIEmpty()
             } else {
                 cell.configure(with: Gifts.sentModels[indexPath.row])
@@ -351,6 +362,21 @@ extension VC : UIScrollViewDelegate {
                 roundedIndex = CGFloat(currentIndex)
             }
         }
+
+        if collectionViewFlag {
+            if Int(currentIndex) == Gifts.receivedModels.count{
+                currentIndex -= 1
+            }
+            self.changeUI(frameType: Gifts.receivedModels[Int(currentIndex)].frameType, color: Gifts.receivedModels[Int(currentIndex)].bgColor)
+            
+        }else{
+            if Int(currentIndex) == Gifts.sentModels.count{
+                currentIndex -= 1
+            }
+            self.changeUI(frameType: Gifts.sentModels[Int(currentIndex)].frameType, color: Gifts.sentModels[Int(currentIndex)].bgColor)
+            
+        }
+
         
         // 위 코드를 통해 페이징 될 좌표값을 targetContentOffset에 대입하면 된다.
         offset = CGPoint(x: roundedIndex * cellWidthIncludingSpacing - scrollView.contentInset.left, y: -scrollView.contentInset.top)
