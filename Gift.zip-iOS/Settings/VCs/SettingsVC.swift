@@ -41,8 +41,24 @@ class SettingsVC: UIViewController, MFMailComposeViewControllerDelegate {
     
     @objc func logout() {
         popupBackgroundView.animatePopupBackground(false)
-        self.navigationController?.popToRootViewController(animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+            guard let navivc = self.navigationController else { return }
+            print(navivc.viewControllers.count)
+            if navivc.viewControllers.count == 4 {
+                let main = navivc.viewControllers[navivc.viewControllers.count - 4]
+                navivc.popToViewController(main, animated: true)
+            } else {
+                let main = navivc.viewControllers[navivc.viewControllers.count - 3]
+                
+                navivc.popToViewController(main, animated: true)
+            }
+       
+            
+        }
+        
+        
     }
+    
     @objc func cancelLogoutPopup() {
         popupBackgroundView.animatePopupBackground(false)
     }

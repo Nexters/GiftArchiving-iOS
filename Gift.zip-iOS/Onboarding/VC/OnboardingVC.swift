@@ -178,30 +178,30 @@ class OnboardingVC: UIViewController, ASAuthorizationControllerPresentationConte
                     
                     // JSON 결과값을 추출
                     let result = jsonObject["message"] as? String
-                    let isSignUp = jsonObject["connected_at"] as? String
+                    let code = jsonObject["code"] as? Int
                     print(jsonObject)
-                    print("안녕??")
-                    print(isSignUp)
                     // 결과가 성공일 경우
                     if result == "SUCCESS" {
                         print("login API Success : 첫 회원가입")
                         let SPREF = UserDefaults.standard
-                        if loginType == "KAKAO"{
+                        if loginType == "KAKAO" {
                             SPREF.setValue(kakaoToken, forKey: "kakaoId")
-                        }else if loginType == "APPLE"{
+                        } else if loginType == "APPLE" {
                             SPREF.setValue(appleToken, forKey: "appleId")
                         }
-                        
                         //메인 이동
-                        
-                        let recordSB = UIStoryboard(name: "MainSB", bundle: nil)
-                        let vc = recordSB.instantiateViewController(withIdentifier: "MainVC")
-                        self.navigationController?.pushViewController(vc, animated: true)
-                    } else if isSignUp != nil {
-                        print("login API Success : 이미 회원가입 되어있음")
-                        let id = jsonObject["id"] as? String
-                        print(id)
+                        self.goToMain()
+                    } else if code == -403 {
+                        let SPREF = UserDefaults.standard
+                        if loginType == "KAKAO" {
+                            SPREF.setValue(kakaoToken, forKey: "kakaoId")
+                        } else if loginType == "APPLE" {
+                            SPREF.setValue(appleToken, forKey: "appleId")
+                        }
+                        //메인 이동
+                        self.goToMain()
                     }
+                    
                 } catch let e as NSError {
                     print("An error has occured while parsing JSONObject: \(e.localizedDescription)")
                 }
@@ -211,6 +211,24 @@ class OnboardingVC: UIViewController, ASAuthorizationControllerPresentationConte
         task.resume()
     }
     
+    private func goToMain() {
+        //메인 이동
+        LoadGiftListService.shared.getReceivedGifts(page: 0, size: 10000000, isReceiveGift: true, completion: {
+            gifts in
+            if let receivedArr = gifts {
+                Gifts.receivedModels = receivedArr
+                LoadGiftListService.shared.getReceivedGifts(page: 0, size: 10000000, isReceiveGift: false, completion: {
+                        gifts in
+                        if let sentArr = gifts {
+                            Gifts.sentModels = sentArr
+                            let recordSB = UIStoryboard(name: "MainSB", bundle: nil)
+                            let vc = recordSB.instantiateViewController(withIdentifier: "MainVC")
+                            self.navigationController?.pushViewController(vc, animated: true)
+                    }
+                })
+            }
+        })
+    }
 
 
 }
