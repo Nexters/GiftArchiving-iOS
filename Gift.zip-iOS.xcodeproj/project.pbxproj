@@ -52,6 +52,9 @@
 		D435F14325D6D65600445A9F /* StickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D435F14225D6D65600445A9F /* StickerView.swift */; };
 		D435F14625D6E75100445A9F /* CustomToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D435F14525D6E75100445A9F /* CustomToastView.swift */; };
 		D435F16A25D6E9A000445A9F /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D435F16925D6E9A000445A9F /* UIViewController+Extensions.swift */; };
+		D441173025DF054800310CE0 /* NoticeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D441172F25DF054800310CE0 /* NoticeData.swift */; };
+		D441173525DF056900310CE0 /* NoticeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D441173425DF056900310CE0 /* NoticeService.swift */; };
+		D441173825DF083900310CE0 /* NoticeTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D441173725DF083900310CE0 /* NoticeTVC.swift */; };
 		D446732F25D90B070044B0A0 /* Detail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D446732E25D90B070044B0A0 /* Detail.storyboard */; };
 		D446733225D90B190044B0A0 /* DetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D446733125D90B190044B0A0 /* DetailVC.swift */; };
 		D446733625D91BBC0044B0A0 /* DeleteDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D446733525D91BBC0044B0A0 /* DeleteDetailVC.swift */; };
@@ -143,6 +146,9 @@
 		D435F14225D6D65600445A9F /* StickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerView.swift; sourceTree = "<group>"; };
 		D435F14525D6E75100445A9F /* CustomToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomToastView.swift; sourceTree = "<group>"; };
 		D435F16925D6E9A000445A9F /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
+		D441172F25DF054800310CE0 /* NoticeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeData.swift; sourceTree = "<group>"; };
+		D441173425DF056900310CE0 /* NoticeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeService.swift; sourceTree = "<group>"; };
+		D441173725DF083900310CE0 /* NoticeTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeTVC.swift; sourceTree = "<group>"; };
 		D446732E25D90B070044B0A0 /* Detail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Detail.storyboard; sourceTree = "<group>"; };
 		D446733125D90B190044B0A0 /* DetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVC.swift; sourceTree = "<group>"; };
 		D446733525D91BBC0044B0A0 /* DeleteDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteDetailVC.swift; sourceTree = "<group>"; };
@@ -511,6 +517,22 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		D441172E25DF053D00310CE0 /* Notice */ = {
+			isa = PBXGroup;
+			children = (
+				D441172F25DF054800310CE0 /* NoticeData.swift */,
+			);
+			path = Notice;
+			sourceTree = "<group>";
+		};
+		D441173325DF055D00310CE0 /* Notice */ = {
+			isa = PBXGroup;
+			children = (
+				D441173425DF056900310CE0 /* NoticeService.swift */,
+			);
+			path = Notice;
+			sourceTree = "<group>";
+		};
 		D446732A25D90AE70044B0A0 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
@@ -541,6 +563,7 @@
 		D463E97125D4FD9C00295B42 /* APIService */ = {
 			isa = PBXGroup;
 			children = (
+				D441173325DF055D00310CE0 /* Notice */,
 				4078479325D7ED78003CB616 /* Load */,
 				D463E97225D4FDB100295B42 /* Record */,
 				D463E97325D4FDBD00295B42 /* APIConstants.swift */,
@@ -561,6 +584,7 @@
 		D463E97E25D5084E00295B42 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D441172E25DF053D00310CE0 /* Notice */,
 				407847D525D807CC003CB616 /* Load */,
 				D463E97F25D5085300295B42 /* Record */,
 				D4DFB46525DA7D5100AC08B8 /* GiftModel.swift */,
@@ -612,6 +636,7 @@
 				D465157125CEA44B00CDA2EB /* SettingsTVC.swift */,
 				D41F926525CEDE30009B9743 /* HeaderTVC.swift */,
 				D41F926825CF00CA009B9743 /* FooterTVC.swift */,
+				D441173725DF083900310CE0 /* NoticeTVC.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -877,6 +902,7 @@
 				401C03C825CEF84C0024B9C5 /* RecentCollectionViewCell.swift in Sources */,
 				D4B189A525CBCEEF007C6AE9 /* XibView.swift in Sources */,
 				D435F14325D6D65600445A9F /* StickerView.swift in Sources */,
+				D441173525DF056900310CE0 /* NoticeService.swift in Sources */,
 				D4A08EB425C016BA009CFCC4 /* DatePopupVC.swift in Sources */,
 				D4D6B3D025D1059800231F8E /* LogoutPopupVC.swift in Sources */,
 				D4684D2F25D113FB0065E7A4 /* NoticeVC.swift in Sources */,
@@ -885,6 +911,7 @@
 				D4A08E9225BFDCFF009CFCC4 /* RecordVC.swift in Sources */,
 				D4684D2B25D10FD10065E7A4 /* TermsVC.swift in Sources */,
 				4052035225C537890066989C /* CollectionViewCell.swift in Sources */,
+				D441173025DF054800310CE0 /* NoticeData.swift in Sources */,
 				401C03CD25CEFD660024B9C5 /* PaddingLabel.swift in Sources */,
 				D4A08E9E25BFE031009CFCC4 /* UIColor+Extensions.swift in Sources */,
 				D400F5B225CDAE2E00F71709 /* SingleCVC.swift in Sources */,
@@ -910,6 +937,7 @@
 				D446733925D91C7F0044B0A0 /* DetailMoreVC.swift in Sources */,
 				408E51A025CB201C0037EC9B /* OnboardingVC.swift in Sources */,
 				D446733625D91BBC0044B0A0 /* DeleteDetailVC.swift in Sources */,
+				D441173825DF083900310CE0 /* NoticeTVC.swift in Sources */,
 				D400F5AA25CDA3CE00F71709 /* PackageStickerCVC.swift in Sources */,
 				D4D5261025CAFE2400D18386 /* IconPopupVC.swift in Sources */,
 				408E519225CAF81E0037EC9B /* GridCollectionViewCell.swift in Sources */,

@@ -100,6 +100,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0kY-0k-efe">
+                                <rect key="frame" x="19.666666666666657" y="100.66666666666669" width="316" height="316"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="0kY-0k-efe" secondAttribute="height" multiplier="1:1" id="Eax-lf-GqU"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h2y-iD-MZp">
                                 <rect key="frame" x="-31" y="100" width="437" height="437"/>
                                 <subviews>
@@ -175,13 +182,6 @@
                                     <constraint firstItem="Z7h-z5-IFg" firstAttribute="trailing" secondItem="sra-ZT-gll" secondAttribute="trailing" constant="-22" id="tlE-mR-21q"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0kY-0k-efe">
-                                <rect key="frame" x="19.666666666666657" y="100.66666666666669" width="316" height="316"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="0kY-0k-efe" secondAttribute="height" multiplier="1:1" id="Eax-lf-GqU"/>
-                                </constraints>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QUt-NO-Vig" userLabel="Image Area">
                                 <rect key="frame" x="0.0" y="100" width="375" height="301"/>
                                 <subviews>
@@ -225,7 +225,7 @@
                                         <color key="backgroundColor" name="charcoalGrey"/>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" name="charcoalGrey"/>
                                 <constraints>
                                     <constraint firstItem="1Lo-Ba-Ckl" firstAttribute="top" secondItem="l7u-JX-PI8" secondAttribute="bottom" id="05f-A8-AJ1"/>
                                     <constraint firstItem="ova-6e-6hJ" firstAttribute="top" secondItem="QUt-NO-Vig" secondAttribute="top" constant="16" id="Bqf-Nt-3wW"/>
