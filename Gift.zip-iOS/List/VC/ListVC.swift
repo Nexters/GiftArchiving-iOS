@@ -131,6 +131,11 @@ class ListVC: UIViewController {
     @IBAction func btnSortClicked(_ sender: UIButton) {
         dropDown.show()
     }
+    @IBAction func btnSearchClicked(_ sender: UIButton) {
+        let searchSB = UIStoryboard(name: "SearchSB", bundle: nil)
+        let vc = searchSB.instantiateViewController(withIdentifier: "SearchVC") as! SearchVC
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }
 //MARK: collectionview datasource
 extension ListVC: UICollectionViewDataSource , UICollectionViewDelegate{
@@ -154,8 +159,10 @@ extension ListVC: UICollectionViewDataSource , UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let detailSB = UIStoryboard(name: "Detail", bundle: nil)
         guard let vc = detailSB.instantiateViewController(withIdentifier: "DetailVC") as? DetailVC else { return }
-        vc.giftId = models[indexPath.row].id
-        self.navigationController?.pushViewController(vc, animated: true)
+        
+        vc.giftId = Gifts.receivedModels[indexPath.row].id
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated:  true, completion: nil)
     }
 }
 //MARK: - collectionview 콤포지셔널 레이아웃

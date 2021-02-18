@@ -24,12 +24,15 @@ class ShareVC: UIViewController {
     var currentFrameOfImage: FrameOfImage?
     var userName: String?
     var kakaoImageURL: String?
+
+    var viewWillAppearCnt = 0
+
     var myPhonePhoto: UIImage?
     var whereToGo: Int = 0
+
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         cardView.backgroundColor = currentBackgroundColor
         cardView.makeRounded(cornerRadius: 8.0)
         nameLabel.text = currentName
@@ -76,8 +79,11 @@ class ShareVC: UIViewController {
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
+        if viewWillAppearCnt < 2 {
+            self.cardView.frame.origin.y = self.cardView.frame.origin.y + 52
+            self.viewWillAppearCnt += 1
+        }
         
-        self.cardView.frame.origin.y = self.cardView.frame.origin.y + 52
     }
     
     override func viewDidLoad() {
@@ -89,6 +95,8 @@ class ShareVC: UIViewController {
             self.cardView.frame.origin.y = self.cardView.frame.origin.y + 52
         }, completion: {_ in
         })
+        
+        
         
     }
     
