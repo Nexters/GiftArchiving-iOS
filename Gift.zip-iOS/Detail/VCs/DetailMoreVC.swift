@@ -15,17 +15,23 @@ class DetailMoreVC: UIViewController {
     var currentBackgroundColor: String = "charcoalGrey"
     override func viewDidLoad() {
         super.viewDidLoad()
-//        roundView.backgroundColor = UIColor.init(named:currentBackgroundColor)
+
         roundView.roundCorners(cornerRadius: 8.0, maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
         cancelButton.makeRounded(cornerRadius: 8.0)
     }
     
     @IBAction func editButtonTapped(_ sender: Any) {
-        
+        NotificationCenter.default.post(name: .init("editGift"), object: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func deleteButtonTapped(_ sender: Any) {
         NotificationCenter.default.post(name: .init("popupchange"), object: nil)
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func shareButtonTapped(_ sender: Any) {
+        NotificationCenter.default.post(name: .init("shareGift"), object: nil)
         self.dismiss(animated: true, completion: nil)
     }
     

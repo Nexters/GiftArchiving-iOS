@@ -24,7 +24,12 @@ class ShareVC: UIViewController {
     var currentFrameOfImage: FrameOfImage?
     var userName: String?
     var kakaoImageURL: String?
+
     var viewWillAppearCnt = 0
+
+    var myPhonePhoto: UIImage?
+    var whereToGo: Int = 0
+
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -35,18 +40,19 @@ class ShareVC: UIViewController {
         logoImageView.backgroundColor = currentBackgroundColor
         if currentBackgroundColor == .wheat {
             nameLabel.textColor = UIColor(white: 41.0 / 255.0, alpha: 1.0)
+            logoImageView.image = UIImage(named: "logoBgcolorNoneBlack")
             switch currentFrameOfImage {
             case .square:
-                logoImageView.image = UIImage(named: "logoYellowRectangle")
                 break
             case .circle:
-                logoImageView.image = UIImage(named: "logoYellowCircle")
+                let radius = logoImageView.layer.bounds.width / 2
+                logoImageView.makeRounded(cornerRadius: radius)
                 break
             case .full:
-                logoImageView.image = UIImage(named: "logoYellowRectangle")
                 break
             case .windowFrame:
-                logoImageView.image = UIImage(named: "logoYellowWindow")
+                let radius = logoImageView.layer.bounds.width / 2
+                logoImageView.roundCorners(cornerRadius: radius, maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
                 break
             case .none:
                 break
@@ -79,6 +85,7 @@ class ShareVC: UIViewController {
         }
         
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -130,18 +137,19 @@ class ShareVC: UIViewController {
     }
     
     @IBAction func popToMain(_ sender: Any) {
-        let mainSB = UIStoryboard.init(name: "MainSB", bundle: nil)
-        guard let mainVC = mainSB.instantiateViewController(identifier: "MainVC") as? VC else { return }
-        print("mainVC")
-        print(mainVC)
-        guard let navivc = self.navigationController else { return }
-        let main = navivc.viewControllers[navivc.viewControllers.count - 3]
-        navivc.popToViewController(main, animated: true)
+        if whereToGo == 0 {
+            guard let navivc = self.navigationController else { return }
+            let main = navivc.viewControllers[navivc.viewControllers.count - 3]
+            navivc.popToViewController(main, animated: true)
+        } else {
+            self.dismiss(animated: true, completion: nil)
+        }
+        
     }
     
     @IBAction func saveImage(_ sender: UIButton) {
         
-        UIImageWriteToSavedPhotosAlbum(instagramImage!, self, #selector(image(image:didFinishSavingWithError:contextInfo:)), nil)
+        UIImageWriteToSavedPhotosAlbum(myPhonePhoto!, self, #selector(image(image:didFinishSavingWithError:contextInfo:)), nil)
         
     }
     

@@ -23,8 +23,9 @@ class VC: UIViewController{
     @IBOutlet weak var btnWrite: UIButton!
     @IBOutlet weak var btnGfitBox: UIButton!
     @IBOutlet weak var btnArrow: UIButton!
+    @IBOutlet weak var bottomView: UIView!
     
-    var currentIndex: CGFloat = 0
+    var currentIndex: Int = 0
     
     let lineSpacing: CGFloat = 0
     
@@ -38,6 +39,29 @@ class VC: UIViewController{
     
     private var device = 0 //device 크기 flag
     
+    private var currentColor: UIColor = .charcoalGrey {
+        didSet {
+            if currentColor == UIColor.wheat {
+//                collectionView.backgroundColor = UIColor(named: color)
+                collectionView.reloadData()
+                
+//                collectionView.backgroundColor = UIColor(named: color)
+//                if(color == "wheat") {
+//                    btnArrow.imageView?.image = UIImage(named: "btn_arrow_black")
+//                    btnGfitBox.titleLabel?.textColor = UIColor.greyishBrown
+//                } else {
+//                    btnArrow.imageView?.image = UIImage(named: "btn_arrow_white")
+//                    btnGfitBox.titleLabel?.textColor = UIColor.white
+//                }
+//
+//                if let cell : CollectionViewCell = collectionView.cellForItem(at: IndexPath(row: currentIndex, section: 0)) as? CollectionViewCell{
+//                    cell.setLabelColor(color: color)
+//                }
+//                imgLogo.image = UIImage(named: "logo_"+color+"_"+frameType)
+            }
+        }
+    }
+    
     
     @IBOutlet weak var constLabelMain1Top: NSLayoutConstraint!
     @IBOutlet weak var constLabelMainWidth: NSLayoutConstraint!
@@ -45,10 +69,15 @@ class VC: UIViewController{
     @IBOutlet weak var constLabelMain2Height: NSLayoutConstraint!
     @IBOutlet weak var constLabelMain2Width: NSLayoutConstraint!
     @IBOutlet weak var constBtnWriteTop: NSLayoutConstraint!
+    
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+        super.viewWillAppear(animated)
+
         collectionView.reloadData()
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+
     }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         print(view.bounds.height)
@@ -129,6 +158,7 @@ class VC: UIViewController{
             self.collectionView.reloadData()
         }
     }
+    
     @IBAction func btnReceivedClicked(_ sender: UIButton) {
         self.btnReceived.titleLabel?.textColor = UIColor.white
         self.btnSent.titleLabel?.textColor = UIColor.whiteOpacity
@@ -183,6 +213,7 @@ class VC: UIViewController{
     }
     
 }
+
 //MARK: 컬랙션뷰 datasource, delegate, changeUI
 extension VC: UICollectionViewDataSource, UICollectionViewDelegate {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -214,24 +245,24 @@ extension VC: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionViewCell", for: indexPath) as! CollectionViewCell
         cell.setConstraint(device: device)
-        if collectionViewFlag{
+        if collectionViewFlag {
             if Gifts.receivedModels.count == 0 {
                 cell.configureEmpty(flag: true, device: device)
                 changeUIEmpty()
-            }else{
+            } else {
                 cell.configure(with: Gifts.receivedModels[indexPath.row])
             }
-        }else{
+        } else {
             if Gifts.sentModels.count == 0 {
                 cell.configureEmpty(flag: false, device: device)
                 changeUIEmpty()
-            }else{
+            } else {
                 cell.configure(with: Gifts.sentModels[indexPath.row])
             }
         }
-        
         return cell
     }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionViewFlag{
             if Gifts.receivedModels.count != 0 {
@@ -261,27 +292,46 @@ extension VC: UICollectionViewDataSource, UICollectionViewDelegate {
         self.btnArrow.imageView?.image = UIImage(named: "btn_arrow_white")
         currentIndex = 0
     }
-    func changeUI(frameType: String, color: String){
-        if(color == "wheat"){
+    
+    func changeUI(frameType: String, color: String) {
+        collectionView.backgroundColor = UIColor(named: color)
+        if(color == "wheat") {
             btnArrow.imageView?.image = UIImage(named: "btn_arrow_black")
             btnGfitBox.titleLabel?.textColor = UIColor.greyishBrown
-        }else{
+        } else {
             btnArrow.imageView?.image = UIImage(named: "btn_arrow_white")
             btnGfitBox.titleLabel?.textColor = UIColor.white
         }
-        collectionView.backgroundColor = UIColor(named: color)
-        if let cell : CollectionViewCell = collectionView.cellForItem(at: IndexPath(row: Int(currentIndex), section: 0)) as? CollectionViewCell{
+   
+        if let cell : CollectionViewCell = collectionView.cellForItem(at: IndexPath(row: currentIndex, section: 0)) as? CollectionViewCell{
             cell.setLabelColor(color: color)
         }
         imgLogo.image = UIImage(named: "logo_"+color+"_"+frameType)
     }
-    
 }
+
 //MARK: 스크롤뷰 델리겟
 extension VC : UIScrollViewDelegate {
     
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>)
-    {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        print("scroll")
+        
+        if collectionViewFlag {
+            if currentIndex == Gifts.receivedModels.count{
+                currentIndex -= 1
+            }
+            self.changeUI(frameType: Gifts.receivedModels[currentIndex].frameType, color: Gifts.receivedModels[currentIndex].bgColor)
+            print(Gifts.receivedModels[currentIndex].frameType)
+        }else{
+            if currentIndex == Gifts.sentModels.count{
+                currentIndex -= 1
+            }
+            self.changeUI(frameType: Gifts.sentModels[currentIndex].frameType, color: Gifts.sentModels[currentIndex].bgColor)
+            print(Gifts.sentModels[currentIndex].frameType)
+        }
+    }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         // item의 사이즈와 item 간의 간격 사이즈를 구해서 하나의 item 크기로 설정.
         let layout = self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         let cellWidthIncludingSpacing = layout.itemSize.width + layout.minimumLineSpacing
@@ -290,7 +340,7 @@ extension VC : UIScrollViewDelegate {
         // 이동한 x좌표 값과 item의 크기를 비교하여 몇 페이징이 될 것인지 값 설정
         var offset = targetContentOffset.pointee
         let index = (offset.x + scrollView.contentInset.left) / cellWidthIncludingSpacing
-        var roundedIndex = round(index)
+        var roundedIndex: CGFloat = round(index)
         
         // scrollView, targetContentOffset의 좌표 값으로 스크롤 방향을 알 수 있다.
         // index를 반올림하여 사용하면 item의 절반 사이즈만큼 스크롤을 해야 페이징이 된다.
@@ -304,14 +354,15 @@ extension VC : UIScrollViewDelegate {
         }
         
         if isOneStepPaging {
-            if currentIndex > roundedIndex {
+            if currentIndex > Int(roundedIndex) {
                 currentIndex -= 1
-                roundedIndex = currentIndex
-            } else if currentIndex < roundedIndex {
+                roundedIndex = CGFloat(currentIndex)
+            } else if currentIndex < Int(roundedIndex) {
                 currentIndex += 1
-                roundedIndex = currentIndex
+                roundedIndex = CGFloat(currentIndex)
             }
         }
+
         if collectionViewFlag {
             if Int(currentIndex) == Gifts.receivedModels.count{
                 currentIndex -= 1
@@ -325,10 +376,16 @@ extension VC : UIScrollViewDelegate {
             self.changeUI(frameType: Gifts.sentModels[Int(currentIndex)].frameType, color: Gifts.sentModels[Int(currentIndex)].bgColor)
             
         }
-        
+
         
         // 위 코드를 통해 페이징 될 좌표값을 targetContentOffset에 대입하면 된다.
         offset = CGPoint(x: roundedIndex * cellWidthIncludingSpacing - scrollView.contentInset.left, y: -scrollView.contentInset.top)
         targetContentOffset.pointee = offset
+    }
+}
+
+extension VC: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestrueRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        return true
     }
 }
