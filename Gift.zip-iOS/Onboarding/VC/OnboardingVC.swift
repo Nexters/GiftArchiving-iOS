@@ -71,6 +71,7 @@ class OnboardingVC: UIViewController, ASAuthorizationControllerPresentationConte
         btnKakaoLogin.backgroundColor = UIColor.dandelion
         btnAppleLogin.layer.cornerRadius = 6
     }
+    
     // Apple Login Button Pressed
     @IBAction func btnAppleLoginClicked(_ sender: UIButton) {
         let appleIDProvider = ASAuthorizationAppleIDProvider()
@@ -117,12 +118,14 @@ class OnboardingVC: UIViewController, ASAuthorizationControllerPresentationConte
                 
                 if let error = error {
                     // 예외 처리 (로그인 취소 등)
+                    print("카카오 문제1")
                     print(error)
                 }
                 else {
                     //사용자 관리 api 호출
                     UserApi.shared.me() {(user, error) in
                         if let error = error {
+                            print("카카오 문제2")
                             print(error)
                         }
                         else {
@@ -175,10 +178,13 @@ class OnboardingVC: UIViewController, ASAuthorizationControllerPresentationConte
                     
                     // JSON 결과값을 추출
                     let result = jsonObject["message"] as? String
-                    
+                    let isSignUp = jsonObject["connected_at"] as? String
+                    print(jsonObject)
+                    print("안녕??")
+                    print(isSignUp)
                     // 결과가 성공일 경우
                     if result == "SUCCESS" {
-                        print("login API Success")
+                        print("login API Success : 첫 회원가입")
                         let SPREF = UserDefaults.standard
                         if loginType == "KAKAO"{
                             SPREF.setValue(kakaoToken, forKey: "kakaoId")
@@ -191,6 +197,10 @@ class OnboardingVC: UIViewController, ASAuthorizationControllerPresentationConte
                         let recordSB = UIStoryboard(name: "MainSB", bundle: nil)
                         let vc = recordSB.instantiateViewController(withIdentifier: "MainVC")
                         self.navigationController?.pushViewController(vc, animated: true)
+                    } else if isSignUp != nil {
+                        print("login API Success : 이미 회원가입 되어있음")
+                        let id = jsonObject["id"] as? String
+                        print(id)
                     }
                 } catch let e as NSError {
                     print("An error has occured while parsing JSONObject: \(e.localizedDescription)")

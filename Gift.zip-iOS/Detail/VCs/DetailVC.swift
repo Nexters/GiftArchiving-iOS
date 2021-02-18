@@ -29,7 +29,8 @@ class DetailVC: UIViewController {
     @IBOutlet weak var moreButton: UIButton!
     @IBOutlet weak var exitButton: UIButton!
     @IBOutlet var textsToChangeColor: [UILabel]!
-    var giftId: String = "6024c92e0b372841ffb814b8"
+    
+    var giftId: String = "602d16ef00eec17e8db2b4e9"
     var currentBackgroundColor: String = "charcoalGrey"
     
     override func viewWillAppear(_ animated: Bool) {
@@ -108,7 +109,7 @@ class DetailVC: UIViewController {
     // UI 작업
     private func setPageInformation(imageURL : String, name: String, receiveDate: String, isReceiveGift: Bool,  category: String, emotion: String, reason: String, content: String, bgColor: String) {
 
-        let url = URL(string: imageURL.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)!)
+        let url = URL(string: imageURL.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)!) //
         giftImageView.kf.setImage(with: url)
         nameLabel.text = name
         isReceiveLabel.text = isReceiveGift ? "From." : "To."

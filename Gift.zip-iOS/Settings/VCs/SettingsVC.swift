@@ -35,8 +35,14 @@ class SettingsVC: UIViewController, MFMailComposeViewControllerDelegate {
     
     private func initNotificationCenter() {
         NotificationCenter.default.addObserver(self, selector: #selector(cancelLogoutPopup), name: .init("cancelLogoutPopup"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(logout), name: .init("logout"), object: nil)
+            
     }
     
+    @objc func logout() {
+        popupBackgroundView.animatePopupBackground(false)
+        self.navigationController?.popToRootViewController(animated: true)
+    }
     @objc func cancelLogoutPopup() {
         popupBackgroundView.animatePopupBackground(false)
     }
@@ -55,7 +61,7 @@ class SettingsVC: UIViewController, MFMailComposeViewControllerDelegate {
 //        mailComposerVC.view.backgroundColor = .black
         mailComposerVC.mailComposeDelegate = self
         mailComposerVC.setSubject("문의 및 건의하기")
-        mailComposerVC.setToRecipients(["support@giftzip.kr"])
+        mailComposerVC.setToRecipients(["smile5602@naver.com"])
         mailComposerVC.setMessageBody("- 정확한 문의 파악을 위해 아래 정보를 작성해주세요!\n\n\n1. 문의 내용:\n\n2. 기프트집(카카오) 메일계정: \n\n★ 문의 관련 스크린샷을 첨부하시면 \n 보다 정확하고 빠른 확인이 가능합니다.", isHTML: false)
         return mailComposerVC
     }
@@ -93,11 +99,11 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         if indexPath.row == 0 {
             if indexPath.section == 3 {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: FooterTVC.identifier, for: indexPath) as? FooterTVC else { return UITableViewCell() }
-                
-                cell.isHighlighted = true
+                cell.selectionStyle = .none
                 cell.delegate = self
                 return cell
             } else {
@@ -109,7 +115,7 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
                 } else {
                     cell.titleLabel.text = "앱 정보"
                 }
-                cell.isUserInteractionEnabled = false
+//                cell.isUserInteractionEnabled = false
                 return cell
             }
             
@@ -136,7 +142,7 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 3 {
-            return 178
+            return 168
         } else {
             return 56.0
         }
@@ -144,9 +150,12 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) else { return }
+       
         if indexPath.row == 0 {
             
         } else {
+            cell.contentView.backgroundColor = UIColor(red: 29.0 / 255.0, green: 29.0 / 255.0, blue: 32.0 / 255.0, alpha: 1.0)
             if indexPath.section == 1 && indexPath.row == 1 {
                 // 공지사항
                 guard let vc = self.storyboard?.instantiateViewController(identifier: "NoticeVC") as? NoticeVC else { return }
