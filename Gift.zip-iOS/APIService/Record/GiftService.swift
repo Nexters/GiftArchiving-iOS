@@ -162,7 +162,6 @@ struct GiftService {
             "category" : category,
             "emotion": emotion,
             "reason": reason,
-            "bgColor": bgColor
         ]
         
         let dataRequest = AF.request(url, method: .put, parameters: body, headers: header)

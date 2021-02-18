@@ -470,6 +470,9 @@ class RecordVC: UIViewController {
     //MARK: - IBAction
     
     @IBAction func backToMain(_ sender: UIButton) {
+//        if emotionTextView.text == ""
+        print(emotionTextView.text)
+        print(
         self.navigationController?.popViewController(animated: true)
     }
     
