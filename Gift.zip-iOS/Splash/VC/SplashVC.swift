@@ -21,7 +21,11 @@ class SplashVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        if checkLogin() {
+            self.getDataAndDisplay()
+        }else{
+            self.moveToOnboarding()
+        }
     }
 
     private func checkLogin() -> Bool{
@@ -51,14 +55,13 @@ class SplashVC: UIViewController {
                             gifts in
                             if let sentArr = gifts {
                                 Gifts.sentModels = sentArr
-                                //self.checkLoginAndDisplay()
                                 let interval = front.distance(to: Date())
                                 if interval < 2 {
                                     DispatchQueue.main.asyncAfter(deadline: .now() + 2 - interval) {
-                                        self.checkLoginAndDisplay()
+                                        self.moveToMain()
                                     }
                                 }else{
-                                    self.checkLoginAndDisplay()
+                                    self.moveToMain()
                                 }
                         }
                     })
