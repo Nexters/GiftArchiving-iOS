@@ -191,6 +191,7 @@ class RecordVC: UIViewController {
                 windowViewLabel.alpha = 0.6
                 
                 cropImageView.makeRounded(cornerRadius: 0)
+                print("square")
                 break
             case .circle:
                 fullFrameView.alpha = 0.6
@@ -205,6 +206,7 @@ class RecordVC: UIViewController {
                 windowViewLabel.alpha = 0.6
                 
                 cropImageView.roundCorners(cornerRadius: radius, maskedCorners: [.layerMaxXMinYCorner, .layerMinXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner])
+                print("circle")
                 break
                 
             case .windowFrame:
@@ -220,6 +222,7 @@ class RecordVC: UIViewController {
                 windowViewLabel.alpha = 1.0
                 
                 cropImageView.roundCorners(cornerRadius: radius, maskedCorners: [.layerMaxXMinYCorner, .layerMinXMinYCorner])
+                print("windowFrame")
                 break
             }
         }
@@ -470,8 +473,8 @@ class RecordVC: UIViewController {
     //MARK: - IBAction
     
     @IBAction func backToMain(_ sender: UIButton) {
-//        if emotionTextView.text == ""
-        print(emotionTextView.text)
+        //        if emotionTextView.text == ""
+        //        print(emotionTextView.text)
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -483,172 +486,186 @@ class RecordVC: UIViewController {
         if isImageSelected {
             if isNameTyped {
                 if isCategoryIconSelected && isPurposeIconSelected && isEmotionIconSelected {
-                    guard let share = UIStoryboard.init(name: "Share", bundle: nil).instantiateViewController(identifier: "ShareVC") as? ShareVC else { return }
-                    
-                    // 공유할 게시할 이미지 넘기기 작업
-                    
-                    let noBackgroundCroppedImage = cropArea.saveAsImage()
-                    let noBackgroundImageView = UIImageView.init(image: noBackgroundCroppedImage)
-                    rectagularInstagramCropView.addSubview(noBackgroundImageView)
-                    noBackgroundImageView.translatesAutoresizingMaskIntoConstraints = false
-                    noBackgroundImageView.leadingAnchor.constraint(equalTo: rectagularInstagramCropView.leadingAnchor, constant: 0).isActive = true
-                    noBackgroundImageView.trailingAnchor.constraint(equalTo: rectagularInstagramCropView.trailingAnchor, constant: 0).isActive = true
-                    noBackgroundImageView.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
-                    noBackgroundImageView.centerYAnchor.constraint(equalTo: rectagularInstagramCropView.centerYAnchor, constant: 0).isActive = true
-                    let noBackgroundSquare = UIGraphicsImageRenderer(size: rectagularInstagramCropView.bounds.size)
-                    let noBackgroundSquareImage = noBackgroundSquare.image { _ in
-                        rectagularInstagramCropView.drawHierarchy(in: rectagularInstagramCropView.bounds, afterScreenUpdates: true)
-                    }
-                    
-                    // 편지봉투 카카오톡 공유하기에 들어갈 이미지
-                    imageViewAfterstickerCropped.image = noBackgroundSquareImage
-                    nameEnvelopLabel.text = "\(fromLabel.text!) \(nameTextField.text!)"
-                    nameEnvelopLabel.textColor = currentBackgroundColor == UIColor.wheat ? .black : .white
-                    kakaoShareView.backgroundColor = currentBackgroundColor
-                    imageViewAfterstickerCropped.backgroundColor = currentBackgroundColor
-                    logoSticker.backgroundColor = currentBackgroundColor
-                    
-                    let kakaoImage = UIGraphicsImageRenderer(size: kakaoShareImageView.bounds.size)
-                    let kakaoEnvelopImage = kakaoImage.image { _ in
-                        kakaoShareImageView.drawHierarchy(in: kakaoShareImageView.bounds, afterScreenUpdates: true)
-                    }
-                    
-                    nameEnvelopLabel.isHidden = true
-                    
-                    // 인스타그램 공유하기에 들어갈 이미지
-                    noBackgroundImageView.leadingAnchor.constraint(equalTo: rectagularInstagramCropView.leadingAnchor, constant: 30).isActive = true
-                    noBackgroundImageView.trailingAnchor.constraint(equalTo: rectagularInstagramCropView.trailingAnchor, constant: 30).isActive = true
-                    noBackgroundImageView.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
-                    noBackgroundImageView.topAnchor.constraint(equalTo: rectagularInstagramCropView.topAnchor, constant: 28).isActive = true
-                    noBackgroundImageView.bottomAnchor.constraint(equalTo: rectagularInstagramCropView.bottomAnchor, constant: -65).isActive = true
-                    noBackgroundImageView.contentMode = .scaleAspectFit
-                    
-                    let label = UILabel()
-                    label.text = fromLabel.text! + nameTextField.text!
-                    label.font = UIFont(name: "SpoqaHanSansNeo-Bold", size: 16)
-                    label.textColor = currentBackgroundColor == UIColor.wheat ? .black : .white
-                    
-                    rectagularInstagramCropView.addSubview(label)
-                    label.translatesAutoresizingMaskIntoConstraints = false
-                    label.topAnchor.constraint(equalTo: noBackgroundImageView.bottomAnchor, constant: 13).isActive = true
-                    label.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
-                    
-                    rectagularInstagramCropView.backgroundColor = currentBackgroundColor
-                    let myPhone = UIGraphicsImageRenderer(size: rectagularInstagramCropView.bounds.size)
-                    let myPhonePhoto = myPhone.image { _ in
-                        rectagularInstagramCropView.drawHierarchy(in: rectagularInstagramCropView.bounds, afterScreenUpdates: true)
-                    }
-                    
-                    rectagularInstagramCropView.makeRounded(cornerRadius: 8.0)
-                    let instagram = UIGraphicsImageRenderer(size: rectagularInstagramCropView.bounds.size)
-                    let instagramSquareImage = instagram.image { _ in
-                        rectagularInstagramCropView.drawHierarchy(in: rectagularInstagramCropView.bounds, afterScreenUpdates: true)
-                    }
-                    
-                    share.currentName = "\(fromLabel.text!) \(nameTextField.text!)"
-                    share.currentBackgroundColor = currentBackgroundColor
-                    share.envelopImage = noBackgroundSquareImage
-                    share.instagramImage = instagramSquareImage
-                    share.myPhonePhoto = myPhonePhoto
-                    share.currentFrameOfImage = currentFrameOfImage
-                    share.userName = nameTextField.text
-                    
-                    let content = emotionTextView.text ?? ""
-                    let name = nameTextField.text ?? ""
-                    
-                    // 날짜
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZ"
-                    let dateString = dateFormatter.string(from: selectedDate)
-                    print(dateString)
-                    let dateArr = dateString.components(separatedBy: [" "," "])
-                    let first = dateArr[0]
-                    let second = dateArr[1]
-                    print(dateArr[2])
-                    let date = first + "T" + second
-                    // 아이콘 이름
-                    
-                    var categoryName: String = ""
-                    var purposeName: String = ""
-                    var emotionName: String = ""
-                    if currentBackgroundColor == UIColor.wheat {
-                        categoryImageName = categoryImageName.trimmingCharacters(in: ["B"])
-                        purposeImageName = purposeImageName.trimmingCharacters(in: ["B"])
-                        emotionImageName = emotionImageName.trimmingCharacters(in: ["B"])
-                    }
-                    
-                    for category in Icons.category {
-                        if category.imageName == categoryImageName {
-                            categoryName = category.englishName
+                    if emotionTextView.text != "지금 이 감정을 기록해보세요." {
+                        
+                        guard let share = UIStoryboard.init(name: "Share", bundle: nil).instantiateViewController(identifier: "ShareVC") as? ShareVC else { return }
+                        
+                        // 공유할 게시할 이미지 넘기기 작업
+                        let noBackgroundCropped = UIGraphicsImageRenderer(size: cropArea.bounds.size)
+                        cropArea.backgroundColor = UIColor.clear
+                        let noBackgroundCroppedImage = noBackgroundCropped.image { _ in
+                            cropArea.drawHierarchy(in: cropArea.bounds, afterScreenUpdates: true)
                         }
-                    }
-                    
-                    for purpose in Icons.purpose {
-                        if purpose.imageName == purposeImageName {
-                            purposeName = purpose.englishName
+                        let noBackgroundImageView = UIImageView.init(image: noBackgroundCroppedImage)
+                        rectagularInstagramCropView.addSubview(noBackgroundImageView)
+                        noBackgroundImageView.translatesAutoresizingMaskIntoConstraints = false
+                        noBackgroundImageView.leadingAnchor.constraint(equalTo: rectagularInstagramCropView.leadingAnchor, constant: 0).isActive = true
+                        noBackgroundImageView.trailingAnchor.constraint(equalTo: rectagularInstagramCropView.trailingAnchor, constant: 0).isActive = true
+                        noBackgroundImageView.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
+                        noBackgroundImageView.centerYAnchor.constraint(equalTo: rectagularInstagramCropView.centerYAnchor, constant: 0).isActive = true
+                        let noBackgroundSquare = UIGraphicsImageRenderer(size: rectagularInstagramCropView.bounds.size)
+                        let noBackgroundSquareImage = noBackgroundSquare.image { _ in
+                            rectagularInstagramCropView.drawHierarchy(in: rectagularInstagramCropView.bounds, afterScreenUpdates: true)
                         }
-                    }
-                    
-                    if isReceiveGift {
-                        for emotion in Icons.emotionGet {
-                            if emotion.imageName == emotionImageName {
-                                emotionName = emotion.englishName
+                        
+                        // 편지봉투 카카오톡 공유하기에 들어갈 이미지
+                        imageViewAfterstickerCropped.image = noBackgroundSquareImage
+                        nameEnvelopLabel.text = "\(fromLabel.text!) \(nameTextField.text!)"
+                        nameEnvelopLabel.textColor = currentBackgroundColor == UIColor.wheat ? .black : .white
+                        kakaoShareView.backgroundColor = currentBackgroundColor
+                        imageViewAfterstickerCropped.backgroundColor = currentBackgroundColor
+                        logoSticker.backgroundColor = currentBackgroundColor
+                        
+                        let kakaoImage = UIGraphicsImageRenderer(size: kakaoShareImageView.bounds.size)
+                        let kakaoEnvelopImage = kakaoImage.image { _ in
+                            kakaoShareImageView.drawHierarchy(in: kakaoShareImageView.bounds, afterScreenUpdates: true)
+                        }
+                        
+                        nameEnvelopLabel.isHidden = true
+                        
+                        // 인스타그램 공유하기에 들어갈 이미지
+                        noBackgroundImageView.leadingAnchor.constraint(equalTo: rectagularInstagramCropView.leadingAnchor, constant: 30).isActive = true
+                        noBackgroundImageView.trailingAnchor.constraint(equalTo: rectagularInstagramCropView.trailingAnchor, constant: 30).isActive = true
+                        noBackgroundImageView.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
+                        noBackgroundImageView.topAnchor.constraint(equalTo: rectagularInstagramCropView.topAnchor, constant: 28).isActive = true
+                        noBackgroundImageView.bottomAnchor.constraint(equalTo: rectagularInstagramCropView.bottomAnchor, constant: -65).isActive = true
+                        noBackgroundImageView.contentMode = .scaleAspectFit
+                        
+                        let label = UILabel()
+                        label.text = fromLabel.text! + nameTextField.text!
+                        label.font = UIFont(name: "SpoqaHanSansNeo-Bold", size: 16)
+                        label.textColor = currentBackgroundColor == UIColor.wheat ? .black : .white
+                        
+                        rectagularInstagramCropView.addSubview(label)
+                        label.translatesAutoresizingMaskIntoConstraints = false
+                        label.topAnchor.constraint(equalTo: noBackgroundImageView.bottomAnchor, constant: 13).isActive = true
+                        label.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
+                        
+                        rectagularInstagramCropView.backgroundColor = currentBackgroundColor
+                        let myPhone = UIGraphicsImageRenderer(size: rectagularInstagramCropView.bounds.size)
+                        let myPhonePhoto = myPhone.image { _ in
+                            rectagularInstagramCropView.drawHierarchy(in: rectagularInstagramCropView.bounds, afterScreenUpdates: true)
+                        }
+                        
+                        rectagularInstagramCropView.makeRounded(cornerRadius: 8.0)
+                        let instagram = UIGraphicsImageRenderer(size: rectagularInstagramCropView.bounds.size)
+                        let instagramSquareImage = instagram.image { _ in
+                            rectagularInstagramCropView.drawHierarchy(in: rectagularInstagramCropView.bounds, afterScreenUpdates: true)
+                        }
+                        
+                        share.currentName = "\(fromLabel.text!) \(nameTextField.text!)"
+                        share.currentBackgroundColor = currentBackgroundColor
+                        share.envelopImage = noBackgroundSquareImage
+                        share.instagramImage = instagramSquareImage
+                        // instagramSquareImage
+                        share.myPhonePhoto = myPhonePhoto
+                        // myPhonePhoto
+                        share.currentFrameOfImage = currentFrameOfImage
+                        share.userName = nameTextField.text
+                        
+                        let content = emotionTextView.text ?? ""
+                        let name = nameTextField.text ?? ""
+                        
+                        // 날짜
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZ"
+                        let dateString = dateFormatter.string(from: selectedDate)
+                        print(dateString)
+                        let dateArr = dateString.components(separatedBy: [" "," "])
+                        let first = dateArr[0]
+                        let second = dateArr[1]
+                        print(dateArr[2])
+                        let date = first + "T" + second
+                        // 아이콘 이름
+                        
+                        var categoryName: String = ""
+                        var purposeName: String = ""
+                        var emotionName: String = ""
+                        if currentBackgroundColor == UIColor.wheat {
+                            categoryImageName = categoryImageName.trimmingCharacters(in: ["B"])
+                            purposeImageName = purposeImageName.trimmingCharacters(in: ["B"])
+                            emotionImageName = emotionImageName.trimmingCharacters(in: ["B"])
+                        }
+                        
+                        for category in Icons.category {
+                            if category.imageName == categoryImageName {
+                                categoryName = category.englishName
                             }
                         }
+                        
+                        for purpose in Icons.purpose {
+                            if purpose.imageName == purposeImageName {
+                                purposeName = purpose.englishName
+                            }
+                        }
+                        
+                        if isReceiveGift {
+                            for emotion in Icons.emotionGet {
+                                if emotion.imageName == emotionImageName {
+                                    emotionName = emotion.englishName
+                                }
+                            }
+                        } else {
+                            for emotion in Icons.emotionSend {
+                                if emotion.imageName == emotionImageName {
+                                    emotionName = emotion.englishName
+                                }
+                            }
+                        }
+                        var token: String = ""
+                        let SPREF = UserDefaults.standard
+                        if let appleId = SPREF.string(forKey: "appleId"){
+                            token = appleId
+                        } else {
+                            if let kakaoId = SPREF.string(forKey: "kakaoId") {
+                                token = kakaoId
+                            }
+                        }
+                        
+                        let bgImg = resizeImage(image: kakaoEnvelopImage, newWidth: kakaoEnvelopImage.size.width)
+                        let noBgImg = resizeImage(image: noBackgroundSquareImage, newWidth: noBackgroundSquareImage.size.width)
+                        
+                        GiftService.shared.recordGift(content: content, isReceiveGift: isReceiveGift, name: name, receiveDate: date, createdBy: token, category: categoryName, emotion: emotionName, reason: purposeName, bgColor: currentBackgroundColorString, bgImg: bgImg!, noBgImg: noBgImg!, frameType: frameType) { networkResult -> Void in
+                            switch networkResult {
+                            case .success(let data):
+                                if let bgData = data as? RecordGiftData {
+                                    print(bgData)
+                                    self.broadcastAdd(gift: ["gifts" : [["id": bgData.id, "imgUrl" : bgData.noBgImg, "name": name, "content" : content , "receiveDate" : date, "bgColor" : self.currentBackgroundColorString, "isReceiveGift" : String(self.isReceiveGift), "category" : categoryName, "emotion": emotionName, "reason" : purposeName, "frameType": self.frameType]]], isReceive: self.isReceiveGift)
+                                    share.kakaoImageURL = bgData.bgImg
+                                    self.navigationController?.pushViewController(share, animated: true)
+                                }
+                                
+                                
+                                
+                                
+                            case .requestErr:
+                                let alertViewController = UIAlertController(title: "통신 실패", message: "💩", preferredStyle: .alert)
+                                let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+                                alertViewController.addAction(action)
+                                self.present(alertViewController, animated: true, completion: nil)
+                                
+                            case .pathErr: print("path")
+                            case .serverErr:
+                                let alertViewController = UIAlertController(title: "통신 실패", message: "서버 오류", preferredStyle: .alert)
+                                let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+                                alertViewController.addAction(action)
+                                self.present(alertViewController, animated: true, completion: nil)
+                                print("networkFail")
+                                print("serverErr")
+                            case .networkFail:
+                                let alertViewController = UIAlertController(title: "통신 실패", message: "네트워크 오류", preferredStyle: .alert)
+                                let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+                                alertViewController.addAction(action)
+                                self.present(alertViewController, animated: true, completion: nil)
+                                print("networkFail")
+                            }
+                        }
+                        
                     } else {
-                        for emotion in Icons.emotionSend {
-                            if emotion.imageName == emotionImageName {
-                                emotionName = emotion.englishName
-                            }
-                        }
-                    }
-                    var token: String = ""
-                    let SPREF = UserDefaults.standard
-                    if let appleId = SPREF.string(forKey: "appleId"){
-                        token = appleId
-                    } else {
-                        if let kakaoId = SPREF.string(forKey: "kakaoId") {
-                            token = kakaoId
-                        }
-                    }
-                    
-                    let bgImg = resizeImage(image: kakaoEnvelopImage, newWidth: kakaoEnvelopImage.size.width)
-                    let noBgImg = resizeImage(image: noBackgroundSquareImage, newWidth: noBackgroundSquareImage.size.width)
-                    
-                    GiftService.shared.recordGift(content: content, isReceiveGift: isReceiveGift, name: name, receiveDate: date, createdBy: token, category: categoryName, emotion: emotionName, reason: purposeName, bgColor: currentBackgroundColorString, bgImg: bgImg!, noBgImg: noBgImg!, frameType: frameType) { networkResult -> Void in
-                        switch networkResult {
-                        case .success(let data):
-                            if let bgData = data as? RecordGiftData {
-                                print(bgData)
-                                self.broadcastAdd(gift: ["gifts" : [["id": bgData.id, "imgUrl" : bgData.noBgImg, "name": name, "content" : content , "receiveDate" : date, "bgColor" : self.currentBackgroundColorString, "isReceiveGift" : String(self.isReceiveGift), "category" : categoryName, "emotion": emotionName, "reason" : purposeName, "frameType": self.frameType]]], isReceive: self.isReceiveGift)
-                                share.kakaoImageURL = bgData.bgImg
-                                self.navigationController?.pushViewController(share, animated: true)
-                            }
-                            
-                            
-                            
-                            
-                        case .requestErr:
-                            let alertViewController = UIAlertController(title: "통신 실패", message: "💩", preferredStyle: .alert)
-                            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
-                            alertViewController.addAction(action)
-                            self.present(alertViewController, animated: true, completion: nil)
-                            
-                        case .pathErr: print("path")
-                        case .serverErr:
-                            let alertViewController = UIAlertController(title: "통신 실패", message: "서버 오류", preferredStyle: .alert)
-                            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
-                            alertViewController.addAction(action)
-                            self.present(alertViewController, animated: true, completion: nil)
-                            print("networkFail")
-                            print("serverErr")
-                        case .networkFail:
-                            let alertViewController = UIAlertController(title: "통신 실패", message: "네트워크 오류", preferredStyle: .alert)
-                            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
-                            alertViewController.addAction(action)
-                            self.present(alertViewController, animated: true, completion: nil)
-                            print("networkFail")
-                        }
+                        let alertViewController = UIAlertController(title: "저장 실패", message: "내용을 입력해주세요. 🥰", preferredStyle: .alert)
+                        let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+                        alertViewController.addAction(action)
+                        self.present(alertViewController, animated: true, completion: nil)
                     }
                 } else {
                     
