@@ -46,7 +46,7 @@ class OnboardingVC: UIViewController, ASAuthorizationControllerPresentationConte
         
     }
     private func setlayout(){
-        if view.bounds.height > 840 {
+        if view.bounds.height > 810 {
             device = 1
         }else{
             device = 0

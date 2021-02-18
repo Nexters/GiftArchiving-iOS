@@ -26,9 +26,9 @@ class VC: UIViewController{
     
     var currentIndex: CGFloat = 0
     
-    let lineSpacing: CGFloat = 20
+    let lineSpacing: CGFloat = 0
     
-    let cellRatio: CGFloat = 0.65
+    let cellRatio: CGFloat = 0.7
     
     var isOneStepPaging = true
 
@@ -51,7 +51,9 @@ class VC: UIViewController{
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        if view.bounds.height > 840 {
+        print(view.bounds.height)
+        if view.bounds.height > 810 {
+            
             device = 1
         }else{
             device = 0
@@ -214,14 +216,14 @@ extension VC: UICollectionViewDataSource, UICollectionViewDelegate {
         cell.setConstraint(device: device)
         if collectionViewFlag{
             if Gifts.receivedModels.count == 0 {
-                cell.configureEmpty(flag: true)
+                cell.configureEmpty(flag: true, device: device)
                 changeUIEmpty()
             }else{
                 cell.configure(with: Gifts.receivedModels[indexPath.row])
             }
         }else{
             if Gifts.sentModels.count == 0 {
-                cell.configureEmpty(flag: false)
+                cell.configureEmpty(flag: false, device: device)
                 changeUIEmpty()
             }else{
                 cell.configure(with: Gifts.sentModels[indexPath.row])

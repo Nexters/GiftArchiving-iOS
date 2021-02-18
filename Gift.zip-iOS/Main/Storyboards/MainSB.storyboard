@@ -36,8 +36,15 @@
                                             <rect key="frame" x="0.0" y="0.0" width="365" height="333"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="D7t-3G-hf8">
+                                                    <rect key="frame" x="75" y="43" width="215" height="215"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="215" id="FUf-q0-IVr"/>
+                                                        <constraint firstAttribute="height" constant="215" id="eOQ-Kt-dlB"/>
+                                                    </constraints>
+                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C7L-zx-c74">
-                                                    <rect key="frame" x="161.5" y="272" width="42" height="24"/>
+                                                    <rect key="frame" x="161.5" y="243" width="42" height="24"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="24" id="Fwd-sK-FiF"/>
                                                     </constraints>
@@ -45,15 +52,8 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgEmptyMainBig" translatesAutoresizingMaskIntoConstraints="NO" id="D7t-3G-hf8">
-                                                    <rect key="frame" x="79.5" y="52" width="206" height="206"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="206" id="FUf-q0-IVr"/>
-                                                        <constraint firstAttribute="height" constant="206" id="eOQ-Kt-dlB"/>
-                                                    </constraints>
-                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ff0-Ib-cHJ">
-                                                    <rect key="frame" x="182.5" y="298" width="0.0" height="20"/>
+                                                    <rect key="frame" x="182.5" y="269" width="0.0" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="1Ap-MO-GC7"/>
                                                     </constraints>
@@ -68,12 +68,13 @@
                                             <constraint firstItem="C7L-zx-c74" firstAttribute="centerX" secondItem="5hF-0A-ZMy" secondAttribute="centerX" id="4aq-5b-Llh"/>
                                             <constraint firstItem="ff0-Ib-cHJ" firstAttribute="centerX" secondItem="5hF-0A-ZMy" secondAttribute="centerX" id="5vK-ty-EOy"/>
                                             <constraint firstItem="ff0-Ib-cHJ" firstAttribute="top" secondItem="C7L-zx-c74" secondAttribute="bottom" constant="2" id="6AR-W3-ma7"/>
-                                            <constraint firstItem="D7t-3G-hf8" firstAttribute="top" secondItem="5hF-0A-ZMy" secondAttribute="topMargin" constant="44" id="AhW-mC-ePk"/>
-                                            <constraint firstItem="C7L-zx-c74" firstAttribute="top" secondItem="D7t-3G-hf8" secondAttribute="bottom" constant="14" id="BGg-xQ-pP9"/>
+                                            <constraint firstItem="D7t-3G-hf8" firstAttribute="top" secondItem="5hF-0A-ZMy" secondAttribute="topMargin" constant="35" id="AhW-mC-ePk"/>
+                                            <constraint firstItem="C7L-zx-c74" firstAttribute="top" secondItem="D7t-3G-hf8" secondAttribute="bottom" constant="-15" id="BGg-xQ-pP9"/>
                                             <constraint firstItem="D7t-3G-hf8" firstAttribute="centerX" secondItem="5hF-0A-ZMy" secondAttribute="centerX" id="gmR-dp-ib2"/>
                                         </constraints>
                                         <size key="customSize" width="365" height="333"/>
                                         <connections>
+                                            <outlet property="cnstLabelTop" destination="BGg-xQ-pP9" id="j4i-Hn-nAB"/>
                                             <outlet property="constImgTop" destination="AhW-mC-ePk" id="MAF-l6-Ao2"/>
                                             <outlet property="imgHeight" destination="eOQ-Kt-dlB" id="VkQ-6M-RW4"/>
                                             <outlet property="imgView" destination="D7t-3G-hf8" id="wGd-bf-osf"/>
@@ -284,7 +285,6 @@
         <image name="btn_arrow_white" width="14" height="10.5"/>
         <image name="btn_search" width="24" height="24"/>
         <image name="btn_setting" width="24.5" height="24.5"/>
-        <image name="imgEmptyMainBig" width="273" height="273"/>
         <image name="logo_charcoalGrey_SQUARE" width="40" height="40"/>
         <namedColor name="ceruleanBlue">
             <color red="0.0" green="0.3880000114440918" blue="0.88200002908706665" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

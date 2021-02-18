@@ -18,6 +18,7 @@ class CollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var constImgTop: NSLayoutConstraint!
     
+    @IBOutlet weak var cnstLabelTop: NSLayoutConstraint!
     
     public func configure(with model: LoadGiftData){
         if let encoded = model.imgUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let url = URL(string: encoded) {
@@ -48,9 +49,8 @@ class CollectionViewCell: UICollectionViewCell {
             self.labelDate.text = ""
         }
         
-        
     }
-    public func configureEmpty(flag: Bool){
+    public func configureEmpty(flag: Bool, device: Int){
         if flag{
             self.labelFrom.text = "From. 보낸이"
         }else{
@@ -60,9 +60,19 @@ class CollectionViewCell: UICollectionViewCell {
         labelDate.text = ""
         self.labelDate.text = ""
         self.imgView.image = UIImage(named: "imgEmptyMainBig")
+        if device == 0{
+            self.imgWidth.constant = 215
+            self.imgHeight.constant = 215
+            self.cnstLabelTop.constant = 14
+            self.constImgTop.constant = 35
+        }else{
+            self.imgWidth.constant = 260
+            self.imgHeight.constant = 260
+            self.cnstLabelTop.constant = 14
+            self.constImgTop.constant = 65
+        }
     }
     public func setLabelColor(color : String){
-        print("setLabelColor called")
         if(color == "wheat"){
             labelFrom.textColor = UIColor.greyishBrown
             labelDate.textColor = UIColor.greyishBrownOpacity
@@ -72,11 +82,17 @@ class CollectionViewCell: UICollectionViewCell {
         }
     }
     public func setConstraint(device: Int){
+        imgView.image = .none
         if device == 1{
-            constImgTop.setValue(64, forKey: "Constant")
+            constImgTop.setValue(55, forKey: "Constant")
+            imgWidth.setValue(280, forKey: "Constant")
+            imgHeight.setValue(280, forKey: "Constant")
+        }else{
+            constImgTop.setValue(14, forKey: "Constant")
             imgWidth.setValue(256, forKey: "Constant")
             imgHeight.setValue(256, forKey: "Constant")
         }
+        self.cnstLabelTop.constant = -10
     }
     
 }
