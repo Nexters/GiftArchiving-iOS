@@ -626,6 +626,7 @@ class RecordVC: UIViewController {
                         case .success(let data):
                             if let bgData = data as? RecordGiftData {
                                 print(bgData)
+                                self.broadcastAdd(gift: ["gifts" : [["id": bgData.id, "imgUrl" : bgData.noBgImg, "name": name, "content" : content , "receiveDate" : date, "bgColor" : self.currentBackgroundColorString, "isReceiveGift" : String(self.isReceiveGift), "category" : categoryName, "emotion": emotionName, "reason" : purposeName, "frameType": self.frameType]]], isReceive: self.isReceiveGift)
                                 share.kakaoImageURL = bgData.bgImg
                                 self.navigationController?.pushViewController(share, animated: true)
                             }
@@ -1300,5 +1301,18 @@ extension RecordVC: StickerViewDelegate {
     
     func stickerViewDidClose(_ stickerView: StickerView) {
         print("close")
+    }
+    //MARK: 추가한 선물 데이터 저장
+    private func broadcastAdd(gift : Dictionary<String, Array<Dictionary<String, String>>>, isReceive: Bool){
+        if let jsonData = try? JSONSerialization.data(withJSONObject: gift, options: .prettyPrinted) {
+            if let json = try? JSONDecoder().decode(LoadAPIResponse.self, from: jsonData){
+                if isReceive {
+                    Gifts.receivedModels.insert(contentsOf: json.gifts, at: 0)
+                }else{
+                    Gifts.sentModels.insert(contentsOf: json.gifts, at: 0)
+                }
+            }
+        }
+        
     }
 }
