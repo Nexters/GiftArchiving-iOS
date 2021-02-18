@@ -206,6 +206,9 @@
                                     <constraint firstAttribute="width" constant="24" id="bx0-MY-R39"/>
                                 </constraints>
                                 <state key="normal" image="btn_arrow_white"/>
+                                <connections>
+                                    <action selector="btnArrowClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yYt-Vy-WPw"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gnd-4h-EwT">
                                 <rect key="frame" x="294" y="355" width="39" height="24"/>

@@ -62,6 +62,7 @@ class CollectionViewCell: UICollectionViewCell {
         self.imgView.image = UIImage(named: "imgEmptyMainBig")
     }
     public func setLabelColor(color : String){
+        print("setLabelColor called")
         if(color == "wheat"){
             labelFrom.textColor = UIColor.greyishBrown
             labelDate.textColor = UIColor.greyishBrownOpacity

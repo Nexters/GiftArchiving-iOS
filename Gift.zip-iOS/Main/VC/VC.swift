@@ -173,6 +173,13 @@ class VC: UIViewController{
         let vc = searchSB.instantiateViewController(withIdentifier: "SearchVC") as! SearchVC
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    @IBAction func btnArrowClicked(_ sender: UIButton) {
+        let listSB = UIStoryboard(name: "ListSB", bundle: nil)
+        let vc = listSB.instantiateViewController(withIdentifier: "ListVC") as! ListVC
+        vc.receivedSentFlag = self.collectionViewFlag
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
 }
 //MARK: 컬랙션뷰 datasource, delegate, changeUI
 extension VC: UICollectionViewDataSource, UICollectionViewDelegate {
@@ -303,7 +310,6 @@ extension VC : UIScrollViewDelegate {
                 roundedIndex = currentIndex
             }
         }
-        
         if collectionViewFlag {
             if Int(currentIndex) == Gifts.receivedModels.count{
                 currentIndex -= 1
