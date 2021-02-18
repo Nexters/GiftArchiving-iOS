@@ -9,9 +9,9 @@ import Foundation
 struct LoadGiftData: Codable {
     let id: String
     let imgUrl: String
-    let name: String
-    let content: String
-    let receiveDate: String
+    var name: String
+    var content: String
+    var receiveDate: String
     let bgColor: String
     let isReceiveGift: Bool
     let category: String
