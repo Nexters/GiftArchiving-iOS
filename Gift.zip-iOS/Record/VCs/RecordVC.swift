@@ -564,8 +564,7 @@ class RecordVC: UIViewController {
                     let first = dateArr[0]
                     let second = dateArr[1]
                     print(dateArr[2])
-                    let third = dateArr[2].replacingOccurrences(of: "+", with: ".")
-                    let date = first + "T" + second + third
+                    let date = first + "T" + second
 
                     // 아이콘 이름
 
@@ -1306,7 +1305,9 @@ extension RecordVC: StickerViewDelegate {
     private func broadcastAdd(gift : Dictionary<String, Array<Dictionary<String, String>>>, isReceive: Bool){
         if let jsonData = try? JSONSerialization.data(withJSONObject: gift, options: .prettyPrinted) {
             if let json = try? JSONDecoder().decode(LoadAPIResponse.self, from: jsonData){
+                
                 if isReceive {
+                    print(json.gifts[0].receiveDate)
                     Gifts.receivedModels.insert(contentsOf: json.gifts, at: 0)
                 }else{
                     Gifts.sentModels.insert(contentsOf: json.gifts, at: 0)

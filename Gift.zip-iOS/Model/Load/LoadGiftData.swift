@@ -11,7 +11,7 @@ struct LoadGiftData: Codable {
     let imgUrl: String
     var name: String
     var content: String
-    let receiveDate: String
+    var receiveDate: String
     let bgColor: String
     let isReceiveGift: Bool
     let category: String

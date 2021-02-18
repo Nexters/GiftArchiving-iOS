@@ -439,7 +439,7 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
                 if gift.id == giftId{
                     target = idx
                 }
-                idx += 0
+                idx += 1
             }
             if target != -1 {
                 resReceivedArr.remove(at: target)
@@ -451,13 +451,44 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
                 if gift.id == giftId{
                     target = idx
                 }
-                idx += 0
+                idx += 1
             }
             if target != -1 {
                 resSentArr.remove(at: target)
             }
         }
         setResBtnText()
+        self.searchResultCollectionView.reloadData()
+    }
+    //MARK: 수정 후 호출
+    public func updateGift(giftId: String, content: String, name: String){
+        if resFlag{
+            var target = -1
+            var idx = 0
+            for gift in resReceivedArr{
+                if gift.id == giftId{
+                    target = idx
+                }
+                idx += 1
+            }
+            if target != -1 {
+                resReceivedArr[target].content = content
+                resReceivedArr[target].name = name
+            }
+        }else{
+            var target = -1
+            var idx = 0
+            for gift in resSentArr{
+                if gift.id == giftId{
+                    target = idx
+                }
+                idx += 1
+            }
+            if target != -1 {
+                resSentArr[target].content = content
+                resSentArr[target].name = name
+            }
+        }
         self.searchResultCollectionView.reloadData()
     }
 }
