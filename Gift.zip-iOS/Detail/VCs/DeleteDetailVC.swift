@@ -27,7 +27,6 @@ class DeleteDetailVC: UIViewController {
     }
     @IBAction func deleteButtonTapped(_ sender: Any) {
         // 삭제 API
-        NotificationCenter.default.post(name: .init("broadcastDelete"), object: nil)
         GiftService.shared.deleteGift(giftId: giftId!) { result in
             switch result {
             case .success(let data):
@@ -49,6 +48,7 @@ class DeleteDetailVC: UIViewController {
                 print("networkFail")
                 print("serverErr")
             case .networkFail:
+                NotificationCenter.default.post(name: .init("broadcastDelete"), object: nil)
                 let alertViewController = UIAlertController(title: "통신 실패", message: "네트워크 오류", preferredStyle: .alert)
                 let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
                 alertViewController.addAction(action)

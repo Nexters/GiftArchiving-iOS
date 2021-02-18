@@ -122,6 +122,7 @@ class VC: UIViewController{
         self.btnReceived.titleLabel?.textColor = UIColor.whiteOpacity
         self.collectionViewFlag = false
         isReceiveGift = false
+        currentIndex = 0
         DispatchQueue.main.asyncAfter(deadline: .now()){
             self.moveBarToSentAnimate()
             if Gifts.sentModels.count > 0 {
@@ -135,6 +136,7 @@ class VC: UIViewController{
         self.btnSent.titleLabel?.textColor = UIColor.whiteOpacity
         self.collectionViewFlag = true
         isReceiveGift = true
+        currentIndex = 0
         DispatchQueue.main.asyncAfter(deadline: .now()){
             self.moveBarToReceivedAnimate()
             if Gifts.receivedModels.count > 0 {
@@ -231,8 +233,8 @@ extension VC: UICollectionViewDataSource, UICollectionViewDelegate {
                 guard let vc = detailSB.instantiateViewController(withIdentifier: "DetailVC") as? DetailVC else { return }
                 
                 vc.giftId = Gifts.receivedModels[indexPath.row].id
-                
-                self.navigationController?.pushViewController(vc, animated: true)
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated:  true, completion: nil)
             }
         }else{
             if Gifts.sentModels.count != 0 {
@@ -240,8 +242,8 @@ extension VC: UICollectionViewDataSource, UICollectionViewDelegate {
                 guard let vc = detailSB.instantiateViewController(withIdentifier: "DetailVC") as? DetailVC else { return }
                 
                 vc.giftId = Gifts.sentModels[indexPath.row].id
-                
-                self.navigationController?.pushViewController(vc, animated: true)
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated:  true, completion: nil)
             }
         }
         

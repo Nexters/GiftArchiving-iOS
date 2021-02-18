@@ -10,7 +10,7 @@ import Alamofire
 
 struct LoadGiftListService {
     static let shared = LoadGiftListService()
-    func getReceivedGifts(page : Int, size : Int, isReceiveGift: Bool, completion: @escaping([LoadGiftData]) -> ()) {
+    func getReceivedGifts(page : Int, size : Int, isReceiveGift: Bool, completion: @escaping([LoadGiftData]?) -> ()) {
         let createdBy = getId()
         let url = APIConstants.baseURL + APIConstants.getGiftsURL + "/" + createdBy
         print(url)
@@ -23,13 +23,12 @@ struct LoadGiftListService {
                     let jsonData = try JSONSerialization.data(withJSONObject: res, options: .prettyPrinted)
                     let json = try JSONDecoder().decode(LoadAPIResponse.self, from: jsonData)
                     completion(json.gifts)
-                } catch(let err) {
-                    debugPrint(err.localizedDescription)
+                }catch(let err){
                     completion(Array<LoadGiftData>())
                 }
             case .failure(let err):
-                debugPrint(err.localizedDescription)
-                completion(Array<LoadGiftData>())
+                
+                completion(nil)
             }
         })
     }
