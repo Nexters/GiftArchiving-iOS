@@ -26,6 +26,9 @@
                                     <constraint firstAttribute="width" constant="24" id="Wnh-eD-cmc"/>
                                 </constraints>
                                 <state key="normal" image="btn_search"/>
+                                <connections>
+                                    <action selector="btnSearchClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="c92-wR-ppx"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uEf-HK-eXU">
                                 <rect key="frame" x="16" y="16" width="24" height="24"/>

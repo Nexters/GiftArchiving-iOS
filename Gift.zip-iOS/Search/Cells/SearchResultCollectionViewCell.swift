@@ -36,7 +36,7 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
         dateFor.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         if let date = dateFor.date(from: model.receiveDate){
             dateFor.locale = Locale(identifier: "ko")
-            dateFor.dateFormat = "yyyy. MM. dd(eeee)"
+            dateFor.dateFormat = "yyyy. MM. dd(eee)"
             self.labelDate.text = dateFor.string(from: date)
         }
         self.backView.backgroundColor = color

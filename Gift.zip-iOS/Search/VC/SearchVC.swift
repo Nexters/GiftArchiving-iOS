@@ -563,7 +563,8 @@ extension SearchVC : UICollectionViewDelegateFlowLayout, UICollectionViewDataSou
             }else{
                 vc.giftId = resSentArr[indexPath.row].id
             }
-            self.navigationController?.pushViewController(vc, animated: true)
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated:  true, completion: nil)
         }
     }
 }

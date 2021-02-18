@@ -123,6 +123,7 @@ class VC: UIViewController{
             if Gifts.sentModels.count > 0 {
                 self.changeUI(frameType: Gifts.sentModels[0].frameType, color: Gifts.sentModels[0].bgColor)
             }
+            self.collectionView.setContentOffset(CGPoint(x: -self.collectionView.contentInset.left,y:0), animated: true)
             self.collectionView.reloadData()
         }
     }
@@ -137,6 +138,7 @@ class VC: UIViewController{
             if Gifts.receivedModels.count > 0 {
                 self.changeUI(frameType: Gifts.receivedModels[0].frameType, color: Gifts.receivedModels[0].bgColor)
             }
+            self.collectionView.setContentOffset(CGPoint(x: -self.collectionView.contentInset.left,y:0), animated: true)
             self.collectionView.reloadData()
         }
     }
