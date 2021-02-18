@@ -21,7 +21,7 @@ class SplashVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        if true {
+        if checkLogin() {
             self.getDataAndDisplay()
         }else{
             self.moveToOnboarding()
