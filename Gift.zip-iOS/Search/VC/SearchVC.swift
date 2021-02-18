@@ -70,8 +70,13 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
         searchResultCollectionView.delegate = self
         searchResultCollectionView.dataSource = self
         setLayout()
+        NotificationCenter.default.addObserver(self, selector: #selector(deleteGift(_:)), name: .init("deleteGift"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateGift(_:)), name: .init("updateGift"), object: nil)
         
-        
+    }
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: .init("deleteGift"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: .init("updateGift"), object: nil)
     }
     // MARK: 레이아웃 관련 초기 세팅
     private func setTagCollectionView(tagCollectionView: TTGTextTagCollectionView, flag: Bool){
@@ -431,7 +436,8 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
         }
     }
     //MARK: 삭제 후 호출
-    public func deleteGift(giftId: String){
+    @objc func deleteGift(_ notification: Notification){
+        guard let giftId = notification.userInfo?["giftId"] as? String else { return }
         if resFlag{
             var target = -1
             var idx = 0
@@ -461,7 +467,9 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
         self.searchResultCollectionView.reloadData()
     }
     //MARK: 수정 후 호출
-    public func updateGift(giftId: String, content: String, name: String){
+    @objc func updateGift(_ notification: Notification){
+        guard let giftId = notification.userInfo?["giftId"] as? String else { return }
+        guard let content = notification.userInfo?["content"] as? String else { return }
         if resFlag{
             var target = -1
             var idx = 0
@@ -473,7 +481,6 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
             }
             if target != -1 {
                 resReceivedArr[target].content = content
-                resReceivedArr[target].name = name
             }
         }else{
             var target = -1
@@ -486,7 +493,6 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
             }
             if target != -1 {
                 resSentArr[target].content = content
-                resSentArr[target].name = name
             }
         }
         self.searchResultCollectionView.reloadData()
