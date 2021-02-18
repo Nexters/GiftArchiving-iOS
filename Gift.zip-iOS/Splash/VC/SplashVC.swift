@@ -65,6 +65,14 @@ class SplashVC: UIViewController {
                                 }
                         }
                     })
+                }else{
+                    if gifts == nil{
+                        //network fail
+                        let alertViewController = UIAlertController(title: "통신 실패", message: "네트워크 오류", preferredStyle: .alert)
+                        let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+                        alertViewController.addAction(action)
+                        self.present(alertViewController, animated: true, completion: nil)
+                    }
                 }
                 
             })
