@@ -97,8 +97,14 @@ class DetailVC: UIViewController {
         }
         NotificationCenter.default.addObserver(self, selector: #selector(popupChange), name: .init("popupchange"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(broadcastDelete), name: .init("broadcastDelete"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(broadcastUpdate(_:)), name: .init("broadcastUpdate"), object: nil)
     }
-    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: .init("broadcastUpdate"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: .init("popupchange"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: .init("broadcastDelete"), object: nil)
+    }
     
     // UI 작업
     private func setPageInformation(imageURL : String, name: String, receiveDate: String, isReceiveGift: Bool,  category: String, emotion: String, reason: String, content: String, bgColor: String) {
@@ -219,7 +225,7 @@ class DetailVC: UIViewController {
     }
     
     @IBAction func dismissDetail(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func moreButtonTapped(_ sender: Any) {
@@ -260,8 +266,41 @@ class DetailVC: UIViewController {
                 searchVC.deleteGift(giftId: giftId)
             }
         }
-        
         self.navigationController?.popViewController(animated: true)
-        
     }
+    @objc func broadcastUpdate(_ notification: Notification){
+        guard let name = notification.userInfo?["name"] as? String else { return }
+        guard let content = notification.userInfo?["content"] as? String else { return }
+        var target = -1
+        var idx = 0
+        for model in Gifts.receivedModels{
+            if model.id == giftId {
+                target = idx
+                break
+            }
+            idx += 1
+        }
+        if target != -1 {
+            Gifts.receivedModels[target].content = content
+            Gifts.receivedModels[target].name = name
+        }else{
+            idx = 0
+            for model in Gifts.sentModels{
+                if model.id == giftId {
+                    target = idx
+                    break
+                }
+                idx += 1
+            }
+            Gifts.sentModels[target].content = content
+            Gifts.sentModels[target].name = name
+        }
+        if let vcCnt = self.navigationController?.viewControllers.count{
+            if let searchVC = self.navigationController?.viewControllers[vcCnt - 2] as? SearchVC{
+                searchVC.updateGift(giftId: giftId, content: content, name: name)
+            }
+        }
+        self.navigationController?.popViewController(animated: true)
+    }
+    
 }

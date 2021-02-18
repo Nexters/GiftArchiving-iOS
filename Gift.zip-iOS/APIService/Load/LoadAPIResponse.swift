@@ -7,5 +7,5 @@
 
 import Foundation
 struct LoadAPIResponse: Codable {
-    let gifts: Array<LoadGiftData>
+    var gifts: Array<LoadGiftData>
 }

@@ -472,7 +472,6 @@ class RecordVC: UIViewController {
     @IBAction func backToMain(_ sender: UIButton) {
 //        if emotionTextView.text == ""
         print(emotionTextView.text)
-        print(
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -566,9 +565,7 @@ class RecordVC: UIViewController {
                     let first = dateArr[0]
                     let second = dateArr[1]
                     print(dateArr[2])
-                    let third = dateArr[2].replacingOccurrences(of: "+", with: ".")
-                    let date = first + "T" + second + third
-                    
+                    let date = first + "T" + second
                     // 아이콘 이름
                     
                     var categoryName: String = ""
@@ -623,6 +620,7 @@ class RecordVC: UIViewController {
                         case .success(let data):
                             if let bgData = data as? RecordGiftData {
                                 print(bgData)
+                                self.broadcastAdd(gift: ["gifts" : [["id": bgData.id, "imgUrl" : bgData.noBgImg, "name": name, "content" : content , "receiveDate" : date, "bgColor" : self.currentBackgroundColorString, "isReceiveGift" : String(self.isReceiveGift), "category" : categoryName, "emotion": emotionName, "reason" : purposeName, "frameType": self.frameType]]], isReceive: self.isReceiveGift)
                                 share.kakaoImageURL = bgData.bgImg
                                 self.navigationController?.pushViewController(share, animated: true)
                             }
@@ -1297,6 +1295,21 @@ extension RecordVC: StickerViewDelegate {
     
     func stickerViewDidClose(_ stickerView: StickerView) {
         print("close")
+    }
+    //MARK: 추가한 선물 데이터 저장
+    private func broadcastAdd(gift : Dictionary<String, Array<Dictionary<String, String>>>, isReceive: Bool){
+        if let jsonData = try? JSONSerialization.data(withJSONObject: gift, options: .prettyPrinted) {
+            if let json = try? JSONDecoder().decode(LoadAPIResponse.self, from: jsonData){
+                
+                if isReceive {
+                    print(json.gifts[0].receiveDate)
+                    Gifts.receivedModels.insert(contentsOf: json.gifts, at: 0)
+                }else{
+                    Gifts.sentModels.insert(contentsOf: json.gifts, at: 0)
+                }
+            }
+        }
+        
     }
 }
 
