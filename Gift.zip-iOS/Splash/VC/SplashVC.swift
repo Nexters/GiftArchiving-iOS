@@ -13,20 +13,19 @@ class SplashVC: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        
-        view.backgroundColor = .black
-        
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         if checkLogin() {
             self.getDataAndDisplay()
         }else{
             self.moveToOnboarding()
         }
+        view.backgroundColor = .black
+        
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+      
     }
 
     private func checkLogin() -> Bool{
@@ -76,7 +75,6 @@ class SplashVC: UIViewController, UIGestureRecognizerDelegate {
                         self.present(alertViewController, animated: true, completion: nil)
                     }
                 }
-                
             })
         }
     }

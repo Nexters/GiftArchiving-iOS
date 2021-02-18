@@ -480,9 +480,18 @@ class RecordVC: UIViewController {
     //MARK: - IBAction
     
     @IBAction func backToMain(_ sender: UIButton) {
-        //        if emotionTextView.text == ""
-        //        print(emotionTextView.text)
-        self.navigationController?.popViewController(animated: true)
+        
+        if isImageSelected || isNameTyped || isCategoryIconSelected || isPurposeIconSelected || isEmotionIconSelected
+            || emotionTextView.text != "지금 이 감정을 기록해보세요." {
+            guard let vc = self.storyboard?.instantiateViewController(identifier: "WarningOutVC") as? WarningOutVC else { return }
+            
+            vc.modalPresentationStyle = .overFullScreen
+            popupBackground.animatePopupBackground(true)
+            self.present(vc, animated: true, completion: nil)
+        } else {
+            self.navigationController?.popViewController(animated: true)
+        }
+        
     }
 
     @IBAction func completeRecord(_ sender: UIButton) {
@@ -1003,6 +1012,19 @@ extension RecordVC {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(selectIcon), name: .init("selectIcon"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(getStickerName), name: .init("getStickerName"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(goOutToMain), name: .init("goOutToMain"), object: nil)
+    }
+    
+    @objc private func goOutToMain(_ notification: Notification) {
+        popupBackground.animatePopupBackground(false)
+        guard let userInfo = notification.userInfo as? [String: Any] else { return }
+        guard let isCancel = userInfo["cancel"] as? Bool else { return }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+            if isCancel {
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
     }
     
     @objc private func getStickerName(_ notification: Notification) {

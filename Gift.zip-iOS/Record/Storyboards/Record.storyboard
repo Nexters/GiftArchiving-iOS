@@ -54,6 +54,9 @@
                                                 <state key="normal" title="취소">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="dismiss:" destination="Ois-tM-TSN" eventType="touchUpInside" id="52d-Ym-gT2"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PCF-TR-fwj">
                                                 <rect key="frame" x="166.66666666666663" y="0.0" width="158.33333333333337" height="48"/>
@@ -62,6 +65,9 @@
                                                 <state key="normal" title="확인">
                                                     <color key="titleColor" red="0.1137254902" green="0.1137254902" blue="0.12549019610000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="goOut:" destination="Ois-tM-TSN" eventType="touchUpInside" id="7Tf-al-5XA"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -87,6 +93,11 @@
                             <constraint firstItem="6eM-ej-if7" firstAttribute="leading" secondItem="1X0-xt-LrI" secondAttribute="leading" id="vxP-Yb-3ib"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="roundView" destination="6eM-ej-if7" id="WwY-4R-22w"/>
+                        <outletCollection property="buttons" destination="PCF-TR-fwj" collectionClass="NSMutableArray" id="iec-WJ-SfS"/>
+                        <outletCollection property="buttons" destination="D3i-tq-N8v" collectionClass="NSMutableArray" id="u4s-jw-VX6"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0nt-x3-CWh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
