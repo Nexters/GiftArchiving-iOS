@@ -224,7 +224,7 @@ class DetailVC: UIViewController {
     }
     
     @IBAction func dismissDetail(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func moreButtonTapped(_ sender: Any) {
@@ -265,7 +265,7 @@ class DetailVC: UIViewController {
                 searchVC.deleteGift(giftId: giftId)
             }
         }
-        self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true, completion: nil)
     }
     @objc func broadcastUpdate(_ notification: Notification){
         guard let name = notification.userInfo?["name"] as? String else { return }
@@ -299,7 +299,7 @@ class DetailVC: UIViewController {
                 searchVC.updateGift(giftId: giftId, content: content, name: name)
             }
         }
-        self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true, completion: nil)
     }
     
 }
