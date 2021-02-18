@@ -81,7 +81,7 @@ class ShareVC: UIViewController {
         
         croppedImageView.image = envelopImage
         
-        UIView.animate(withDuration: 3.0, delay: 0.0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.2, options: [.repeat,.autoreverse,.curveEaseIn], animations: {
+        UIView.animate(withDuration: 3.0, delay: 1.0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.2, options: [.curveEaseIn], animations: {
             self.cardView.frame.origin.y = self.cardView.frame.origin.y + 52
         }, completion: {_ in
         })
