@@ -161,7 +161,6 @@ class DetailVC: UIViewController {
     }
 
     deinit {
-        print("deninit")
         NotificationCenter.default.removeObserver(self, name: .init("broadcastUpdate"), object: nil)
         NotificationCenter.default.removeObserver(self, name: .init("popupchange"), object: nil)
         NotificationCenter.default.removeObserver(self, name: .init("broadcastDelete"), object: nil)
@@ -509,6 +508,8 @@ class DetailVC: UIViewController {
                         print("serverErr")
                     case .networkFail:
                         self.isGiftEditing = false
+                        let data = ["content" : content]
+                        NotificationCenter.default.post(name: .init("broadcastUpdate"), object: nil, userInfo: data)
                     }
                 }
             } else {
