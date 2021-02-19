@@ -32,7 +32,6 @@ class RecordVC: UIViewController {
     @IBOutlet weak var bottomBarBottomConstraintWithBottomSafeArea: NSLayoutConstraint!
     @IBOutlet weak var upperContainerConstraintWithImageContainerTop: NSLayoutConstraint!
     
-    @IBOutlet weak var bottomContainerHideAndShow: NSLayoutConstraint!
     @IBOutlet weak var emptyImageLabel: UILabel!
     
     @IBOutlet weak var bottomContainer: UIView!
@@ -51,6 +50,7 @@ class RecordVC: UIViewController {
     @IBOutlet weak var completeButton: UIButton!
     @IBOutlet weak var dateDropDownImage: UIImageView!
     
+    @IBOutlet weak var bottomContainerConstarintWhenNameTextFieldTouched: NSLayoutConstraint!
     @IBOutlet var colorButtons: [UIButton]!
     
     
@@ -64,7 +64,6 @@ class RecordVC: UIViewController {
     @IBOutlet weak var circleViewLabel: UILabel!
     @IBOutlet weak var windowViewLabel: UILabel!
     @IBOutlet weak var fullViewLabel: UILabel!
-    @IBOutlet weak var clearView: UIView!
     
     @IBOutlet var backgroundColorViews: [UIView]!
     
@@ -722,6 +721,7 @@ class RecordVC: UIViewController {
     }
     
     @IBAction func selectPhoto(_ sender: UIButton) {
+        self.view.endEditing(true)
         let alert = UIAlertController(title: "사진 선택", message: "선물을 골라주세요. 🎁", preferredStyle: .actionSheet)
         let library = UIAlertAction(title: "사진앨범", style: .default) { (action) in
             self.openLibrary()
@@ -738,6 +738,7 @@ class RecordVC: UIViewController {
     }
     
     @IBAction func changeFrame(_ sender: UIButton) {
+        self.view.endEditing(true)
         if isFrameEditing {
             print("button false")
             isFrameEditing = false
@@ -748,6 +749,7 @@ class RecordVC: UIViewController {
     }
     
     @IBAction func useSticker(_ sender: UIButton) {
+        self.view.endEditing(true)
         if isStickerEditing {
             isStickerEditing = false
             changeButtonContainerColor(false)
@@ -773,12 +775,10 @@ class RecordVC: UIViewController {
     }
     
     private func animateFrameView(_ direction: Bool) {
-        clearView.isHidden = !direction
         changeFrameView.isHidden = !direction
         let alpha: CGFloat = direction ? 1.0 : 0.0
         UIView.animate(withDuration: 0.25, animations: {
             self.changeFrameView.alpha = alpha
-            self.clearView.alpha = alpha
         }, completion: nil)
     }
     
@@ -796,7 +796,6 @@ class RecordVC: UIViewController {
             }
         }
     }
-    
     
     private func changeFrameButtonInteraction(_ direction: Bool) {
         photoButton.isUserInteractionEnabled = direction
@@ -830,6 +829,7 @@ class RecordVC: UIViewController {
     }
     
     @IBAction func changeColor(_ sender: UIButton) {
+        self.view.endEditing(true)
         if isColorEditing {
             isColorEditing = false
         } else {
@@ -1100,25 +1100,28 @@ extension RecordVC {
         let heightConstant = isAppearing ? keyboardHeight - 34 : 0
         
         if isNameTouched {
-            
             self.bottomBarBottomConstraintWithBottomSafeArea.constant = heightConstant
+            
+            if isAppearing {
+                self.bottomContainerConstarintWhenNameTextFieldTouched.priority = UILayoutPriority(rawValue: 1)
+            }
             isNameTouched = false
             self.view.layoutIfNeeded()
-            
         } else {
+            if isAppearing {
+                self.upperContainerConstraintWithImageContainerTop.priority =
+                    UILayoutPriority(rawValue: 248)
+            } else {
+                self.upperContainerConstraintWithImageContainerTop.priority = UILayoutPriority(rawValue: 1000)
+                self.bottomContainerConstarintWhenNameTextFieldTouched.priority = UILayoutPriority(rawValue: 1000)
+            }
             UIView.animate(withDuration: keyboardAnimationDuration, animations: {
-                if isAppearing {
-                    self.upperContainerConstraintWithImageContainerTop.priority = UILayoutPriority(rawValue: 248)
-                } else {
-                    self.upperContainerConstraintWithImageContainerTop.priority = UILayoutPriority(rawValue: 1000)
-                }
+                
                 self.bottomBarBottomConstraintWithBottomSafeArea.constant = heightConstant
                 self.view.layoutIfNeeded()
             }) { (_) in
             }
-        }
-        
-        
+        } 
     }
     
     private func initTextField() {
