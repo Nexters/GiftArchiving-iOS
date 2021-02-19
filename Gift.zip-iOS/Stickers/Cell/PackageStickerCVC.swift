@@ -11,13 +11,11 @@ class PackageStickerCVC: UICollectionViewCell {
     static let identifier: String = "PackageStickerCVC"
     
     @IBOutlet weak var packageCollectionView: UICollectionView!
-    @IBOutlet weak var packageCategoryCollectionView: UICollectionView!
     
     
     var currentBackgroundColor: UIColor = UIColor.Background.charcoalGrey.popup {
         didSet {
             packageCollectionView.backgroundColor = currentBackgroundColor
-            packageCategoryCollectionView.backgroundColor = currentBackgroundColor
         }
     }
     
@@ -27,7 +25,7 @@ class PackageStickerCVC: UICollectionViewCell {
             heart.append("heartPackageSticker\(i+1)")
         }
         var diary: [String] = []
-        for i in 0..<37 {
+        for i in 0..<42 {
             diary.append("diaryPackageSticker\(i+1)")
         }
         
@@ -55,6 +53,8 @@ class PackageStickerCVC: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        isPackageSelected = false
+        
         let nib = UINib(nibName: PackageCVC.identifier, bundle: nil)
         packageCollectionView.register(nib, forCellWithReuseIdentifier: PackageCVC.identifier)
         packageCollectionView.delegate = self
@@ -63,9 +63,10 @@ class PackageStickerCVC: UICollectionViewCell {
         let nib1 = UINib(nibName: PackageCategoryCVC.identifier, bundle: nil)
         packageCollectionView.register(nib1, forCellWithReuseIdentifier: PackageCategoryCVC.identifier)
         
-//        packageCategoryCollectionView.delegate = self
-//        packageCategoryCollectionView.dataSource = self
-        isPackageSelected = false
+        
+        let nib2 = UINib(nibName: UpdateCVC.identifier, bundle: nil)
+        packageCollectionView.register(nib2, forCellWithReuseIdentifier: UpdateCVC.identifier)
+        
         NotificationCenter.default.addObserver(self, selector: #selector(selectPackageCategory), name: .init("selectPackageCategory"), object: nil)
     }
 
@@ -84,7 +85,7 @@ extension PackageStickerCVC: UICollectionViewDataSource, UICollectionViewDelegat
         if isPackageSelected {
             return stickers[currentIndex].count
         } else {
-            return stickerPackage.count
+            return stickerPackage.count + 1
         }
             
     }
@@ -96,10 +97,16 @@ extension PackageStickerCVC: UICollectionViewDataSource, UICollectionViewDelegat
             cell.setSticker(imageName: stickers[currentIndex][indexPath.item])
             return cell
         } else {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PackageCategoryCVC.identifier, for: indexPath) as? PackageCategoryCVC else { return UICollectionViewCell() }
-            cell.setSticker(imageName: stickerPackage[indexPath.item])
-            cell.index = indexPath.item
-            return cell
+            if indexPath.item == stickerPackage.count {
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UpdateCVC.identifier, for: indexPath) as? UpdateCVC else { return UICollectionViewCell() }
+                return cell
+            } else {
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PackageCategoryCVC.identifier, for: indexPath) as? PackageCategoryCVC else { return UICollectionViewCell() }
+                cell.setSticker(imageName: stickerPackage[indexPath.item])
+                cell.index = indexPath.item
+                return cell
+            }
+            
         }
         
     }
@@ -116,7 +123,7 @@ extension PackageStickerCVC: UICollectionViewDataSource, UICollectionViewDelegat
         if isPackageSelected {
             return CGSize(width: 60, height: 60)
         } else {
-            let width: CGFloat = 114
+            let width: CGFloat = 120
             let height: CGFloat = width * 136 / 104
             return CGSize(width: width, height: height)
         }

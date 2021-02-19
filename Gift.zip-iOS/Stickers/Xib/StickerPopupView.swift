@@ -86,12 +86,12 @@ class StickerPopupView: XibView {
         packageSticker.alpha = 1
         singleSticker.alpha = 0.3
         scrollDirection(by: 1)
-        if whichButtonSelected == 1 {
-            if isCategorySelected {
-                isCategorySelected = false
-                stickerCollectionView.reloadData()
-            }
+        //        if whichButtonSelected == 1 {
+        if isCategorySelected {
+            isCategorySelected = false
+            stickerCollectionView.reloadData()
         }
+        //        }
         
         whichButtonSelected = 1
     }

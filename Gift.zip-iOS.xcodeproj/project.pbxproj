@@ -64,6 +64,8 @@
 		D44D954025DFE27C0074736C /* PackageCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = D44D953E25DFE27C0074736C /* PackageCVC.xib */; };
 		D44D954925DFF0850074736C /* PackageCategoryCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44D954725DFF0850074736C /* PackageCategoryCVC.swift */; };
 		D44D954A25DFF0850074736C /* PackageCategoryCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = D44D954825DFF0850074736C /* PackageCategoryCVC.xib */; };
+		D44D955225DFFD790074736C /* UpdateCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44D955025DFFD790074736C /* UpdateCVC.swift */; };
+		D44D955325DFFD790074736C /* UpdateCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = D44D955125DFFD790074736C /* UpdateCVC.xib */; };
 		D463E97425D4FDBD00295B42 /* APIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D463E97325D4FDBD00295B42 /* APIConstants.swift */; };
 		D463E97825D503D100295B42 /* NetworkResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D463E97725D503D100295B42 /* NetworkResult.swift */; };
 		D463E97B25D5080000295B42 /* GiftService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D463E97A25D5080000295B42 /* GiftService.swift */; };
@@ -163,6 +165,8 @@
 		D44D953E25DFE27C0074736C /* PackageCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PackageCVC.xib; sourceTree = "<group>"; };
 		D44D954725DFF0850074736C /* PackageCategoryCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageCategoryCVC.swift; sourceTree = "<group>"; };
 		D44D954825DFF0850074736C /* PackageCategoryCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PackageCategoryCVC.xib; sourceTree = "<group>"; };
+		D44D955025DFFD790074736C /* UpdateCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateCVC.swift; sourceTree = "<group>"; };
+		D44D955125DFFD790074736C /* UpdateCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpdateCVC.xib; sourceTree = "<group>"; };
 		D463E97325D4FDBD00295B42 /* APIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConstants.swift; sourceTree = "<group>"; };
 		D463E97725D503D100295B42 /* NetworkResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResult.swift; sourceTree = "<group>"; };
 		D463E97A25D5080000295B42 /* GiftService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiftService.swift; sourceTree = "<group>"; };
@@ -736,6 +740,8 @@
 				D400F5B125CDAE2E00F71709 /* SingleCVC.xib */,
 				D400F5A825CDA3CE00F71709 /* PackageStickerCVC.swift */,
 				D400F5A925CDA3CE00F71709 /* PackageStickerCVC.xib */,
+				D44D955025DFFD790074736C /* UpdateCVC.swift */,
+				D44D955125DFFD790074736C /* UpdateCVC.xib */,
 				D44D954725DFF0850074736C /* PackageCategoryCVC.swift */,
 				D44D954825DFF0850074736C /* PackageCategoryCVC.xib */,
 				D44D953D25DFE27C0074736C /* PackageCVC.swift */,
@@ -840,6 +846,7 @@
 			files = (
 				D4A7141325D13CDC0095CE68 /* Share.storyboard in Resources */,
 				D4336D2B25BE80D500D27568 /* LaunchScreen.storyboard in Resources */,
+				D44D955325DFFD790074736C /* UpdateCVC.xib in Resources */,
 				40ADFC0E25C9AFA100721F4D /* ListSB.storyboard in Resources */,
 				D4B189A825CBCF30007C6AE9 /* StickerPopupView.xib in Resources */,
 				40C900CC25D2A4A200BC38C5 /* SearchResultCollectionViewCell.xib in Resources */,
@@ -978,6 +985,7 @@
 				4078479525D7EDEC003CB616 /* LoadGiftListService.swift in Sources */,
 				D463E97425D4FDBD00295B42 /* APIConstants.swift in Sources */,
 				D4336D4225BE81FB00D27568 /* UIView+Extensions.swift in Sources */,
+				D44D955225DFFD790074736C /* UpdateCVC.swift in Sources */,
 				D4336D2125BE80D500D27568 /* SceneDelegate.swift in Sources */,
 				D465156925CE9F8100CDA2EB /* SettingsVC.swift in Sources */,
 			);
