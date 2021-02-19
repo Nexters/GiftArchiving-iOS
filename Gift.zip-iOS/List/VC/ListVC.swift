@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import DropDown
 
 class ListVC: UIViewController {
     var models = [LoadGiftData]()
@@ -24,11 +23,11 @@ class ListVC: UIViewController {
     @IBOutlet weak var btnSort: UIButton!
     
     @IBOutlet weak var viewEmpty: UIView!
+    
     var stickyCellFlowLayout : StickyCellFlowLayout?
     var gridCellFlowLayout : UICollectionViewLayout?
     var gridCellNib : UINib?
     var collectionViewFlowLayoutType = true // true는 stickyType false는 gridType
-    let dropDown = DropDown()
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         resetData()
@@ -40,12 +39,44 @@ class ListVC: UIViewController {
         stickyCellFlowLayout = collectionView.collectionViewLayout as! StickyCellFlowLayout
         gridCellNib = UINib(nibName: "GridCollectionViewCell", bundle: nil)
         gridCellFlowLayout = createGridLayout()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(returnSortVC(_:)), name: .init("returnSortVC"), object: nil)
     }
+    //MARK: SortVC noti
+    @objc func returnSortVC(_ notification: Notification){
+        guard let res = notification.userInfo?["res"] as? String else { return }
+        sort(sortType: res)
+    }
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: .init("returnSortVC"), object: nil)
+    }
+    private func sort(sortType: String){
+        labelSort.text = sortType
+        //sort
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko")
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        models = models.sorted { model1, model2 in
+            guard let date1 = formatter.date(from: model1.receiveDate) else { return true }
+            guard let date2 = formatter.date(from: model2.receiveDate) else { return false }
+            if sortType == "최신순" {
+                return date1 > date2
+            }else{
+                return date1 < date2
+            }
+            
+        }
+        self.collectionView.reloadData()
+        //self.collectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
+    }
+    //MARK: resetData
     public func resetData() {
         if receivedSentFlag {
             models = Gifts.receivedModels
+            self.sort(sortType: labelSort.text!)
         }else{
             models = Gifts.sentModels
+            self.sort(sortType: labelSort.text!)
         }
         if models.count == 0 {
             collectionView.isHidden = true
@@ -56,8 +87,8 @@ class ListVC: UIViewController {
         }
         labelCount.text = "\(models.count)"
         self.collectionView.reloadData()
-        collectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
     }
+    //MARK: setLayout
     private func setLayout(){
         resetData()
         if receivedSentFlag {
@@ -71,11 +102,11 @@ class ListVC: UIViewController {
                 layout.stickyIndexPath.append(IndexPath(row: index, section: 0))
             }
         }
-        makeDropDown()
         setupLabelTap()
     }
+    //MARK: label sort tapped
     @objc func labelTapped(_ sender: UITapGestureRecognizer) {
-        self.dropDown.show()
+        self.showPopUp()
     }
     func setupLabelTap() {
         let labelTap = UITapGestureRecognizer(target: self, action: #selector(self.labelTapped(_:)))
@@ -83,37 +114,23 @@ class ListVC: UIViewController {
         self.labelSort.addGestureRecognizer(labelTap)
         
     }
-    //MARK: drop down setting
-    private func makeDropDown(){
-        dropDown.dataSource = ["최신순", "과거순"]
-        dropDown.anchorView = labelSort
-        dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
-        dropDown.textColor = UIColor.white
-        dropDown.selectedTextColor = UIColor.whiteOpacity
-        dropDown.backgroundColor = UIColor.black
-        dropDown.textFont = UIFont.systemFont(ofSize: 14)
-        dropDown.cornerRadius = 10
-        dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-            let formatter = DateFormatter()
-            formatter.locale = Locale(identifier: "ko")
-            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-            models = models.sorted { model1, model2 in
-                guard let date1 = formatter.date(from: model1.receiveDate) else { return true }
-                guard let date2 = formatter.date(from: model2.receiveDate) else { return false }
-                if index == 0 {
-                    return date1 > date2
-                }else{
-                    return date1 < date2
-                }
-                
-            }
-            self.collectionView.reloadData()
-            self.labelSort.text = item
-            self.collectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
-            self.dropDown.clearSelection()
-        }
+    //MARK: show pop up
+    private func showPopUp(){
+        guard let popup = self.storyboard?.instantiateViewController(identifier: "SortVC") as? SortVC else { return }
         
+        popup.modalPresentationStyle = .overFullScreen
+        var idx = 0
+        var target = -1
+        for data in popup.sortData{
+            if data.sortType == self.labelSort.text{
+                target = idx
+            }
+            idx += 1
+        }
+        popup.sortData[target].isSelected = true
+        present(popup, animated: true, completion: nil)
     }
+    
     
 //MARK: 버튼 클릭 이벤트
     @IBAction func btnCollectionViewTypeClicked(_ sender: UIButton) {
@@ -140,7 +157,7 @@ class ListVC: UIViewController {
     }
     
     @IBAction func btnSortClicked(_ sender: UIButton) {
-        dropDown.show()
+        self.showPopUp()
     }
     @IBAction func btnSearchClicked(_ sender: UIButton) {
         let searchSB = UIStoryboard(name: "SearchSB", bundle: nil)
@@ -172,7 +189,7 @@ extension ListVC: UICollectionViewDataSource , UICollectionViewDelegate{
         let detailSB = UIStoryboard(name: "Detail", bundle: nil)
         guard let vc = detailSB.instantiateViewController(withIdentifier: "DetailVC") as? DetailVC else { return }
         
-        vc.giftId = Gifts.receivedModels[indexPath.row].id
+        vc.giftId = models[indexPath.row].id
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated:  true, completion: nil)
     }
