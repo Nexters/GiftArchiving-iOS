@@ -318,8 +318,6 @@ extension VC: UICollectionViewDataSource, UICollectionViewDelegate {
 extension VC : UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print("scroll")
-        print(currentIndex)
         if collectionViewFlag {
             if currentIndex == Gifts.receivedModels.count{
                 currentIndex -= 1
@@ -328,6 +326,7 @@ extension VC : UIScrollViewDelegate {
                 self.changeUI(frameType: Gifts.receivedModels[currentIndex].frameType, color: Gifts.receivedModels[currentIndex].bgColor)
             }
         } else {
+
             if currentIndex == Gifts.sentModels.count{
                 currentIndex -= 1
             }
