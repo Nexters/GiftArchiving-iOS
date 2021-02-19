@@ -77,17 +77,24 @@ class VC: UIViewController{
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
     }
-
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setUIByCurrentIdx()
+    }
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: .init("deleteGift"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: .init("addGift"), object: nil)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(view.bounds.height)
         if view.bounds.height > 810 {
-            
             device = 1
         }else{
             device = 0
         }
         setLayout()
+        NotificationCenter.default.addObserver(self, selector: #selector(deleteGift), name: .init("deleteGift"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(addGift), name: .init("addGift"), object: nil)
     }
     func setLayout(){
         var cellHeight = CGFloat(330)
@@ -135,7 +142,6 @@ class VC: UIViewController{
         if Gifts.receivedModels.count > 0 {
             changeUI(frameType: Gifts.receivedModels[0].frameType, color: Gifts.receivedModels[0].bgColor)
         }
-        
     }
     
     @IBAction func settingButtonClicked(_ sender: UIButton) {
@@ -210,6 +216,28 @@ class VC: UIViewController{
         let vc = listSB.instantiateViewController(withIdentifier: "ListVC") as! ListVC
         vc.receivedSentFlag = self.collectionViewFlag
         navigationController?.pushViewController(vc, animated: true)
+        
+    }
+    private func setUIByCurrentIdx(){
+        if collectionViewFlag {
+            if Gifts.receivedModels.count > 0 {
+                changeUI(frameType: Gifts.receivedModels[currentIndex].frameType, color: Gifts.receivedModels[currentIndex].bgColor)
+            }
+        }else{
+            if Gifts.sentModels.count > 0 {
+                changeUI(frameType: Gifts.sentModels[currentIndex].frameType, color: Gifts.sentModels[currentIndex].bgColor)
+            }
+        }
+        
+    }
+    @objc func deleteGift(){
+        currentIndex = 0
+        self.collectionView.setContentOffset(CGPoint(x: -self.collectionView.contentInset.left,y:0), animated: true)
+    }
+    @objc func addGift(){
+        print("addGift()")
+        currentIndex = 0
+        self.collectionView.setContentOffset(CGPoint(x: -self.collectionView.contentInset.left,y:0), animated: true)
     }
     
 }
@@ -221,6 +249,7 @@ extension VC: UICollectionViewDataSource, UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print(currentIndex)
         if collectionViewFlag {
             if Gifts.receivedModels.count == 0 {
                 self.collectionView.isScrollEnabled = false
@@ -304,13 +333,8 @@ extension VC: UICollectionViewDataSource, UICollectionViewDelegate {
                 self.btnGfitBox.titleLabel?.textColor = UIColor.white
             }
             
-            if let cell : CollectionViewCell = self.collectionView.cellForItem(at: IndexPath(row: self.currentIndex, section: 0)) as? CollectionViewCell{
-                cell.setLabelColor(color: color)
-            }
             self.imgLogo.image = UIImage(named: "logo_"+color+"_"+frameType)
         }
-        
-       
     }
 }
 
@@ -318,6 +342,7 @@ extension VC: UICollectionViewDataSource, UICollectionViewDelegate {
 extension VC : UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+
         if collectionViewFlag {
             if currentIndex == Gifts.receivedModels.count{
                 currentIndex -= 1

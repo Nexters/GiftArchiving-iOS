@@ -56,6 +56,7 @@ class ListVC: UIViewController {
         }
         labelCount.text = "\(models.count)"
         self.collectionView.reloadData()
+        collectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
     }
     private func setLayout(){
         resetData()
@@ -71,6 +72,16 @@ class ListVC: UIViewController {
             }
         }
         makeDropDown()
+        setupLabelTap()
+    }
+    @objc func labelTapped(_ sender: UITapGestureRecognizer) {
+        self.dropDown.show()
+    }
+    func setupLabelTap() {
+        let labelTap = UITapGestureRecognizer(target: self, action: #selector(self.labelTapped(_:)))
+        self.labelSort.isUserInteractionEnabled = true
+        self.labelSort.addGestureRecognizer(labelTap)
+        
     }
     //MARK: drop down setting
     private func makeDropDown(){
@@ -136,6 +147,7 @@ class ListVC: UIViewController {
         let vc = searchSB.instantiateViewController(withIdentifier: "SearchVC") as! SearchVC
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
 }
 //MARK: collectionview datasource
 extension ListVC: UICollectionViewDataSource , UICollectionViewDelegate{
