@@ -16,8 +16,11 @@ class StickerPopupView: XibView {
     
     @IBOutlet var backgroundColorViews: [UIView]!
     
+    private var whichButtonSelected: Int = 0
     private var isCategorySelected: Bool = false {
-        
+        didSet {
+            
+        }
     }
     
     var outsideBackgroundColor: UIColor? {
@@ -55,6 +58,13 @@ class StickerPopupView: XibView {
         super.init(frame: frame)
         initCollectionView()
         initBackgroundColor()
+        NotificationCenter.default.addObserver(self, selector: #selector(noticePackageStickerSelected), name: .init("noticePackageStickerSelected"), object: nil)
+    }
+    
+    @objc func noticePackageStickerSelected(_ notification: Notification) {
+//        guard let userInfo = notification.userInfo as? [String: Any] else { return }
+//        guard let index = userInfo["index"] as? Int else { return }
+        isCategorySelected = true
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -67,6 +77,8 @@ class StickerPopupView: XibView {
         singleSticker.alpha = 1
         packageSticker.alpha = 0.3
         scrollDirection(by: 0)
+        
+        whichButtonSelected = 0
     }
     
     @IBAction func selectPackage(_ sender: UIButton) {
@@ -74,7 +86,14 @@ class StickerPopupView: XibView {
         packageSticker.alpha = 1
         singleSticker.alpha = 0.3
         scrollDirection(by: 1)
+        if whichButtonSelected == 1 {
+            if isCategorySelected {
+                isCategorySelected = false
+                stickerCollectionView.reloadData()
+            }
+        }
         
+        whichButtonSelected = 1
     }
     
     
@@ -135,6 +154,7 @@ extension StickerPopupView: UICollectionViewDelegateFlowLayout, UICollectionView
             guard let packageSticker = collectionView.dequeueReusableCell(withReuseIdentifier: PackageStickerCVC.identifier, for: indexPath) as? PackageStickerCVC else { return UICollectionViewCell() }
             packageSticker.backgroundColor = currentBackgroundColor
             packageSticker.currentBackgroundColor = currentBackgroundColor
+            packageSticker.isPackageSelected = isCategorySelected
             return packageSticker
         } else {
             return UICollectionViewCell()

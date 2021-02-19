@@ -19,6 +19,7 @@ class PackageCategoryCVC: UICollectionViewCell {
     }
     
     @IBAction func selectPackage(_ sender: Any) {
+        NotificationCenter.default.post(name: .init("noticePackageStickerSelected"), object: self)
         NotificationCenter.default.post(name: .init("selectPackageCategory"), object: self, userInfo: ["index": index!])
     }
 }

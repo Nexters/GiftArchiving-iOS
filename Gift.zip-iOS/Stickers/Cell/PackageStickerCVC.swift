@@ -38,23 +38,18 @@ class PackageStickerCVC: UICollectionViewCell {
     
     private var currentIndex: Int = 0
     
-    private var isPackageSelected: Bool = false {
+    var isPackageSelected: Bool = false {
         didSet {
             if isPackageSelected {
-                
-//                packageCategoryCollectionView.isHidden = true
-//                packageCategoryCollectionView.alpha = 0
-//                UIView.animate(withDuration: 0.2) {
-//                    self.packageCollectionView.isHidden = false
-//                    self.packageCollectionView.alpha = 1
-//                }
-//                packageCollectionView.reloadData()
+                if let layout = packageCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+                    layout.scrollDirection = .vertical
+                }
             } else {
-//                packageCategoryCollectionView.isHidden = false
-//                packageCategoryCollectionView.alpha = 1
-//                packageCollectionView.isHidden = true
-//                packageCollectionView.alpha = 0
+                if let layout = packageCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+                    layout.scrollDirection = .horizontal
+                }
             }
+            packageCollectionView.reloadData()
         }
     }
     override func awakeFromNib() {
@@ -86,16 +81,16 @@ class PackageStickerCVC: UICollectionViewCell {
 
 extension PackageStickerCVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        if collectionView == packageCollectionView {
-        
+        if isPackageSelected {
             return stickers[currentIndex].count
-//        } else {
+        } else {
             return stickerPackage.count
-//        }
+        }
+            
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == packageCollectionView {
+        if isPackageSelected {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PackageCVC.identifier, for: indexPath) as? PackageCVC else { return UICollectionViewCell() }
             
             cell.setSticker(imageName: stickers[currentIndex][indexPath.item])
@@ -110,7 +105,7 @@ extension PackageStickerCVC: UICollectionViewDataSource, UICollectionViewDelegat
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        if collectionView == packageCollectionView {
+        if isPackageSelected {
             return UIEdgeInsets(top: 30, left: 30, bottom: 30, right: 30)
         } else {
             return UIEdgeInsets(top: 30, left: 32, bottom: 72, right: 32)
@@ -118,7 +113,7 @@ extension PackageStickerCVC: UICollectionViewDataSource, UICollectionViewDelegat
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if collectionView == packageCollectionView {
+        if isPackageSelected {
             return CGSize(width: 60, height: 60)
         } else {
             let width: CGFloat = 114
@@ -128,7 +123,7 @@ extension PackageStickerCVC: UICollectionViewDataSource, UICollectionViewDelegat
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        if collectionView == packageCollectionView {
+        if isPackageSelected {
             let spacing: CGFloat = (collectionView.frame.width - 300) / 3
             return spacing
         } else {
