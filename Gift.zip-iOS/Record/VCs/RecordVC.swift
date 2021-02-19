@@ -516,6 +516,7 @@ class RecordVC: UIViewController {
                             noBackgroundImageView.translatesAutoresizingMaskIntoConstraints = false
                             noBackgroundImageView.leadingAnchor.constraint(equalTo: rectagularInstagramCropView.leadingAnchor, constant: 0).isActive = true
                             noBackgroundImageView.trailingAnchor.constraint(equalTo: rectagularInstagramCropView.trailingAnchor, constant: 0).isActive = true
+                            noBackgroundImageView.contentMode = .scaleAspectFit
                             noBackgroundImageView.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
                             noBackgroundImageView.centerYAnchor.constraint(equalTo: rectagularInstagramCropView.centerYAnchor, constant: 0).isActive = true
                             let noBackgroundSquare = UIGraphicsImageRenderer(size: rectagularInstagramCropView.bounds.size)
@@ -539,8 +540,8 @@ class RecordVC: UIViewController {
                             nameEnvelopLabel.isHidden = true
                             
                             // 인스타그램 공유하기에 들어갈 이미지
-                            noBackgroundImageView.leadingAnchor.constraint(equalTo: rectagularInstagramCropView.leadingAnchor, constant: 15).isActive = true
-                            noBackgroundImageView.trailingAnchor.constraint(equalTo: rectagularInstagramCropView.trailingAnchor, constant: 15).isActive = true
+                            noBackgroundImageView.leadingAnchor.constraint(equalTo: rectagularInstagramCropView.leadingAnchor, constant: 10).isActive = true
+                            noBackgroundImageView.trailingAnchor.constraint(equalTo: rectagularInstagramCropView.trailingAnchor, constant: 10).isActive = true
                             noBackgroundImageView.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
                             noBackgroundImageView.topAnchor.constraint(equalTo: rectagularInstagramCropView.topAnchor, constant: 20).isActive = true
                             noBackgroundImageView.bottomAnchor.constraint(equalTo: rectagularInstagramCropView.bottomAnchor, constant: -50).isActive = true
@@ -553,7 +554,7 @@ class RecordVC: UIViewController {
                             
                             rectagularInstagramCropView.addSubview(label)
                             label.translatesAutoresizingMaskIntoConstraints = false
-                            label.topAnchor.constraint(equalTo: noBackgroundImageView.bottomAnchor, constant: 18).isActive = true
+                            label.topAnchor.constraint(equalTo: noBackgroundImageView.bottomAnchor, constant: 10).isActive = true
                             label.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
                             
                             rectagularInstagramCropView.backgroundColor = currentBackgroundColor

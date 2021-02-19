@@ -10,6 +10,7 @@ import Kingfisher
 
 class DetailVC: UIViewController {
     
+    @IBOutlet weak var rectagularInstagramCropView: UIView!
     @IBOutlet weak var upperContainer: UIView!
     @IBOutlet weak var topSafeAreaView: UIView!
     
@@ -41,6 +42,7 @@ class DetailVC: UIViewController {
     private var giftImage: UIImage?
     private var bgImgURL: String?
     private var receiveDate: String?
+    private var frameType: String?
     private var isReceiveGift: Bool = true
     private var isGiftEditing: Bool = false {
         didSet {
@@ -93,8 +95,13 @@ class DetailVC: UIViewController {
                 self.bgImgURL = gift.bgImgURL
                 self.receiveDate = gift.receiveDate
                 self.isReceiveGift = gift.isReceiveGift
+                
                 self.upperContainer.backgroundColor = UIColor.init(named: gift.bgColor)
                 self.view.backgroundColor = UIColor.init(named: gift.bgColor)
+                self.frameType = gift.frameType
+                
+                
+                
                 self.setPageInformation(
                     imageURL: gift.noBgImgURL,
                     name: gift.name,
@@ -200,7 +207,6 @@ class DetailVC: UIViewController {
         
         let url = URL(string: imageURL.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)!) //
         giftImageView.kf.setImage(with: url)
-        giftImage = giftImageView.image
         nameLabel.text = name
         isReceiveLabel.text = isReceiveGift ? "From." : "To."
         let dateBeforeParsing: String = receiveDate.components(separatedBy: "T")[0]
@@ -328,19 +334,94 @@ class DetailVC: UIViewController {
             
             let sb = UIStoryboard.init(name: "Share", bundle: nil)
             guard let share = sb.instantiateViewController(identifier: "ShareVC") as? ShareVC else { return }
+            
             share.whereToGo = 1
+            
+            self.giftImage = self.giftImageView.image
             share.envelopImage = self.giftImage
             
+            var currentFrameOfImage: FrameOfImage = .square
+            switch self.frameType {
+            case "SQUARE":
+                currentFrameOfImage = .square
+                break
+            case "CIRCLE":
+                currentFrameOfImage = .circle
+                break
+            case "FULL":
+                currentFrameOfImage = .full
+                break
+            case "ARCH":
+                currentFrameOfImage = .windowFrame
+                break
+            default:
+                break
+            }
+            share.currentFrameOfImage = currentFrameOfImage
+            
+            var color: UIColor?
+            switch self.currentBackgroundColor {
+            case "charcoalGrey":
+                color = .charcoalGrey
+                break
+            case "ceruleanBlue":
+                color = .ceruleanBlue
+                break
+            case "wheat":
+                color = .wheat
+                break
+            case "pinkishOrange":
+                color = .pinkishOrange
+                break
+            default:
+                break
+            }
+            share.currentBackgroundColor = color
+            
+            share.userName = self.nameLabel.text
             share.currentName = "\(self.isReceiveLabel.text!) \(self.nameLabel.text!)"
-            share.currentBackgroundColor = UIColor(named: self.currentBackgroundColor)
+            
             share.kakaoImageURL = self.bgImgURL
-            //            share.instagramImage = instagramSquareImage
-            //            // instagramSquareImage
-            //            share.myPhonePhoto = myPhonePhoto
-            //            // myPhonePhoto
-            //            share.currentFrameOfImage = currentFrameOfImage
-            //            share.userName = nameTextField.text
+            
+            
+            let noBackgroundImageView = UIImageView.init(image: self.giftImage)
+            self.rectagularInstagramCropView.addSubview(noBackgroundImageView)
+//            noBackgroundImageView.translatesAutoresizingMaskIntoConstraints = false
+            noBackgroundImageView.leadingAnchor.constraint(equalTo: self.rectagularInstagramCropView.leadingAnchor, constant: 16).isActive = true
+            noBackgroundImageView.trailingAnchor.constraint(equalTo: self.rectagularInstagramCropView.trailingAnchor, constant: 16).isActive = true
+            noBackgroundImageView.centerYAnchor.constraint(equalTo: self.rectagularInstagramCropView.centerYAnchor, constant: -16).isActive = true
+//            noBackgroundImageView.topAnchor.constraint(equalTo: self.rectagularInstagramCropView.topAnchor, constant: -30).isActive = true
+//            noBackgroundImageView.bottomAnchor.constraint(equalTo: self.rectagularInstagramCropView.bottomAnchor, constant: -20).isActive = true
+            noBackgroundImageView.contentMode = .scaleAspectFit
+            let label = UILabel()
+            label.text = self.isReceiveLabel.text! + self.nameLabel.text!
+            label.font = UIFont(name: "SpoqaHanSansNeo-Bold", size: 16)
+            label.textColor = color == UIColor.wheat ? .black : .white
+            
+            self.rectagularInstagramCropView.addSubview(label)
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.topAnchor.constraint(equalTo: noBackgroundImageView.bottomAnchor, constant: -40).isActive = true
+            label.centerXAnchor.constraint(equalTo: self.rectagularInstagramCropView.centerXAnchor).isActive = true
+            
+            self.rectagularInstagramCropView.backgroundColor = color
+            let myPhone = UIGraphicsImageRenderer(size: self.rectagularInstagramCropView.bounds.size)
+            let myPhonePhoto = myPhone.image { _ in
+                self.rectagularInstagramCropView.drawHierarchy(in: self.rectagularInstagramCropView.bounds, afterScreenUpdates: true)
+            }
+            
+            self.rectagularInstagramCropView.makeRounded(cornerRadius: 8.0)
+            let instagram = UIGraphicsImageRenderer(size: self.rectagularInstagramCropView.bounds.size)
+            let instagramSquareImage = instagram.image { _ in
+                self.rectagularInstagramCropView.drawHierarchy(in: self.rectagularInstagramCropView.bounds, afterScreenUpdates: true)
+            }
+            self.rectagularInstagramCropView.isHidden = true
+            
+            share.instagramImage = instagramSquareImage
+            // instagramSquareImage
+            share.myPhonePhoto = myPhonePhoto
+            // myPhonePhoto
             share.modalPresentationStyle = .fullScreen
+            
             self.present(share, animated: true, completion: nil)
         }
     }
@@ -507,7 +588,8 @@ class DetailVC: UIViewController {
                         print("networkFail")
                         print("serverErr")
                     case .networkFail:
-                        self.isGiftEditing = false
+                        self.isGiftEditing = false                        
+                        self.showToast(message: "수정되었습니다.", font: UIFont(name: "SpoqaHanSansNeo-Bold", size: 16) ?? UIFont())
                         let data = ["content" : content]
                         NotificationCenter.default.post(name: .init("broadcastUpdate"), object: nil, userInfo: data)
                     }
@@ -527,6 +609,41 @@ class DetailVC: UIViewController {
             self.present(moreVC, animated: true, completion: nil)
         }
         
+    }
+    
+    private func showToast(message : String, font: UIFont = UIFont.systemFont(ofSize: 14.0)) {
+        let toastLabel = UILabel()
+        toastLabel.backgroundColor = UIColor(red: 141.0 / 255.0, green: 141.0 / 255.0, blue: 154.0 / 255.0, alpha: 1.0)
+        toastLabel.textColor = UIColor.black
+        toastLabel.font = font
+        toastLabel.textAlignment = .center
+        toastLabel.text = message
+        
+        toastLabel.alpha = 1.0
+        toastLabel.layer.cornerRadius = 8;
+        toastLabel.clipsToBounds = true
+        
+        self.view.addSubview(toastLabel)
+        
+        toastLabel.translatesAutoresizingMaskIntoConstraints = false
+        toastLabel.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 16.0).isActive = true
+        toastLabel.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -16.0).isActive = true
+        toastLabel.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -40.0).isActive = true
+        toastLabel.heightAnchor.constraint(equalToConstant: 56.0).isActive = true
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            toastLabel.alpha = 1
+            
+        },completion: { finish in
+            UIView.animate(withDuration: 0.3, delay: 0.7, animations: {
+                toastLabel.alpha = 0
+
+            }, completion: { finish in
+                if finish {
+                    toastLabel.removeFromSuperview()
+                }
+            })
+        })
     }
     
     //MARK: 삭제 API success 후,  로컬에서도 삭제시키기
