@@ -198,7 +198,7 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
                     vc.navigationTitleText = "서비스 이용약관"
                     break
                 case 2:
-                    vc.titleText = "기프트집 사용 오픈소스"
+                    vc.titleText = "기프트집 오픈소스 라이센스"
                     vc.navigationTitleText = "오픈소스 라이센스"
                     break
                 case 3:
