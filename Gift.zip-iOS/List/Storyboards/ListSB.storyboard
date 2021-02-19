@@ -57,7 +57,7 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3zZ-NR-n1H">
                                         <rect key="frame" x="66" y="0.0" width="20" height="24"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="20" id="hdb-yr-Rcd"/>
+                                            <constraint firstAttribute="width" priority="729" constant="20" id="hdb-yr-Rcd"/>
                                             <constraint firstAttribute="height" constant="24" id="wZ3-3C-Kwr"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
@@ -69,7 +69,7 @@
                                 <constraints>
                                     <constraint firstItem="JdU-IV-UfM" firstAttribute="centerY" secondItem="DSV-Jt-YTx" secondAttribute="centerY" id="4MM-Lu-em8"/>
                                     <constraint firstAttribute="trailing" secondItem="3zZ-NR-n1H" secondAttribute="trailing" id="KQj-ey-uhl"/>
-                                    <constraint firstAttribute="width" constant="86" id="MDN-so-vHX"/>
+                                    <constraint firstAttribute="width" priority="250" constant="86" id="MDN-so-vHX"/>
                                     <constraint firstItem="JdU-IV-UfM" firstAttribute="leading" secondItem="DSV-Jt-YTx" secondAttribute="leading" id="Rb9-bp-0sT"/>
                                     <constraint firstAttribute="height" constant="24" id="RrJ-pE-5MH"/>
                                     <constraint firstItem="3zZ-NR-n1H" firstAttribute="centerY" secondItem="DSV-Jt-YTx" secondAttribute="centerY" id="eV6-pe-R5c"/>
