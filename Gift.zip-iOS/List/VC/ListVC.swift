@@ -39,7 +39,7 @@ class ListVC: UIViewController {
         stickyCellFlowLayout = collectionView.collectionViewLayout as! StickyCellFlowLayout
         gridCellNib = UINib(nibName: "GridCollectionViewCell", bundle: nil)
         gridCellFlowLayout = createGridLayout()
-        
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 410, right: 0)
         NotificationCenter.default.addObserver(self, selector: #selector(returnSortVC(_:)), name: .init("returnSortVC"), object: nil)
     }
     //MARK: SortVC noti
@@ -135,6 +135,7 @@ class ListVC: UIViewController {
 //MARK: 버튼 클릭 이벤트
     @IBAction func btnCollectionViewTypeClicked(_ sender: UIButton) {
         if collectionViewFlowLayoutType {
+            collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 30, right: 0)
             sender.setImage(UIImage(named: "iconSticky"), for: .normal)
             collectionView.collectionViewLayout = self.gridCellFlowLayout!
             collectionView.register(gridCellNib, forCellWithReuseIdentifier: "GridCollectionViewCell")
@@ -142,6 +143,7 @@ class ListVC: UIViewController {
             collectionView.reloadData()
             
         }else{
+            collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 410, right: 0)
             sender.setImage(UIImage(named: "iconGrid"), for: .normal)
             collectionView.collectionViewLayout = self.stickyCellFlowLayout!
             collectionViewFlowLayoutType = true
