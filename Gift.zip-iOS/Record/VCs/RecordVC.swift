@@ -892,7 +892,6 @@ extension RecordVC {
             emotionTextView.alpha = 1.0
         }
         
-        
         currentInfoViewOriginY = infoView.frame.origin.y
         currentBottomContainerOriginY = bottomContainer.frame.origin.y
         currentImageContainerOriginY = imageContainer.frame.origin.y

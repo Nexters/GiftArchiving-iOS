@@ -16,7 +16,7 @@ class SettingsVC: UIViewController, MFMailComposeViewControllerDelegate {
     var userSettingsName: [String] = ["공지사항", "앱 문의・건의"]
     var userSettingsIconImageName: [String] = ["iconAnnouncementCopy", "iconQnAmail"]
     
-    var appSettingsName: [String] = ["서비스 이용약관", "오픈 소스 라이센스", "개인정보 이용방침"]
+    var appSettingsName: [String] = ["팀 소개","서비스 이용약관", "오픈 소스 라이센스", "개인정보 이용방침"]
     var appSettingsIconImageName: [String] = ["iconTerms", "iconOpensourceCopy", "iconPrivacyinfo"]
     
     lazy var popupBackgroundView = UIView()
@@ -108,7 +108,7 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
         } else if section == 1 {
             return 3
         } else if section == 2 {
-            return 4
+            return 5
         } else {
             return 1
         }
@@ -192,16 +192,16 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
                 guard let vc = self.storyboard?.instantiateViewController(identifier: "TermsVC") as? TermsVC else { return }
                 
                 switch indexPath.row {
-                case 1:
+                case 2:
                     // 서비스 이용약관
                     vc.titleText = "기프트집 서비스 이용약관"
                     vc.navigationTitleText = "서비스 이용약관"
                     break
-                case 2:
+                case 3:
                     vc.titleText = "기프트집 오픈소스 라이센스"
                     vc.navigationTitleText = "오픈소스 라이센스"
                     break
-                case 3:
+                case 4:
                     vc.titleText = "기프트집 사용자\n개인정보 이용방침"
                     vc.navigationTitleText = "개인정보 이용방침"
                     break
