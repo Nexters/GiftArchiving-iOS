@@ -31,7 +31,8 @@ class OnboardingVC: UIViewController, ASAuthorizationControllerPresentationConte
     @IBOutlet weak var cnstPageControlTop: NSLayoutConstraint!
     var device = 0
     var itemHeight = 455
-    
+    var kakaoBtnFlag = true
+    var appleBtnFlag = true
     
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         return self.view.window!
@@ -74,14 +75,17 @@ class OnboardingVC: UIViewController, ASAuthorizationControllerPresentationConte
     
     // Apple Login Button Pressed
     @IBAction func btnAppleLoginClicked(_ sender: UIButton) {
-        let appleIDProvider = ASAuthorizationAppleIDProvider()
-        let request = appleIDProvider.createRequest()
-        request.requestedScopes = [.fullName, .email]
-            
-        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
-        authorizationController.delegate = self
-        authorizationController.presentationContextProvider = self
-        authorizationController.performRequests()
+        if appleBtnFlag{
+            appleBtnFlag = false
+            let appleIDProvider = ASAuthorizationAppleIDProvider()
+            let request = appleIDProvider.createRequest()
+            request.requestedScopes = [.fullName, .email]
+                
+            let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+            authorizationController.delegate = self
+            authorizationController.presentationContextProvider = self
+            authorizationController.performRequests()
+        }
     }
     // Apple ID 연동 성공 시
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
@@ -112,7 +116,8 @@ class OnboardingVC: UIViewController, ASAuthorizationControllerPresentationConte
     
     @IBAction func kakaoSignInBtnClicked(_ sender: UIButton) {
         // 카카오톡 설치 여부 확인
-        if(AuthApi.isKakaoTalkLoginAvailable()) {
+        if(AuthApi.isKakaoTalkLoginAvailable() && kakaoBtnFlag) {
+            kakaoBtnFlag = false
             // 카카오톡 로그인. api 호출 결과를 클로저로 전달.
             AuthApi.shared.loginWithKakaoTalk {(oauthToken, error) in
                 
@@ -204,6 +209,8 @@ class OnboardingVC: UIViewController, ASAuthorizationControllerPresentationConte
                     
                 } catch let e as NSError {
                     print("An error has occured while parsing JSONObject: \(e.localizedDescription)")
+                    self.kakaoBtnFlag = true
+                    self.appleBtnFlag = true
                 }
             }
         }
@@ -224,6 +231,8 @@ class OnboardingVC: UIViewController, ASAuthorizationControllerPresentationConte
                             let recordSB = UIStoryboard(name: "MainSB", bundle: nil)
                             let vc = recordSB.instantiateViewController(withIdentifier: "MainVC")
                             self.navigationController?.pushViewController(vc, animated: true)
+                            self.kakaoBtnFlag = true
+                            self.appleBtnFlag = true
                     }
                 })
             }
