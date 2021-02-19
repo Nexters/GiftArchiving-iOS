@@ -1,14 +1,14 @@
 {
   "images" : [
     {
-      "idiom" : "universal",
       "filename" : "iconMoreBk.png",
+      "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "scale" : "2x",
       "filename" : "iconMoreBk@2x.png",
-      "idiom" : "universal"
+      "idiom" : "universal",
+      "scale" : "2x"
     },
     {
       "filename" : "iconMoreBk@3x.png",
@@ -17,7 +17,7 @@
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }

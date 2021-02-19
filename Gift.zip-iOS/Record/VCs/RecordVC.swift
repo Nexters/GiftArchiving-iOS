@@ -299,6 +299,7 @@ class RecordVC: UIViewController {
                 purposeLabel.textColor = .greyishBrown
                 emotionLabel.textColor = .greyishBrown
                 
+                
                 categoryImageName = categoryImageName + "B"
                 purposeImageName = purposeImageName + "B"
                 emotionImageName = emotionImageName + "B"
