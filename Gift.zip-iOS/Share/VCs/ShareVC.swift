@@ -33,12 +33,15 @@ class ShareVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        print(instagramImage)
+        print(myPhonePhoto)
         cardView.backgroundColor = currentBackgroundColor
         cardView.makeRounded(cornerRadius: 8.0)
         nameLabel.text = currentName
         
         logoImageView.backgroundColor = currentBackgroundColor
         if currentBackgroundColor == .wheat {
+            print("HELLO")
             nameLabel.textColor = UIColor(white: 41.0 / 255.0, alpha: 1.0)
             logoImageView.image = UIImage(named: "logoBgcolorNoneBlack")
             switch currentFrameOfImage {

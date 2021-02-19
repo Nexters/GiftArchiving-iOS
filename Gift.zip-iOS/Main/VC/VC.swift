@@ -323,21 +323,18 @@ extension VC: UICollectionViewDataSource, UICollectionViewDelegate {
     }
     
     func changeUI(frameType: String, color: String) {
-        print("changeUI()  color : " + color)
-        collectionView.backgroundColor = UIColor(named: color)
-        if(color == "wheat") {
-            self.btnArrow.imageView?.image = UIImage(named: "btn_arrow_black")
-            self.btnGfitBox.titleLabel?.textColor = UIColor.greyishBrown
-            print("changed!!")
-        } else {
-            self.btnArrow.imageView?.image = UIImage(named: "btn_arrow_white")
-            self.btnGfitBox.titleLabel?.textColor = UIColor.white
+        UIView.animate(withDuration: 0.4) {
+            self.collectionView.backgroundColor = UIColor(named: color)
+            if(color == "wheat") {
+                self.btnArrow.imageView?.image = UIImage(named: "btn_arrow_black")
+                self.btnGfitBox.titleLabel?.textColor = UIColor.greyishBrown
+            } else {
+                self.btnArrow.imageView?.image = UIImage(named: "btn_arrow_white")
+                self.btnGfitBox.titleLabel?.textColor = UIColor.white
+            }
+            
+            self.imgLogo.image = UIImage(named: "logo_"+color+"_"+frameType)
         }
-   /*
-        if let cell : CollectionViewCell = collectionView.cellForItem(at: IndexPath(row: currentIndex, section: 0)) as? CollectionViewCell{
-            cell.setLabelColor(color: color)
-        }*/
-        imgLogo.image = UIImage(named: "logo_"+color+"_"+frameType)
     }
 }
 
@@ -345,7 +342,7 @@ extension VC: UICollectionViewDataSource, UICollectionViewDelegate {
 extension VC : UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print("scrollviewdidscroll : " + String(currentIndex))
+
         if collectionViewFlag {
             if currentIndex == Gifts.receivedModels.count{
                 currentIndex -= 1
@@ -353,15 +350,14 @@ extension VC : UIScrollViewDelegate {
             if Gifts.receivedModels.count > 0 {
                 self.changeUI(frameType: Gifts.receivedModels[currentIndex].frameType, color: Gifts.receivedModels[currentIndex].bgColor)
             }
+        } else {
 
-        }else{
             if currentIndex == Gifts.sentModels.count{
                 currentIndex -= 1
             }
             if Gifts.sentModels.count > 0 {
                 self.changeUI(frameType: Gifts.sentModels[currentIndex].frameType, color: Gifts.sentModels[currentIndex].bgColor)
             }
-
         }
     }
     
