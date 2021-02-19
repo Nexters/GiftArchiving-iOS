@@ -56,6 +56,7 @@ class ListVC: UIViewController {
         }
         labelCount.text = "\(models.count)"
         self.collectionView.reloadData()
+        collectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
     }
     private func setLayout(){
         resetData()

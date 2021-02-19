@@ -48,7 +48,7 @@ class CollectionViewCell: UICollectionViewCell {
         }else{
             self.labelDate.text = ""
         }
-        
+        setLabelColor(color: model.bgColor)
     }
     public func configureEmpty(flag: Bool, device: Int){
         if flag{

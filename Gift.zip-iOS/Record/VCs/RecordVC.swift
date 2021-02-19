@@ -1350,11 +1350,11 @@ extension RecordVC: StickerViewDelegate {
             if let json = try? JSONDecoder().decode(LoadAPIResponse.self, from: jsonData){
                 
                 if isReceive {
-                    print(json.gifts[0].receiveDate)
                     Gifts.receivedModels.insert(contentsOf: json.gifts, at: 0)
                 }else{
                     Gifts.sentModels.insert(contentsOf: json.gifts, at: 0)
                 }
+                NotificationCenter.default.post(name: .init("addGift"), object: nil)
             }
         }
         
