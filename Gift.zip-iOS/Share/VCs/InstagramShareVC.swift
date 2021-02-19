@@ -12,6 +12,7 @@ class InstagramShareVC: UIViewController, UIDocumentInteractionControllerDelegat
     
     @IBOutlet weak var imageView: UIImageView!
     
+    var myPhonePhoto: UIImage?
     var instagramImage: UIImage?
     
     override func viewDidLoad() {
@@ -30,7 +31,7 @@ class InstagramShareVC: UIViewController, UIDocumentInteractionControllerDelegat
     
     @IBAction func shareFeed(_ sender: Any) {
 //        let pngFile = changeImageToPNG(instagramImage!)
-        postImage(image: instagramImage!)
+        postImage(image: myPhonePhoto!)
     }
     
     

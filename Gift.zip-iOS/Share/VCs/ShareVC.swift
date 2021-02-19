@@ -33,8 +33,7 @@ class ShareVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print(instagramImage)
-        print(myPhonePhoto)
+        
         cardView.backgroundColor = currentBackgroundColor
         cardView.makeRounded(cornerRadius: 8.0)
         nameLabel.text = currentName
@@ -147,7 +146,6 @@ class ShareVC: UIViewController {
         } else {
             self.dismiss(animated: true, completion: nil)
         }
-        
     }
     
     @IBAction func saveImage(_ sender: UIButton) {
@@ -169,6 +167,7 @@ class ShareVC: UIViewController {
     @IBAction func shareToInstagramButtonTapped(_ sender: Any) {
         guard let insta = self.storyboard?.instantiateViewController(identifier: "InstagramShareVC") as? InstagramShareVC else { return }
         insta.instagramImage = instagramImage
+        insta.myPhonePhoto = myPhonePhoto
         insta.modalPresentationStyle = .fullScreen
         self.present(insta, animated: true, completion: nil)
     }

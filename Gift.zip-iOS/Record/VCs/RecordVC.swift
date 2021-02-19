@@ -554,7 +554,9 @@ class RecordVC: UIViewController {
                             
                             rectagularInstagramCropView.addSubview(label)
                             label.translatesAutoresizingMaskIntoConstraints = false
-                            label.topAnchor.constraint(equalTo: noBackgroundImageView.bottomAnchor, constant: 10).isActive = true
+                            
+                            let constraint: CGFloat = (rectagularInstagramCropView.frame.height - noBackgroundImageView.frame.height - 20) / 2
+                            label.topAnchor.constraint(equalTo: noBackgroundImageView.bottomAnchor, constant: constraint).isActive = true
                             label.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
                             
                             rectagularInstagramCropView.backgroundColor = currentBackgroundColor

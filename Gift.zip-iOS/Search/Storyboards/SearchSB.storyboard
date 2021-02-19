@@ -475,7 +475,7 @@
                                         <rect key="frame" x="0.0" y="53" width="375" height="558"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="searchIllustNone" translatesAutoresizingMaskIntoConstraints="NO" id="0dS-UT-PT1">
-                                                <rect key="frame" x="118.5" y="199" width="138" height="100"/>
+                                                <rect key="frame" x="134" y="199" width="138" height="100"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="100" id="a1a-mU-2NY"/>
                                                     <constraint firstAttribute="width" constant="138" id="gJU-lk-0Nz"/>
@@ -490,8 +490,9 @@
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="0dS-UT-PT1" firstAttribute="centerX" secondItem="v0c-je-pHQ" secondAttribute="centerX" id="6pL-6z-pJk"/>
                                             <constraint firstItem="nNj-dA-9My" firstAttribute="centerX" secondItem="v0c-je-pHQ" secondAttribute="centerX" id="P4a-WG-66M"/>
+                                            <constraint firstItem="0dS-UT-PT1" firstAttribute="leading" secondItem="v0c-je-pHQ" secondAttribute="leading" constant="134" id="gqa-uZ-NMC"/>
+                                            <constraint firstAttribute="trailing" secondItem="0dS-UT-PT1" secondAttribute="trailing" constant="103" id="jKs-8o-wMV"/>
                                             <constraint firstItem="0dS-UT-PT1" firstAttribute="centerY" secondItem="v0c-je-pHQ" secondAttribute="centerY" constant="-30" id="jlQ-CU-JUU"/>
                                             <constraint firstItem="nNj-dA-9My" firstAttribute="top" secondItem="0dS-UT-PT1" secondAttribute="bottom" constant="18" id="oxU-iK-7lP"/>
                                         </constraints>
