@@ -8,7 +8,6 @@ target 'Gift.zip-iOS' do
   # Pods for Gift.zip-iOS
   pod 'Alamofire'
   pod 'Kingfisher'
-  pod 'lottie-ios'
   pod 'SnapKit'
   pod 'Then'
   pod 'RxSwift', '6.0.0'
