@@ -17,7 +17,9 @@ class SplashVC: UIViewController, UIGestureRecognizerDelegate {
         if checkLogin() {
             self.getDataAndDisplay()
         }else{
-            self.moveToOnboarding()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2 ) {
+                self.moveToOnboarding()
+            }
         }
         view.backgroundColor = .black
         

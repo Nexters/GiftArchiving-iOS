@@ -16,7 +16,6 @@ struct LoadGiftListService {
         print(url)
         let params = ["createdBy" : createdBy, "page" : page, "size" : size , "isReceiveGift" : isReceiveGift] as [String : Any]
         AF.request(url, method: .get, parameters: params).responseJSON(completionHandler: { response in
-            print(response.data)
             switch response.result {
             case .success(let res):
                 do {

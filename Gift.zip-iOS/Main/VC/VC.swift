@@ -314,20 +314,23 @@ extension VC: UICollectionViewDataSource, UICollectionViewDelegate {
 extension VC : UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print("scroll")
         
         if collectionViewFlag {
             if currentIndex == Gifts.receivedModels.count{
                 currentIndex -= 1
             }
-            self.changeUI(frameType: Gifts.receivedModels[currentIndex].frameType, color: Gifts.receivedModels[currentIndex].bgColor)
-            print(Gifts.receivedModels[currentIndex].frameType)
+            if Gifts.receivedModels.count > 0 {
+                self.changeUI(frameType: Gifts.receivedModels[currentIndex].frameType, color: Gifts.receivedModels[currentIndex].bgColor)
+            }
+
         }else{
             if currentIndex == Gifts.sentModels.count{
                 currentIndex -= 1
             }
-            self.changeUI(frameType: Gifts.sentModels[currentIndex].frameType, color: Gifts.sentModels[currentIndex].bgColor)
-            print(Gifts.sentModels[currentIndex].frameType)
+            if Gifts.sentModels.count > 0 {
+                self.changeUI(frameType: Gifts.sentModels[currentIndex].frameType, color: Gifts.sentModels[currentIndex].bgColor)
+            }
+
         }
     }
     
