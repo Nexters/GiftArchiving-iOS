@@ -29,6 +29,8 @@
 		40ADFC0E25C9AFA100721F4D /* ListSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40ADFC0D25C9AFA100721F4D /* ListSB.storyboard */; };
 		40ADFC1325C9B03800721F4D /* StickyCellFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40ADFC1225C9B03800721F4D /* StickyCellFlowLayout.swift */; };
 		40B15ECD25DB961100B60787 /* Gifts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40B15ECC25DB961100B60787 /* Gifts.swift */; };
+		40B15F1C25DFF65600B60787 /* SortVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40B15F1B25DFF65600B60787 /* SortVC.swift */; };
+		40B15F1F25DFFEBF00B60787 /* SortTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40B15F1E25DFFEBF00B60787 /* SortTableViewCell.swift */; };
 		40C900C525D1B70F00BC38C5 /* AutoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C900C425D1B70F00BC38C5 /* AutoTableViewCell.swift */; };
 		40C900CC25D2A4A200BC38C5 /* SearchResultCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40C900CB25D2A4A200BC38C5 /* SearchResultCollectionViewCell.xib */; };
 		40C900CF25D2A5B000BC38C5 /* SearchResultCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C900CE25D2A5B000BC38C5 /* SearchResultCollectionViewCell.swift */; };
@@ -127,6 +129,8 @@
 		40ADFC0D25C9AFA100721F4D /* ListSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ListSB.storyboard; sourceTree = "<group>"; };
 		40ADFC1225C9B03800721F4D /* StickyCellFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyCellFlowLayout.swift; sourceTree = "<group>"; };
 		40B15ECC25DB961100B60787 /* Gifts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gifts.swift; sourceTree = "<group>"; };
+		40B15F1B25DFF65600B60787 /* SortVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortVC.swift; sourceTree = "<group>"; };
+		40B15F1E25DFFEBF00B60787 /* SortTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortTableViewCell.swift; sourceTree = "<group>"; };
 		40C900C425D1B70F00BC38C5 /* AutoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoTableViewCell.swift; sourceTree = "<group>"; };
 		40C900CB25D2A4A200BC38C5 /* SearchResultCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchResultCollectionViewCell.xib; sourceTree = "<group>"; };
 		40C900CE25D2A5B000BC38C5 /* SearchResultCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -407,6 +411,7 @@
 			isa = PBXGroup;
 			children = (
 				40DE15CB25C8636D00184320 /* ListVC.swift */,
+				40B15F1B25DFF65600B60787 /* SortVC.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -416,6 +421,7 @@
 			children = (
 				40DE15C825C8629300184320 /* ListCollectionViewCell.swift */,
 				408E519125CAF81E0037EC9B /* GridCollectionViewCell.swift */,
+				40B15F1E25DFFEBF00B60787 /* SortTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -930,7 +936,9 @@
 				D4A08EB425C016BA009CFCC4 /* DatePopupVC.swift in Sources */,
 				D4D6B3D025D1059800231F8E /* LogoutPopupVC.swift in Sources */,
 				D4684D2F25D113FB0065E7A4 /* NoticeVC.swift in Sources */,
+				40B15F1F25DFFEBF00B60787 /* SortTableViewCell.swift in Sources */,
 				D4D5106E25DE5BD500C89C2D /* WarningOutVC.swift in Sources */,
+				40B15F1C25DFF65600B60787 /* SortVC.swift in Sources */,
 				D4DFB46625DA7D5100AC08B8 /* GiftModel.swift in Sources */,
 				D4A08E9225BFDCFF009CFCC4 /* RecordVC.swift in Sources */,
 				D4684D2B25D10FD10065E7A4 /* TermsVC.swift in Sources */,
@@ -1137,13 +1145,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Gift.zip-iOS/Gift.zip-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = TZVHD77BLL;
+				DEVELOPMENT_TEAM = N5FS2H5UXX;
 				INFOPLIST_FILE = "Gift.zip-iOS/Global/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mukbang.Gift-zip";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jaeyong.Gift-zip-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1158,13 +1166,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Gift.zip-iOS/Gift.zip-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = TZVHD77BLL;
+				DEVELOPMENT_TEAM = N5FS2H5UXX;
 				INFOPLIST_FILE = "Gift.zip-iOS/Global/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mukbang.Gift-zip";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jaeyong.Gift-zip-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
