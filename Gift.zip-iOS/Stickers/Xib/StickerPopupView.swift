@@ -16,6 +16,10 @@ class StickerPopupView: XibView {
     
     @IBOutlet var backgroundColorViews: [UIView]!
     
+    private var isCategorySelected: Bool = false {
+        
+    }
+    
     var outsideBackgroundColor: UIColor? {
         didSet {
             switch outsideBackgroundColor! {
@@ -70,6 +74,7 @@ class StickerPopupView: XibView {
         packageSticker.alpha = 1
         singleSticker.alpha = 0.3
         scrollDirection(by: 1)
+        
     }
     
     
@@ -78,7 +83,6 @@ class StickerPopupView: XibView {
         UIView.animate(withDuration: 0.2, delay: 0, options: [.curveLinear], animations: {
             // Slide Animation
             self.slider.frame.origin.x =  button.frame.minX
-            
         }) { _ in
         }
     }
@@ -130,7 +134,7 @@ extension StickerPopupView: UICollectionViewDelegateFlowLayout, UICollectionView
         } else if indexPath.item == 1 {
             guard let packageSticker = collectionView.dequeueReusableCell(withReuseIdentifier: PackageStickerCVC.identifier, for: indexPath) as? PackageStickerCVC else { return UICollectionViewCell() }
             packageSticker.backgroundColor = currentBackgroundColor
-            packageSticker.backgroundColor = currentBackgroundColor
+            packageSticker.currentBackgroundColor = currentBackgroundColor
             return packageSticker
         } else {
             return UICollectionViewCell()

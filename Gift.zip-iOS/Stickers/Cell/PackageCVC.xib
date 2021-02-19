@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PackageCVC" id="gTV-IL-0wX" customClass="PackageCVC" customModule="Gift_zip_iOS" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pjh-OQ-0MW">
+                        <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                    </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uWl-7Q-UTz">
+                        <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                        <connections>
+                            <action selector="selectSticker:" destination="gTV-IL-0wX" eventType="touchUpInside" id="qdI-Uw-5yE"/>
+                        </connections>
+                    </button>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="pjh-OQ-0MW" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="8Y4-nw-o2m"/>
+                <constraint firstItem="uWl-7Q-UTz" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="BWe-hs-fbZ"/>
+                <constraint firstAttribute="trailing" secondItem="uWl-7Q-UTz" secondAttribute="trailing" id="iD6-lF-5NR"/>
+                <constraint firstItem="pjh-OQ-0MW" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="kUS-22-UmH"/>
+                <constraint firstAttribute="bottom" secondItem="uWl-7Q-UTz" secondAttribute="bottom" id="oBz-lt-wg8"/>
+                <constraint firstItem="uWl-7Q-UTz" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="pKw-Cj-hlE"/>
+                <constraint firstAttribute="trailing" secondItem="pjh-OQ-0MW" secondAttribute="trailing" id="usf-u0-xnd"/>
+                <constraint firstAttribute="bottom" secondItem="pjh-OQ-0MW" secondAttribute="bottom" id="ycT-RK-h6S"/>
+            </constraints>
+            <connections>
+                <outlet property="imageView" destination="pjh-OQ-0MW" id="EgE-P3-G6g"/>
+            </connections>
+            <point key="canvasLocation" x="-149" y="110"/>
+        </collectionViewCell>
+    </objects>
+</document>

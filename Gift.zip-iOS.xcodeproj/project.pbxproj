@@ -60,6 +60,10 @@
 		D446733625D91BBC0044B0A0 /* DeleteDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D446733525D91BBC0044B0A0 /* DeleteDetailVC.swift */; };
 		D446733925D91C7F0044B0A0 /* DetailMoreVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D446733825D91C7F0044B0A0 /* DetailMoreVC.swift */; };
 		D44D952F25DFC8240074736C /* ShareManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44D952E25DFC8240074736C /* ShareManager.swift */; };
+		D44D953F25DFE27C0074736C /* PackageCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44D953D25DFE27C0074736C /* PackageCVC.swift */; };
+		D44D954025DFE27C0074736C /* PackageCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = D44D953E25DFE27C0074736C /* PackageCVC.xib */; };
+		D44D954925DFF0850074736C /* PackageCategoryCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44D954725DFF0850074736C /* PackageCategoryCVC.swift */; };
+		D44D954A25DFF0850074736C /* PackageCategoryCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = D44D954825DFF0850074736C /* PackageCategoryCVC.xib */; };
 		D463E97425D4FDBD00295B42 /* APIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D463E97325D4FDBD00295B42 /* APIConstants.swift */; };
 		D463E97825D503D100295B42 /* NetworkResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D463E97725D503D100295B42 /* NetworkResult.swift */; };
 		D463E97B25D5080000295B42 /* GiftService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D463E97A25D5080000295B42 /* GiftService.swift */; };
@@ -155,6 +159,10 @@
 		D446733525D91BBC0044B0A0 /* DeleteDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteDetailVC.swift; sourceTree = "<group>"; };
 		D446733825D91C7F0044B0A0 /* DetailMoreVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMoreVC.swift; sourceTree = "<group>"; };
 		D44D952E25DFC8240074736C /* ShareManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareManager.swift; sourceTree = "<group>"; };
+		D44D953D25DFE27C0074736C /* PackageCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageCVC.swift; sourceTree = "<group>"; };
+		D44D953E25DFE27C0074736C /* PackageCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PackageCVC.xib; sourceTree = "<group>"; };
+		D44D954725DFF0850074736C /* PackageCategoryCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageCategoryCVC.swift; sourceTree = "<group>"; };
+		D44D954825DFF0850074736C /* PackageCategoryCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PackageCategoryCVC.xib; sourceTree = "<group>"; };
 		D463E97325D4FDBD00295B42 /* APIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConstants.swift; sourceTree = "<group>"; };
 		D463E97725D503D100295B42 /* NetworkResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResult.swift; sourceTree = "<group>"; };
 		D463E97A25D5080000295B42 /* GiftService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiftService.swift; sourceTree = "<group>"; };
@@ -728,6 +736,10 @@
 				D400F5B125CDAE2E00F71709 /* SingleCVC.xib */,
 				D400F5A825CDA3CE00F71709 /* PackageStickerCVC.swift */,
 				D400F5A925CDA3CE00F71709 /* PackageStickerCVC.xib */,
+				D44D954725DFF0850074736C /* PackageCategoryCVC.swift */,
+				D44D954825DFF0850074736C /* PackageCategoryCVC.xib */,
+				D44D953D25DFE27C0074736C /* PackageCVC.swift */,
+				D44D953E25DFE27C0074736C /* PackageCVC.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -846,6 +858,8 @@
 				D4A08E9525BFDD09009CFCC4 /* Record.storyboard in Resources */,
 				D400F5B325CDAE2E00F71709 /* SingleCVC.xib in Resources */,
 				D4A08EB625C01A8A009CFCC4 /* Spoqa Han Sans Neo Bold.otf in Resources */,
+				D44D954025DFE27C0074736C /* PackageCVC.xib in Resources */,
+				D44D954A25DFF0850074736C /* PackageCategoryCVC.xib in Resources */,
 				D4A08EB825C01A8D009CFCC4 /* Spoqa Han Sans Neo Regular.otf in Resources */,
 				D400F5AB25CDA3CE00F71709 /* PackageStickerCVC.xib in Resources */,
 			);
@@ -915,9 +929,11 @@
 				D4684D2B25D10FD10065E7A4 /* TermsVC.swift in Sources */,
 				4052035225C537890066989C /* CollectionViewCell.swift in Sources */,
 				D441173025DF054800310CE0 /* NoticeData.swift in Sources */,
+				D44D954925DFF0850074736C /* PackageCategoryCVC.swift in Sources */,
 				401C03CD25CEFD660024B9C5 /* PaddingLabel.swift in Sources */,
 				D4A08E9E25BFE031009CFCC4 /* UIColor+Extensions.swift in Sources */,
 				D400F5B225CDAE2E00F71709 /* SingleCVC.swift in Sources */,
+				D44D953F25DFE27C0074736C /* PackageCVC.swift in Sources */,
 				D4F360AC25C8871700874874 /* ImageCropVC.swift in Sources */,
 				40C900CF25D2A5B000BC38C5 /* SearchResultCollectionViewCell.swift in Sources */,
 				D4F3609625C8739F00874874 /* ShiftyImageCropVC.swift in Sources */,

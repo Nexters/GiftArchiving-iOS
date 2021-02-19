@@ -16,8 +16,9 @@ class SingleCVC: UICollectionViewCell {
         imageView.image = UIImage.init(named: imageName)
         self.imageName = imageName
     }
+    
     @IBAction func selectSticker(_ sender: UIButton) {
-        print("tapped")
+        
         NotificationCenter.default.post(name: .init("getStickerName"), object: nil, userInfo: ["stickerName": imageName!])
     }
 }
