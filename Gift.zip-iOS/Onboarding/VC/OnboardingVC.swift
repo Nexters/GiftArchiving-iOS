@@ -31,8 +31,6 @@ class OnboardingVC: UIViewController, ASAuthorizationControllerPresentationConte
     @IBOutlet weak var cnstPageControlTop: NSLayoutConstraint!
     var device = 0
     var itemHeight = 455
-    var kakaoBtnFlag = true
-    var appleBtnFlag = true
     
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         return self.view.window!
@@ -75,17 +73,16 @@ class OnboardingVC: UIViewController, ASAuthorizationControllerPresentationConte
     
     // Apple Login Button Pressed
     @IBAction func btnAppleLoginClicked(_ sender: UIButton) {
-        if appleBtnFlag{
-            appleBtnFlag = false
-            let appleIDProvider = ASAuthorizationAppleIDProvider()
-            let request = appleIDProvider.createRequest()
-            request.requestedScopes = [.fullName, .email]
-                
-            let authorizationController = ASAuthorizationController(authorizationRequests: [request])
-            authorizationController.delegate = self
-            authorizationController.presentationContextProvider = self
-            authorizationController.performRequests()
-        }
+    
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+            
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
+        
     }
     // Apple ID 연동 성공 시
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
@@ -94,13 +91,7 @@ class OnboardingVC: UIViewController, ASAuthorizationControllerPresentationConte
         case let appleIDCredential as ASAuthorizationAppleIDCredential:
                 
             // 계정 정보 가져오기
-            let userIdentifier = appleIDCredential.user//userIdentifier를 앱 내부에 저장해서 appdelegate 에서 불러와서 이미 로그인한 유저인지 판단해야 할 듯??
-            let fullName = appleIDCredential.fullName
-            let email = appleIDCredential.email
-            /*
-            print("User ID : \(userIdentifier)")
-            print("User Email : \(email ?? "")")
-            print("User Name : \((fullName?.givenName ?? "") + (fullName?.familyName ?? ""))")*/
+            let userIdentifier = appleIDCredential.user
             //loginAPI 호출
             self.loginAPI(appleToken: userIdentifier, kakaoToken: "", loginType: "APPLE", name: "")
      
@@ -111,39 +102,49 @@ class OnboardingVC: UIViewController, ASAuthorizationControllerPresentationConte
     // Apple ID 연동 실패 시
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         //handle error
-        print("apple ID 연동 실패 :  authorizationController() called ")
+        self.showLoginCancelAlert()
     }
     
     @IBAction func kakaoSignInBtnClicked(_ sender: UIButton) {
         // 카카오톡 설치 여부 확인
-        if(AuthApi.isKakaoTalkLoginAvailable() && kakaoBtnFlag) {
-            kakaoBtnFlag = false
+        if(AuthApi.isKakaoTalkLoginAvailable()) {
             // 카카오톡 로그인. api 호출 결과를 클로저로 전달.
             AuthApi.shared.loginWithKakaoTalk {(oauthToken, error) in
-                
                 if let error = error {
                     // 예외 처리 (로그인 취소 등)
-                    print("카카오 문제1")
-                    print(error)
+                    debugPrint("카카오 앱 로그인 에러 : " + error.localizedDescription)
+                    self.showLoginCancelAlert()
                 }
                 else {
-                    //사용자 관리 api 호출
-                    UserApi.shared.me() {(user, error) in
-                        if let error = error {
-                            print("카카오 문제2")
-                            print(error)
-                        }
-                        else {
-                            _ = user
-                            if let userId = user?.id{
-                                self.loginAPI(appleToken: "", kakaoToken: String(userId), loginType: "KAKAO", name: "")
-                            }
-                        }
-                    }
-                    
+                    self.callUserApi()
                 }
             }
-       }
+        }else{
+            AuthApi.shared.loginWithKakaoAccount{[weak self] (ouathToken, error) in
+                if let error = error {
+                    debugPrint("웹 로그인 에러 : " + error.localizedDescription)
+                    self?.showLoginCancelAlert()
+                }else{
+                    self?.callUserApi()
+                }
+            }
+            
+        }
+    }
+    private func callUserApi(){
+        //사용자 관리 api 호출
+        UserApi.shared.me() {(user, error) in
+            if let error = error {
+                self.showNetworkErrorAlert()
+                debugPrint("카카오 유저 관리 api 에러 : " + error.localizedDescription)
+            }
+            else {
+                _ = user
+                if let userId = user?.id{
+                    self.loginAPI(appleToken: "", kakaoToken: String(userId), loginType: "KAKAO", name: "")
+                }
+            }
+        }
     }
     func loginAPI(appleToken : String, kakaoToken: String, loginType : String, name: String){
         // 전송할 값
@@ -173,6 +174,7 @@ class OnboardingVC: UIViewController, ASAuthorizationControllerPresentationConte
             // 서버가 응답이 없거나 통신이 실패
             if let e = error {
                 NSLog("An error has occured: \(e.localizedDescription)")
+                self.showNetworkErrorAlert()
                 return
             }
             // 응답 처리 로직
@@ -205,19 +207,31 @@ class OnboardingVC: UIViewController, ASAuthorizationControllerPresentationConte
                         }
                         //메인 이동
                         self.goToMain()
+                    }else{
+                        self.showNetworkErrorAlert()
                     }
                     
                 } catch let e as NSError {
+                    self.showNetworkErrorAlert()
                     print("An error has occured while parsing JSONObject: \(e.localizedDescription)")
-                    self.kakaoBtnFlag = true
-                    self.appleBtnFlag = true
                 }
             }
         }
         // POST 전송
         task.resume()
     }
-    
+    private func showNetworkErrorAlert(){
+        let alertViewController = UIAlertController(title: "통신 실패", message: "네트워크 오류! 로그인에 실패하였습니다.", preferredStyle: .alert)
+        let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+        alertViewController.addAction(action)
+        self.present(alertViewController, animated: true, completion: nil)
+    }
+    private func showLoginCancelAlert(){
+        let alertViewController = UIAlertController(title: "로그인 실패", message: "로그인 취소", preferredStyle: .alert)
+        let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+        alertViewController.addAction(action)
+        self.present(alertViewController, animated: true, completion: nil)
+    }
     private func goToMain() {
         //메인 이동
         LoadGiftListService.shared.getReceivedGifts(page: 0, size: 10000000, isReceiveGift: true, completion: {
@@ -231,8 +245,6 @@ class OnboardingVC: UIViewController, ASAuthorizationControllerPresentationConte
                             let recordSB = UIStoryboard(name: "MainSB", bundle: nil)
                             let vc = recordSB.instantiateViewController(withIdentifier: "MainVC")
                             self.navigationController?.pushViewController(vc, animated: true)
-                            self.kakaoBtnFlag = true
-                            self.appleBtnFlag = true
                     }
                 })
             }
