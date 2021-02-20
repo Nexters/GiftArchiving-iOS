@@ -320,7 +320,7 @@
         <image name="logoBgcolorNoneWhite" width="40" height="40"/>
         <image name="shareIllustLettertop" width="265" height="225"/>
         <namedColor name="pinkishOrange">
-            <color red="1" green="0.44699999690055847" blue="0.2669999897480011" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.44705882352941179" blue="0.26666666666666666" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

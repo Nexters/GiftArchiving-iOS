@@ -8,7 +8,7 @@
 import UIKit
 
 class ListCollectionViewCell: UICollectionViewCell {
-    
+    var receivedSentFlag: Bool = true
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var labelName: UILabel!
     @IBOutlet weak var labelDate: UILabel!
@@ -28,7 +28,12 @@ class ListCollectionViewCell: UICollectionViewCell {
             }
         }
         
-        self.labelName.text = model.name
+        if receivedSentFlag {
+            self.labelName.text = "From. " + model.name
+        } else {
+            self.labelName.text = "To. " + model.name
+        }
+        
         let dateFor: DateFormatter = DateFormatter()
         dateFor.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         if let date = dateFor.date(from: model.receiveDate){

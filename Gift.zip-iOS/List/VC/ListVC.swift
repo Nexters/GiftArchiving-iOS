@@ -178,11 +178,13 @@ extension ListVC: UICollectionViewDataSource , UICollectionViewDelegate{
         
         if collectionViewFlowLayoutType {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! ListCollectionViewCell
+            cell.receivedSentFlag = receivedSentFlag
             cell.configure(with: models[indexPath.row], color: UIColor(named: models[indexPath.row].bgColor)! )
             return cell
             
         }else{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GridCollectionViewCell", for: indexPath) as! GridCollectionViewCell
+            cell.receivedSentFlag = receivedSentFlag
             cell.configure(with: models[indexPath.row], color: UIColor(named: models[indexPath.row].bgColor)! )
             return cell
         }

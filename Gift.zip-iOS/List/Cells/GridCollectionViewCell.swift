@@ -12,7 +12,7 @@ class GridCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imgVIew: UIImageView!
     @IBOutlet weak var labelName: UILabel!
     @IBOutlet weak var labelDate: UILabel!
-    
+    var receivedSentFlag: Bool = true
     public func configure(with model: LoadGiftData, color : UIColor){
         if let encoded = model.imgUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let url = URL(string: encoded) {
             
@@ -27,8 +27,13 @@ class GridCollectionViewCell: UICollectionViewCell {
                 }
             }
         }
-    
-        self.labelName.text = model.name
+        
+        if receivedSentFlag {
+            self.labelName.text = "From. " + model.name
+        } else {
+            self.labelName.text = "To. " + model.name
+        }
+        
         let dateFor: DateFormatter = DateFormatter()
         dateFor.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         if let date = dateFor.date(from: model.receiveDate){
