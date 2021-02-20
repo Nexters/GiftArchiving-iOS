@@ -9,6 +9,11 @@ import UIKit
 
 class VC: UIViewController{
     
+    enum AnimationDirection: Int {
+      case positive = 1
+      case negative = -1
+    }
+    
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var collectionViewHeight: NSLayoutConstraint!
     
@@ -81,10 +86,12 @@ class VC: UIViewController{
         super.viewDidAppear(animated)
         setUIByCurrentIdx()
     }
+    
     deinit {
         NotificationCenter.default.removeObserver(self, name: .init("deleteGift"), object: nil)
         NotificationCenter.default.removeObserver(self, name: .init("addGift"), object: nil)
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if view.bounds.height > 810 {
@@ -96,6 +103,29 @@ class VC: UIViewController{
         NotificationCenter.default.addObserver(self, selector: #selector(deleteGift), name: .init("deleteGift"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(addGift), name: .init("addGift"), object: nil)
     }
+    
+    func cubeTransition(image: UIImageView, name: String, direction: AnimationDirection) {
+        let auxImageView = UIImageView(frame: image.frame)
+        auxImageView.image = UIImage.init(named: name)
+        
+        let auxLabelOffset = CGFloat(direction.rawValue) * image.frame.size.height/2.0
+        
+        auxImageView.transform = CGAffineTransform(translationX: 0.0, y: auxLabelOffset)
+            .scaledBy(x: 1.0, y: 0.1)
+        image.superview?.addSubview(auxImageView)
+        
+        UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseOut, animations: {
+            auxImageView.transform = .identity
+            image.transform = CGAffineTransform(translationX: 0.0, y: -auxLabelOffset)
+                .scaledBy(x: 1.0, y: 0.1)
+        }, completion: { _ in
+            image.image = auxImageView.image
+            image.transform = .identity
+            
+            auxImageView.removeFromSuperview()
+        })
+    }
+    
     func setLayout(){
         var cellHeight = CGFloat(330)
         if device == 0 {
@@ -332,9 +362,21 @@ extension VC: UICollectionViewDataSource, UICollectionViewDelegate {
                 self.btnArrow.imageView?.image = UIImage(named: "btn_arrow_white")
                 self.btnGfitBox.titleLabel?.textColor = UIColor.white
             }
-            
             self.imgLogo.image = UIImage(named: "logo_"+color+"_"+frameType)
         }
+//        if imgLogo != nil {
+//            print("Not Nil")
+//            let newLogo = UIImageView.init(frame: imgLogo.frame)
+//            let name: String = "logo_"+color+"_"+frameType
+//            newLogo.image = UIImage(named: name)
+//            UIView.transition(from: imgLogo, to: newLogo, duration: 0.4, options: .transitionFlipFromBottom) { (_) in
+                
+//            }
+//        } else {
+//            print("Nil")
+//        }
+           
+        
     }
 }
 
