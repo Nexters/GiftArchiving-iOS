@@ -308,7 +308,6 @@ class RecordVC: UIViewController {
                 
                 emotionTextView.textColor = .greyishBrown
                 
-                
                 let photo = UIImage(named: "iconCameraBk")
                 let frame = UIImage(named: "iconShapeBk")
                 let sticker = UIImage(named: "iconStickerBk")
@@ -967,6 +966,16 @@ extension RecordVC {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissStickerPopupView))
         imageContainer.addGestureRecognizer(tapGesture)
+        
+        let attrString = NSMutableAttributedString(string: emotionTextView.text!)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 4
+        attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attrString.length))
+        let fontAttr = [ NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16),  NSAttributedString.Key.foregroundColor: UIColor.white ]
+        attrString.addAttributes(fontAttr, range: NSMakeRange(0, attrString.length))
+        emotionTextView.autocorrectionType = .no
+        emotionTextView.attributedText = attrString
+        
     }
     
     @objc func dismissStickerPopupView() {
