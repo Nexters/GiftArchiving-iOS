@@ -343,7 +343,7 @@
                                 <rect key="frame" x="0.0" y="56" width="375" height="611"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="searchIllustNone" translatesAutoresizingMaskIntoConstraints="NO" id="fEQ-v0-oZw">
-                                        <rect key="frame" x="118.5" y="141" width="138" height="100"/>
+                                        <rect key="frame" x="134" y="141" width="138" height="100"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="100" id="666-x4-b9U"/>
                                             <constraint firstAttribute="width" constant="138" id="bIO-04-Q8q"/>
@@ -365,11 +365,12 @@
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="LxY-TT-lC1" firstAttribute="centerX" secondItem="BV9-KN-Cqn" secondAttribute="centerX" id="Ayu-ER-zsJ"/>
+                                    <constraint firstAttribute="trailing" secondItem="fEQ-v0-oZw" secondAttribute="trailing" constant="103" id="M0H-5p-vkk"/>
                                     <constraint firstItem="RSu-ns-fYJ" firstAttribute="centerX" secondItem="BV9-KN-Cqn" secondAttribute="centerX" id="TnX-cV-1lB"/>
                                     <constraint firstItem="RSu-ns-fYJ" firstAttribute="top" secondItem="fEQ-v0-oZw" secondAttribute="bottom" constant="16" id="ZXf-AZ-SJQ"/>
                                     <constraint firstItem="fEQ-v0-oZw" firstAttribute="top" secondItem="BV9-KN-Cqn" secondAttribute="top" constant="141" id="ex9-0A-cZQ"/>
-                                    <constraint firstItem="fEQ-v0-oZw" firstAttribute="centerX" secondItem="BV9-KN-Cqn" secondAttribute="centerX" id="nvi-QD-7tR"/>
                                     <constraint firstItem="LxY-TT-lC1" firstAttribute="top" secondItem="RSu-ns-fYJ" secondAttribute="bottom" constant="3" id="uVU-OL-rSu"/>
+                                    <constraint firstItem="fEQ-v0-oZw" firstAttribute="leading" secondItem="BV9-KN-Cqn" secondAttribute="leading" constant="134" id="vLE-3y-elO"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pxt-Yp-EOT">

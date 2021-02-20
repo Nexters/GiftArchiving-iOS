@@ -15,8 +15,10 @@ class SortTableViewCell: UITableViewCell {
         labelSortType.text = model.sortType
         if model.isSelected {
             imgCheck.image = UIImage(named: "imgCheck")
+            labelSortType.font = .boldSystemFont(ofSize: 16)
         }else{
             imgCheck.image = .none
+            labelSortType.font = .systemFont(ofSize: 16)
         }
     }
 
