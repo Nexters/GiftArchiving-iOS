@@ -10,13 +10,13 @@ import MessageUI
 class SettingsVC: UIViewController, MFMailComposeViewControllerDelegate {
     @IBOutlet weak var settingTableView: UITableView!
     
-    var serviceSettingsName: [String] = ["현재버전 1.1.0"]
-    var serviceSettingsIconImageName: [String] = ["icnAppversion"]
+    var serviceSettingsName: [String] = ["현재버전 1.1.0", "기프트집에 대하여"]
+    var serviceSettingsIconImageName: [String] = ["icnAppversion", "iconFeeling"]
     
     var userSettingsName: [String] = ["공지사항", "앱 문의・건의"]
     var userSettingsIconImageName: [String] = ["iconAnnouncementCopy", "iconQnAmail"]
     
-    var appSettingsName: [String] = ["팀 소개","서비스 이용약관", "오픈 소스 라이센스", "개인정보 이용방침"]
+    var appSettingsName: [String] = ["서비스 이용약관", "오픈 소스 라이센스", "개인정보 이용방침"]
     var appSettingsIconImageName: [String] = ["iconTerms", "iconOpensourceCopy", "iconPrivacyinfo"]
     
     lazy var popupBackgroundView = UIView()
@@ -104,11 +104,11 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return 2
+            return 3
         } else if section == 1 {
             return 3
         } else if section == 2 {
-            return 5
+            return 4
         } else {
             return 1
         }
@@ -141,7 +141,7 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
             }
             
             if indexPath.section == 0 {
-                cell.setInformations(settingIconName: serviceSettingsName[0], settingIconImageName: serviceSettingsIconImageName[0])
+                cell.setInformations(settingIconName: serviceSettingsName[indexPath.row-1], settingIconImageName: serviceSettingsIconImageName[indexPath.row-1])
             } else if indexPath.section == 1 {
                 cell.setInformations(settingIconName: userSettingsName[indexPath.row-1], settingIconImageName: userSettingsIconImageName[indexPath.row-1])
             } else {
@@ -177,6 +177,10 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
                 guard let vc = self.storyboard?.instantiateViewController(identifier: "NoticeVC") as? NoticeVC else { return }
                 
                 self.navigationController?.pushViewController(vc, animated: true)
+            } else if indexPath.section == 0 && indexPath.row == 2 {
+                guard let vc = self.storyboard?.instantiateViewController(identifier: "TeamIntroduceVC") as? TeamIntroduceVC else { return }
+                
+                self.navigationController?.pushViewController(vc, animated: true)
             } else if indexPath.section == 1 && indexPath.row == 2 {
                 // 메일
                 let mailComposeViewController = self.configuredMailComposeViewController()
@@ -192,16 +196,16 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
                 guard let vc = self.storyboard?.instantiateViewController(identifier: "TermsVC") as? TermsVC else { return }
                 
                 switch indexPath.row {
-                case 2:
+                case 1:
                     // 서비스 이용약관
                     vc.titleText = "기프트집 서비스 이용약관"
                     vc.navigationTitleText = "서비스 이용약관"
                     break
-                case 3:
+                case 2:
                     vc.titleText = "기프트집 오픈소스 라이센스"
                     vc.navigationTitleText = "오픈소스 라이센스"
                     break
-                case 4:
+                case 3:
                     vc.titleText = "기프트집 사용자\n개인정보 이용방침"
                     vc.navigationTitleText = "개인정보 이용방침"
                     break
