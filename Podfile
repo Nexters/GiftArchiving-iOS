@@ -16,6 +16,6 @@ target 'Gift.zip-iOS' do
   pod 'KakaoSDKAuth'  # 카카오 로그인
   pod 'KakaoSDKUser'  # 사용자 관리
   pod 'KakaoSDKTalk'  # 친구, 메시지(카카오톡)
-  pod 'KakaoSDKLink'  # 메시지(카카오링크)
+  pod 'KakaoSDKLiㅌ₩nk'  # 메시지(카카오링크)
   pod 'TTGTagCollectionView'
 end
