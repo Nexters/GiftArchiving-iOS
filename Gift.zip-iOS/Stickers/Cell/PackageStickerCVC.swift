@@ -22,11 +22,11 @@ class PackageStickerCVC: UICollectionViewCell {
     var stickers: [[String]] = {
         var heart: [String] = []
         for i in 0..<12 {
-            heart.append("heartPackageSticker\(i+1)")
+            heart.append("heart_package_sticker_\(i+1)")
         }
         var diary: [String] = []
         for i in 0..<42 {
-            diary.append("diaryPackageSticker\(i+1)")
+            diary.append("diary_package_sticker_\(i+1)")
         }
         
         return [heart, diary]

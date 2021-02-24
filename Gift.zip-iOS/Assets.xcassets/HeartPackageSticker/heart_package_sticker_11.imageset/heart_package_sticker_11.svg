@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="44" viewBox="0 0 30 44">
+    <defs>
+        <path id="mh1ma894ha" d="M0.952 0.8L15.486 0.8 15.486 25.171 0.952 25.171z"/>
+        <path id="bicjgopm8c" d="M0 1.213L16.74 1.213 16.74 26.25 0 26.25z"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <g>
+            <g>
+                <path fill="#A0B2BE" d="M22.23 26.808l-.041-1.187c-.005.404.006.801.04 1.187" transform="translate(-205 -456) translate(205 456)"/>
+                <g transform="translate(-205 -456) translate(205 456) translate(13.75 .45)">
+                    <mask id="6th7j1xwub" fill="#fff">
+                        <use xlink:href="#mh1ma894ha"/>
+                    </mask>
+                    <path fill="#A0B2BE" d="M15.486 11.013C10.747 9.347 8.366 6.567 7.593.8l.061 1.785C7.25 7.61 5.412 10.254.952 11.06c2.376.68 4.245 2.603 5.387 4.793 1.049 2.015 1.591 4.581 2.014 6.871l.085 2.448c.061-5.053 3.111-11.332 7.047-14.158" mask="url(#6th7j1xwub)"/>
+                </g>
+                <g transform="translate(-205 -456) translate(205 456) translate(0 16.7)">
+                    <mask id="5t1278vzvd" fill="#fff">
+                        <use xlink:href="#bicjgopm8c"/>
+                    </mask>
+                    <path fill="#BD6B77" d="M9.631 1.213c1.162 4.549 3.268 8.997 7.109 11.698-2.468 1.533-4.55 4.448-5.499 6.572-.95 2.122-1.271 4.462-1.584 6.767C7.732 19.85 5.131 15.046 0 11.727c0 0 9.261-1.863 9.598-10.514" mask="url(#5t1278vzvd)"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

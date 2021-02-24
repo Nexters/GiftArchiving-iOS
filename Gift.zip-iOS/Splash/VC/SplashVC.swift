@@ -9,11 +9,11 @@ import UIKit
 import Lottie
 import AuthenticationServices
 
-class SplashVC: UIViewController, UIGestureRecognizerDelegate {
+class SplashVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+//        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         if checkLogin() {
             self.getDataAndDisplay()
         }else{
@@ -68,7 +68,7 @@ class SplashVC: UIViewController, UIGestureRecognizerDelegate {
                                 }
                         }
                     })
-                }else{
+                } else {
                     if gifts == nil{
                         //network fail
                         let alertViewController = UIAlertController(title: "통신 실패", message: "네트워크 오류", preferredStyle: .alert)
@@ -80,13 +80,15 @@ class SplashVC: UIViewController, UIGestureRecognizerDelegate {
             })
         }
     }
-    private func moveToMain(){
+    
+    private func moveToMain() {
         //메인 이동
         let mainSB = UIStoryboard(name: "MainSB", bundle: nil)
         let vc = mainSB.instantiateViewController(withIdentifier: "MainVC")
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    private func moveToOnboarding(){
+    
+    private func moveToOnboarding() {
         //온보딩 화면 이동
         let onboardSB = UIStoryboard(name: "OnboardingSB", bundle: nil)
         let vc = onboardSB.instantiateViewController(withIdentifier: "OnboardingVC")

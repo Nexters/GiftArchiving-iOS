@@ -981,11 +981,9 @@ extension RecordVC {
     @objc func dismissStickerPopupView() {
         if isStickerEditing {
             if isStickerGuideLineEditing {
-                print("sticker O GuideLine O")
                 isStickerGuideLineEditing = false
                 _selectedStickerView?.showEditingHandlers = false
             } else {
-                print("sticker O GuideLine X")
                 isStickerEditing = false
                 changeButtonContainerColor(false)
                 changeStickerButtonInteraction(true)
@@ -1001,11 +999,10 @@ extension RecordVC {
             }
         } else {
             if isStickerGuideLineEditing {
-                print("sticker X GuideLine O")
                 isStickerGuideLineEditing = false
                 _selectedStickerView?.showEditingHandlers = false
             } else {
-                print("sticker X GuideLine X")
+                
             }
         }
         

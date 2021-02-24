@@ -15,8 +15,7 @@ class OnboardingVC: UIViewController, ASAuthorizationControllerPresentationConte
     let imgs = [UIImage(named: "imgOnboarding1"), UIImage(named: "imgOnboarding2"), UIImage(named: "imgOnboarding3"), UIImage(named: "imgOnboarding4")]
     let txtTop1 = ["주고받은", "주고받은", "친구에게 기록을", "선물 기록을"]
     let txtTop2 = ["선물을 기록해보세요", "선물을 기록해보세요", "공유해보세요", "차곡차곡 모아보세요"]
-    let txtTop3 = ["선물 종류부터 감정, 원하는 스티커까지", "선물 종류부터 감정, 원하는 스티커까지", "",
-    ""]
+    let txtTop3 = ["선물 종류부터 감정, 원하는 스티커까지", "선물 종류부터 감정, 원하는 스티커까지", "", ""]
     
     
     @IBOutlet weak var pageControl: UIPageControl!
@@ -47,7 +46,7 @@ class OnboardingVC: UIViewController, ASAuthorizationControllerPresentationConte
     private func setlayout(){
         if view.bounds.height > 810 {
             device = 1
-        }else{
+        } else {
             device = 0
         }
         if device == 0 {
@@ -220,18 +219,20 @@ class OnboardingVC: UIViewController, ASAuthorizationControllerPresentationConte
         // POST 전송
         task.resume()
     }
-    private func showNetworkErrorAlert(){
+    private func showNetworkErrorAlert() {
         let alertViewController = UIAlertController(title: "통신 실패", message: "네트워크 오류! 로그인에 실패하였습니다.", preferredStyle: .alert)
         let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
         alertViewController.addAction(action)
         self.present(alertViewController, animated: true, completion: nil)
     }
-    private func showLoginCancelAlert(){
+    
+    private func showLoginCancelAlert() {
         let alertViewController = UIAlertController(title: "로그인 실패", message: "로그인 취소", preferredStyle: .alert)
         let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
         alertViewController.addAction(action)
         self.present(alertViewController, animated: true, completion: nil)
     }
+    
     private func goToMain() {
         //메인 이동
         LoadGiftListService.shared.getReceivedGifts(page: 0, size: 10000000, isReceiveGift: true, completion: {
@@ -245,6 +246,7 @@ class OnboardingVC: UIViewController, ASAuthorizationControllerPresentationConte
                             let recordSB = UIStoryboard(name: "MainSB", bundle: nil)
                             let vc = recordSB.instantiateViewController(withIdentifier: "MainVC")
                             self.navigationController?.pushViewController(vc, animated: true)
+                            
                     }
                 })
             }

@@ -79,7 +79,7 @@ class VC: UIViewController{
         super.viewWillAppear(animated)
 
         collectionView.reloadData()
-        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        
 
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -99,6 +99,7 @@ class VC: UIViewController{
         }else{
             device = 0
         }
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         setLayout()
         NotificationCenter.default.addObserver(self, selector: #selector(deleteGift), name: .init("deleteGift"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(addGift), name: .init("addGift"), object: nil)
