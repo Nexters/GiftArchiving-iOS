@@ -18,6 +18,7 @@ enum FrameOfImage {
 
 class RecordVC: UIViewController {
     
+    @IBOutlet weak var editCancelButton: UIButton!
     @IBOutlet weak var fromLabel: UILabel!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var categoryLabel: UILabel!
@@ -101,6 +102,26 @@ class RecordVC: UIViewController {
     private var _selectedStickerView:StickerView?
     
     private var frameType: String = "SQUARE"
+    
+    var isGiftEditing: Bool = false
+    var editFrameType: String?
+    var editCurrentColor: String?
+    var editNoBgImageURL: String?
+    var editBgImageURL: String?
+    var editCategoryImageName: String?
+    var editPurposeImageName: String?
+    var editEmotionImageName: String?
+    var editContent: String?
+    var editCategoryName: String?
+    var editPurposeName: String?
+    var editEmotionName: String?
+    var editCurrentDate: String?
+    var editName: String?
+    var editIsReceiveGift: Bool?
+    var editGiftId: String?
+    var editReceiveDate: String?
+    var isDateChanged: Bool = false
+    
     var selectedStickerView:StickerView? {
         get {
             return _selectedStickerView
@@ -427,6 +448,63 @@ class RecordVC: UIViewController {
         
         fromLabel.text = isReceiveGift ? "From." : "To."
         
+        if isGiftEditing {
+            
+            categoryImageName = editCategoryImageName!
+            categoryLabel.text = editCategoryName!
+            isCategoryIconSelected = true
+            purposeImageName = editPurposeImageName!
+            purposeLabel.text = editPurposeName!
+            isPurposeIconSelected = true
+            emotionImageName = editEmotionImageName!
+            emotionLabel.text = editEmotionName!
+            isEmotionIconSelected = true
+            nameTextField.text = editName
+            
+            
+            fromLabel.text = editIsReceiveGift! ? "From." : "To."
+            fromLabel.alpha = 1
+            
+            emotionTextView.text = editContent!
+            if emotionTextView.text == "" || emotionTextView.text == nil {
+                textViewPlaceholderFlag = true
+            } else {
+                textViewPlaceholderFlag = false
+            }
+            if textViewPlaceholderFlag {
+                emotionTextView.text = "지금 이 감정을 기록해보세요."
+                emotionTextView.alpha = 0.34
+            } else {
+                emotionTextView.alpha = 1.0
+            }
+            
+            
+            
+            
+            
+            currentBackgroundColor = UIColor(named: editCurrentColor!) ?? UIColor()
+            
+          
+            let url = URL(string: editNoBgImageURL!.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)!) //
+            cropImageView.kf.setImage(with: url)
+            cropImageView.translatesAutoresizingMaskIntoConstraints = false
+            
+            
+            
+            editCancelButton.isHidden = false
+            backButton.isHidden = true
+            
+            dateToRecord = self.editCurrentDate ?? ""
+            
+            
+            
+            nameTextField.isUserInteractionEnabled = false
+            photoButton.isHidden = true
+            frameButton.isHidden = true
+            stickerButton.isHidden = true
+            colorButton.isHidden = true
+        }
+        
     }
     
     override func viewDidLoad() {
@@ -478,6 +556,10 @@ class RecordVC: UIViewController {
     
     //MARK: - IBAction
     
+    @IBAction func backToEdit(_ sender: Any) {
+        self.dismiss(animated: false, completion: nil)
+    }
+    
     @IBAction func backToMain(_ sender: UIButton) {
         
         if isImageSelected || isNameTyped || isCategoryIconSelected || isPurposeIconSelected || isEmotionIconSelected
@@ -496,6 +578,93 @@ class RecordVC: UIViewController {
     @IBAction func completeRecord(_ sender: UIButton) {
         
         // record server
+        if isGiftEditing {
+            if isGiftEditing {
+                // 통신
+                if !emotionTextView.text.isEmpty || emotionTextView.text != "지금 이 감정을 기록해보세요." {
+                    
+                    let content: String = emotionTextView.text
+                    
+                    
+                    // 날짜
+                    var date: String = ""
+                    if isDateChanged {
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZ"
+                        let dateString = dateFormatter.string(from: selectedDate)
+                        print(dateString)
+                        let dateArr = dateString.components(separatedBy: [" "," "])
+                        let first = dateArr[0]
+                        let second = dateArr[1]
+                        print(dateArr[2])
+                        date = first + "T" + second
+                    } else {
+                        date = self.editReceiveDate ?? ""
+                    }
+                    
+                    
+                    
+                    var category: String = ""
+                    var emotion: String = ""
+                    var reason: String = ""
+                    for c in Icons.category {
+                        if categoryLabel.text == c.name {
+                            category = c.englishName
+                        }
+                    }
+                    
+                    if editIsReceiveGift! {
+                        for e in Icons.emotionGet {
+                            if emotionLabel.text == e.name {
+                                emotion = e.englishName
+                            }
+                        }
+                    } else {
+                        for e in Icons.emotionSend {
+                            if emotionLabel.text == e.name {
+                                emotion = e.englishName
+                            }
+                        }
+                    }
+                    for p in Icons.purpose {
+                        if purposeLabel.text == p.name {
+                            reason = p.englishName
+                        }
+                    }
+
+                    GiftService.shared.putGift(category: category, content: content, emotion: emotion, reason: reason, receiveDate: date, giftId: editGiftId!)  { networkResult -> Void in
+                        switch networkResult {
+                        case .success:
+                            print("ㄷ ㄷ")
+                        case .requestErr:
+                            let alertViewController = UIAlertController(title: "통신 실패", message: "💩", preferredStyle: .alert)
+                            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+                            alertViewController.addAction(action)
+                            self.present(alertViewController, animated: true, completion: nil)
+                            
+                        case .pathErr: print("path")
+                        case .serverErr:
+                            let alertViewController = UIAlertController(title: "통신 실패", message: "서버 오류", preferredStyle: .alert)
+                            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+                            alertViewController.addAction(action)
+                            self.present(alertViewController, animated: true, completion: nil)
+                            print("networkFail")
+                            print("serverErr")
+                        case .networkFail:
+                            let data = ["content" : content]
+                            NotificationCenter.default.post(name: .init("broadcastUpdate"), object: nil, userInfo: data)
+                        }
+                    }
+                } else {
+                    let alertViewController = UIAlertController(title: "저장 실패", message: "내용을 입력해주세요. 🥰", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+                    alertViewController.addAction(action)
+                    self.present(alertViewController, animated: true, completion: nil)
+                }
+                
+            }
+            return
+        }
         selectedStickerView?.showEditingHandlers = false
         if isImageSelected {
             if isNameTyped {
@@ -783,7 +952,6 @@ class RecordVC: UIViewController {
         }, completion: nil)
     }
     
-    
     private func changeButtonContainerColor(_ direction: Bool) {
         if direction {
             UIView.animate(withDuration: 0.25) {
@@ -884,12 +1052,28 @@ extension RecordVC {
         )
         popupBackground.setPopupBackgroundView(to: view)
         emotionTextView.textColor = UIColor.white
+        if emotionTextView.text == "" || emotionTextView.text == nil {
+            textViewPlaceholderFlag = true
+        } else {
+            textViewPlaceholderFlag = false
+        }
         if textViewPlaceholderFlag {
             emotionTextView.text = "지금 이 감정을 기록해보세요."
             emotionTextView.alpha = 0.34
         } else {
             emotionTextView.alpha = 1.0
         }
+        
+        
+        
+        categoryImageView.image = UIImage(named: categoryImageName)
+        purposeImageView.image = UIImage(named: purposeImageName)
+        emotionImageView.image = UIImage(named: emotionImageName)
+        
+        
+        
+        
+        
         
         currentInfoViewOriginY = infoView.frame.origin.y
         currentBottomContainerOriginY = bottomContainer.frame.origin.y
@@ -1275,6 +1459,7 @@ extension RecordVC: PopupViewDelegate {
         
         dateToRecord = todayDate + getDayOfWeek(date!)
         selectedDate = date!
+        isDateChanged = true
     }
     
     func getDayOfWeek(_ today: Date) -> String {

@@ -28,15 +28,13 @@ class OnboardingVC: UIViewController, ASAuthorizationControllerPresentationConte
     @IBOutlet weak var cnstCollectionViewTop: NSLayoutConstraint!
     @IBOutlet weak var cnstAppleBtnBottom: NSLayoutConstraint!
     @IBOutlet weak var cnstPageControlTop: NSLayoutConstraint!
+    
     var device = 0
     var itemHeight = 455
     
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         return self.view.window!
     }
-    
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()

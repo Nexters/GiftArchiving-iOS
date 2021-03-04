@@ -41,21 +41,23 @@ class DetailVC: UIViewController {
     
     private var giftImage: UIImage?
     private var bgImgURL: String?
+    private var noBgImgURL: String?
     private var receiveDate: String?
     private var frameType: String?
+    private var editContent: String?
     private var isReceiveGift: Bool = true
+    
+    private var editCategoryImageName: String = "iconCategoryDefault"
+    private var editPurposeImageName: String = "iconPurposeDefault"
+    private var editEmotionImageName: String = "iconFeelingDefault"
+    private var editCategoryName: String = "카테고리"
+    private var editPurposeName: String = "목적"
+    private var editEmotionName: String = "감정"
+    
     private var isGiftEditing: Bool = false {
         didSet {
-            nameLabel.isUserInteractionEnabled = false
+//            nameLabel.isUserInteractionEnabled = false
             if isGiftEditing {
-                contentTextView.isUserInteractionEnabled = true
-                for button in tagButtons {
-                    button.isUserInteractionEnabled = true
-                }
-                
-                let image = currentBackgroundColor == "wheat" ? "iconCheckBk" : "iconCheck"
-                moreButton.setImage(UIImage(named: image), for: .normal)
-                
             } else {
                 contentTextView.isUserInteractionEnabled = false
                 for button in tagButtons {
@@ -76,7 +78,6 @@ class DetailVC: UIViewController {
             case .success(let data):
                 guard let gift = data as? GiftModel else { return }
                 print(self.giftId)
-                print(gift.receiveDate)
                 if gift.bgColor == "wheat" {
                     for label in self.textsToChangeColor {
                         label.textColor = .black
@@ -95,11 +96,11 @@ class DetailVC: UIViewController {
                 self.bgImgURL = gift.bgImgURL
                 self.receiveDate = gift.receiveDate
                 self.isReceiveGift = gift.isReceiveGift
-                
+    
                 self.upperContainer.backgroundColor = UIColor.init(named: gift.bgColor)
                 self.view.backgroundColor = UIColor.init(named: gift.bgColor)
                 self.frameType = gift.frameType
-                
+                self.noBgImgURL = gift.noBgImgURL
                 
                 
                 self.setPageInformation(
@@ -207,14 +208,15 @@ class DetailVC: UIViewController {
         
         let url = URL(string: imageURL.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)!) //
         giftImageView.kf.setImage(with: url)
+        
         nameLabel.text = name
         isReceiveLabel.text = isReceiveGift ? "From." : "To."
         let dateBeforeParsing: String = receiveDate.components(separatedBy: "T")[0]
-        
+        print(dateBeforeParsing)
         let formatter  = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         let date = formatter.date(from: dateBeforeParsing)
-        formatter.dateFormat = "yyyy.MM.dd "
+        formatter.dateFormat = "yyyy. MM. dd "
         let dateAfterParsing = formatter.string(from: date!)
         let dateToRecord = dateAfterParsing + getDayOfWeek(date!)
         dateLabel.text = dateToRecord
@@ -229,8 +231,11 @@ class DetailVC: UIViewController {
             if c.englishName == category {
                 categoryName = c.name
                 categoryImageName = c.imageName
+                editCategoryName = c.name
+                editCategoryImageName = c.imageName
                 if bgColor == "wheat" {
                     categoryImageName += "B"
+                    editCategoryImageName += "B"
                 }
             }
         }
@@ -238,8 +243,11 @@ class DetailVC: UIViewController {
             if p.englishName == reason {
                 purposeName = p.name
                 purposeImageName = p.imageName
+                editPurposeName = p.name
+                editPurposeImageName = p.imageName
                 if bgColor == "wheat" {
                     purposeImageName += "B"
+                    editPurposeImageName += "B"
                 }
             }
         }
@@ -249,8 +257,11 @@ class DetailVC: UIViewController {
                 if e.englishName == emotion {
                     emotionName = e.name
                     emotionImageName = e.imageName
+                    editEmotionName = e.name
+                    editEmotionImageName = e.imageName
                     if bgColor == "wheat" {
                         emotionImageName += "B"
+                        editEmotionImageName += "B"
                     }
                 }
             }
@@ -259,8 +270,10 @@ class DetailVC: UIViewController {
                 if e.englishName == emotion {
                     emotionName = e.name
                     emotionImageName = e.imageName
+                    editEmotionImageName = e.imageName
                     if bgColor == "wheat" {
                         emotionImageName += "B"
+                        editEmotionImageName += "B"
                     }
                 }
             }
@@ -275,7 +288,7 @@ class DetailVC: UIViewController {
         emotionLabel.text = emotionName
         feelingImageView.image = UIImage.init(named: emotionImageName)
         contentTextView.text = content
-        
+        editContent = content
         
         
     }
@@ -386,12 +399,10 @@ class DetailVC: UIViewController {
             
             let noBackgroundImageView = UIImageView.init(image: self.giftImage)
             self.rectagularInstagramCropView.addSubview(noBackgroundImageView)
-//            noBackgroundImageView.translatesAutoresizingMaskIntoConstraints = false
+
             noBackgroundImageView.leadingAnchor.constraint(equalTo: self.rectagularInstagramCropView.leadingAnchor, constant: 16).isActive = true
             noBackgroundImageView.trailingAnchor.constraint(equalTo: self.rectagularInstagramCropView.trailingAnchor, constant: 16).isActive = true
             noBackgroundImageView.centerYAnchor.constraint(equalTo: self.rectagularInstagramCropView.centerYAnchor, constant: -16).isActive = true
-//            noBackgroundImageView.topAnchor.constraint(equalTo: self.rectagularInstagramCropView.topAnchor, constant: -30).isActive = true
-//            noBackgroundImageView.bottomAnchor.constraint(equalTo: self.rectagularInstagramCropView.bottomAnchor, constant: -20).isActive = true
             noBackgroundImageView.contentMode = .scaleAspectFit
             let label = UILabel()
             label.text = self.isReceiveLabel.text! + self.nameLabel.text!
@@ -427,8 +438,32 @@ class DetailVC: UIViewController {
     }
     
     @objc func editGift() {
-        
-        isGiftEditing = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.11) {
+            
+            guard let recordVC = UIStoryboard.init(name: "Record", bundle: nil).instantiateViewController(identifier: "RecordVC") as? RecordVC else { return }
+            
+            recordVC.isGiftEditing = true
+            recordVC.editFrameType = self.frameType ?? "SQUARE"
+            recordVC.editCurrentColor = self.currentBackgroundColor
+            recordVC.editCategoryImageName = self.editCategoryImageName
+            recordVC.editPurposeImageName = self.editPurposeImageName
+            recordVC.editEmotionImageName = self.editEmotionImageName
+            recordVC.editContent = self.editContent
+            recordVC.editBgImageURL = self.bgImgURL
+            recordVC.editNoBgImageURL = self.noBgImgURL
+            
+            recordVC.editEmotionName = self.editEmotionName
+            recordVC.editCategoryName = self.editCategoryName
+            recordVC.editPurposeName = self.editPurposeName
+            recordVC.editCurrentDate = self.dateLabel.text
+            recordVC.editName = self.nameLabel.text ?? ""
+            recordVC.editIsReceiveGift = self.isReceiveGift
+            recordVC.editGiftId = self.giftId
+            recordVC.editReceiveDate = self.receiveDate
+            
+            recordVC.modalPresentationStyle = .fullScreen
+            self.present(recordVC, animated: true, completion: nil)
+        }
     }
     
     @objc func popupChange() {
@@ -686,9 +721,10 @@ class DetailVC: UIViewController {
             }
             idx += 1
         }
+        
         if target != -1 {
             Gifts.receivedModels[target].content = content
-        }else{
+        } else {
             idx = 0
             for model in Gifts.sentModels{
                 if model.id == giftId {
@@ -699,6 +735,8 @@ class DetailVC: UIViewController {
             }
             Gifts.sentModels[target].content = content
         }
+        self.isGiftEditing = false
+        self.showToast(message: "수정되었습니다.", font: UIFont(name: "SpoqaHanSansNeo-Bold", size: 16) ?? UIFont())
         let data = ["giftId" : giftId, "content" : content]
         NotificationCenter.default.post(name: .init("updateGift"), object: nil, userInfo: data)
         self.dismiss(animated: true, completion: nil)
