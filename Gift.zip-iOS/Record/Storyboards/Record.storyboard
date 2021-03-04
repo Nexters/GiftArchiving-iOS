@@ -118,7 +118,7 @@
                                     <constraint firstAttribute="width" secondItem="0kY-0k-efe" secondAttribute="height" multiplier="1:1" id="Eax-lf-GqU"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h2y-iD-MZp">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h2y-iD-MZp">
                                 <rect key="frame" x="-37.666666666666657" y="100" width="450.33333333333326" height="450"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shareIllustLettertop" translatesAutoresizingMaskIntoConstraints="NO" id="RPE-jX-94Q">
@@ -235,6 +235,12 @@
                                         <rect key="frame" x="345.66666666666669" y="16" width="29.333333333333314" height="285"/>
                                         <color key="backgroundColor" name="charcoalGrey"/>
                                     </view>
+                                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="n6b-YM-fiE">
+                                        <rect key="frame" x="42" y="10" width="291" height="291"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="n6b-YM-fiE" secondAttribute="height" multiplier="1:1" id="XSF-A6-u4k"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" name="charcoalGrey"/>
                                 <constraints>
@@ -243,9 +249,12 @@
                                     <constraint firstItem="ova-6e-6hJ" firstAttribute="leading" secondItem="1Lo-Ba-Ckl" secondAttribute="trailing" id="BuQ-wf-m7y"/>
                                     <constraint firstAttribute="trailing" secondItem="l7u-JX-PI8" secondAttribute="trailing" id="Iye-qB-MfW"/>
                                     <constraint firstItem="ova-6e-6hJ" firstAttribute="top" secondItem="l7u-JX-PI8" secondAttribute="bottom" id="Lj5-0b-nIT"/>
+                                    <constraint firstAttribute="bottom" secondItem="n6b-YM-fiE" secondAttribute="bottom" id="LsP-Cg-ocf"/>
                                     <constraint firstAttribute="trailing" secondItem="vcM-kN-yem" secondAttribute="trailing" id="Ndp-15-6JE"/>
+                                    <constraint firstItem="n6b-YM-fiE" firstAttribute="centerX" secondItem="QUt-NO-Vig" secondAttribute="centerX" id="OY4-xa-D3y"/>
                                     <constraint firstItem="1Lo-Ba-Ckl" firstAttribute="leading" secondItem="QUt-NO-Vig" secondAttribute="leading" id="OpJ-wd-Wdn"/>
                                     <constraint firstItem="vcM-kN-yem" firstAttribute="leading" secondItem="ova-6e-6hJ" secondAttribute="trailing" id="UVQ-bQ-lhv"/>
+                                    <constraint firstItem="n6b-YM-fiE" firstAttribute="top" secondItem="QUt-NO-Vig" secondAttribute="top" constant="10" id="VBK-8n-hgd"/>
                                     <constraint firstAttribute="bottom" secondItem="vcM-kN-yem" secondAttribute="bottom" id="XbT-6u-et4"/>
                                     <constraint firstItem="l7u-JX-PI8" firstAttribute="leading" secondItem="QUt-NO-Vig" secondAttribute="leading" id="csU-9J-tDr"/>
                                     <constraint firstAttribute="bottom" secondItem="1Lo-Ba-Ckl" secondAttribute="bottom" id="eOk-oz-gn6"/>
@@ -754,6 +763,7 @@
                         <outlet property="dateDropDownImage" destination="9qE-Wy-OJ9" id="OzD-1O-skp"/>
                         <outlet property="dateToRecordLabel" destination="2vp-as-nC9" id="xX7-if-CUM"/>
                         <outlet property="editCancelButton" destination="JaC-FW-9Jn" id="WQu-ro-UJK"/>
+                        <outlet property="editImageView" destination="n6b-YM-fiE" id="GxC-tE-eNf"/>
                         <outlet property="emotionImageView" destination="fyc-oo-JiH" id="P4J-bs-avn"/>
                         <outlet property="emotionLabel" destination="GsQ-Rg-OpX" id="C4k-pl-Yrp"/>
                         <outlet property="emotionTextView" destination="xsE-dq-Ng9" id="abH-fU-6lo"/>

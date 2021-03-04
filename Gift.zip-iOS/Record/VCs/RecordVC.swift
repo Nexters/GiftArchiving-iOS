@@ -121,6 +121,7 @@ class RecordVC: UIViewController {
     var editGiftId: String?
     var editReceiveDate: String?
     var isDateChanged: Bool = false
+    @IBOutlet weak var editImageView: UIImageView!
     
     var selectedStickerView:StickerView? {
         get {
@@ -273,6 +274,8 @@ class RecordVC: UIViewController {
     private var currentBackgroundColorString: String = "charcoalGrey"
     private var currentBackgroundColor: UIColor = UIColor.charcoalGrey {
         didSet {
+            let image = UIImage.init(named: "iconCancelBk")
+            editCancelButton.setImage(image, for: .normal)
             selectedStickerView?.currentBackgroundColor = currentBackgroundColor
             switch currentBackgroundColor {
             case .charcoalGrey:
@@ -318,7 +321,6 @@ class RecordVC: UIViewController {
                 categoryLabel.textColor = .greyishBrown
                 purposeLabel.textColor = .greyishBrown
                 emotionLabel.textColor = .greyishBrown
-                
                 
                 categoryImageName = categoryImageName + "B"
                 purposeImageName = purposeImageName + "B"
@@ -452,6 +454,19 @@ class RecordVC: UIViewController {
         
         if isGiftEditing {
             
+            if editCurrentColor! == "wheat" {
+                currentBackgroundColor = UIColor.wheat
+                editCategoryImageName = editCategoryImageName?.trimmingCharacters(in: ["B"])
+                editPurposeImageName = editPurposeImageName?.trimmingCharacters(in: ["B"])
+                editEmotionImageName = editEmotionImageName?.trimmingCharacters(in: ["B"])
+            } else if editCurrentColor! == "ceruleanBlue" {
+                currentBackgroundColor = UIColor.ceruleanBlue
+            } else if editCurrentColor! == "charcoalGrey" {
+                currentBackgroundColor = UIColor.charcoalGrey
+            } else {
+                currentBackgroundColor = UIColor.pinkishOrange
+            }
+            
             categoryImageName = editCategoryImageName!
             categoryLabel.text = editCategoryName!
             isCategoryIconSelected = true
@@ -481,19 +496,16 @@ class RecordVC: UIViewController {
             }
             
             
+            emptyImageLabel.isHidden = true
             
+         
             
-            
-            currentBackgroundColor = UIColor(named: editCurrentColor!) ?? UIColor()
-            
-          
-            let url = URL(string: editNoBgImageURL!.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)!) //
-            cropImageView.kf.setImage(with: url)
-            cropImageView.translatesAutoresizingMaskIntoConstraints = false
-            
-            
+            let url = URL(string: editNoBgImageURL!.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)!)
+            editImageView.isHidden = false
+            editImageView.kf.setImage(with: url)
             
             editCancelButton.isHidden = false
+
             backButton.isHidden = true
             
             dateToRecord = self.editCurrentDate ?? ""
@@ -565,7 +577,7 @@ class RecordVC: UIViewController {
     //MARK: - IBAction
     
     @IBAction func backToEdit(_ sender: Any) {
-        self.dismiss(animated: false, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func backToMain(_ sender: UIButton) {
@@ -681,6 +693,7 @@ class RecordVC: UIViewController {
                         if isTappedAlready == false {
                             isTappedAlready = true
                             
+                            kakaoShareImageView.isHidden = false
                             // 공유할 게시할 이미지 넘기기 작업
                             let noBackgroundCropped = UIGraphicsImageRenderer(size: cropArea.bounds.size)
                             cropArea.backgroundColor = UIColor.clear
