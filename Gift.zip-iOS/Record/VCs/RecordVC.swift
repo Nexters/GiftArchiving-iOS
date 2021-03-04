@@ -436,6 +436,9 @@ class RecordVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        
         let stickerButtonWidth = colorButton.frame.width
         colorButton.makeRounded(cornerRadius: stickerButtonWidth / 2)
         for button in colorButtons {
@@ -512,6 +515,12 @@ class RecordVC: UIViewController {
         setNotificationCenter()
         initTextField()
         initializeDelegates()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

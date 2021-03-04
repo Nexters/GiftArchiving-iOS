@@ -55,9 +55,7 @@ class SettingsVC: UIViewController, MFMailComposeViewControllerDelegate {
             let duration: TimeInterval = 0.3
             
             UIView.transition(with: window, duration: duration, options: options, animations: {}, completion:
-                                { completed in
-                                    
-                                })
+                                { completed in })
             
         }
         
