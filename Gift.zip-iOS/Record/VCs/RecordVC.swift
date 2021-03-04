@@ -444,7 +444,6 @@ class RecordVC: UIViewController {
             button.layer.borderColor = UIColor.white.cgColor
             button.layer.borderWidth = 1
         }
-        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         
         fromLabel.text = isReceiveGift ? "From." : "To."
         

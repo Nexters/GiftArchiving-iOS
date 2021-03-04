@@ -241,9 +241,25 @@ class OnboardingVC: UIViewController, ASAuthorizationControllerPresentationConte
                         gifts in
                         if let sentArr = gifts {
                             Gifts.sentModels = sentArr
+                            
+                            
+                            guard let window = self.view.window else { return }
+                            
+                            
                             let recordSB = UIStoryboard(name: "MainSB", bundle: nil)
-                            let vc = recordSB.instantiateViewController(withIdentifier: "MainVC")
-                            self.navigationController?.pushViewController(vc, animated: true)
+                            let vc = recordSB.instantiateViewController(withIdentifier: "MainNVC")
+                            
+                            window.rootViewController = vc
+                            
+                            let options: UIView.AnimationOptions = .transitionCrossDissolve
+                            let duration: TimeInterval = 0.3
+                            
+                            UIView.transition(with: window, duration: duration, options: options, animations: {}, completion:
+                                                { completed in
+                                                    
+                                                })
+                            
+                            
                             
                     }
                 })

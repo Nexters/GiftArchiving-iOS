@@ -284,6 +284,23 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="1535.2" y="-48.125937031484263"/>
+        </scene>
+        <!--MainNVC-->
+        <scene sceneID="UTa-th-Dm6">
+            <objects>
+                <navigationController storyboardIdentifier="MainNVC" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="wZM-HJ-Rcd" customClass="MainNVC" customModule="Gift_zip_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="H2H-nT-M2S">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="7gY-lT-eWL"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6ot-Mv-Ilw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
             <point key="canvasLocation" x="596" y="-48.125937031484263"/>
         </scene>
     </scenes>
