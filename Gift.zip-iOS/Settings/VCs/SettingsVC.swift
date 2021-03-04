@@ -42,17 +42,20 @@ class SettingsVC: UIViewController, MFMailComposeViewControllerDelegate {
     @objc func logout() {
         popupBackgroundView.animatePopupBackground(false)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-            guard let navivc = self.navigationController else { return }
-            print(navivc.viewControllers.count)
-            if navivc.viewControllers.count == 4 {
-                let main = navivc.viewControllers[navivc.viewControllers.count - 4]
-                navivc.popToViewController(main, animated: true)
-            } else {
-                let main = navivc.viewControllers[navivc.viewControllers.count - 3]
-                
-                navivc.popToViewController(main, animated: true)
-            }
-       
+            
+            
+            guard let window = self.view.window else { return }
+            
+            let sb = UIStoryboard.init(name: "SplashSB", bundle: nil)
+            let vc = sb.instantiateViewController(identifier: "SplashVC")
+            
+            window.rootViewController = vc
+            
+            let options: UIView.AnimationOptions = .transitionCrossDissolve
+            let duration: TimeInterval = 0.3
+            
+            UIView.transition(with: window, duration: duration, options: options, animations: {}, completion:
+                                { completed in })
             
         }
         

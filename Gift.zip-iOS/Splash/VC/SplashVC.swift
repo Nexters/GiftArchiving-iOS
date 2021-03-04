@@ -13,16 +13,15 @@ class SplashVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+
         if checkLogin() {
             self.getDataAndDisplay()
-        }else{
+        } else {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2 ) {
                 self.moveToOnboarding()
             }
         }
         view.backgroundColor = .black
-        
     }
 
     override func viewDidLoad() {
@@ -34,10 +33,9 @@ class SplashVC: UIViewController {
         let SPREF = UserDefaults.standard
         if let appleId = SPREF.string(forKey: "appleId"){
             if !appleId.isEmpty {
-
                 return true
             }
-        }else{
+        } else {
             if let kakaoId = SPREF.string(forKey: "kakaoId"){
                 if !kakaoId.isEmpty{
                     return true
@@ -83,17 +81,28 @@ class SplashVC: UIViewController {
     
     private func moveToMain() {
         //메인 이동
+      
+        guard let window = self.view.window else { return }
+
         let mainSB = UIStoryboard(name: "MainSB", bundle: nil)
-        let vc = mainSB.instantiateViewController(withIdentifier: "MainVC")
-        self.navigationController?.pushViewController(vc, animated: true)
+        let vc = mainSB.instantiateViewController(withIdentifier: "MainNVC")
+       
+        window.rootViewController = vc
+        
+        let options: UIView.AnimationOptions = .transitionCrossDissolve
+        let duration: TimeInterval = 0.3
+
+        UIView.transition(with: window, duration: duration, options: options, animations: {}, completion:
+        { completed in
+            
+        })
+    
     }
     
     private func moveToOnboarding() {
         //온보딩 화면 이동
         let onboardSB = UIStoryboard(name: "OnboardingSB", bundle: nil)
         let vc = onboardSB.instantiateViewController(withIdentifier: "OnboardingVC")
-        self.navigationController?.pushViewController(vc, animated: true)
+        self.view.window?.rootViewController = vc
     }
-    
-
 }
