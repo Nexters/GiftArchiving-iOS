@@ -77,7 +77,7 @@ class VC: UIViewController{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        print("main viewWillAppear called()")
         collectionView.reloadData()
     }
     
@@ -182,6 +182,7 @@ class VC: UIViewController{
     @IBAction func btnSentClicked(_ sender: UIButton) {
         self.btnSent.titleLabel?.textColor = UIColor.white
         self.btnReceived.titleLabel?.textColor = UIColor.whiteOpacity
+        self.labelMain2.text = "보냈나요?"
         self.collectionViewFlag = false
         isReceiveGift = false
         currentIndex = 0
@@ -198,6 +199,7 @@ class VC: UIViewController{
     @IBAction func btnReceivedClicked(_ sender: UIButton) {
         self.btnReceived.titleLabel?.textColor = UIColor.white
         self.btnSent.titleLabel?.textColor = UIColor.whiteOpacity
+        self.labelMain2.text = "받았나요?"
         self.collectionViewFlag = true
         isReceiveGift = true
         currentIndex = 0
@@ -279,7 +281,6 @@ extension VC: UICollectionViewDataSource, UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(currentIndex)
         if collectionViewFlag {
             if Gifts.receivedModels.count == 0 {
                 self.collectionView.isScrollEnabled = false
@@ -309,14 +310,14 @@ extension VC: UICollectionViewDataSource, UICollectionViewDelegate {
                 cell.configureEmpty(flag: true, device: device)
                 changeUIEmpty()
             } else {
-                cell.configure(with: Gifts.receivedModels[indexPath.row])
+                cell.configure(with: Gifts.receivedModels[indexPath.row], isReceive: true)
             }
         } else {
             if Gifts.sentModels.count == 0 {
                 cell.configureEmpty(flag: false, device: device)
                 changeUIEmpty()
             } else {
-                cell.configure(with: Gifts.sentModels[indexPath.row])
+                cell.configure(with: Gifts.sentModels[indexPath.row], isReceive: false)
             }
         }
         return cell

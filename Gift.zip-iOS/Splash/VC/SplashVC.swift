@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Lottie
 import AuthenticationServices
 
 class SplashVC: UIViewController {

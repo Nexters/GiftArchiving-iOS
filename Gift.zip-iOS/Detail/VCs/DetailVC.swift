@@ -146,6 +146,8 @@ class DetailVC: UIViewController {
         }
         isGiftEditing = false
         popupBackground.setPopupBackgroundView(to: view)
+        
+        
         NotificationCenter.default.addObserver(self, selector: #selector(selectIcon), name: .init("selectIcon"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(popupChange), name: .init("popupchange"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(broadcastDelete), name: .init("broadcastDelete"), object: nil)
@@ -288,6 +290,14 @@ class DetailVC: UIViewController {
         emotionLabel.text = emotionName
         feelingImageView.image = UIImage.init(named: emotionImageName)
         contentTextView.text = content
+        let attrString = NSMutableAttributedString(string: contentTextView.text!)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 4
+        attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attrString.length))
+        let fontAttr = [ NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16),  NSAttributedString.Key.foregroundColor: UIColor.white ]
+        attrString.addAttributes(fontAttr, range: NSMakeRange(0, attrString.length))
+        contentTextView.autocorrectionType = .no
+        contentTextView.attributedText = attrString
         editContent = content
         
         
@@ -712,6 +722,10 @@ class DetailVC: UIViewController {
     
     @objc func broadcastUpdate(_ notification: Notification){
         guard let content = notification.userInfo?["content"] as? String else { return }
+        guard let category = notification.userInfo?["category"] as? String else { return }
+        guard let emotion = notification.userInfo?["emotion"] as? String else { return }
+        guard let reason = notification.userInfo?["reason"] as? String else { return }
+        guard let receiveDate = notification.userInfo?["receiveDate"] as? String else { return}
         var target = -1
         var idx = 0
         for model in Gifts.receivedModels{
@@ -724,6 +738,10 @@ class DetailVC: UIViewController {
         
         if target != -1 {
             Gifts.receivedModels[target].content = content
+            Gifts.receivedModels[target].category = category
+            Gifts.receivedModels[target].emotion = emotion
+            Gifts.receivedModels[target].reason = reason
+            Gifts.receivedModels[target].receiveDate = receiveDate
         } else {
             idx = 0
             for model in Gifts.sentModels{
@@ -734,10 +752,14 @@ class DetailVC: UIViewController {
                 idx += 1
             }
             Gifts.sentModels[target].content = content
+            Gifts.sentModels[target].category = category
+            Gifts.sentModels[target].emotion = emotion
+            Gifts.sentModels[target].reason = reason
+            Gifts.sentModels[target].receiveDate = receiveDate
         }
         self.isGiftEditing = false
         self.showToast(message: "수정되었습니다.", font: UIFont(name: "SpoqaHanSansNeo-Bold", size: 16) ?? UIFont())
-        let data = ["giftId" : giftId, "content" : content]
+        let data = ["giftId" : giftId, "content" : content, "category": category, "emotion":emotion, "reason": reason, "receiveDate" : receiveDate]
         NotificationCenter.default.post(name: .init("updateGift"), object: nil, userInfo: data)
         self.dismiss(animated: true, completion: nil)
     }
