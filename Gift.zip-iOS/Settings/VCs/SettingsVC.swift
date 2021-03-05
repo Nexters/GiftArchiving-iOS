@@ -10,7 +10,7 @@ import MessageUI
 class SettingsVC: UIViewController, MFMailComposeViewControllerDelegate {
     @IBOutlet weak var settingTableView: UITableView!
     
-    var serviceSettingsName: [String] = ["현재버전 1.1.0", "기프트집에 대하여"]
+    var serviceSettingsName: [String] = ["현재버전 1.0.1", "기프트집에 대하여"]
     var serviceSettingsIconImageName: [String] = ["icnAppversion", "iconFeeling"]
     
     var userSettingsName: [String] = ["공지사항", "앱 문의・건의"]
