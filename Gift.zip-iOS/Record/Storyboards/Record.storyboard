@@ -212,15 +212,25 @@
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hXW-J5-gBQ">
+                                                <rect key="frame" x="42" y="21" width="232" height="232"/>
+                                                <connections>
+                                                    <action selector="firstSelectPhoto:" destination="mvo-u9-pcE" eventType="touchUpInside" id="Fgo-Ln-7Ug"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" name="charcoalGrey"/>
                                         <constraints>
                                             <constraint firstItem="qtg-tk-6aK" firstAttribute="centerX" secondItem="ova-6e-6hJ" secondAttribute="centerX" id="3B8-oQ-R65"/>
+                                            <constraint firstItem="hXW-J5-gBQ" firstAttribute="leading" secondItem="qtg-tk-6aK" secondAttribute="leading" id="AKM-oF-mGU"/>
+                                            <constraint firstItem="hXW-J5-gBQ" firstAttribute="trailing" secondItem="qtg-tk-6aK" secondAttribute="trailing" id="AdG-Og-jYV"/>
+                                            <constraint firstItem="hXW-J5-gBQ" firstAttribute="bottom" secondItem="qtg-tk-6aK" secondAttribute="bottom" id="HkQ-eg-VXo"/>
                                             <constraint firstAttribute="width" constant="316" id="IVY-HT-qWX"/>
                                             <constraint firstAttribute="bottom" secondItem="qtg-tk-6aK" secondAttribute="bottom" constant="32" id="edG-Y5-BTG"/>
                                             <constraint firstItem="qtg-tk-6aK" firstAttribute="top" secondItem="ova-6e-6hJ" secondAttribute="top" constant="21" id="jCf-VT-KBO"/>
                                             <constraint firstItem="jB3-iH-sZV" firstAttribute="centerY" secondItem="qtg-tk-6aK" secondAttribute="centerY" id="jgd-j8-sCO"/>
                                             <constraint firstItem="jB3-iH-sZV" firstAttribute="centerX" secondItem="qtg-tk-6aK" secondAttribute="centerX" id="oRe-jK-WnS"/>
+                                            <constraint firstItem="hXW-J5-gBQ" firstAttribute="top" secondItem="qtg-tk-6aK" secondAttribute="top" id="pK1-zq-mDl"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Lo-Ba-Ckl">
@@ -777,6 +787,7 @@
                         <outlet property="imageTopConstraint" destination="jCf-VT-KBO" id="b3s-iT-Oaa"/>
                         <outlet property="imageViewAfterstickerCropped" destination="Plb-t9-8FF" id="Wrm-7d-kKA"/>
                         <outlet property="infoView" destination="pfU-as-DXj" id="qGG-Gu-gsh"/>
+                        <outlet property="isFirstSelectPhotoButton" destination="hXW-J5-gBQ" id="64e-il-YnI"/>
                         <outlet property="kakaoShareImageView" destination="h2y-iD-MZp" id="v88-YD-Db1"/>
                         <outlet property="kakaoShareView" destination="q5O-2U-o49" id="1dR-Cf-nre"/>
                         <outlet property="logoSticker" destination="Z7h-z5-IFg" id="2Oc-li-4G1"/>

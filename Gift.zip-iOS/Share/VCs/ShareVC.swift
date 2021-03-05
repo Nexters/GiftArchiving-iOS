@@ -24,7 +24,8 @@ class ShareVC: UIViewController {
     var currentFrameOfImage: FrameOfImage?
     var userName: String?
     var kakaoImageURL: String?
-
+    var isReceiveGift: Bool?
+    
     var viewWillAppearCnt = 0
 
     var myPhonePhoto: UIImage?
@@ -175,7 +176,8 @@ class ShareVC: UIViewController {
     
     @IBAction func shareToKakaoButtonTapped(_ sender: UIButton) {
         let title: String = "🎁기프트집 선물 도착🎁"
-        let description: String = "\(userName!)님이 나에게 보낸 선물이 도착했어요!"
+        let description: String =
+            isReceiveGift ?? true ? "\(userName!)님이 나에게 보낸 선물이 도착했어요!" : "\(userName!)님에게 보낸 선물이 도착했어요!"
         let imageURL: String = kakaoImageURL!
         let templateId = 47251
 

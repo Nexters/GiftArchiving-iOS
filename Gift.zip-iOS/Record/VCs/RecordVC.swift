@@ -18,6 +18,7 @@ enum FrameOfImage {
 
 class RecordVC: UIViewController {
     
+    @IBOutlet weak var isFirstSelectPhotoButton: UIButton!
     @IBOutlet weak var editCancelButton: UIButton!
     @IBOutlet weak var fromLabel: UILabel!
     @IBOutlet weak var nameTextField: UITextField!
@@ -761,6 +762,7 @@ class RecordVC: UIViewController {
                             
                             guard let share = UIStoryboard.init(name: "Share", bundle: nil).instantiateViewController(identifier: "ShareVC") as? ShareVC else { return }
                             
+                            share.isReceiveGift = isReceiveGift
                             share.currentName = "\(fromLabel.text!) \(nameTextField.text!)"
                             share.currentBackgroundColor = currentBackgroundColor
                             share.envelopImage = noBackgroundSquareImage
@@ -908,6 +910,25 @@ class RecordVC: UIViewController {
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return newImage
+    }
+    
+    
+    @IBAction func firstSelectPhoto(_ sender: Any) {
+        print("HELLO")
+        self.view.endEditing(true)
+        let alert = UIAlertController(title: "사진 선택", message: "선물을 골라주세요. 🎁", preferredStyle: .actionSheet)
+        let library = UIAlertAction(title: "사진앨범", style: .default) { (action) in
+            self.openLibrary()
+        }
+        let camera = UIAlertAction(title: "카메라", style: .default) { (action) in
+            self.openCamera()
+            
+        }
+        let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        alert.addAction(library)
+        alert.addAction(camera)
+        alert.addAction(cancel)
+        present(alert, animated: true, completion: nil)
     }
     
     @IBAction func selectPhoto(_ sender: UIButton) {
@@ -1420,6 +1441,7 @@ extension RecordVC: UIImagePickerControllerDelegate, UINavigationControllerDeleg
             isImageSelected = true
             self.dismiss(animated: true, completion: nil)
         }
+        isFirstSelectPhotoButton.isHidden = true
     }
     
     @objc func savedImage(image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeMutableRawPointer?) {
