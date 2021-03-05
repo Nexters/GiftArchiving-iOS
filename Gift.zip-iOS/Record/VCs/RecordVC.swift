@@ -18,6 +18,7 @@ enum FrameOfImage {
 
 class RecordVC: UIViewController {
     
+    @IBOutlet weak var isFirstSelectPhotoButton: UIButton!
     @IBOutlet weak var editCancelButton: UIButton!
     @IBOutlet weak var fromLabel: UILabel!
     @IBOutlet weak var nameTextField: UITextField!
@@ -170,6 +171,7 @@ class RecordVC: UIViewController {
                 logoSticker.makeRounded(cornerRadius: 0)
                 break
             case .circle:
+                print("이것은 원!!!")
                 frameType = "CIRCLE"
                 let radius = logoSticker.bounds.width / 2
                 logoSticker.makeRounded(cornerRadius: radius)
@@ -179,6 +181,7 @@ class RecordVC: UIViewController {
                 logoSticker.makeRounded(cornerRadius: 0)
                 break
             case .windowFrame:
+                print("이것은 창문!!!")
                 frameType = "ARCH"
                 let radius = logoSticker.bounds.width / 2
                 logoSticker.roundCorners(cornerRadius: radius, maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
@@ -274,8 +277,6 @@ class RecordVC: UIViewController {
     private var currentBackgroundColorString: String = "charcoalGrey"
     private var currentBackgroundColor: UIColor = UIColor.charcoalGrey {
         didSet {
-            let image = UIImage.init(named: "iconCancelBk")
-            editCancelButton.setImage(image, for: .normal)
             selectedStickerView?.currentBackgroundColor = currentBackgroundColor
             switch currentBackgroundColor {
             case .charcoalGrey:
@@ -439,8 +440,6 @@ class RecordVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-        
         let stickerButtonWidth = colorButton.frame.width
         colorButton.makeRounded(cornerRadius: stickerButtonWidth / 2)
         for button in colorButtons {
@@ -459,6 +458,11 @@ class RecordVC: UIViewController {
                 editCategoryImageName = editCategoryImageName?.trimmingCharacters(in: ["B"])
                 editPurposeImageName = editPurposeImageName?.trimmingCharacters(in: ["B"])
                 editEmotionImageName = editEmotionImageName?.trimmingCharacters(in: ["B"])
+                
+                let image = UIImage.init(named: "iconCancelBk")
+                editCancelButton.setImage(image, for: .normal)
+                
+                
             } else if editCurrentColor! == "ceruleanBlue" {
                 currentBackgroundColor = UIColor.ceruleanBlue
             } else if editCurrentColor! == "charcoalGrey" {
@@ -531,8 +535,7 @@ class RecordVC: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -594,97 +597,96 @@ class RecordVC: UIViewController {
         }
         
     }
-
+    
     @IBAction func completeRecord(_ sender: UIButton) {
         
         // record server
         if isGiftEditing {
-            if isGiftEditing {
-                // 통신
-                if !emotionTextView.text.isEmpty || emotionTextView.text != "지금 이 감정을 기록해보세요." {
-                    
-                    let content: String = emotionTextView.text
-                    
-                    
-                    // 날짜
-                    var date: String = ""
-                    if isDateChanged {
-                        let dateFormatter = DateFormatter()
-                        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZ"
-                        let dateString = dateFormatter.string(from: selectedDate)
-                        print(dateString)
-                        let dateArr = dateString.components(separatedBy: [" "," "])
-                        let first = dateArr[0]
-                        let second = dateArr[1]
-                        print(dateArr[2])
-                        date = first + "T" + second
-                    } else {
-                        date = self.editReceiveDate ?? ""
+            
+            // 통신
+            if !emotionTextView.text.isEmpty || emotionTextView.text != "지금 이 감정을 기록해보세요." {
+                
+                let content: String = emotionTextView.text
+                
+                
+                // 날짜
+                var date: String = ""
+                if isDateChanged {
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZ"
+                    let dateString = dateFormatter.string(from: selectedDate)
+                    print(dateString)
+                    let dateArr = dateString.components(separatedBy: [" "," "])
+                    let first = dateArr[0]
+                    let second = dateArr[1]
+                    print(dateArr[2])
+                    date = first + "T" + second
+                } else {
+                    date = self.editReceiveDate ?? ""
+                }
+                
+                
+                
+                var category: String = ""
+                var emotion: String = ""
+                var reason: String = ""
+                for c in Icons.category {
+                    if categoryLabel.text == c.name {
+                        category = c.englishName
                     }
-                    
-                    
-                    
-                    var category: String = ""
-                    var emotion: String = ""
-                    var reason: String = ""
-                    for c in Icons.category {
-                        if categoryLabel.text == c.name {
-                            category = c.englishName
-                        }
-                    }
-                    
-                    if editIsReceiveGift! {
-                        for e in Icons.emotionGet {
-                            if emotionLabel.text == e.name {
-                                emotion = e.englishName
-                            }
-                        }
-                    } else {
-                        for e in Icons.emotionSend {
-                            if emotionLabel.text == e.name {
-                                emotion = e.englishName
-                            }
-                        }
-                    }
-                    for p in Icons.purpose {
-                        if purposeLabel.text == p.name {
-                            reason = p.englishName
-                        }
-                    }
-
-                    GiftService.shared.putGift(category: category, content: content, emotion: emotion, reason: reason, receiveDate: date, giftId: editGiftId!)  { networkResult -> Void in
-                        switch networkResult {
-                        case .success:
-                            print("ㄷ ㄷ")
-                        case .requestErr:
-                            let alertViewController = UIAlertController(title: "통신 실패", message: "💩", preferredStyle: .alert)
-                            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
-                            alertViewController.addAction(action)
-                            self.present(alertViewController, animated: true, completion: nil)
-                            
-                        case .pathErr: print("path")
-                        case .serverErr:
-                            let alertViewController = UIAlertController(title: "통신 실패", message: "서버 오류", preferredStyle: .alert)
-                            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
-                            alertViewController.addAction(action)
-                            self.present(alertViewController, animated: true, completion: nil)
-                            print("networkFail")
-                            print("serverErr")
-                        case .networkFail:
-                            let data = ["content" : content, "category": category, "emotion":emotion, "reason": reason, "receiveDate" : date]
-                            NotificationCenter.default.post(name: .init("broadcastUpdate"), object: nil, userInfo: data)
+                }
+                
+                if editIsReceiveGift! {
+                    for e in Icons.emotionGet {
+                        if emotionLabel.text == e.name {
+                            emotion = e.englishName
                         }
                     }
                 } else {
-                    let alertViewController = UIAlertController(title: "저장 실패", message: "내용을 입력해주세요. 🥰", preferredStyle: .alert)
-                    let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
-                    alertViewController.addAction(action)
-                    self.present(alertViewController, animated: true, completion: nil)
+                    for e in Icons.emotionSend {
+                        if emotionLabel.text == e.name {
+                            emotion = e.englishName
+                        }
+                    }
+                }
+                for p in Icons.purpose {
+                    if purposeLabel.text == p.name {
+                        reason = p.englishName
+                    }
                 }
                 
+                GiftService.shared.putGift(category: category, content: content, emotion: emotion, reason: reason, receiveDate: date, giftId: editGiftId!)  { networkResult -> Void in
+                    switch networkResult {
+                    case .success:
+                        print("ㄷ ㄷ")
+                    case .requestErr:
+                        let alertViewController = UIAlertController(title: "통신 실패", message: "💩", preferredStyle: .alert)
+                        let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+                        alertViewController.addAction(action)
+                        self.present(alertViewController, animated: true, completion: nil)
+                        
+                    case .pathErr: print("path")
+                    case .serverErr:
+                        let alertViewController = UIAlertController(title: "통신 실패", message: "서버 오류", preferredStyle: .alert)
+                        let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+                        alertViewController.addAction(action)
+                        self.present(alertViewController, animated: true, completion: nil)
+                        print("networkFail")
+                        print("serverErr")
+                    case .networkFail:
+                        let data = ["content" : content, "category": category, "emotion":emotion, "reason": reason, "receiveDate" : date]
+                        NotificationCenter.default.post(name: .init("broadcastUpdate"), object: nil, userInfo: data)
+                    }
+                }
+            } else {
+                let alertViewController = UIAlertController(title: "저장 실패", message: "내용을 입력해주세요. 🥰", preferredStyle: .alert)
+                let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+                alertViewController.addAction(action)
+                self.present(alertViewController, animated: true, completion: nil)
             }
             return
         }
+        
         selectedStickerView?.showEditingHandlers = false
         if isImageSelected {
             if isNameTyped {
@@ -745,7 +747,7 @@ class RecordVC: UIViewController {
                             label.translatesAutoresizingMaskIntoConstraints = false
                             
                             let constraint: CGFloat = (rectagularInstagramCropView.frame.height - noBackgroundImageView.frame.height - 20) / 2
-                            label.topAnchor.constraint(equalTo: noBackgroundImageView.bottomAnchor, constant: constraint).isActive = true
+                            label.topAnchor.constraint(equalTo: noBackgroundImageView.bottomAnchor, constant: constraint-15).isActive = true
                             label.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
                             
                             rectagularInstagramCropView.backgroundColor = currentBackgroundColor
@@ -762,6 +764,7 @@ class RecordVC: UIViewController {
                             
                             guard let share = UIStoryboard.init(name: "Share", bundle: nil).instantiateViewController(identifier: "ShareVC") as? ShareVC else { return }
                             
+                            share.isReceiveGift = isReceiveGift
                             share.currentName = "\(fromLabel.text!) \(nameTextField.text!)"
                             share.currentBackgroundColor = currentBackgroundColor
                             share.envelopImage = noBackgroundSquareImage
@@ -909,6 +912,25 @@ class RecordVC: UIViewController {
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return newImage
+    }
+    
+    
+    @IBAction func firstSelectPhoto(_ sender: Any) {
+        print("HELLO")
+        self.view.endEditing(true)
+        let alert = UIAlertController(title: "사진 선택", message: "선물을 골라주세요. 🎁", preferredStyle: .actionSheet)
+        let library = UIAlertAction(title: "사진앨범", style: .default) { (action) in
+            self.openLibrary()
+        }
+        let camera = UIAlertAction(title: "카메라", style: .default) { (action) in
+            self.openCamera()
+            
+        }
+        let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        alert.addAction(library)
+        alert.addAction(camera)
+        alert.addAction(cancel)
+        present(alert, animated: true, completion: nil)
     }
     
     @IBAction func selectPhoto(_ sender: UIButton) {
@@ -1421,6 +1443,7 @@ extension RecordVC: UIImagePickerControllerDelegate, UINavigationControllerDeleg
             isImageSelected = true
             self.dismiss(animated: true, completion: nil)
         }
+        isFirstSelectPhotoButton.isHidden = true
     }
     
     @objc func savedImage(image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeMutableRawPointer?) {

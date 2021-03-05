@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainNVC: UINavigationController, UIGestureRecognizerDelegate {
+class MainNVC: UINavigationController {
     
     override func viewDidLoad() {
         super.viewDidLoad()

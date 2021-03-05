@@ -21,7 +21,7 @@ class TermsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 120, right: 0)
+        scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 80, right: 0)
         navigaitonTitleLabel.text = navigationTitleText
         titleLabel.text = titleText
         if navigationTitleText == "서비스 이용약관" {

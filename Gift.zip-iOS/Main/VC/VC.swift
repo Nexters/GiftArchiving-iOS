@@ -79,9 +79,8 @@ class VC: UIViewController{
         super.viewWillAppear(animated)
         print("main viewWillAppear called()")
         collectionView.reloadData()
-        
-
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setUIByCurrentIdx()
@@ -99,7 +98,7 @@ class VC: UIViewController{
         }else{
             device = 0
         }
-        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        
         setLayout()
         NotificationCenter.default.addObserver(self, selector: #selector(deleteGift), name: .init("deleteGift"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(addGift), name: .init("addGift"), object: nil)
@@ -355,7 +354,7 @@ extension VC: UICollectionViewDataSource, UICollectionViewDelegate {
     }
     
     func changeUI(frameType: String, color: String) {
-        UIView.animate(withDuration: 0.4) {
+        UIView.animate(withDuration: 0.4, delay: 0, options: [.allowUserInteraction]) {
             self.collectionView.backgroundColor = UIColor(named: color)
             if(color == "wheat") {
                 self.btnArrow.imageView?.image = UIImage(named: "btn_arrow_black")
@@ -365,7 +364,12 @@ extension VC: UICollectionViewDataSource, UICollectionViewDelegate {
                 self.btnGfitBox.titleLabel?.textColor = UIColor.white
             }
             self.imgLogo.image = UIImage(named: "logo_"+color+"_"+frameType)
+        } completion: { _ in
         }
+//
+//        UIView.animate(withDuration: 0.4) {
+//            
+//        }
 //        if imgLogo != nil {
 //            print("Not Nil")
 //            let newLogo = UIImageView.init(frame: imgLogo.frame)
