@@ -671,7 +671,7 @@ class RecordVC: UIViewController {
                             print("networkFail")
                             print("serverErr")
                         case .networkFail:
-                            let data = ["content" : content]
+                            let data = ["content" : content, "category": category, "emotion":emotion, "reason": reason, "receiveDate" : date]
                             NotificationCenter.default.post(name: .init("broadcastUpdate"), object: nil, userInfo: data)
                         }
                     }
