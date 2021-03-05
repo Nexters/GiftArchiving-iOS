@@ -277,8 +277,6 @@ class RecordVC: UIViewController {
     private var currentBackgroundColorString: String = "charcoalGrey"
     private var currentBackgroundColor: UIColor = UIColor.charcoalGrey {
         didSet {
-            let image = UIImage.init(named: "iconCancelBk")
-            editCancelButton.setImage(image, for: .normal)
             selectedStickerView?.currentBackgroundColor = currentBackgroundColor
             switch currentBackgroundColor {
             case .charcoalGrey:
@@ -460,6 +458,11 @@ class RecordVC: UIViewController {
                 editCategoryImageName = editCategoryImageName?.trimmingCharacters(in: ["B"])
                 editPurposeImageName = editPurposeImageName?.trimmingCharacters(in: ["B"])
                 editEmotionImageName = editEmotionImageName?.trimmingCharacters(in: ["B"])
+                
+                let image = UIImage.init(named: "iconCancelBk")
+                editCancelButton.setImage(image, for: .normal)
+                
+                
             } else if editCurrentColor! == "ceruleanBlue" {
                 currentBackgroundColor = UIColor.ceruleanBlue
             } else if editCurrentColor! == "charcoalGrey" {
@@ -594,97 +597,96 @@ class RecordVC: UIViewController {
         }
         
     }
-
+    
     @IBAction func completeRecord(_ sender: UIButton) {
         
         // record server
         if isGiftEditing {
-            if isGiftEditing {
-                // 통신
-                if !emotionTextView.text.isEmpty || emotionTextView.text != "지금 이 감정을 기록해보세요." {
-                    
-                    let content: String = emotionTextView.text
-                    
-                    
-                    // 날짜
-                    var date: String = ""
-                    if isDateChanged {
-                        let dateFormatter = DateFormatter()
-                        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZ"
-                        let dateString = dateFormatter.string(from: selectedDate)
-                        print(dateString)
-                        let dateArr = dateString.components(separatedBy: [" "," "])
-                        let first = dateArr[0]
-                        let second = dateArr[1]
-                        print(dateArr[2])
-                        date = first + "T" + second
-                    } else {
-                        date = self.editReceiveDate ?? ""
+            
+            // 통신
+            if !emotionTextView.text.isEmpty || emotionTextView.text != "지금 이 감정을 기록해보세요." {
+                
+                let content: String = emotionTextView.text
+                
+                
+                // 날짜
+                var date: String = ""
+                if isDateChanged {
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZ"
+                    let dateString = dateFormatter.string(from: selectedDate)
+                    print(dateString)
+                    let dateArr = dateString.components(separatedBy: [" "," "])
+                    let first = dateArr[0]
+                    let second = dateArr[1]
+                    print(dateArr[2])
+                    date = first + "T" + second
+                } else {
+                    date = self.editReceiveDate ?? ""
+                }
+                
+                
+                
+                var category: String = ""
+                var emotion: String = ""
+                var reason: String = ""
+                for c in Icons.category {
+                    if categoryLabel.text == c.name {
+                        category = c.englishName
                     }
-                    
-                    
-                    
-                    var category: String = ""
-                    var emotion: String = ""
-                    var reason: String = ""
-                    for c in Icons.category {
-                        if categoryLabel.text == c.name {
-                            category = c.englishName
-                        }
-                    }
-                    
-                    if editIsReceiveGift! {
-                        for e in Icons.emotionGet {
-                            if emotionLabel.text == e.name {
-                                emotion = e.englishName
-                            }
-                        }
-                    } else {
-                        for e in Icons.emotionSend {
-                            if emotionLabel.text == e.name {
-                                emotion = e.englishName
-                            }
-                        }
-                    }
-                    for p in Icons.purpose {
-                        if purposeLabel.text == p.name {
-                            reason = p.englishName
-                        }
-                    }
-
-                    GiftService.shared.putGift(category: category, content: content, emotion: emotion, reason: reason, receiveDate: date, giftId: editGiftId!)  { networkResult -> Void in
-                        switch networkResult {
-                        case .success:
-                            print("ㄷ ㄷ")
-                        case .requestErr:
-                            let alertViewController = UIAlertController(title: "통신 실패", message: "💩", preferredStyle: .alert)
-                            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
-                            alertViewController.addAction(action)
-                            self.present(alertViewController, animated: true, completion: nil)
-                            
-                        case .pathErr: print("path")
-                        case .serverErr:
-                            let alertViewController = UIAlertController(title: "통신 실패", message: "서버 오류", preferredStyle: .alert)
-                            let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
-                            alertViewController.addAction(action)
-                            self.present(alertViewController, animated: true, completion: nil)
-                            print("networkFail")
-                            print("serverErr")
-                        case .networkFail:
-                            let data = ["content" : content, "category": category, "emotion":emotion, "reason": reason, "receiveDate" : date]
-                            NotificationCenter.default.post(name: .init("broadcastUpdate"), object: nil, userInfo: data)
+                }
+                
+                if editIsReceiveGift! {
+                    for e in Icons.emotionGet {
+                        if emotionLabel.text == e.name {
+                            emotion = e.englishName
                         }
                     }
                 } else {
-                    let alertViewController = UIAlertController(title: "저장 실패", message: "내용을 입력해주세요. 🥰", preferredStyle: .alert)
-                    let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
-                    alertViewController.addAction(action)
-                    self.present(alertViewController, animated: true, completion: nil)
+                    for e in Icons.emotionSend {
+                        if emotionLabel.text == e.name {
+                            emotion = e.englishName
+                        }
+                    }
+                }
+                for p in Icons.purpose {
+                    if purposeLabel.text == p.name {
+                        reason = p.englishName
+                    }
                 }
                 
+                GiftService.shared.putGift(category: category, content: content, emotion: emotion, reason: reason, receiveDate: date, giftId: editGiftId!)  { networkResult -> Void in
+                    switch networkResult {
+                    case .success:
+                        print("ㄷ ㄷ")
+                    case .requestErr:
+                        let alertViewController = UIAlertController(title: "통신 실패", message: "💩", preferredStyle: .alert)
+                        let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+                        alertViewController.addAction(action)
+                        self.present(alertViewController, animated: true, completion: nil)
+                        
+                    case .pathErr: print("path")
+                    case .serverErr:
+                        let alertViewController = UIAlertController(title: "통신 실패", message: "서버 오류", preferredStyle: .alert)
+                        let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+                        alertViewController.addAction(action)
+                        self.present(alertViewController, animated: true, completion: nil)
+                        print("networkFail")
+                        print("serverErr")
+                    case .networkFail:
+                        let data = ["content" : content, "category": category, "emotion":emotion, "reason": reason, "receiveDate" : date]
+                        NotificationCenter.default.post(name: .init("broadcastUpdate"), object: nil, userInfo: data)
+                    }
+                }
+            } else {
+                let alertViewController = UIAlertController(title: "저장 실패", message: "내용을 입력해주세요. 🥰", preferredStyle: .alert)
+                let action = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+                alertViewController.addAction(action)
+                self.present(alertViewController, animated: true, completion: nil)
             }
             return
         }
+        
         selectedStickerView?.showEditingHandlers = false
         if isImageSelected {
             if isNameTyped {

@@ -408,11 +408,12 @@ class DetailVC: UIViewController {
             
             
             let noBackgroundImageView = UIImageView.init(image: self.giftImage)
+            noBackgroundImageView.contentMode = .scaleAspectFit
             self.rectagularInstagramCropView.addSubview(noBackgroundImageView)
 
-            noBackgroundImageView.leadingAnchor.constraint(equalTo: self.rectagularInstagramCropView.leadingAnchor, constant: 16).isActive = true
-            noBackgroundImageView.trailingAnchor.constraint(equalTo: self.rectagularInstagramCropView.trailingAnchor, constant: 16).isActive = true
-            noBackgroundImageView.centerYAnchor.constraint(equalTo: self.rectagularInstagramCropView.centerYAnchor, constant: -16).isActive = true
+            noBackgroundImageView.leadingAnchor.constraint(equalTo: self.rectagularInstagramCropView.leadingAnchor, constant: 24).isActive = true
+            noBackgroundImageView.trailingAnchor.constraint(equalTo: self.rectagularInstagramCropView.trailingAnchor, constant: 24).isActive = true
+            noBackgroundImageView.centerYAnchor.constraint(equalTo: self.rectagularInstagramCropView.centerYAnchor, constant: -20).isActive = true
             noBackgroundImageView.contentMode = .scaleAspectFit
             let label = UILabel()
             label.text = self.isReceiveLabel.text! + self.nameLabel.text!
