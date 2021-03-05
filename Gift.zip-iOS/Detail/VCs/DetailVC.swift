@@ -294,7 +294,7 @@ class DetailVC: UIViewController {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 4
         attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attrString.length))
-        let fontAttr = [ NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16),  NSAttributedString.Key.foregroundColor: UIColor.white ]
+        let fontAttr = bgColor == "wheat" ? [ NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16),  NSAttributedString.Key.foregroundColor: UIColor.black ] : [ NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16),  NSAttributedString.Key.foregroundColor: UIColor.white ]
         attrString.addAttributes(fontAttr, range: NSMakeRange(0, attrString.length))
         contentTextView.autocorrectionType = .no
         contentTextView.attributedText = attrString

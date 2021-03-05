@@ -354,7 +354,7 @@ extension VC: UICollectionViewDataSource, UICollectionViewDelegate {
     }
     
     func changeUI(frameType: String, color: String) {
-        UIView.animate(withDuration: 0.4) {
+        UIView.animate(withDuration: 0.4, delay: 0, options: [.allowUserInteraction]) {
             self.collectionView.backgroundColor = UIColor(named: color)
             if(color == "wheat") {
                 self.btnArrow.imageView?.image = UIImage(named: "btn_arrow_black")
@@ -364,7 +364,12 @@ extension VC: UICollectionViewDataSource, UICollectionViewDelegate {
                 self.btnGfitBox.titleLabel?.textColor = UIColor.white
             }
             self.imgLogo.image = UIImage(named: "logo_"+color+"_"+frameType)
+        } completion: { _ in
         }
+//
+//        UIView.animate(withDuration: 0.4) {
+//            
+//        }
 //        if imgLogo != nil {
 //            print("Not Nil")
 //            let newLogo = UIImageView.init(frame: imgLogo.frame)
