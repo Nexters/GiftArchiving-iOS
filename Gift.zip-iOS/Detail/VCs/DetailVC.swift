@@ -29,6 +29,8 @@ class DetailVC: UIViewController {
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var shareCropImageView: UIImageView!
+    @IBOutlet weak var shareCropLabel: UILabel!
     
     @IBOutlet weak var moreButton: UIButton!
     @IBOutlet weak var exitButton: UIButton!
@@ -56,7 +58,7 @@ class DetailVC: UIViewController {
     
     private var isGiftEditing: Bool = false {
         didSet {
-//            nameLabel.isUserInteractionEnabled = false
+            nameLabel.isUserInteractionEnabled = false
             if isGiftEditing {
             } else {
                 contentTextView.isUserInteractionEnabled = false
@@ -72,6 +74,7 @@ class DetailVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         // 선물기록 정보들 가져오기
         GiftService.shared.getOneGift(id: giftId) { (result) in
             switch result {
@@ -405,25 +408,14 @@ class DetailVC: UIViewController {
             share.currentName = "\(self.isReceiveLabel.text!) \(self.nameLabel.text!)"
             
             share.kakaoImageURL = self.bgImgURL
-            
-            
-            let noBackgroundImageView = UIImageView.init(image: self.giftImage)
-            noBackgroundImageView.contentMode = .scaleAspectFit
-            self.rectagularInstagramCropView.addSubview(noBackgroundImageView)
 
-            noBackgroundImageView.leadingAnchor.constraint(equalTo: self.rectagularInstagramCropView.leadingAnchor, constant: 24).isActive = true
-            noBackgroundImageView.trailingAnchor.constraint(equalTo: self.rectagularInstagramCropView.trailingAnchor, constant: 24).isActive = true
-            noBackgroundImageView.centerYAnchor.constraint(equalTo: self.rectagularInstagramCropView.centerYAnchor, constant: -20).isActive = true
-            noBackgroundImageView.contentMode = .scaleAspectFit
-            let label = UILabel()
-            label.text = self.isReceiveLabel.text! + self.nameLabel.text!
-            label.font = UIFont(name: "SpoqaHanSansNeo-Bold", size: 16)
-            label.textColor = color == UIColor.wheat ? .black : .white
+            self.rectagularInstagramCropView.isHidden = false
             
-            self.rectagularInstagramCropView.addSubview(label)
-            label.translatesAutoresizingMaskIntoConstraints = false
-            label.topAnchor.constraint(equalTo: noBackgroundImageView.bottomAnchor, constant: -40).isActive = true
-            label.centerXAnchor.constraint(equalTo: self.rectagularInstagramCropView.centerXAnchor).isActive = true
+            
+            
+            
+            self.shareCropLabel.text = self.isReceiveLabel.text! + " " + self.nameLabel.text!
+            self.shareCropImageView.image = self.giftImage
             
             self.rectagularInstagramCropView.backgroundColor = color
             let myPhone = UIGraphicsImageRenderer(size: self.rectagularInstagramCropView.bounds.size)
@@ -436,6 +428,7 @@ class DetailVC: UIViewController {
             let instagramSquareImage = instagram.image { _ in
                 self.rectagularInstagramCropView.drawHierarchy(in: self.rectagularInstagramCropView.bounds, afterScreenUpdates: true)
             }
+            
             self.rectagularInstagramCropView.isHidden = true
             
             share.instagramImage = instagramSquareImage
