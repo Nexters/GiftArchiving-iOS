@@ -439,8 +439,6 @@ class RecordVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-        
         let stickerButtonWidth = colorButton.frame.width
         colorButton.makeRounded(cornerRadius: stickerButtonWidth / 2)
         for button in colorButtons {
@@ -531,8 +529,7 @@ class RecordVC: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -745,7 +742,7 @@ class RecordVC: UIViewController {
                             label.translatesAutoresizingMaskIntoConstraints = false
                             
                             let constraint: CGFloat = (rectagularInstagramCropView.frame.height - noBackgroundImageView.frame.height - 20) / 2
-                            label.topAnchor.constraint(equalTo: noBackgroundImageView.bottomAnchor, constant: constraint).isActive = true
+                            label.topAnchor.constraint(equalTo: noBackgroundImageView.bottomAnchor, constant: constraint-15).isActive = true
                             label.centerXAnchor.constraint(equalTo: rectagularInstagramCropView.centerXAnchor).isActive = true
                             
                             rectagularInstagramCropView.backgroundColor = currentBackgroundColor
