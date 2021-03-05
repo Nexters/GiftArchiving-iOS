@@ -170,6 +170,7 @@ class RecordVC: UIViewController {
                 logoSticker.makeRounded(cornerRadius: 0)
                 break
             case .circle:
+                print("이것은 원!!!")
                 frameType = "CIRCLE"
                 let radius = logoSticker.bounds.width / 2
                 logoSticker.makeRounded(cornerRadius: radius)
@@ -179,6 +180,7 @@ class RecordVC: UIViewController {
                 logoSticker.makeRounded(cornerRadius: 0)
                 break
             case .windowFrame:
+                print("이것은 창문!!!")
                 frameType = "ARCH"
                 let radius = logoSticker.bounds.width / 2
                 logoSticker.roundCorners(cornerRadius: radius, maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])

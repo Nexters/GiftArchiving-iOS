@@ -131,8 +131,8 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q5O-2U-o49">
                                         <rect key="frame" x="101.66666666666666" y="41" width="246.99999999999997" height="317"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Plb-t9-8FF">
-                                                <rect key="frame" x="0.0" y="31" width="247" height="180"/>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Plb-t9-8FF">
+                                                <rect key="frame" x="10" y="31" width="227" height="180"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="180" id="HWj-P3-cQP"/>
                                                 </constraints>
@@ -152,9 +152,9 @@
                                             <constraint firstItem="Plb-t9-8FF" firstAttribute="top" secondItem="q5O-2U-o49" secondAttribute="top" constant="31" id="Jsc-dl-XEY"/>
                                             <constraint firstAttribute="height" constant="317" id="M6k-y1-deY"/>
                                             <constraint firstItem="Plb-t9-8FF" firstAttribute="centerX" secondItem="q5O-2U-o49" secondAttribute="centerX" id="Uct-ib-b7l"/>
-                                            <constraint firstAttribute="trailing" secondItem="Plb-t9-8FF" secondAttribute="trailing" id="Xty-r9-ClN"/>
+                                            <constraint firstAttribute="trailing" secondItem="Plb-t9-8FF" secondAttribute="trailing" constant="10" id="Xty-r9-ClN"/>
                                             <constraint firstAttribute="trailing" secondItem="fdn-L4-WP4" secondAttribute="trailing" constant="10" id="frD-jw-Rj3"/>
-                                            <constraint firstItem="Plb-t9-8FF" firstAttribute="leading" secondItem="q5O-2U-o49" secondAttribute="leading" id="jCM-E6-Ma4"/>
+                                            <constraint firstItem="Plb-t9-8FF" firstAttribute="leading" secondItem="q5O-2U-o49" secondAttribute="leading" constant="10" id="jCM-E6-Ma4"/>
                                             <constraint firstItem="fdn-L4-WP4" firstAttribute="centerX" secondItem="q5O-2U-o49" secondAttribute="centerX" id="nUh-cH-mwk"/>
                                         </constraints>
                                     </view>
