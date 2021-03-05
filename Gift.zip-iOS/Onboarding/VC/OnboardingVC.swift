@@ -50,8 +50,8 @@ class OnboardingVC: UIViewController, ASAuthorizationControllerPresentationConte
         if device == 0 {
             cnstCollectionViewTop.constant = 30
             cnstAppleBtnBottom.constant = 25
-            itemHeight = 410
-            cnstPageControlTop.constant = -20
+            //itemHeight = 410
+            cnstPageControlTop.constant = -90
         }
         collectionView.collectionViewLayout = self.createCompositionalLayout()
         let nib = UINib(nibName: "OnboardingCollectionViewCell", bundle: nil)

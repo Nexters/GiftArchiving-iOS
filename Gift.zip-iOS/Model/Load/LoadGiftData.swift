@@ -14,9 +14,9 @@ struct LoadGiftData: Codable {
     var receiveDate: String
     let bgColor: String
     let isReceiveGift: Bool
-    let category: String
-    let emotion: String
-    let reason: String
+    var category: String
+    var emotion: String
+    var reason: String
     let frameType: String
     
     init(from decoder: Decoder) throws {

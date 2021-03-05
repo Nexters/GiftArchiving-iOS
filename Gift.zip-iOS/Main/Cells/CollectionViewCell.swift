@@ -20,7 +20,7 @@ class CollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var cnstLabelTop: NSLayoutConstraint!
     
-    public func configure(with model: LoadGiftData){
+    public func configure(with model: LoadGiftData, isReceive: Bool){
         if let encoded = model.imgUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let url = URL(string: encoded) {
             
             DispatchQueue.global().async {
@@ -36,8 +36,11 @@ class CollectionViewCell: UICollectionViewCell {
         }else{
             self.imgView.image = UIImage(named: "imgEmptyMainBig")
         }
-        
-        self.labelFrom.text = model.name
+        if isReceive{
+            self.labelFrom.text = "From. " + model.name
+        }else{
+            self.labelFrom.text = "To. " + model.name
+        }
         
         
         let dateFor: DateFormatter = DateFormatter()
@@ -54,7 +57,7 @@ class CollectionViewCell: UICollectionViewCell {
         if flag{
             self.labelFrom.text = "From. 보낸이"
         }else{
-            self.labelFrom.text = "From. 받는이"
+            self.labelFrom.text = "To. 받는이"
         }
         labelFrom.textColor = UIColor.white
         labelDate.text = ""

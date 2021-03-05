@@ -470,6 +470,10 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
     @objc func updateGift(_ notification: Notification){
         guard let giftId = notification.userInfo?["giftId"] as? String else { return }
         guard let content = notification.userInfo?["content"] as? String else { return }
+        guard let category = notification.userInfo?["category"] as? String else { return }
+        guard let emotion = notification.userInfo?["emotion"] as? String else { return }
+        guard let reason = notification.userInfo?["reason"] as? String else { return }
+        guard let receiveDate = notification.userInfo?["receiveDate"] as? String else { return}
         if resFlag{
             var target = -1
             var idx = 0
@@ -481,6 +485,10 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
             }
             if target != -1 {
                 resReceivedArr[target].content = content
+                resReceivedArr[target].category = category
+                resReceivedArr[target].emotion = emotion
+                resReceivedArr[target].reason = reason
+                resReceivedArr[target].receiveDate = receiveDate
             }
         }else{
             var target = -1
@@ -493,6 +501,10 @@ class SearchVC: UIViewController, TTGTextTagCollectionViewDelegate, UITextFieldD
             }
             if target != -1 {
                 resSentArr[target].content = content
+                resSentArr[target].category = category
+                resSentArr[target].emotion = emotion
+                resSentArr[target].reason = reason
+                resSentArr[target].receiveDate = receiveDate
             }
         }
         self.searchResultCollectionView.reloadData()

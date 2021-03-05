@@ -25,7 +25,7 @@ class OnboardingCollectionViewCell: UICollectionViewCell {
         labelTop3.text = txtTop3
         labelTop3.textColor = UIColor.whiteOpacity
         if device == 0 {
-            cnstImgViewTop.constant = 20
+            cnstImgViewTop.constant = -10
         }
     }
 }
