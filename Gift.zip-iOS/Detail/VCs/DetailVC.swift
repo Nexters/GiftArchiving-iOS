@@ -365,7 +365,7 @@ class DetailVC: UIViewController {
             
             self.giftImage = self.giftImageView.image
             share.envelopImage = self.giftImage
-            
+            share.giftId = self.giftId
             var currentFrameOfImage: FrameOfImage = .square
             switch self.frameType {
             case "SQUARE":

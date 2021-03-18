@@ -36,6 +36,7 @@ class SplashVC: UIViewController {
             }
         } else {
             if let kakaoId = SPREF.string(forKey: "kakaoId"){
+                print(kakaoId)
                 if !kakaoId.isEmpty{
                     return true
                 }

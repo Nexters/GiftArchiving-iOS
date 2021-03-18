@@ -764,6 +764,7 @@ class RecordVC: UIViewController {
                             
                             guard let share = UIStoryboard.init(name: "Share", bundle: nil).instantiateViewController(identifier: "ShareVC") as? ShareVC else { return }
                             
+                            
                             share.isReceiveGift = isReceiveGift
                             share.currentName = "\(fromLabel.text!) \(nameTextField.text!)"
                             share.currentBackgroundColor = currentBackgroundColor
@@ -843,6 +844,7 @@ class RecordVC: UIViewController {
                                     if let bgData = data as? RecordGiftData {
                                         print(bgData)
                                         self.broadcastAdd(gift: ["gifts" : [["id": bgData.id, "imgUrl" : bgData.noBgImg, "name": name, "content" : content , "receiveDate" : date, "bgColor" : self.currentBackgroundColorString, "isReceiveGift" : String(self.isReceiveGift), "category" : categoryName, "emotion": emotionName, "reason" : purposeName, "frameType": self.frameType]]], isReceive: self.isReceiveGift)
+                                        share.giftId = bgData.id
                                         share.kakaoImageURL = bgData.bgImg
                                         self.navigationController?.pushViewController(share, animated: true)
                                     }

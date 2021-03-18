@@ -25,6 +25,7 @@ class ShareVC: UIViewController {
     var userName: String?
     var kakaoImageURL: String?
     var isReceiveGift: Bool?
+    var giftId: String?
     
     var viewWillAppearCnt = 0
 
@@ -180,8 +181,8 @@ class ShareVC: UIViewController {
             isReceiveGift ?? true ? "\(userName!)님이 나에게 보낸 선물이 도착했어요!" : "\(userName!)님에게 보낸 선물이 도착했어요!"
         let imageURL: String = kakaoImageURL!
         let templateId = 47251
-
-        LinkApi.shared.customLink(templateId: Int64(templateId), templateArgs:["title": title, "description": description, "imageURL": imageURL]) { (linkResult, error) in
+        
+        LinkApi.shared.customLink(templateId: Int64(templateId), templateArgs:["title": title, "description": description, "imageURL": imageURL, "giftId": giftId!]) { (linkResult, error) in
             if let error = error {
                 print(error)
             }
@@ -192,7 +193,36 @@ class ShareVC: UIViewController {
                 }
             }
         }
-        
+    }
+    
+    func makeFeedMessage() {
+        let title = "피드 메시지"
+        let description = "피드 메시지 예제"
+
+        let feedTemplateJsonStringData =
+            """
+            {
+                "object_type": "feed",
+                "content": {
+                    "title": "딸기 치즈 케익",
+                    "description": "#케익 #딸기 #삼평동 #카페 #분위기 #소개팅",
+                    "image_url": "http://mud-kage.kakao.co.kr/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png",
+                    "link": {
+                        "mobile_web_url": "https://developers.kakao.com",
+                        "web_url": "https://developers.kakao.com"
+                    }
+                },
+                "buttons": [
+                    {
+                        "title": "구경하기",
+                        "link": {
+                            "android_execution_params": "key1=value1&key2=value2",
+                            "ios_execution_params": "key1=value1&key2=value2"
+                        }
+                    }
+                ]
+            }
+            """.data(using: .utf8)!
     }
 }
 
