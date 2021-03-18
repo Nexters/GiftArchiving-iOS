@@ -45,6 +45,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
 
+    
+    func parseQueryString(_ query: String?) -> Bool {
+        guard let query = query else { return false }
+        
+        var dict = [String: String]()
+        let queryComponents = query.components(separatedBy: "&")
+        
+        for theComponent in queryComponents {
+            let elements = theComponent.components(separatedBy: "=")
+            guard let key = elements[0].removingPercentEncoding else { continue }
+            guard let val = elements[1].removingPercentEncoding else { continue }
+            
+            dict[key] = val
+        }
+        
+        if dict.count == 0 { return false }
+        
+        let SPREF = UserDefaults.standard
+        SPREF.setValue(true, forKey: "checkFromKakaoTalk")
+        
+        NotificationCenter.default.post(name: .init("fromKakaoTalkToFirst"), object: dict)
+        return true
+    }
+    
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+       
+        return parseQueryString(url.query)
+    }
 
 }
 

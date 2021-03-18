@@ -7,6 +7,8 @@
 
 import UIKit
 import KakaoSDKLink
+import KakaoSDKTemplate
+import KakaoSDKCommon
 
 class ShareVC: UIViewController {
     
@@ -196,33 +198,53 @@ class ShareVC: UIViewController {
     }
     
     func makeFeedMessage() {
-        let title = "피드 메시지"
-        let description = "피드 메시지 예제"
+        let title: String = "🎁기프트집 선물 도착🎁"
+        let description: String =
+            isReceiveGift ?? true ? "\(userName!)님이 나에게 보낸 선물이 도착했어요!" : "\(userName!)님에게 보낸 선물이 도착했어요!"
+        let imageURL: String = kakaoImageURL!
+        
+         let feedTemplateJsonStringData =
+             """
+             {
+                 "object_type": "feed",
+                 "content": {
+                     "title": \(title),
+                     "description": \(description),
+                     "image_url": \(imageURL),
+                     "link": {
+                             "android_execution_params": "gift_id=2",
+                             "ios_execution_params": "gift_id=2"
+                     }
+                 },
+                 "buttons": [
+                     {
+                         "title": "구경하기",
+                         "link": {
+                             "android_execution_params": "gift_id=2",
+                             "ios_execution_params": "gift_id=2"
+                         }
+                     }
+                 ]
+             }
+             """.data(using: .utf8)!
+         
+         if let templatable = try? SdkJSONDecoder.custom.decode(FeedTemplate.self, from: feedTemplateJsonStringData) {
+             
+             LinkApi.shared.defaultLink(templatable: templatable) {(linkResult, error) in
+                 if let error = error {
+                     print(error)
+                 }
+                 else {
+                     print("defaultLink() success.")
+                     if let linkResult = linkResult {
+                         UIApplication.shared.open(linkResult.url, options: [:], completionHandler: nil)
+                     }
+                 }
+             }
+         } else {
+             print("Templatable error")
+         }
 
-        let feedTemplateJsonStringData =
-            """
-            {
-                "object_type": "feed",
-                "content": {
-                    "title": "딸기 치즈 케익",
-                    "description": "#케익 #딸기 #삼평동 #카페 #분위기 #소개팅",
-                    "image_url": "http://mud-kage.kakao.co.kr/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png",
-                    "link": {
-                        "mobile_web_url": "https://developers.kakao.com",
-                        "web_url": "https://developers.kakao.com"
-                    }
-                },
-                "buttons": [
-                    {
-                        "title": "구경하기",
-                        "link": {
-                            "android_execution_params": "key1=value1&key2=value2",
-                            "ios_execution_params": "key1=value1&key2=value2"
-                        }
-                    }
-                ]
-            }
-            """.data(using: .utf8)!
     }
 }
 

@@ -47,22 +47,8 @@ class VC: UIViewController{
     private var currentColor: UIColor = .charcoalGrey {
         didSet {
             if currentColor == UIColor.wheat {
-//                collectionView.backgroundColor = UIColor(named: color)
                 collectionView.reloadData()
                 
-//                collectionView.backgroundColor = UIColor(named: color)
-//                if(color == "wheat") {
-//                    btnArrow.imageView?.image = UIImage(named: "btn_arrow_black")
-//                    btnGfitBox.titleLabel?.textColor = UIColor.greyishBrown
-//                } else {
-//                    btnArrow.imageView?.image = UIImage(named: "btn_arrow_white")
-//                    btnGfitBox.titleLabel?.textColor = UIColor.white
-//                }
-//
-//                if let cell : CollectionViewCell = collectionView.cellForItem(at: IndexPath(row: currentIndex, section: 0)) as? CollectionViewCell{
-//                    cell.setLabelColor(color: color)
-//                }
-//                imgLogo.image = UIImage(named: "logo_"+color+"_"+frameType)
             }
         }
     }
@@ -77,15 +63,30 @@ class VC: UIViewController{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("main viewWillAppear called()")
+        
+        
+        
         collectionView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setUIByCurrentIdx()
+        NotificationCenter.default.addObserver(self, selector: #selector(handleNotification), name: .init("fromKakaoTalkToFirst"), object: nil)
     }
     
+    @objc func handleNotification(_ notification: NSNotification) {
+        if notification.name.rawValue == "fromKakaoTalkToFirst" {
+            if let object = notification.object as? [String: String] {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    guard let detail = UIStoryboard.init(name: "Detail", bundle: nil).instantiateViewController(identifier: "DetailVC") as? DetailVC else { return }
+                    detail.giftId = object["gift_id"]!
+                    detail.modalPresentationStyle = .fullScreen
+                    self.present(detail, animated: true, completion: nil)
+                }
+            }
+        }
+    }
     deinit {
         NotificationCenter.default.removeObserver(self, name: .init("deleteGift"), object: nil)
         NotificationCenter.default.removeObserver(self, name: .init("addGift"), object: nil)
@@ -366,23 +367,6 @@ extension VC: UICollectionViewDataSource, UICollectionViewDelegate {
             self.imgLogo.image = UIImage(named: "logo_"+color+"_"+frameType)
         } completion: { _ in
         }
-//
-//        UIView.animate(withDuration: 0.4) {
-//            
-//        }
-//        if imgLogo != nil {
-//            print("Not Nil")
-//            let newLogo = UIImageView.init(frame: imgLogo.frame)
-//            let name: String = "logo_"+color+"_"+frameType
-//            newLogo.image = UIImage(named: name)
-//            UIView.transition(from: imgLogo, to: newLogo, duration: 0.4, options: .transitionFlipFromBottom) { (_) in
-                
-//            }
-//        } else {
-//            print("Nil")
-//        }
-           
-        
     }
 }
 
