@@ -142,10 +142,9 @@ class DetailVC: UIViewController {
             }
         }
         
-        let SPREF = UserDefaults.standard
-        if SPREF.bool(forKey: "checkFromKakaoTalk") {
+        if UserDefaults.standard.bool(forKey: "checkFromKakaoTalk") {
             moreButton.isHidden = true
-            SPREF.setValue(false, forKey: "checkFromKakaoTalk")
+            UserDefaults.standard.setValue(false, forKey: "checkFromKakaoTalk")
         }
     }
     

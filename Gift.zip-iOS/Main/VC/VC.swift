@@ -64,9 +64,14 @@ class VC: UIViewController{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        
-        
+        if UserDefaults.standard.bool(forKey: "checkFromKakaoTalk") {
+            guard let vc = UIStoryboard.init(name: "Detail", bundle: nil).instantiateViewController(identifier: "DetailVC") as? DetailVC else { return }
+            vc.giftId = UserDefaults.standard.string(forKey: "gift_id")!
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
+        }
         collectionView.reloadData()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {

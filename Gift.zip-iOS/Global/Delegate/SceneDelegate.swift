@@ -17,7 +17,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+        UserDefaults.standard.setValue(false, forKey: "checkFromKakaoTalk")
         
+        if let url = connectionOptions.urlContexts.first?.url {
+            
+            if let windowScene = scene as? UIWindowScene {
+                let gift_id = parseQueryString(url.query)
+                UserDefaults.standard.setValue(gift_id, forKey: "gift_id")
+                let window = UIWindow(windowScene: windowScene)
+                guard let vc = UIStoryboard.init(name: "SplashSB", bundle: nil).instantiateViewController(identifier: "SplashVC") as? SplashVC else { return }
+                window.rootViewController = vc
+                self.window = window
+                window.makeKeyAndVisible()
+            }
+        }
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -49,8 +62,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     
-    func parseQueryString(_ query: String?) -> Bool {
-        guard let query = query else { return false }
+    func parseQueryString(_ query: String?) -> String {
+        guard let query = query else { return "" }
         
         var dict = [String: String]()
         let queryComponents = query.components(separatedBy: "&")
@@ -63,15 +76,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             dict[key] = val
         }
         
-        if dict.count == 0 { return false }
+        if dict.count == 0 { return "" }
         
-        let SPREF = UserDefaults.standard
-        SPREF.setValue(true, forKey: "checkFromKakaoTalk")
-        
-        NotificationCenter.default.post(name: .init("fromKakaoTalk"), object: dict)
-        return true
+        UserDefaults.standard.setValue(true, forKey: "checkFromKakaoTalk")
+        return dict["gift_id"] ?? ""
     }
-    
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         if let url = URLContexts.first?.url {
@@ -79,22 +88,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 _ = AuthController.handleOpenUrl(url: url)
             } else {
                 
-                NotificationCenter.default.addObserver(self, selector: #selector(handleNotification), name: .init("fromKakaoTalk"), object: nil)
-                _ = parseQueryString(url.query)
-            }
-        }
-    }
-    
-    @objc func handleNotification(_ notification: NSNotification) {
-        if notification.name.rawValue == "fromKakaoTalk" {
-            if let object = notification.object as? [String: String] {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    let rootVC = self.window?.rootViewController as! UINavigationController
-                    let vc = rootVC.viewControllers[0]
-                    guard let detail = UIStoryboard.init(name: "Detail", bundle: nil).instantiateViewController(identifier: "DetailVC") as? DetailVC else { return }
-                    detail.giftId = object["gift_id"]!
-                    detail.modalPresentationStyle = .fullScreen
-                    vc.present(detail, animated: true, completion: nil)
+                if let windowScene = scene as? UIWindowScene {
+                    let gift_id = parseQueryString(url.query)
+                    UserDefaults.standard.setValue(gift_id, forKey: "gift_id")
+                    let window = UIWindow(windowScene: windowScene)
+                    guard let vc = UIStoryboard.init(name: "MainSB", bundle: nil).instantiateViewController(identifier: "MainNVC") as? MainNVC else { return }
+                    window.rootViewController = vc
+                    self.window = window
+                    window.makeKeyAndVisible()
+                    
                 }
             }
         }
