@@ -75,6 +75,7 @@ class DetailVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+       
         // 선물기록 정보들 가져오기
         GiftService.shared.getOneGift(id: giftId) { (result) in
             switch result {
@@ -139,6 +140,11 @@ class DetailVC: UIViewController {
                 self.present(alertViewController, animated: true, completion: nil)
                 print("networkFail")
             }
+        }
+        
+        if UserDefaults.standard.bool(forKey: "checkFromKakaoTalk") {
+            moreButton.isHidden = true
+            UserDefaults.standard.setValue(false, forKey: "checkFromKakaoTalk")
         }
     }
     
@@ -365,7 +371,7 @@ class DetailVC: UIViewController {
             
             self.giftImage = self.giftImageView.image
             share.envelopImage = self.giftImage
-            
+            share.giftId = self.giftId
             var currentFrameOfImage: FrameOfImage = .square
             switch self.frameType {
             case "SQUARE":

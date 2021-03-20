@@ -7,6 +7,8 @@
 
 import UIKit
 import KakaoSDKLink
+import KakaoSDKTemplate
+import KakaoSDKCommon
 
 class ShareVC: UIViewController {
     
@@ -25,6 +27,7 @@ class ShareVC: UIViewController {
     var userName: String?
     var kakaoImageURL: String?
     var isReceiveGift: Bool?
+    var giftId: String?
     
     var viewWillAppearCnt = 0
 
@@ -180,8 +183,8 @@ class ShareVC: UIViewController {
             isReceiveGift ?? true ? "\(userName!)님이 나에게 보낸 선물이 도착했어요!" : "\(userName!)님에게 보낸 선물이 도착했어요!"
         let imageURL: String = kakaoImageURL!
         let templateId = 47251
-
-        LinkApi.shared.customLink(templateId: Int64(templateId), templateArgs:["title": title, "description": description, "imageURL": imageURL]) { (linkResult, error) in
+        
+        LinkApi.shared.customLink(templateId: Int64(templateId), templateArgs:["title": title, "description": description, "imageURL": imageURL, "giftId": giftId!]) { (linkResult, error) in
             if let error = error {
                 print(error)
             }
@@ -192,7 +195,56 @@ class ShareVC: UIViewController {
                 }
             }
         }
+    }
+    
+    func makeFeedMessage() {
+        let title: String = "🎁기프트집 선물 도착🎁"
+        let description: String =
+            isReceiveGift ?? true ? "\(userName!)님이 나에게 보낸 선물이 도착했어요!" : "\(userName!)님에게 보낸 선물이 도착했어요!"
+        let imageURL: String = kakaoImageURL!
         
+         let feedTemplateJsonStringData =
+             """
+             {
+                 "object_type": "feed",
+                 "content": {
+                     "title": \(title),
+                     "description": \(description),
+                     "image_url": \(imageURL),
+                     "link": {
+                             "android_execution_params": "gift_id=2",
+                             "ios_execution_params": "gift_id=2"
+                     }
+                 },
+                 "buttons": [
+                     {
+                         "title": "구경하기",
+                         "link": {
+                             "android_execution_params": "gift_id=2",
+                             "ios_execution_params": "gift_id=2"
+                         }
+                     }
+                 ]
+             }
+             """.data(using: .utf8)!
+         
+         if let templatable = try? SdkJSONDecoder.custom.decode(FeedTemplate.self, from: feedTemplateJsonStringData) {
+             
+             LinkApi.shared.defaultLink(templatable: templatable) {(linkResult, error) in
+                 if let error = error {
+                     print(error)
+                 }
+                 else {
+                     print("defaultLink() success.")
+                     if let linkResult = linkResult {
+                         UIApplication.shared.open(linkResult.url, options: [:], completionHandler: nil)
+                     }
+                 }
+             }
+         } else {
+             print("Templatable error")
+         }
+
     }
 }
 
